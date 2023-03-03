@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14.883" height="20.271" viewBox="0 0 14.883 20.271">
+  <g id="bulb_1_" data-name="bulb (1)" transform="translate(1.184 1.085)">
+    <path id="Path_73" data-name="Path 73" d="M20.7,11.447A6.349,6.349,0,1,0,9.9,15.971a4.024,4.024,0,0,1,1.27,2.857V19.3h6.349v-.421a4.151,4.151,0,0,1,1.294-2.929A6.349,6.349,0,0,0,20.7,11.447Z" transform="translate(-8 -5.086)" fill="none" stroke="#ffbb1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <line id="Line_100" data-name="Line 100" x2="6.349" transform="translate(3.175 16.599)" fill="none" stroke="#ffbb1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <line id="Line_101" data-name="Line 101" x2="4.762" transform="translate(3.969 17.393)" fill="none" stroke="#ffbb1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <line id="Line_102" data-name="Line 102" y1="0.794" transform="translate(6.35 17.393)" fill="none" stroke="#ffbb1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_74" data-name="Path 74" d="M15.794,12.42,15,14.666h1.587l-.794,2.318" transform="translate(-9.444 -6.599)" fill="none" stroke="#ffbb1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="44.114" height="44.114" viewBox="0 0 44.114 44.114">
+  <g id="wall_1_" data-name="wall (1)" transform="translate(0 -0.302)">
+    <rect id="Rectangle_185" data-name="Rectangle 185" width="44.114" height="44.114" transform="translate(0 0.302)" fill="none"/>
+    <path id="Path_34" data-name="Path 34" d="M136,55.437h16.225V49.352A1.352,1.352,0,0,0,150.873,48H136Z" transform="translate(-113.748 -40.729)" fill="#1c1c1c"/>
+    <rect id="Rectangle_186" data-name="Rectangle 186" width="9.515" height="6.055" transform="translate(28.545 18.467)" fill="#1c1c1c"/>
+    <rect id="Rectangle_187" data-name="Rectangle 187" width="11.245" height="6.055" transform="translate(14.705 18.467)" fill="#1c1c1c"/>
+    <rect id="Rectangle_188" data-name="Rectangle 188" width="6.055" height="6.055" transform="translate(5.19 18.467)" fill="#1c1c1c"/>
+    <path id="Path_35" data-name="Path 35" d="M42.929,69.642V76.4H57.8a1.352,1.352,0,0,0,1.352-1.352V69.642Zm-2.7-14.205V48H25.352A1.352,1.352,0,0,0,24,49.352v6.084Zm0,14.205H24V75.05A1.352,1.352,0,0,0,25.352,76.4H40.225Z" transform="translate(-20.677 -40.729)" fill="#1c1c1c"/>
+  </g>
+</svg>

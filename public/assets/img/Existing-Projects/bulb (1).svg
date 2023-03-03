@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18.225" height="25.017" viewBox="0 0 18.225 25.017">
+  <g id="bulb_1_" data-name="bulb (1)" transform="translate(-6.775 -3.983)">
+    <path id="Path_73" data-name="Path 73" d="M24,13.1a8,8,0,1,0-13.6,5.7A5.07,5.07,0,0,1,12,22.4V23h8v-.53a5.23,5.23,0,0,1,1.63-3.69A8,8,0,0,0,24,13.1Z" fill="none" stroke="#ffbb1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <line id="Line_100" data-name="Line 100" x2="8" transform="translate(12 26)" fill="none" stroke="#ffbb1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <line id="Line_101" data-name="Line 101" x2="6" transform="translate(13 27)" fill="none" stroke="#ffbb1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <line id="Line_102" data-name="Line 102" y1="1" transform="translate(16 27)" fill="none" stroke="#ffbb1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_74" data-name="Path 74" d="M16,12.42l-1,2.83h2l-1,2.92" fill="none" stroke="#ffbb1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+  </g>
+</svg>

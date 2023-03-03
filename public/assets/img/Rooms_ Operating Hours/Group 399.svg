@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="54.688" height="39.117" viewBox="0 0 54.688 39.117">
+  <g id="Group_399" data-name="Group 399" transform="translate(-1572.25 -242)">
+    <g id="Layer_2" data-name="Layer 2" transform="translate(1571.359 244)">
+      <g id="VECTOR" transform="translate(1.641 2)">
+        <path id="Path_112" data-name="Path 112" d="M96.407,9.932V42.075H84.1s2.306-16.625,11.34-18.288C85.9,21.293,86.865,9.932,86.865,9.932Z" transform="translate(-61.253 -7.749)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        <path id="Path_113" data-name="Path 113" d="M111.745,9.932s-1.867,6.648,3.872,13.021" transform="translate(-81.077 -7.749)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        <path id="Path_114" data-name="Path 114" d="M106.407,78.9s-.615-10.878,5.539-18.151" transform="translate(-77.407 -44.577)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        <path id="Path_115" data-name="Path 115" d="M12.325,9.932V42.075H24.633s-2.306-16.625-11.34-18.288c9.542-2.494,8.574-13.854,8.574-13.854Z" transform="translate(-9.239 -7.749)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        <path id="Path_116" data-name="Path 116" d="M18.43,9.932s1.867,6.648-3.872,13.021" transform="translate(-10.857 -7.749)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        <path id="Path_117" data-name="Path 117" d="M20.1,78.9s.615-10.878-5.539-18.151" transform="translate(-10.857 -44.577)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        <line id="Line_166" data-name="Line 166" x2="37.929" transform="translate(0 0)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+    </g>
+    <g id="_9" data-name="9" transform="translate(1575 210)">
+      <g id="row3" transform="translate(32 32)">
+        <path id="icon:1_1_" d="M35.847,41.989a6.123,6.123,0,1,1,6.123,6.122A6.123,6.123,0,0,1,35.847,41.989Zm6.434,6.767h-.623v3.182h.623Zm-2.621-.4-.576-.239-1.218,2.94.576.239Zm6.412,2.7-1.094-2.642-.576.239L45.5,51.3ZM49.239,48.8l-2.022-2.022-.441.441L48.8,49.239ZM37.39,46.989l-.441-.441L34.7,48.8l.441.441ZM51.3,45.5,48.657,44.4l-.239.576,2.642,1.094Zm-15.481-.642-.239-.576-.949.393-1.991.825.239.576Zm16.121-3.2h-2.86v.623h2.86Zm-16.756,0-1.9-.084-.639.623,2.543.084Zm.636-2.574-2.94-1.218-.239.576,2.94,1.218ZM51.3,38.442l-.239-.576-2.642,1.094.239.576ZM37.39,36.95l-1.639-1.523-.441.441L36.95,37.39ZM49.239,35.14,48.8,34.7l-2.022,2.022.441.441Zm-9.579.439-1.218-2.94-.576.239,1.218,2.94Zm6.412-2.7-.576-.239L44.4,35.281l.576.239ZM42.281,32h-.623v2.86h.623Z" transform="translate(-32 -32)" fill="#dcdcdc"/>
+      </g>
+    </g>
+  </g>
+</svg>

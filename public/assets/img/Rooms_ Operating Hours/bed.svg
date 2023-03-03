@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="53.693" height="42.336" viewBox="0 0 53.693 42.336">
+  <defs>
+    <filter id="bed" x="0" y="0" width="53.693" height="42.336" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.42"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#bed)">
+    <path id="bed-2" data-name="bed" d="M10.734,17.479a4.867,4.867,0,1,0-4.867-4.867,4.867,4.867,0,0,0,4.867,4.867Zm0-6.49a1.622,1.622,0,1,1-1.622,1.622A1.622,1.622,0,0,1,10.734,10.99ZM31.826,7.745H18.846a1.622,1.622,0,0,0-1.622,1.622V19.1H4.245V6.122A1.622,1.622,0,1,0,1,6.122V27.214a1.622,1.622,0,1,0,3.245,0V22.346h29.2v4.867a1.622,1.622,0,0,0,3.245,0v-14.6A4.867,4.867,0,0,0,31.826,7.745ZM33.448,19.1H20.469V10.99H31.826a1.622,1.622,0,0,1,1.622,1.622Z" transform="translate(8 4.5)" fill="#fff"/>
+  </g>
+</svg>

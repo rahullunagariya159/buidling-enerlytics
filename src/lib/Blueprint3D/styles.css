@@ -1,0 +1,248 @@
+.bp3d {
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bp3d .input-container {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bp3d .input-container label {
+  padding-right: 10px;
+}
+
+.bp3d .input-container .input {
+  flex: 1;
+  display: flex;
+}
+
+.bp3d .input-container .input-slider {
+  flex: 1;
+}
+
+.bp3d .input-container .input-number {
+  width: 50px;
+}
+
+.bp3d .container {
+  /* display: table; */
+  display: inline;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.bp3d .container .left-container {
+  /* width: 60px; */
+  width: 54px;
+  height: 100vh;
+  overflow: auto;
+  float: left;
+}
+
+/* .bp3d .container .main-container:not(.full-container-bemodel) { */
+.bp3d .container .main-container {
+  width: calc(100% - 60px);
+  height: 100vh;
+  position: relative;
+  float: left;
+  background: #013b674f;
+  ;
+}
+
+.bp3d .container .full-container-bemodel {
+  width: 100% !important;
+  height: 100vh;
+  position: relative;
+  float: left;
+}
+
+.bp3d .container .right-container {
+  max-width: 400px;
+  width: auto;
+  max-height: 440px;
+  overflow: auto;
+  position: absolute;
+  right: -400px;
+  transition: 0.3s;
+  border-left: 1px solid #ddd;
+  background: #ffffff80;
+  /* display: none; */
+}
+
+.bp3d .container .right-container label.label-option-walls {
+  font-size: 14px;
+}
+
+.bp3d .container .right-container.opened {
+  /* display: block; */
+  right: 24px;
+  top: 92px;
+}
+
+.bp3d .container .right-container .property-section {
+  background: #ffffff80;
+  padding: 15px;
+}
+
+.bp3d .container .main-container .btn-switch-mode {
+  position: absolute;
+  background-color: #ffffff88;
+  border: 1px solid #cccccc;
+  font-size: 24px;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.bp3d .container .main-container .floorplan-modes-container {
+  position: absolute;
+  left: 5px;
+  bottom: 10px;
+}
+
+.bp3d .container .main-container .floorplan-modes-container span {
+  padding: 5px;
+  border: 1px solid gray;
+  background: white;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.bp3d .container .main-container .scenes-container {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+}
+
+.bp3d .container .main-container .controls-section {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  transition: 0.3s;
+}
+
+.bp3d .container .main-container .controls-section .control-button {
+  font-size: 18px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.bp3d .container .custom-context-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 3px;
+  min-width: 150px;
+}
+
+.bp3d .container .custom-context-menu .item-container {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.bp3d .container .custom-context-menu .item-container label {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.bp3d .container .custom-context-menu input,
+.bp3d .container .custom-context-menu button,
+.bp3d .container .custom-context-menu select {
+  flex: 1;
+}
+
+.bp3d .modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff88;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bp3d .modal-container .modal-dialog {
+  background: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.bp3d .modal-container .modal-dialog .buttons {
+  text-align: right;
+}
+
+.property-section .tab {
+  border: 1px solid #ddd;
+  padding: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: transparent;
+}
+
+.property-section .tab:hover {
+  background-color: #ccc;
+}
+
+.property-section .tab.active {
+  background-color: #aaa;
+}
+
+.input-with-unit {
+  display: inline-block;
+  position: relative;
+}
+
+/* .input-with-unit .arrow {
+  position: absolute;
+  font-size: 10px;
+  padding: 1px 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: calc(50% - 1px);
+}
+
+.input-with-unit .arrow:hover {
+  color: #3575a5;
+  background: #ddd;
+}
+
+.input-with-unit .arrow-up {
+  top: 1px;
+  right: 1px;
+}
+
+.input-with-unit .arrow-down {
+  bottom: 1px;
+  right: 1px;
+}
+
+.input-with-unit input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  padding-right: 20px;
+  font-size: 16px;
+}
+.input-with-unit input[type="number"]::-webkit-inner-spin-button,
+.input-with-unit input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+} */
