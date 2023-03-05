@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useMemo} from 'react';
 import { ReactSession } from 'react-client-session';
 
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -8,6 +8,8 @@ import { validateInput } from '../config';
 import { Auth } from 'aws-amplify';
 import Navbar from './Navbar';
 import AddCard from './AddCard';
+import Button from "./Button";
+import LinkButton from "./LinkButton";
 
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from "@stripe/react-stripe-js";
@@ -34,7 +36,7 @@ function Dashboard() {
   const [addCardClicked, setAddCardClicked] = useState(false);
   const [createProjectClicked, setCreateProjectClicked] = useState(false);
   const [applyPromoClicked, setApplyPromoClicked] = useState(false);
-
+  const [applyPromoLoading,setApplyPromoLoading] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState({});
   const [isLoggedIn, setLoggedInStatus] = useState(ReactSession.get("is_logged_in"));
@@ -172,31 +174,39 @@ function Dashboard() {
     }
   }
 
+  const handleBuyPlan = () => {
+    const payload = {
+      "type": "BUYPLAN",
+      "userId": userID,
+      "planName": selectedPlan,
+      "creditAmount": selectedCredit
+    };
+    
+    getPlans(payload)
+      .then(response => {
+        if (response.error) {
+          toast.error(response.error);
+        } else {
+          // data comes here..
+          console.log(response);
+
+          if (response && response.msg) {
+            setPlanData(response.msg);
+            toast.success(`Your ${selectedPlan.toLowerCase()} plan successfully activated.`, { toastId: 'toast12' });
+          }
+          // ReactSession.set("user_email_registered", "true");
+          setTimeout(window.location.href = '/dashboard', 2000);
+        }
+        setPayClicked(false);
+      });
+  }
+
   const buyPlan = () => {
     setPayClicked(true);
     if (cardAdded && selectedCard.name) {
-      const payload = {
-        "type": "BUYPLAN",
-        "userId": userID,
-        "planName": selectedPlan,
-        "creditAmount": selectedCredit
-      };
-      getPlans(payload)
-        .then(response => {
-          setPayClicked(false);
-
-          if (response.error) {
-            toast.error(response.error);
-          } else {
-            // data comes here..
-            console.log(response);
-            if (response && response.msg) {
-              setPlanData(response.msg);
-            }
-            // ReactSession.set("user_email_registered", "true");
-            setTimeout(window.location.href = '/dashboard', 2000);
-          }
-        });
+      handleBuyPlan();
+    }else if(promoApplied && totalCost === 0){
+      handleBuyPlan();
     } else {
       setPayClicked(false);
       document.getElementById('paymentMethod').classList.add('no-card-added');
@@ -204,11 +214,11 @@ function Dashboard() {
     }
   }
 
-  const skipToBuy = () => {
+  const skipToBuy = (planName) => {
     const payload = {
       "type": "BUYPLAN",
       "userId": userID,
-      "planName": selectedPlan,
+      "planName": planName ?? selectedPlan,
       "creditAmount": selectedCredit
     };
     getPlans(payload)
@@ -220,7 +230,7 @@ function Dashboard() {
         } else {
           // data comes here..
           console.log(response);
-          toast.success("Plan successfully activated.", { toastId: 'toast12' });
+          toast.success(`Your ${planName.toLowerCase()} plan successfully activated.`, { toastId: 'toast12' });
           if (response && response.msg) {
             setPlanData(response.msg);
           }
@@ -235,6 +245,7 @@ function Dashboard() {
     const promoElm = document.getElementById('promoCode');
     const checkPromo = validateInput(promoElm);
     if (checkPromo) {
+      setApplyPromoLoading(true);
       const payload = {
         "promo_code": promoElm.value.toUpperCase()
       };
@@ -245,7 +256,7 @@ function Dashboard() {
           } else if (response) {
             console.log(response.data);
             if (response.data) {
-              toast.success("Applied successfully.", { toastId: 'toast12' });
+              toast.success("Promocode applied successfully.", { toastId: 'toast12' });
               setDiscount(response.data.discount);
               setPromo(promoElm.value);
               setPromoApplied(true);
@@ -256,9 +267,10 @@ function Dashboard() {
           console.log(err.message);
           promoElm.classList.add('error');
           toast.error('Invalid Promo Code.', { toastId: 'toast11' });
+        }).finally(() => {
+          setApplyPromoLoading(false);
         });
     }
-
   }
 
   const removePromo = () => {
@@ -391,6 +403,8 @@ function Dashboard() {
     }
   }
 
+  const totalCost = useMemo(() => parseInt(selectedCost) - parseInt(discount),[selectedCost,discount])
+
   return (
     <div>
       <Navbar />
@@ -493,7 +507,7 @@ function Dashboard() {
                 </p>
               </div>
               <div className="col-lg-3 text-end">
-                <a className="clickable" onClick={skipToBuy}>
+                <a className="clickable" onClick={() => skipToBuy("TRIAL")}>
                   <img src="assets/img/Home–new/close_icon.png" alt="" />
                 </a>
               </div>
@@ -520,7 +534,7 @@ function Dashboard() {
                       className="plan-img" alt="" />Detailed analytics</p>
                   </div>
                   <div>
-                    <a className="Try-now-btn clickable" onClick={() => redirectToBuy({ 'plan': 'TRIAL', 'credit': 1, 'cost': 0 })}>Try now</a>
+                    <a className="Try-now-btn clickable" onClick={() => skipToBuy("TRIAL")}>Try now</a>
                   </div>
                 </div>
               </div>
@@ -594,7 +608,7 @@ function Dashboard() {
               </div>
             </div>
             <div className="position-plan">
-              <a className="skip-bt clickable" onClick={skipToBuy}> Skip <img
+              <a className="skip-bt clickable" onClick={() => skipToBuy("TRIAL")}> Skip <img
                 src="assets/img/Home–new/next-black.svg" alt="" /></a>
             </div>
           </div>
@@ -605,7 +619,7 @@ function Dashboard() {
       <div className="modal fade" id="PROMOCODE" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog signup">
           <div className="modal-content signup PROMOCODE">
-            <img src="assets/img/Home–new/close_icon.png" className="close_iconw" data-bs-dismiss="modal" alt="" />
+            <img src="assets/img/Home–new/close_icon.png" className="close_iconw" data-bs-dismiss="modal" alt="" onClick={() => showChoosePlanDialog()} />
             <div className="row m-0">
               <div className="col-lg-6 p-0">
                 <div className="canter-aline">
@@ -654,8 +668,8 @@ function Dashboard() {
                     </div>
                     <div className="Apply-btn-flex">
                       <input id="promoCode" type="text" placeholder="Promo code here" className="promo-input" maxLength={10} onInput={handlePromoInput} />
-                      <a className="Apply-btn" onClick={applyPromo}>Apply</a>
-                      <a className="Remove-btn" onClick={removePromo}>Remove</a>
+                     <LinkButton className={`Apply-btn ${applyPromoLoading ? 'loading-button' : ""}`} onClick={applyPromo}  title="Apply" isLoading={applyPromoLoading} isDisable={applyPromoLoading} />
+                     <LinkButton className="Remove-btn" onClick={removePromo}  title="Remove" />
                     </div>
                     <div>
                       <p className="Terms-pr">Terms & conditions applied</p>
@@ -710,15 +724,16 @@ function Dashboard() {
                     </div>
                     <div className="cost-grid">
                       <p className="drk-grey">Total cost</p>
-                      <p className="totle-grt">€{parseInt(selectedCost) - parseInt(discount)}</p>
+                      <p className="totle-grt">€{totalCost}</p>
                     </div>
                   </div>
                   <div className="pay-back-flex">
-                    {payClicked ? (
-                      <a className="Pay-btn loading-button"><i class="fa fa-spinner fa-spin"></i> Pay</a>
+                    <Button className={`Pay-btn ${payClicked ? 'loading-button': ''}`}  title={totalCost > 0 ? "Pay" : "Activate"} isLoading={payClicked} isDisable={payClicked} onClick={buyPlan} />
+                    {/* {payClicked ? (
+                      <a className="Pay-btn loading-button"><i class="fa fa-spinner fa-spin"></i> {totalCost > 0 ? "Pay" : "Activate"}</a>
                     ) : (
-                      <a className="Pay-btn" onClick={buyPlan}>Pay</a>
-                    )}
+                      <a className="Pay-btn" onClick={buyPlan}>{totalCost > 0 ? "Pay" : "Activate"}</a>
+                    )} */}
                     {/* <a className="Back-btn" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#CHOOSEPLAN">Back</a> */}
                     <button type="button clickable" className="Back-btn" data-bs-dismiss="modal" onClick={showChoosePlanDialog}>Back</button>
                   </div>

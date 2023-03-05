@@ -32,6 +32,7 @@ function Login() {
   const [isValidEmailReg, setIsValidEmailReg] = useState(true);
   const [isValidPassReg, setIsValidPassReg] = useState(true);
   const [isValidConfirmPass, setIsValidConfirmPass] = useState(true);
+  const [isPendingConfirmCode, setIsPendingConfirmCode] = useState(false);
 
   const { authenticate } = useContext(AccountContext);
 
@@ -116,9 +117,9 @@ function Login() {
 
   function checkPassword(str) {
     // var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    const re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
-    console.log('__IS_VALID', re.test(str));
+    // console.log('__IS_VALID', re.test(str));
     return re.test(str);
   }
 
@@ -191,7 +192,7 @@ function Login() {
         return false;
       } else if (passwordReg !== confirmPassReg) {
         setRegClicked(false);
-        toast.error("Comfirm password couldn't match.", { toastId: 'toast11' });
+        toast.error("Confirm password couldn't match.", { toastId: 'toast11' });
         return false;
       }
 
@@ -224,28 +225,27 @@ function Login() {
     }
   };
 
-  const resendOTP = () => {
-    userSignUp()
-      .then((data) => {
-        console.log('success', data);
-        setVerifyProcess(true);
-        toast.success("OTP sent to your provided email id.", { toastId: 'toast12' });
-      })
-      .catch((e) => {
-        if (e === 'UsernameExistsException') {
-          // console.log(e);
-          // toast.error("Please enter OTP sent to your registered email id to confirm your account.");
-          // document.getElementById('getOTP').click();
-          toast.success("OTP sent to your provided email id.", { toastId: 'toast12' });
-        } else {
-          toast.error(e);
-        }
-      })
+  const resendOTP = async () => {
+    const user = new CognitoUser({
+      Username: emailReg,
+      Pool: UserPool,
+    });
+    await user.resendConfirmationCode((err,result) => {
+          if(err)
+          {
+            toast.error("We are sorry, but something went wrong. Please try again later.");
+          }
+          else
+          {
+            setVerifyProcess(true);
+            toast.success("OTP sent to your provided email id.", { toastId: 'toast12' });
+          }
+        })
+      
   }
 
   const userSignUp = () => {
     return new Promise((resolve, reject) => {
-
       UserPool.signUp(emailReg, passwordReg, [], null, (error, result) => {
         console.log(error, result)
         if (error) {
@@ -365,7 +365,7 @@ function Login() {
   const onSubmit = (e) => {
     e.preventDefault();
     setLoginClicked(true);
-
+    setIsPendingConfirmCode(false);
     let usernameElm = document.getElementById('username');
     let passwordElm = document.getElementById('loginPass');
 
@@ -387,7 +387,6 @@ function Login() {
       authenticate(username, password)
         .then((data) => {
           console.log(data);
-          setLoginClicked(false);
 
           ReactSession.set("building_user", username);
           ReactSession.set("is_logged_in", 'true');
@@ -396,9 +395,19 @@ function Login() {
           setTimeout(window.location.href = '/dashboard', 2000);
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err,"UserNotConfirmedException");
+          if(err?.code === "UserNotConfirmedException")
+          {
+            document.getElementById('SIGNIN').click();
+            document.getElementById('getOTP').click();
+            setIsPendingConfirmCode(true);
+          }
+          else
+          {
+            toast.error("Incorrect email or password.", { toastId: 'toast11' });
+          }
+        }).finally(() => {
           setLoginClicked(false);
-          toast.error("Incorrect email or password.", { toastId: 'toast11' });
         });
     } else {
       toast.error("Please enter all required input values.", { toastId: 'toast11' });
@@ -631,12 +640,12 @@ function Login() {
                     }
                     {isLoggedIn == 'true' && clicked &&
                       (
-                        <a className="head-btn loading-button"><i class="fa fa-spinner fa-spin"></i> CREATE A PROJECT</a>
+                        <a className="head-btn loading-button"><i className="fa fa-spinner fa-spin"></i> CREATE A PROJECT</a>
                       )
                     }
                     {(!isLoggedIn || isLoggedIn == 'false') && clicked &&
                       (
-                        <a className="head-btn loading-button"><i class="fa fa-spinner fa-spin"></i> TRY FOR FREE</a>
+                        <a className="head-btn loading-button"><i className="fa fa-spinner fa-spin"></i> TRY FOR FREE</a>
                       )
                     }
                   </div>
@@ -1077,13 +1086,13 @@ function Login() {
             </div>
             <div>
               {!loginClicked && (<a className="signin-btn" onClick={onSubmit}>Login</a>)}
-              {loginClicked && (<a className="signin-btn loading-button"><i class="fa fa-spinner fa-spin"></i> Login</a>)}
+              {loginClicked && (<a className="signin-btn loading-button"><i className="fa fa-spinner fa-spin"></i> Login</a>)}
             </div>
             <div className="modal-footer-btn">
               <p className="Account-btn">Don't Have an Account? <span className="sign-brdr" data-bs-dismiss="modal"
                 data-bs-toggle="modal" data-bs-target="#SIGNup">Register</span></p>
               {skipClicked && (
-                <a className="Account-btn skip"><i class="fa fa-spinner fa-spin"></i> Skip for now
+                <a className="Account-btn skip"><i className="fa fa-spinner fa-spin"></i> Skip for now
                   {/* <img src="assets/img/Home-Page/homeFinal/Path 66.svg" className="right-ic" alt="" /> */}
                 </a>
               )}
@@ -1162,7 +1171,7 @@ function Login() {
                     </div>
                     <div className="signup-bottom">
                       {!regClicked && (<a className="signin-btn" onClick={onSubmitSignup}>Register</a>)}
-                      {regClicked && (<a className="signin-btn loading-button"><i class="fa fa-spinner fa-spin"></i> Register</a>)}
+                      {regClicked && (<a className="signin-btn loading-button"><i className="fa fa-spinner fa-spin"></i> Register</a>)}
                       <a id="getOTP" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#OTP" hidden>Signup</a>
                     </div>
                     <div className="canter-skip">
@@ -1171,7 +1180,7 @@ function Login() {
 
 
                       {skipClicked && (
-                        <p className="Account-btn clr pt-3"><i class="fa fa-spinner fa-spin"></i> Skip for now
+                        <p className="Account-btn clr pt-3"><i className="fa fa-spinner fa-spin"></i> Skip for now
                           {/* <img src="assets/img/Home-Page/homeFinal/Path 66.svg" className="right-ic" alt="" /> */}
                         </p>
                       )}
@@ -1194,7 +1203,7 @@ function Login() {
         <div className="modal-dialog signin otp">
           <div className="modal-content signin px-50px-canter">
             <div className="">
-              <img src="assets/img/Home–new/arrow.svg" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#SIGNup" className="back-arrow" alt="" />
+              <img src="assets/img/Home–new/arrow.svg" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target={isPendingConfirmCode ? "#SIGNIN" : "#SIGNup"} className="back-arrow" alt="" />
               <img src="assets/img/Sign-up/secured-letter_hires.png" className="msg-img" alt="" />
             </div>
             <div className="otp-grid">
@@ -1214,7 +1223,7 @@ function Login() {
             </div>
             <div>
               {nextButtonClicked ? (
-                <button className="signin-btn loading-button" onClick={verifyAccount}><i class="fa fa-spinner fa-spin"></i> Next</button>
+                <button className="signin-btn loading-button" onClick={verifyAccount}><i className="fa fa-spinner fa-spin"></i> Next</button>
               ) : (
                 <button className="signin-btn" onClick={verifyAccount}>Next</button>
               )}

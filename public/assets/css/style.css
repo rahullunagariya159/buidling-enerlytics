@@ -3681,8 +3681,10 @@ a.Apply-btn {
     background: #00BEC1 0% 0% no-repeat padding-box;
     border-radius: 4px;
     padding: 11px 30px;
-    display: inline-block;
+    display: flex;
     cursor: pointer;
+    align-items: center;
+    text-align: center;
 }
 
 a.Remove-btn {
