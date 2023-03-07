@@ -2,12 +2,9 @@ import React from "react";
 
 const LinkButton = ({ isLoading, isDisable, title, className, onClick }) => {
   return (
-    <a
-      className={`${className}`}
-      onClick={onClick}
-      disabled={isDisable}
-    >
-      {isLoading && <i class="fa fa-spinner fa-spin link-spinner-icon"></i>} {title}
+    <a className={`${className}`} onClick={onClick} disabled={isDisable}>
+      {isLoading && <i className="fa fa-spinner fa-spin link-spinner-icon"></i>}{" "}
+      {title}
     </a>
   );
 };
