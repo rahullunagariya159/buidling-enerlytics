@@ -814,18 +814,6 @@ function Login() {
                   data-bs-slide-to="2"
                   aria-label="Slide 3"
                 ></button>
-                <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide-to="3"
-                  aria-label="Slide 2"
-                ></button>
-                <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide-to="4"
-                  aria-label="Slide 3"
-                ></button>
               </div>
               <div className="carousel-inner">
                 <div className="carousel-item active">
@@ -837,21 +825,7 @@ function Login() {
                 </div>
                 <div className="carousel-item">
                   <img
-                    src="assets/img/Home-Page/ForSlider1.png"
-                    className="d-block head-img"
-                    alt="..."
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    src="assets/img/Home-Page/ForSlider1.png"
-                    className="d-block head-img"
-                    alt="..."
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    src="assets/img/Home-Page/ForSlider1.png"
+                    src="assets/img/Home-Page/ForSlider2.png"
                     className="d-block head-img"
                     alt="..."
                   />
