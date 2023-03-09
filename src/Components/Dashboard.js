@@ -163,6 +163,9 @@ function Dashboard() {
   };
 
   const checkPlans = (ID) => {
+    if (!ID) {
+      return false;
+    }
     console.log("Check Plans ..", ID);
 
     const payload = {
@@ -198,6 +201,10 @@ function Dashboard() {
   };
 
   const handleBuyPlan = () => {
+    if (!userID) {
+      return false;
+    }
+
     const payload = {
       type: "BUYPLAN",
       userId: userID,
@@ -240,6 +247,9 @@ function Dashboard() {
   };
 
   const skipToBuy = (planName) => {
+    if (!userID) {
+      return false;
+    }
     const payload = {
       type: "BUYPLAN",
       userId: userID,
@@ -406,7 +416,6 @@ function Dashboard() {
     ) {
       ReactSession.set("is_logged_in", "true");
       setLoggedInStatus("true");
-      checkPlans(IDVal);
     }
 
     var input = document.getElementById("projectName");
@@ -421,8 +430,10 @@ function Dashboard() {
       .then((data) => {
         let idToken = data.getIdToken();
         let email = idToken.payload.email;
+        console.log({ email });
         ReactSession.set("building_social_user", email);
         ReactSession.set("is_logged_in", "true");
+        !IDVal && setUserId(email);
       })
       .catch((err) => console.log(err));
 
@@ -430,13 +441,18 @@ function Dashboard() {
       if (ReactSession.get("guest_user_id")) {
         handleUpdateGuestLogin();
       }
-
-      setTimeout(handleListProjects(IDVal), 3000);
     }
     // else {
     //   navigate('/');
     // }
-  }, []);
+  }, [Auth]);
+
+  useEffect(() => {
+    if (userID) {
+      checkPlans(userID);
+      handleListProjects(userID);
+    }
+  }, [userID]);
 
   const handlePromoInput = () => {
     if (applyPromoClicked) {

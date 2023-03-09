@@ -115,17 +115,18 @@ function Login() {
   };
 
   const logoutSession = () => {
+    // ReactSession.set("is_logged_in", false);
+    // ReactSession.set("alreadyShow", false);
+    // ReactSession.set("bp3dJson", null);
+    // ReactSession.set("alreadyShow", null);
+    // ReactSession.set("building_user", null);
+    // ReactSession.set("building_social_user", null);
+    // ReactSession.set("user_email_registered", null);
+    // localStorage.setItem("amplify-signin-with-hostedUI", null);
+    // localStorage.setItem("amplify-redirected-from-hosted-ui", null);
     logout();
-
-    ReactSession.set("is_logged_in", false);
-    ReactSession.set("alreadyShow", false);
-    ReactSession.set("bp3dJson", null);
-    ReactSession.set("alreadyShow", null);
-    ReactSession.set("building_user", null);
-    ReactSession.set("building_social_user", null);
-    ReactSession.set("user_email_registered", null);
-    localStorage.setItem("amplify-signin-with-hostedUI", null);
-    localStorage.setItem("amplify-redirected-from-hosted-ui", null);
+    localStorage.clear();
+    ReactSession.clear();
 
     setTimeout(window.location.reload(), 2000);
   };
@@ -259,8 +260,9 @@ function Login() {
   };
 
   const resendOTP = async () => {
+    console.log({ emailReg });
     const user = new CognitoUser({
-      Username: emailReg,
+      Username: emailReg || username,
       Pool: UserPool,
     });
     await user.resendConfirmationCode((err, result) => {
@@ -367,7 +369,7 @@ function Login() {
       const otpVal = OTP.d1 + OTP.d2 + OTP.d3 + OTP.d4 + OTP.d5 + OTP.d6;
 
       const user = new CognitoUser({
-        Username: emailReg,
+        Username: emailReg || username,
         Pool: UserPool,
       });
 
@@ -587,6 +589,23 @@ function Login() {
           break;
       }
     });
+  }, []);
+
+  const handleLoginWithGoogle = async () => {
+    await Auth.federatedSignIn({
+      provider: CognitoHostedUIIdentityProvider.Google,
+    })
+      .then((result) => {})
+      .catch((error) => {
+        console.log({ error });
+      });
+  };
+
+  useEffect(() => {
+    return () => {
+      setUsername("");
+      setPassword("");
+    };
   }, []);
 
   return (
@@ -1451,11 +1470,7 @@ function Login() {
                 src="assets/img/Home-Page/google-plusb.svg"
                 alt=""
                 className="google-ic"
-                onClick={() =>
-                  Auth.federatedSignIn({
-                    provider: CognitoHostedUIIdentityProvider.Google,
-                  })
-                }
+                onClick={() => handleLoginWithGoogle()}
               />
               {/* <img src="assets/img/Sign-up/facebook.svg" alt="" className="google-ic" onClick={() => Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Facebook })} /> */}
             </div>
@@ -1615,11 +1630,7 @@ function Login() {
                         src="assets/img/Home-Page/google-plus.svg"
                         alt=""
                         className="google-ic"
-                        onClick={() =>
-                          Auth.federatedSignIn({
-                            provider: CognitoHostedUIIdentityProvider.Google,
-                          })
-                        }
+                        onClick={() => handleLoginWithGoogle()}
                       />
                       {/* <img src="assets/img/Sign-up/facebook (2).svg" alt="" className="google-ic" onClick={() => Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Facebook })} /> */}
                     </div>
