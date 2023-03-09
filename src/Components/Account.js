@@ -1,8 +1,8 @@
-import { AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
-import React, { createContext } from 'react';
-import UserPool from '../UserPool';
-import { Auth } from 'aws-amplify';
-import '../aws-exports';
+import { AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
+import React, { createContext } from "react";
+import UserPool from "../UserPool";
+import { Auth } from "aws-amplify";
+import "../aws-exports";
 
 const AccountContext = createContext();
 
@@ -38,15 +38,15 @@ const Account = (props) => {
 
       user.authenticateUser(authDetails, {
         onSuccess: (result) => {
-          console.log('login success', result);
+          console.log("login success", result);
           resolve(result);
         },
         onFailure: (err) => {
-          console.log('login failure', err);
+          console.log("login failure", err);
           reject(err);
         },
         newPasswordRequired: (data) => {
-          console.log('new password required', data);
+          console.log("new password required", data);
           resolve(data);
         },
       });
@@ -59,9 +59,11 @@ const Account = (props) => {
     if (!user) {
       Auth.signOut();
     } else {
+      console.log("else inn");
       user.signOut();
     }
-    window.location.href = '/';
+
+    window.location.href = "/";
   };
 
   return (
