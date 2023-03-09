@@ -21,8 +21,8 @@
     position: relative;
   }
   header.header.aftr {
-    border-bottom: 1px solid #F1F1F1;
-    padding: 0; 
+    border-bottom: 1px solid #f1f1f1;
+    padding: 0;
   }
   .side-left {
     width: 100%;
@@ -93,7 +93,7 @@
     transition: 0.3s ease;
     z-index: 11;
     top: 0;
-    background: #FBFBFB 0% 0% no-repeat padding-box;
+    background: #fbfbfb 0% 0% no-repeat padding-box;
   }
   .offcanvas-menu nav > div {
     display: flex;
@@ -139,73 +139,66 @@
   .offcanvas-menu nav > ul li:hover {
     animation: hover 0.5s;
   }
-  .offcanvas-menu input[type=checkbox] {
+  .offcanvas-menu input[type="checkbox"] {
     display: none;
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ label {
+  .offcanvas-menu input[type="checkbox"]:checked ~ label {
     opacity: 0;
     pointer-events: none;
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav {
     left: 0;
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav label span {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav label span {
     background: transparent;
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav label span:before {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav label span:before {
     transform: rotate(-45deg);
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav label span:after {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav label span:after {
     transform: rotate(45deg);
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav label span:before,
-  .offcanvas-menu input[type=checkbox]:checked ~ nav label span:after {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav label span:before,
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav label span:after {
     transition-delay: 0.2s;
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav ul li {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav ul li {
     opacity: 1;
     transform: translateX(0px);
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav ul li:nth-child(1) {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav ul li:nth-child(1) {
     transition-delay: 0.1s;
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav ul li:nth-child(2) {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav ul li:nth-child(2) {
     transition-delay: 0.2s;
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav ul li:nth-child(3) {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav ul li:nth-child(3) {
     transition-delay: 0.3s;
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav ul li:nth-child(4) {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav ul li:nth-child(4) {
     transition-delay: 0.4s;
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav ul li:nth-child(5) {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav ul li:nth-child(5) {
     transition-delay: 0.5s;
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav ul li:nth-child(6) {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav ul li:nth-child(6) {
     transition-delay: 0.6s;
   }
-  .offcanvas-menu input[type=checkbox]:checked ~ nav ul li:nth-child(7) {
+  .offcanvas-menu input[type="checkbox"]:checked ~ nav ul li:nth-child(7) {
     transition-delay: 0.7s;
   }
-  
-
-
 
   /* End */
-
-
-
-
 
   span.src-block {
     display: unset;
   }
   h1.head-title.bordr::after {
     left: 0;
-    border: 3px solid #FFBB1C;
+    border: 3px solid #ffbb1c;
   }
-  h1.head-title.bordr::before{
-    border: 3px solid #FFBB1C;
+  h1.head-title.bordr::before {
+    border: 3px solid #ffbb1c;
     right: 0;
   }
   .main-nav {
@@ -336,11 +329,11 @@
   }
 }
 @media only screen and (max-width: 767px) and (min-width: 576px) {
-  h1.head-title.bordr::after{
+  h1.head-title.bordr::after {
     display: none;
   }
-  h1.head-title.bordr::before{
-    display: none; 
+  h1.head-title.bordr::before {
+    display: none;
   }
   .modal-dialog.signup {
     max-width: 100%;
@@ -353,21 +346,21 @@
     display: unset;
   }
   .modeler-box {
-    padding-top: 40px;  
-  }  
+    padding-top: 40px;
+  }
   .cntr-area {
     display: block;
     height: 100%;
   }
   .d-block {
-    display: unset !IMPORTANT;
+    display: unset !important;
   }
   .PROJECT-btns {
     display: grid;
     gap: 40px;
     padding-top: 60px;
     justify-content: center;
-}
+  }
   .modal-dialog.signin {
     max-width: 100%;
     margin: 0;
@@ -388,7 +381,7 @@
     grid-template-columns: repeat(1, 1fr);
   }
   .main-parant-1 {
-    padding: 100px 0 0 0;
+    padding: 0;
     position: relative;
   }
   .main-parant-3 {
@@ -457,7 +450,7 @@
     padding: 34px 0 0;
     display: grid;
     gap: 32px;
-    grid-template-columns: repeat(1,1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
   input.contact-input.web {
     display: none;
@@ -482,11 +475,11 @@
     align-items: center;
     gap: 16px;
     justify-content: center;
-   }
-   a.house-link {
+  }
+  a.house-link {
     font: normal normal normal 20px/30px Poppins;
-   }
-   a.house-link.More {
+  }
+  a.house-link.More {
     font: normal normal 600 20px/30px Poppins;
   }
   .alweay-grid {
@@ -506,7 +499,7 @@
   label.no-1 {
     font: normal normal normal 11px/21px Poppins;
   } */
-  .container{
+  .container {
     max-width: 1200px !important;
   }
   .container.brdr-bottom.full {
@@ -530,7 +523,7 @@
   h6.STEPS-TO::after {
     width: 85px;
   }
-  .container{
+  .container {
     max-width: 1200px !important;
     padding: 0 32px !important;
   }
@@ -563,7 +556,7 @@
   h6.STEPS-TO::after {
     width: 85px;
   }
-  .container{
+  .container {
     max-width: 1200px !important;
   }
   .container.brdr-bottom.full {
@@ -573,7 +566,7 @@
 }
 @media only screen and (max-width: 575px) and (min-width: 481px) {
   input.sign-in-input.wigt {
-    background: #FFFFFF 0% 0% no-repeat padding-box;
+    background: #ffffff 0% 0% no-repeat padding-box;
     width: 100%;
   }
   a.show-ic.wer {
@@ -637,12 +630,11 @@
     width: 100%;
   }
 
-
   .card-box {
     grid-template-columns: repeat(1, 1fr);
   }
   .main-parant-1 {
-    padding: 80px 0 0 0;
+    padding: 0;
     position: relative;
   }
   .main-parant-3 {
@@ -709,7 +701,7 @@
     padding: 34px 0 0;
     display: grid;
     gap: 32px;
-    grid-template-columns: repeat(1,1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
   input.contact-input.web {
     display: none;
@@ -743,19 +735,19 @@
     align-items: center;
     gap: 16px;
     justify-content: center;
-   }
-   h1.card-no {
+  }
+  h1.card-no {
     font: normal normal 600 40px/50px Poppins;
   }
-   .second-card {
-    border: 2px solid #FFFFFF;
+  .second-card {
+    border: 2px solid #ffffff;
     border-radius: 6px;
     padding: 24px;
-   }
-   a.house-link {
+  }
+  a.house-link {
     font: normal normal normal 20px/30px Poppins;
-   }
-   a.house-link.More {
+  }
+  a.house-link.More {
     font: normal normal 600 20px/30px Poppins;
   }
   h1.forth-title {
@@ -767,11 +759,11 @@
   .container {
     max-width: 95%;
   }
-  h1.head-title.bordr::after{
+  h1.head-title.bordr::after {
     display: none;
   }
-  h1.head-title.bordr::before{
-    display: none; 
+  h1.head-title.bordr::before {
+    display: none;
   }
   h1.fifth-title {
     font: normal normal normal 40px/50px DM Serif Display;
@@ -787,13 +779,9 @@
   .top-padise {
     text-align: center;
   }
-
-
-
-
 }
 @media only screen and (max-width: 1749px) and (min-width: 1600px) {
-  .container{
+  .container {
     max-width: 1200px !important;
   }
   .container.brdr-bottom.full {
@@ -802,7 +790,8 @@
   }
 }
 @media only screen and (max-width: 480px) {
-  .carousel-control-next, .carousel-control-prev {
+  .carousel-control-next,
+  .carousel-control-prev {
     bottom: 24px !important;
     right: 24px !important;
     width: 40px !important;
@@ -821,7 +810,7 @@
     padding: 60px 24px;
   }
   input.sign-in-input.wigt {
-    background: #FFFFFF 0% 0% no-repeat padding-box;
+    background: #ffffff 0% 0% no-repeat padding-box;
     width: 100%;
   }
   a.show-ic.wer {
@@ -845,9 +834,9 @@
   h1.start-title {
     font: normal normal bold 28px/48px Poppins;
     letter-spacing: 0px;
-    color: #013A67;
+    color: #013a67;
     margin: 20px 0 0;
-   }
+  }
   a.PROJECT-one {
     padding: 16px;
   }
@@ -876,7 +865,6 @@
   h1.WELCOME-title {
     font: normal normal bold 36px/60px Poppins;
   }
-
 
   input.sign-in-input.blue.w-80 {
     width: 100%;
@@ -925,16 +913,11 @@
     grid-template-columns: repeat(1, 1fr);
   }
 
-
-
-
-
-
   .card-box {
     grid-template-columns: repeat(1, 1fr);
   }
   .main-parant-1 {
-    padding: 80px 0 0 0;
+    padding: 0;
     position: relative;
   }
   .main-parant-3 {
@@ -971,7 +954,7 @@
     gap: 60px;
   }
   .main-parant-7 {
-    padding:80px 0 100px 0;
+    padding: 80px 0 100px 0;
     background-image: url(./../img/Home-Page/78787.png);
   }
   .pading {
@@ -1006,7 +989,7 @@
     padding: 34px 0 0;
     display: grid;
     gap: 32px;
-    grid-template-columns: repeat(1,1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
   input.contact-input.web {
     display: none;
@@ -1040,20 +1023,20 @@
     align-items: center;
     gap: 10px;
     justify-content: center;
-   }
+  }
 
-   .second-card {
-    border: 2px solid #FFFFFF;
+  .second-card {
+    border: 2px solid #ffffff;
     border-radius: 6px;
     padding: 24px;
-   }
-   a.house-link {
+  }
+  a.house-link {
     font: normal normal normal 16px/39px Poppins;
-   }
-   p.lore\,-title {
+  }
+  p.lore\,-title {
     font: normal normal 300 15px/21px Poppins;
   }
-   a.house-link.More {
+  a.house-link.More {
     font: normal normal 600 16px/39px Poppins;
   }
   h1.forth-title {
@@ -1065,11 +1048,11 @@
   .container {
     max-width: 95%;
   }
-  h1.head-title.bordr::after{
+  h1.head-title.bordr::after {
     display: none;
   }
-  h1.head-title.bordr::before{
-    display: none; 
+  h1.head-title.bordr::before {
+    display: none;
   }
   h1.fifth-title {
     font: normal normal normal 40px/56px DM Serif Display;
@@ -1094,7 +1077,6 @@
   .top-padise {
     text-align: center;
   }
-
 }
 @media only screen and (max-width: 1920px) and (min-width: 1750px) {
   p.rotet {
@@ -1103,7 +1085,7 @@
   .modal-dialog.signup {
     max-width: 75%;
   }
-  .container{
+  .container {
     max-width: 1200px !important;
   }
   .container.brdr-bottom.full {
@@ -1137,8 +1119,8 @@
     font: normal normal 600 40px/53px Poppins;
   }
   .card-box {
-    grid-template-columns: repeat(2,1fr);
-   }
+    grid-template-columns: repeat(2, 1fr);
+  }
   h1.head-title.bordr::before {
     right: 6%;
   }

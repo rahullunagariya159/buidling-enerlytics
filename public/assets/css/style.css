@@ -192,9 +192,9 @@ a.head-btn {
 }
 
 .main-parant-1 {
-  padding: 122px 0 0 0;
+  padding: 0;
   position: relative;
-  background: #edf6f7 0% 0% no-repeat padding-box;
+  /* background: #edf6f7 0% 0% no-repeat padding-box; */
 }
 
 .small-grid {
@@ -2658,7 +2658,7 @@ header.offcanvas-menu {
   display: none;
 }
 
-img.head-img {
+head-img {
   width: 720px;
   height: 340px;
   margin: auto;
@@ -3123,6 +3123,7 @@ nav.navbar.right-space {
   right: 32px !important;
   bottom: 100% !important;
   left: unset !important;
+  top: 32%;
   z-index: 2;
   display: grid !important;
   padding: 0;

@@ -3,7 +3,6 @@ import { ReactSession } from "react-client-session";
 
 import { toast } from "react-toastify";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { createProject } from "./Services/UserService";
 import { AccountContext } from "./Account";
 import { validateInput } from "../config";
 import UserPool from "../UserPool";
@@ -12,6 +11,7 @@ import { CognitoUser } from "amazon-cognito-identity-js";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 import LinkButton from "./LinkButton";
 import "../assets/styles/login.css";
+import Slider from "./slider/Slider";
 
 function Login() {
   const navigate = useNavigate();
@@ -23,7 +23,6 @@ function Login() {
   const isGuestUser = searchParams.get("skip") || false;
   const { logout } = useContext(AccountContext);
 
-  const [clicked, setClicked] = useState(false);
   const [skipClicked, setSkipClicked] = useState(false);
   const [loginClicked, setLoginClicked] = useState(false);
   const [regClicked, setRegClicked] = useState(false);
@@ -42,7 +41,6 @@ function Login() {
   const { authenticate } = useContext(AccountContext);
 
   const [user, setUser] = useState(null);
-  const [customState, setCustomState] = useState(null);
 
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showRegPassword, setShowRegPassword] = useState(false);
@@ -72,46 +70,6 @@ function Login() {
     } else {
       navigate({ pathname: "/dashboard", search: "?skip=true" });
     }
-  };
-
-  const handleCreateProjectForGuest = (clickedStatus) => {
-    if (clickedStatus) {
-      setClicked(true);
-    } else {
-      setSkipClicked(true);
-    }
-
-    let guestUserId = `${Math.floor(Date.now() / 1000)}`;
-
-    ReactSession.set("guest_user_id", guestUserId);
-    ReactSession.set("bp3dJson", null);
-    const guestProjectName = "project" + new Date().getTime();
-    const payload = {
-      name: guestProjectName,
-      userId: guestUserId,
-    };
-    createProject(payload).then((response) => {
-      if (response.error) {
-        toast.error(response.error);
-      } else {
-        if (response && response.msg) {
-          ReactSession.set("project_id", response.msg[0].id);
-          if (isLoggedIn == "true") {
-            setTimeout(
-              (window.location.href =
-                "/create-project?name=" + guestProjectName),
-              2000,
-            );
-          } else {
-            setTimeout(
-              (window.location.href =
-                "/create-project?name=" + guestProjectName + "&&skip=true"),
-              2000,
-            );
-          }
-        }
-      }
-    });
   };
 
   const logoutSession = () => {
@@ -688,7 +646,7 @@ function Login() {
                   </div>
                 </div>
 
-                {isLoggedIn == "true" && isGuestUser == false ? (
+                {isLoggedIn === "true" && isGuestUser === false ? (
                   <div className="login-btn">
                     <a
                       className="Register-done"
@@ -732,141 +690,7 @@ function Login() {
         </div>
       </div>
 
-      <div id="main-parant-1" className="main-parant-1">
-        <section className="sec-1">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="main-grid">
-                  <div className="small-grid">
-                    <h1 className="head-title bordr">
-                      <span className="head-block">MAKE FIRST 3D MODEL </span>
-                      <span className="head-block">OF YOUR HOUSE</span>
-                    </h1>
-                    <p className="small-title">
-                      <span className="head-block">
-                        OUR EASY TO USE TOOL CAN CALCULATE YOUR DAILY/MONTHLY
-                        CONSUMPTION{" "}
-                      </span>
-                      <span className="head-block">
-                        OF ENERGY AND PROVIDE YOU BETTER CALCUATIONS/RESULT
-                        BASED ON DATA YOU PROVIDE.
-                      </span>
-                    </p>
-                  </div>
-                  <div>
-                    {isLoggedIn == "true" && !clicked && (
-                      <a
-                        className="head-btn clickable"
-                        onClick={() => handleCreateProjectForGuest(true)}
-                      >
-                        CREATE A PROJECT
-                      </a>
-                    )}
-                    {(!isLoggedIn || isLoggedIn == "false") && !clicked && (
-                      <a
-                        className="head-btn clickable"
-                        onClick={() => handleCreateProjectForGuest(true)}
-                      >
-                        TRY FOR FREE
-                      </a>
-                    )}
-                    {isLoggedIn == "true" && clicked && (
-                      <a className="head-btn loading-button">
-                        <i className="fa fa-spinner fa-spin"></i> CREATE A
-                        PROJECT
-                      </a>
-                    )}
-                    {(!isLoggedIn || isLoggedIn == "false") && clicked && (
-                      <a className="head-btn loading-button">
-                        <i className="fa fa-spinner fa-spin"></i> TRY FOR FREE
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="swiper-sider">
-            <div
-              id="carouselExampleIndicators"
-              className="carousel slide"
-              data-bs-ride="carousel"
-            >
-              <div className="carousel-indicators">
-                <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide-to="0"
-                  className="active"
-                  aria-current="true"
-                  aria-label="Slide 1"
-                ></button>
-                <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide-to="1"
-                  aria-label="Slide 2"
-                ></button>
-                <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide-to="2"
-                  aria-label="Slide 3"
-                ></button>
-              </div>
-              <div className="carousel-inner">
-                <div className="carousel-item active">
-                  <img
-                    src="assets/img/Home-Page/ForSlider1.png"
-                    className="d-block head-img"
-                    alt="..."
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    src="assets/img/Home-Page/ForSlider2.png"
-                    className="d-block head-img"
-                    alt="..."
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    src="assets/img/Home-Page/ForSlider1.png"
-                    className="d-block head-img"
-                    alt="..."
-                  />
-                </div>
-              </div>
-              <button
-                className="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="prev"
-              >
-                <span
-                  className="carousel-control-prev-icon"
-                  aria-hidden="true"
-                ></span>
-                <span className="visually-hidden">Previous</span>
-              </button>
-              <button
-                className="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="next"
-              >
-                <span
-                  className="carousel-control-next-icon"
-                  aria-hidden="true"
-                ></span>
-                <span className="visually-hidden">Next</span>
-              </button>
-            </div>
-          </div>
-        </section>
-      </div>
-
+      <Slider />
       <div id="main-parant-2" className="main-parant-2">
         <section className="sec-1">
           <div className="container">
