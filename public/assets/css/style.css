@@ -4015,7 +4015,7 @@ p.Card-type-tit {
 }
 
 input.Card-type-input {
-  font: normal normal normal 12px/18px Poppins;
+  font: normal normal bold 12px/18px Poppins;
   letter-spacing: 0px;
   color: #1c1c1c;
   background: #ffffff 0% 0% no-repeat padding-box;
@@ -4039,7 +4039,7 @@ input.Card-type-input.w-s {
 .Card-drid-24px {
   display: grid;
   gap: 24px;
-  padding: 24px 0 36px;
+  padding: 24px 0 12px;
 }
 
 .flex-card-24px {
@@ -4096,7 +4096,7 @@ img.vicaa-ic.sss {
 }
 
 .dd-button {
-  font: normal normal normal 12px/18px Poppins;
+  font: normal normal bold 12px/18px Poppins;
   letter-spacing: 0px;
   color: #1c1c1c;
   background: #ffffff 0% 0% no-repeat padding-box;
@@ -4112,16 +4112,15 @@ img.vicaa-ic.sss {
 .dd-button:after {
   content: "";
   position: absolute;
-  top: 50%;
+  top: 34%;
   right: 15px;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 5px solid black;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
 }
-
 .dd-input {
   display: none;
 }

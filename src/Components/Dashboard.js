@@ -1168,7 +1168,7 @@ function Dashboard() {
               <div className="col-lg-6 p-0">
                 <div className="Add-credit-aline">
                   <img
-                    src="assets/img/Add-credit-card-details/Aman.png"
+                    src="assets/img/Add-credit-card-details/AddCardLogo.jpg"
                     className="hgyu"
                     alt=""
                   />

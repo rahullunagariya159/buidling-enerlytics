@@ -21,6 +21,7 @@ function AddCard(props) {
 
   const inputStyle = {
     fontSize: "12px",
+    fontWeight: "bold",
     letterSpacing: "0px",
     color: "#1C1C1C",
     border: "1px solid #DCDCDC",
@@ -220,6 +221,11 @@ function AddCard(props) {
                   }}
                   name="card_cvv"
                   onChange={handleChange}
+                />
+                <img
+                  src="assets/img/Add-credit-card-details/qcstion.svg"
+                  className="vicaa-ic sss"
+                  alt=""
                 />
               </div>
             </div>
