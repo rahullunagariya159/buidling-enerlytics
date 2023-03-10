@@ -12,6 +12,7 @@ import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 import LinkButton from "./LinkButton";
 import "../assets/styles/login.css";
 import Slider from "./slider/Slider";
+import useEnterKeyListener from "../helpers/useEnterKeyListener";
 
 function Login() {
   const navigate = useNavigate();
@@ -560,6 +561,10 @@ function Login() {
       setPassword("");
     };
   }, []);
+
+  useEnterKeyListener({
+    querySelectorToExecuteClick: "#btnSubmitOtp",
+  });
 
   return (
     <div>
@@ -1779,7 +1784,11 @@ function Login() {
                   <i className="fa fa-spinner fa-spin"></i> Next
                 </button>
               ) : (
-                <button className="signin-btn" onClick={verifyAccount}>
+                <button
+                  id="btnSubmitOtp"
+                  className="signin-btn"
+                  onClick={verifyAccount}
+                >
                   Next
                 </button>
               )}

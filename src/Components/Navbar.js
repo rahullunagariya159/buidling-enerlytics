@@ -16,6 +16,7 @@ import { CognitoUser } from "amazon-cognito-identity-js";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 import { Routes } from "../navigation/Routes";
 import LinkButton from "./LinkButton";
+import useEnterKeyListener from "../helpers/useEnterKeyListener";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -465,6 +466,10 @@ function Navbar() {
       console.log("--->>navbar login error", error);
     }
   };
+
+  useEnterKeyListener({
+    querySelectorToExecuteClick: "#btnSubmitOtp",
+  });
 
   return (
     <div className="main-nav">
@@ -1055,7 +1060,11 @@ function Navbar() {
               />
             </div>
             <div>
-              <a className="signin-btn" onClick={verifyAccount}>
+              <a
+                className="signin-btn"
+                onClick={verifyAccount}
+                id="btnSubmitOtp"
+              >
                 Next
               </a>
             </div>
