@@ -196,7 +196,14 @@ a.head-btn {
   position: relative;
   /* background: #edf6f7 0% 0% no-repeat padding-box; */
 }
-
+.header-sticky {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  background-color: #fff;
+  overflow: hidden;
+  top: 0;
+}
 .small-grid {
   display: grid;
   gap: 8px;
@@ -1841,7 +1848,9 @@ a.DELE-btn {
   margin: 0px;
   border-bottom: 1px solid #f1f1f1;
 }
-
+.mb-95px {
+  margin-bottom: 95px;
+}
 header.header.aftr {
   border-bottom: 1px solid #f1f1f1;
   padding: 0 0 0 16px;

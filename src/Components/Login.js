@@ -568,9 +568,9 @@ function Login() {
 
   return (
     <div>
-      <div className="main-nav">
+      <div className="main-nav mb-95px">
         <div className="brdr-bottom full">
-          <header className="header bg-img">
+          <header className="header bg-img header-sticky ">
             <nav className="navbar">
               <a className="logo-link" onClick={() => navigate("/")}>
                 <img src="assets/img/Home-Page/Asset 8@3x@2x.png" alt="" />
