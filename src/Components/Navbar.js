@@ -63,17 +63,17 @@ function Navbar() {
   const logoutSession = () => {
     logout();
 
-    // ReactSession.set("is_logged_in", false);
-    // ReactSession.set("alreadyShow", false);
-    // ReactSession.set("bp3dJson", null);
-    // ReactSession.set("alreadyShow", null);
-    // ReactSession.set("building_user", null);
-    // ReactSession.set("building_social_user", null);
-    // ReactSession.set("user_email_registered", null);
-    // localStorage.setItem("amplify-signin-with-hostedUI", null);
-    // localStorage.setItem("amplify-redirected-from-hosted-ui", null);
-    localStorage.clear();
-    ReactSession.clear();
+    ReactSession.set("is_logged_in", false);
+    ReactSession.set("alreadyShow", false);
+    ReactSession.set("bp3dJson", null);
+    ReactSession.set("alreadyShow", null);
+    ReactSession.set("building_user", null);
+    ReactSession.set("building_social_user", null);
+    ReactSession.set("user_email_registered", null);
+    localStorage.setItem("amplify-signin-with-hostedUI", null);
+    localStorage.setItem("amplify-redirected-from-hosted-ui", null);
+    // localStorage.clear();
+    // ReactSession.clear();
 
     setTimeout((window.location.href = "/"), 2000);
   };
@@ -431,6 +431,7 @@ function Navbar() {
         // console.log('__name_', name);
         ReactSession.set("building_social_user", email);
         ReactSession.set("is_logged_in", "true");
+        setLoggedInStatus("true");
       })
       .catch((err) => {
         console.log("set building_social_user", err);
@@ -439,7 +440,12 @@ function Navbar() {
     Auth.currentAuthenticatedUser()
       .then((currentUser) => {
         setUser(currentUser);
-        console.log("___user", currentUser);
+        ReactSession.set(
+          "building_social_user",
+          currentUser?.attributes?.email,
+        );
+        ReactSession.set("is_logged_in", "true");
+        setLoggedInStatus("true");
       })
       .catch((error) => {
         console.log("Not navbar signed in", error);
@@ -448,16 +454,16 @@ function Navbar() {
     setLoggedInStatus(ReactSession.get("is_logged_in"));
 
     return unsubscribe;
-  }, [Auth]);
+  }, []);
 
   const handleLoginWithGoogle = async () => {
-    await Auth.federatedSignIn({
-      provider: CognitoHostedUIIdentityProvider.Google,
-    })
-      .then((result) => {})
-      .catch((error) => {
-        console.log({ error });
+    try {
+      await Auth.federatedSignIn({
+        provider: CognitoHostedUIIdentityProvider.Google,
       });
+    } catch (error) {
+      console.log("--->>navbar login error", error);
+    }
   };
 
   return (

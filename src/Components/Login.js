@@ -73,18 +73,18 @@ function Login() {
   };
 
   const logoutSession = () => {
-    // ReactSession.set("is_logged_in", false);
-    // ReactSession.set("alreadyShow", false);
-    // ReactSession.set("bp3dJson", null);
-    // ReactSession.set("alreadyShow", null);
-    // ReactSession.set("building_user", null);
-    // ReactSession.set("building_social_user", null);
-    // ReactSession.set("user_email_registered", null);
-    // localStorage.setItem("amplify-signin-with-hostedUI", null);
-    // localStorage.setItem("amplify-redirected-from-hosted-ui", null);
+    ReactSession.set("is_logged_in", false);
+    ReactSession.set("alreadyShow", false);
+    ReactSession.set("bp3dJson", null);
+    ReactSession.set("alreadyShow", null);
+    ReactSession.set("building_user", null);
+    ReactSession.set("building_social_user", null);
+    ReactSession.set("user_email_registered", null);
+    localStorage.setItem("amplify-signin-with-hostedUI", null);
+    localStorage.setItem("amplify-redirected-from-hosted-ui", null);
     logout();
-    localStorage.clear();
-    ReactSession.clear();
+    // localStorage.clear();
+    // ReactSession.clear();
 
     setTimeout(window.location.reload(), 2000);
   };
@@ -550,13 +550,13 @@ function Login() {
   }, []);
 
   const handleLoginWithGoogle = async () => {
-    await Auth.federatedSignIn({
-      provider: CognitoHostedUIIdentityProvider.Google,
-    })
-      .then((result) => {})
-      .catch((error) => {
-        console.log({ error });
+    try {
+      await Auth.federatedSignIn({
+        provider: CognitoHostedUIIdentityProvider.Google,
       });
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   useEffect(() => {

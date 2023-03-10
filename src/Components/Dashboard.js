@@ -34,7 +34,7 @@ function Dashboard() {
   const [planData, setPlanData] = useState([]);
   const [userID, setUserId] = useState("");
   const [promo, setPromo] = useState("");
-  const [selectedPlan, setSelectedPlan] = useState("TRIAL");
+  const [selectedPlan, setSelectedPlan] = useState("Trial");
   const [selectedCredit, setSelectedCredit] = useState(1);
   const [selectedCost, setSelectedCost] = useState(0);
   const [discount, setDiscount] = useState(0);
@@ -175,8 +175,7 @@ function Dashboard() {
     getPlans(payload).then((response) => {
       if (response.error) {
         toast.error(response.error);
-      } else if (response && response.msg && !response.msg.length) {
-        console.log(response);
+      } else if (response?.msg && response?.msg?.Count === 0) {
         // document.getElementById('CHOOSEPLAN').classList.remove('show');
         // document.getElementById('SECURE-RELIABLE').classList.remove('show');
         // document.getElementById('PROMOCODE').classList.add('show');
@@ -191,7 +190,7 @@ function Dashboard() {
     setSelectedCredit(planInfo.credit);
     setSelectedCost(planInfo.cost);
 
-    if (planInfo.plan === "TRIAL") {
+    if (planInfo.plan === "Trial") {
       setTimeout(skipToBuy(), 1000);
     } else {
       document.getElementById("CHOOSEPLAN").classList.remove("show");
@@ -205,12 +204,17 @@ function Dashboard() {
       return false;
     }
 
-    const payload = {
-      type: "BUYPLAN",
+    let payload = {
+      type: "buy",
       userId: userID,
       planName: selectedPlan,
       creditAmount: selectedCredit,
+      amount: totalCost,
     };
+
+    if (cardAdded && selectedCard.cardId) {
+      payload.cardId = selectedCard.cardId;
+    }
 
     getPlans(payload).then((response) => {
       if (response.error) {
@@ -251,10 +255,11 @@ function Dashboard() {
       return false;
     }
     const payload = {
-      type: "BUYPLAN",
+      type: "buy",
       userId: userID,
       planName: planName ?? selectedPlan,
       creditAmount: selectedCredit,
+      amount: 0,
     };
     getPlans(payload).then((response) => {
       setPayClicked(false);
@@ -349,15 +354,13 @@ function Dashboard() {
           if (response.error) {
             toast.error(response.error);
           } else if (response) {
-            console.log(response);
             if (response.data) {
-              console.log("SAVED_DATA__", response);
-
               let cardData = {
                 cardType: data.selectedCard,
                 last4: data?.paymentMethod?.card?.last4 || "",
                 isDefault: response.data?.isDefault?.BOOL || true,
                 name: data.name,
+                cardId: response?.data?.id?.S,
               };
 
               setCardAdded(true);
@@ -430,7 +433,6 @@ function Dashboard() {
       .then((data) => {
         let idToken = data.getIdToken();
         let email = idToken.payload.email;
-        console.log({ email });
         ReactSession.set("building_social_user", email);
         ReactSession.set("is_logged_in", "true");
         !IDVal && setUserId(email);
@@ -661,7 +663,7 @@ function Dashboard() {
                 </p>
               </div>
               <div className="col-lg-3 text-end">
-                <a className="clickable" onClick={() => skipToBuy("TRIAL")}>
+                <a className="clickable" onClick={() => skipToBuy("Trial")}>
                   <img src="assets/img/Home–new/close_icon.png" alt="" />
                 </a>
               </div>
@@ -716,7 +718,7 @@ function Dashboard() {
                   <div>
                     <a
                       className="Try-now-btn clickable"
-                      onClick={() => skipToBuy("TRIAL")}
+                      onClick={() => skipToBuy("Trial")}
                     >
                       Try now
                     </a>
@@ -811,7 +813,7 @@ function Dashboard() {
                     <a
                       className="Try-now-btn orn clickable"
                       onClick={() =>
-                        redirectToBuy({ plan: "HOME", credit: 100, cost: 30 })
+                        redirectToBuy({ plan: "Basic", credit: 100, cost: 30 })
                       }
                     >
                       Start now
@@ -878,7 +880,7 @@ function Dashboard() {
                       className="Try-now-btn clickable"
                       onClick={() =>
                         redirectToBuy({
-                          plan: "PROFESSIONAL",
+                          plan: "Premium",
                           credit: 300,
                           cost: 70,
                         })
@@ -893,7 +895,7 @@ function Dashboard() {
             <div className="position-plan">
               <a
                 className="skip-bt clickable"
-                onClick={() => skipToBuy("TRIAL")}
+                onClick={() => skipToBuy("Trial")}
               >
                 {" "}
                 Skip <img src="assets/img/Home–new/next-black.svg" alt="" />
