@@ -1155,7 +1155,7 @@ function Navbar() {
               <div className="sign-space-input">
                 <input
                   id="verificationCode"
-                  type="text"
+                  type="number"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   placeholder="Enter verification code sent on email"

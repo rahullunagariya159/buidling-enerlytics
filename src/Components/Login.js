@@ -193,12 +193,7 @@ function Login() {
           setRegClicked(false);
           if (e === "UsernameExistsException") {
             console.log(e);
-            // toast.error("Please enter OTP sent to your registered email id to confirm your account.");
-            toast.success("OTP sent to your provided email id.", {
-              toastId: "toast12",
-            });
-            resendOTP();
-            document.getElementById("getOTP").click();
+            toast.error("Already register with this email address");
           } else if (e === "InvalidPasswordException") {
             passwordElm.classList.add("error");
             toast.error("Please enter a valid password.", {
@@ -1885,7 +1880,7 @@ function Login() {
               <div className="sign-space-input">
                 <input
                   id="verificationCode"
-                  type="text"
+                  type="number"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   placeholder="Enter verification code sent on email"
