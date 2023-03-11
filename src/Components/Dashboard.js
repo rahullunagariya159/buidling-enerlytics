@@ -671,9 +671,6 @@ function Dashboard() {
                 >
                   x
                 </button>
-                {/* <a className="clickable" onClick={() => skipToBuy("Trial")}>
-                  <img src="assets/img/Home–new/close_icon.png" alt="" />
-                </a> */}
               </div>
             </div>
             <div className="plan-box">
@@ -931,13 +928,6 @@ function Dashboard() {
             >
               x
             </button>
-            {/* <img
-              src="assets/img/Home–new/close_icon.png"
-              className="close_iconw"
-              data-bs-dismiss="modal"
-              alt=""
-              onClick={() => showChoosePlanDialog()}
-            /> */}
             <div className="row m-0">
               <div className="col-lg-6 p-0">
                 <div className="canter-aline">
@@ -1185,12 +1175,6 @@ function Dashboard() {
             >
               x
             </button>
-            {/* <img
-              src="assets/img/Home–new/close_icon.png"
-              className="close_iconw"
-              data-bs-dismiss="modal"
-              alt=""
-            /> */}
             <div className="row m-0">
               <div className="col-lg-6 p-0">
                 <div className="Add-credit-aline">
