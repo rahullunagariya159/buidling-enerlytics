@@ -663,9 +663,16 @@ function Dashboard() {
                 </p>
               </div>
               <div className="col-lg-3 text-end">
-                <a className="clickable" onClick={() => skipToBuy("Trial")}>
+                <button
+                  type="button"
+                  className="x-btn"
+                  onClick={() => skipToBuy("Trial")}
+                >
+                  x
+                </button>
+                {/* <a className="clickable" onClick={() => skipToBuy("Trial")}>
                   <img src="assets/img/Home–new/close_icon.png" alt="" />
-                </a>
+                </a> */}
               </div>
             </div>
             <div className="plan-box">
@@ -915,13 +922,21 @@ function Dashboard() {
       >
         <div className="modal-dialog signup">
           <div className="modal-content signup PROMOCODE">
-            <img
+            <button
+              type="button"
+              className="x-btn close_iconw"
+              onClick={showChoosePlanDialog}
+              data-bs-dismiss="modal"
+            >
+              x
+            </button>
+            {/* <img
               src="assets/img/Home–new/close_icon.png"
               className="close_iconw"
               data-bs-dismiss="modal"
               alt=""
               onClick={() => showChoosePlanDialog()}
-            />
+            /> */}
             <div className="row m-0">
               <div className="col-lg-6 p-0">
                 <div className="canter-aline">
@@ -1160,12 +1175,21 @@ function Dashboard() {
       >
         <div className="modal-dialog signup">
           <div className="modal-content signup card-detal">
-            <img
+            <button
+              type="button"
+              className="x-btn close_iconw"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              onClick={showChoosePlanDialog}
+            >
+              x
+            </button>
+            {/* <img
               src="assets/img/Home–new/close_icon.png"
               className="close_iconw"
               data-bs-dismiss="modal"
               alt=""
-            />
+            /> */}
             <div className="row m-0">
               <div className="col-lg-6 p-0">
                 <div className="Add-credit-aline">

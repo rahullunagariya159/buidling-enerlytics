@@ -73,7 +73,7 @@ function Register() {
         });
         return false;
       } else if (password !== confirmPassword) {
-        toast.error("Comfirm password couldn't match.", { toastId: "toast11" });
+        toast.error("Confirm password couldn't match.", { toastId: "toast11" });
         return false;
       }
 
