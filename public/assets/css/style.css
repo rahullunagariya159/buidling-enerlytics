@@ -975,8 +975,7 @@ p.Your-Email.wiht::after {
   content: "";
   position: absolute;
   top: 7px;
-  /* left: 204px; */
-  left: 196px;
+  left: 188px;
 }
 
 .main-sing-up {
