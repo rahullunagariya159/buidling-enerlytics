@@ -18,6 +18,8 @@ import { Routes } from "../navigation/Routes";
 import LinkButton from "./LinkButton";
 import useEnterKeyListener from "../helpers/useEnterKeyListener";
 import { updateGuestLogin, getPlans } from "./Services/UserService";
+import { checkPassword } from "../utils";
+import "../assets/styles/login.css";
 
 function Navbar(props) {
   const navigate = useNavigate();
@@ -47,6 +49,7 @@ function Navbar(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [regClicked, setRegClicked] = useState(false);
   const [verifyAccountClicked, setVerifyAccountClicked] = useState(false);
+  const [regError, setRegError] = useState("");
 
   // ---- Register ---
 
@@ -108,13 +111,6 @@ function Navbar(props) {
     let checkTerms = validateInput(termsCheckElm);
 
     if (checkPass && checkCP) {
-      if (!checkTerms) {
-        toast.error("Please accept terms and conditions.", {
-          toastId: "toast11",
-        });
-        return false;
-      }
-
       if (!emailReg) {
         toast.error("Please enter all required input values.", {
           toastId: "toast11",
@@ -132,10 +128,27 @@ function Navbar(props) {
           toastId: "toast11",
         });
         return false;
+      } else if (!checkPassword(passwordReg)) {
+        setRegClicked(false);
+        setRegError(
+          "Password contains at least 8 characters or more, 1 number, 1 letter, 1 lower case letter, and 1 upper case letter required",
+        );
+
+        passwordElm.classList.add("error");
+        confirmPasswordElm.classList.add("error");
+        return false;
       } else if (passwordReg !== confirmPassReg) {
         toast.error("Comfirm password couldn't match.", { toastId: "toast11" });
         return false;
       }
+
+      if (!checkTerms) {
+        toast.error("Please accept terms and conditions.", {
+          toastId: "toast11",
+        });
+        return false;
+      }
+
       setRegClicked(true);
 
       userSignUp()
@@ -147,9 +160,12 @@ function Navbar(props) {
         .catch((e) => {
           if (e === "UsernameExistsException") {
             console.log(e);
-            // toast.error("Please enter OTP sent to your registered email id to confirm your account.");
-            toast.success("OTP sent to your provided email id.");
-            document.getElementById("getOTP").click();
+            toast.error("Already register with this email address");
+          } else if (e === "InvalidPasswordException") {
+            passwordElm.classList.add("error");
+            toast.error("Please enter a valid password.", {
+              toastId: "toast11",
+            });
           } else {
             toast.error(e);
           }
@@ -167,22 +183,24 @@ function Navbar(props) {
     }
   };
 
-  const resendOTP = () => {
-    userSignUp()
-      .then((data) => {
+  const resendOTP = async () => {
+    console.log({ emailReg });
+    const user = new CognitoUser({
+      Username: emailReg || username,
+      Pool: UserPool,
+    });
+    await user.resendConfirmationCode((err, result) => {
+      if (err) {
+        toast.error(
+          "We are sorry, but something went wrong. Please try again later.",
+        );
+      } else {
         setVerifyProcess(true);
-        toast.success("OTP sent to your provided email id.");
-      })
-      .catch((e) => {
-        if (e === "UsernameExistsException") {
-          // console.log(e);
-          // toast.error("Please enter OTP sent to your registered email id to confirm your account.");
-          // document.getElementById('getOTP').click();
-          toast.success("OTP sent to your provided email id.");
-        } else {
-          toast.error(e);
-        }
-      });
+        toast.success("OTP sent to your provided email id.", {
+          toastId: "toast12",
+        });
+      }
+    });
   };
 
   const userSignUp = () => {
@@ -368,11 +386,13 @@ function Navbar(props) {
         toast.error("Please enter all required input values.", {
           toastId: "toast11",
         });
+        setIsLoading(false);
         return false;
       } else if (username && !checkUN) {
         toast.error("Please enter a valid email address.", {
           toastId: "toast11",
         });
+        setIsLoading(false);
         return false;
       }
       authenticate(username, password)
@@ -584,6 +604,17 @@ function Navbar(props) {
   useEnterKeyListener({
     querySelectorToExecuteClick: "#btnSubmitOtp",
   });
+
+  const keypressed = (e) => {
+    if (e.keyCode === 8) {
+      let currentElm = e.srcElement || e.target;
+      let prevElm = currentElm.previousElementSibling;
+      if (prevElm) {
+        currentElm.value = "";
+        prevElm.focus();
+      }
+    }
+  };
 
   return (
     <div className="main-nav mb-95px">
@@ -797,7 +828,10 @@ function Navbar(props) {
                     placeholder="Password"
                     className="sign-in-input"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setRegError("");
+                    }}
                     minLength={6}
                     maxLength={16}
                   />
@@ -938,7 +972,10 @@ function Navbar(props) {
                           type="password"
                           id="passwordRegister"
                           value={passwordReg}
-                          onChange={(e) => setPasswordReg(e.target.value)}
+                          onChange={(e) => {
+                            setPasswordReg(e.target.value);
+                            setRegError("");
+                          }}
                           placeholder="Password"
                           className="sign-in-input wigt"
                           minLength={6}
@@ -979,7 +1016,10 @@ function Navbar(props) {
                           type="password"
                           id="confirmPasswordReg"
                           value={confirmPassReg}
-                          onChange={(e) => setConfirmPassReg(e.target.value)}
+                          onChange={(e) => {
+                            setConfirmPassReg(e.target.value);
+                            setRegError("");
+                          }}
                           placeholder="Confirm password"
                           className="sign-in-input wigt"
                           minLength={6}
@@ -1016,6 +1056,9 @@ function Navbar(props) {
                         </a>
                       </div>
                     </div>
+                    {regError && (
+                      <div className="reg-error-msg">{regError}</div>
+                    )}
                     <div className="flex-check">
                       <div className="custom-radio-wrap">
                         <form>
@@ -1124,12 +1167,13 @@ function Navbar(props) {
             <div className="otp-flex">
               <input
                 autoComplete="off"
-                type="text"
+                type="number"
                 className="otp-input"
                 onChange={(e) => {
                   SetOtpFunc(e, 1);
                 }}
                 id="digit1"
+                onKeyDown={keypressed}
                 minLength="1"
                 maxLength="1"
                 required
@@ -1142,6 +1186,7 @@ function Navbar(props) {
                 onChange={(e) => {
                   SetOtpFunc(e, 2);
                 }}
+                onKeyDown={keypressed}
                 id="digit2"
                 minLength="1"
                 maxLength="1"
@@ -1154,6 +1199,7 @@ function Navbar(props) {
                 onChange={(e) => {
                   SetOtpFunc(e, 3);
                 }}
+                onKeyDown={keypressed}
                 id="digit3"
                 minLength="1"
                 maxLength="1"
@@ -1166,6 +1212,7 @@ function Navbar(props) {
                 onChange={(e) => {
                   SetOtpFunc(e, 4);
                 }}
+                onKeyDown={keypressed}
                 id="digit4"
                 minLength="1"
                 maxLength="1"
@@ -1178,6 +1225,7 @@ function Navbar(props) {
                 onChange={(e) => {
                   SetOtpFunc(e, 5);
                 }}
+                onKeyDown={keypressed}
                 id="digit5"
                 minLength="1"
                 maxLength="1"
@@ -1190,6 +1238,7 @@ function Navbar(props) {
                 onChange={(e) => {
                   SetOtpFunc(e, 6);
                 }}
+                onKeyDown={keypressed}
                 id="digit6"
                 minLength="1"
                 maxLength="1"
