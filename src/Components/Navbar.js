@@ -53,7 +53,7 @@ function Navbar(props) {
   const [emailReg, setEmailReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
   const [confirmPassReg, setConfirmPassReg] = useState("");
-  const [TCAccepted, setTCAccepted] = useState("");
+  const [tcAccepted, setTCAccepted] = useState("");
   const [verifyProcess, setVerifyProcess] = useState(false);
   const [OTP, setOTP] = useState({});
   const [currentPlanDetails, setCurrentPlanDetails] = useState([]);
@@ -1022,10 +1022,10 @@ function Navbar(props) {
                           <div className="formroup tc-accepted">
                             <input
                               id="TCAccepted"
-                              type="radio"
-                              name="custom-radio-btn"
-                              value={TCAccepted}
-                              onChange={(e) => setTCAccepted(e.target.value)}
+                              type="checkbox"
+                              disabled={verifyProcess}
+                              checked={tcAccepted}
+                              onChange={(e) => setTCAccepted(!tcAccepted)}
                               required
                             />
                             <label
