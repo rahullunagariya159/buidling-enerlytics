@@ -669,7 +669,14 @@ function Navbar(props) {
                   English
                   <img src="assets/img/Home–new/gry-arrow.svg" alt="" />
                 </button>
-                <div id="myDropdown" className="dropdown-content">
+                <div
+                  id="myDropdown"
+                  className={`dropdown-content ${
+                    isLoggedIn == "true" && isGuestUser == false
+                      ? "position-fixed"
+                      : ""
+                  } `}
+                >
                   <a className="active">
                     <img
                       src="assets/img/Home–new/NoPath@2x.png"
