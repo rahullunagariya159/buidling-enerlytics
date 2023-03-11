@@ -62,6 +62,7 @@ function Dashboard() {
       name: guestProjectName,
       userId: guestUserId,
     };
+
     createProject(payload)
       .then((response) => {
         setCreateProjectClicked(false);
@@ -100,6 +101,7 @@ function Dashboard() {
         name: projectNameElm.value,
         userId: userID,
       };
+
       createProject(payload).then((response) => {
         if (response.error) {
           toast.error(response.error);
@@ -138,7 +140,6 @@ function Dashboard() {
         toast.error(response.error);
       } else {
         // data comes here..
-        // console.log(response);
         setProjectList(response.data);
       }
     });
@@ -154,7 +155,6 @@ function Dashboard() {
         toast.error(response.error);
       } else {
         ReactSession.set("guest_user_id", null);
-        console.log(response);
 
         const path = ReactSession.get("guest_state");
         navigate(path);
@@ -166,7 +166,6 @@ function Dashboard() {
     if (!ID) {
       return false;
     }
-    console.log("Check Plans ..", ID);
 
     const payload = {
       type: "VERIFY",
@@ -293,22 +292,20 @@ function Dashboard() {
       };
       getPromoDetails(payload)
         .then((response) => {
-          if (response.error) {
-            toast.error(response.error);
+          if (response?.error) {
+            toast.error(response?.error);
           } else if (response) {
-            console.log(response.data);
-            if (response.data) {
+            if (response?.data) {
               toast.success("Promocode applied successfully.", {
                 toastId: "toast12",
               });
-              setDiscount(response.data.discount);
+              setDiscount(response?.data?.discount);
               setPromo(promoElm.value);
               setPromoApplied(true);
             }
           }
         })
         .catch((err) => {
-          console.log(err.message);
           promoElm.classList.add("error");
           toast.error("Invalid Promo Code.", { toastId: "toast11" });
         })
@@ -521,7 +518,7 @@ function Dashboard() {
                           className="PROJECT-one"
                           onClick={handleCreateProjectForGuest}
                         >
-                          START NEW PROJECT 2
+                          START NEW PROJECT
                         </a>
                       )}
                       {isGuestUser !== false && createProjectClicked && (
@@ -617,7 +614,11 @@ function Dashboard() {
             <div className="CONTINUE-space">
               <a
                 className="CONTINUE-btn clickable"
-                onClick={handleCreateProject}
+                onClick={() => {
+                  !userID && !createProjectClicked
+                    ? handleCreateProjectForGuest()
+                    : handleCreateProject();
+                }}
               >
                 CONTINUE
               </a>
