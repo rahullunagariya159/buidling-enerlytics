@@ -62,7 +62,6 @@
 }
 
 @keyframes rotate-0 {
-
   0%,
   20% {
     transform: rotate(0deg);
@@ -86,7 +85,6 @@
 }
 
 @keyframes rotate-1 {
-
   0%,
   20% {
     transform: rotate(20deg);
@@ -110,7 +108,6 @@
 }
 
 @keyframes rotate-2 {
-
   0%,
   20% {
     transform: rotate(40deg);
@@ -134,7 +131,6 @@
 }
 
 @keyframes rotate-3 {
-
   0%,
   20% {
     transform: rotate(60deg);
@@ -158,7 +154,6 @@
 }
 
 @keyframes rotate-4 {
-
   0%,
   20% {
     transform: rotate(80deg);
@@ -182,7 +177,6 @@
 }
 
 @keyframes rotate-5 {
-
   0%,
   20% {
     transform: rotate(100deg);
@@ -270,7 +264,7 @@ span#card-errors {
   font-size: 14px;
 }
 
-.form-group input.error+.checkedbox:before {
+.form-group input.error + .checkedbox:before {
   border-color: red;
 }
 
@@ -325,13 +319,14 @@ a.link-itme.flex.signin-btn.btn-nav {
 
 .btn[disabled] {
   pointer-events: none;
-  background: transparent linear-gradient(90deg, #f7931e69 0%, #f15a2475 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(90deg, #f7931e69 0%, #f15a2475 100%)
+    0% 0% no-repeat padding-box;
 }
 
 .note {
   font: normal normal normal 12px/18px Poppins;
   letter-spacing: 0.37px;
-  color: #F26922;
+  color: #f26922;
 }
 
 .be-status {
@@ -348,14 +343,14 @@ a.link-itme.flex.signin-btn.btn-nav {
 
 #loadProjects[disabled] {
   pointer-events: none;
-  background: #DCDCDC 0% 0% no-repeat padding-box;
-  color: #9F9F9F;
-  border: #9F9F9F;
+  background: #dcdcdc 0% 0% no-repeat padding-box;
+  color: #9f9f9f;
+  border: #9f9f9f;
 }
 
 .load-existing:hover {
-  color: #F15A24 !important;
-  border-color: #F15A24 !important;
+  color: #f15a24 !important;
+  border-color: #f15a24 !important;
 }
 
 .main-parant-11,
@@ -374,7 +369,7 @@ a.link-itme.flex.signin-btn.btn-nav {
 .edit-model-btn {
   position: absolute;
   right: 0;
-  z-index: 1000;
+  z-index: 9;
   font: normal normal normal 12px/21px Poppins;
   display: flex;
   color: #013a67;
@@ -384,7 +379,7 @@ a.link-itme.flex.signin-btn.btn-nav {
 }
 
 .edit-model-btn:hover {
-  color: #F7931E;
+  color: #f7931e;
 }
 
 .edit-name-btn {
@@ -397,7 +392,8 @@ a.link-itme.flex.signin-btn.btn-nav {
   margin-right: 10px;
   margin-top: 5px;
   display: inline-block;
-  background: transparent linear-gradient(90deg, #F7931E 0%, #F15A24 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(90deg, #f7931e 0%, #f15a24 100%) 0% 0%
+    no-repeat padding-box;
 }
 
 .w-100 {
@@ -444,37 +440,37 @@ p.top-home.nav-left {
 }
 
 li.menu-item:hover::after {
-  content: '';
+  content: "";
   position: absolute;
   border: 0;
   left: 0;
   width: 100%;
   height: 2px;
-  background: #FFBB1C;
+  background: #ffbb1c;
   bottom: -32px;
 }
 
 .menu-item .link-itme.active {
-  color: #FFBB1C;
+  color: #ffbb1c;
 }
 
 .menu-item .link-itme.active::after {
-  content: '';
+  content: "";
   position: absolute;
   border: 0;
   left: 0;
   width: 100%;
   height: 2px;
-  background: #FFBB1C;
+  background: #ffbb1c;
   bottom: -32px;
 }
 
 .StripeElement {
   font: normal normal normal 12px/18px Poppins;
   letter-spacing: 0px;
-  color: #1C1C1C;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  border: 1px solid #DCDCDC;
+  color: #1c1c1c;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #dcdcdc;
   border-radius: 4px;
   padding: 10px 20px;
   /* width: 274px; */
@@ -498,7 +494,7 @@ li.menu-item:hover::after {
 }
 
 .rr {
-  background: url('../img/Home-Page/registered.svg') no-repeat;
+  background: url("../img/Home-Page/registered.svg") no-repeat;
   width: 10px;
   height: 10px;
   margin-bottom: 6px;
@@ -506,7 +502,7 @@ li.menu-item:hover::after {
 }
 
 .rr2 {
-  background: url('../img/Home-Page/registered-hover.svg') no-repeat;
+  background: url("../img/Home-Page/registered-hover.svg") no-repeat;
   width: 10px;
   height: 10px;
   margin-bottom: 6px;
@@ -515,7 +511,7 @@ li.menu-item:hover::after {
 
 .reg-mark-icon:hover .rr,
 .reg-mark-icon.active .rr {
-  background: url('../img/Home-Page/registered-hover.svg') no-repeat;
+  background: url("../img/Home-Page/registered-hover.svg") no-repeat;
   width: 10px;
   height: 10px;
   margin-bottom: 6px;
@@ -526,7 +522,7 @@ li.menu-item:hover::after {
   text-decoration: underline;
   font: normal normal normal 12px/18px Poppins !important;
   letter-spacing: 0.24px !important;
-  color: #FFFFFF !important;
+  color: #ffffff !important;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -537,6 +533,6 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
