@@ -513,7 +513,7 @@ function Dashboard() {
                           data-bs-target="#STARTPROJECT"
                           className="PROJECT-one"
                         >
-                          START NEW PROJECT 1
+                          START NEW PROJECT
                         </a>
                       )}
                       {isGuestUser !== false && !createProjectClicked && (
