@@ -8,7 +8,7 @@ const AccountContext = createContext();
 
 const Account = (props) => {
   const getSession = async () => {
-    await new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       const user = UserPool.getCurrentUser();
       if (user) {
         user.getSession((err, session) => {
@@ -25,7 +25,7 @@ const Account = (props) => {
   };
 
   const authenticate = async (Username, Password) => {
-    await new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       const user = new CognitoUser({
         Username,
         Pool: UserPool,

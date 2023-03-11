@@ -399,7 +399,7 @@ function Dashboard() {
   useEffect(() => {
     ReactSession.set("bp3dJson", null);
 
-    let IDVal;
+    let IDVal = null;
     if (isGuestUser) {
       IDVal = ReactSession.get("guest_user_id");
       setUserId(IDVal);
@@ -447,9 +447,9 @@ function Dashboard() {
     // else {
     //   navigate('/');
     // }
-  }, [Auth]);
+  }, []);
 
-  useEffect(() => {
+  useMemo(() => {
     if (userID) {
       checkPlans(userID);
       handleListProjects(userID);
@@ -507,13 +507,13 @@ function Dashboard() {
                       </p>
                     </div>
                     <div className="PROJECT-btns">
-                      {isGuestUser == false && (
+                      {!isGuestUser && (
                         <a
                           data-bs-toggle="modal"
                           data-bs-target="#STARTPROJECT"
                           className="PROJECT-one"
                         >
-                          START NEW PROJECT
+                          START NEW PROJECT 1
                         </a>
                       )}
                       {isGuestUser !== false && !createProjectClicked && (
@@ -521,7 +521,7 @@ function Dashboard() {
                           className="PROJECT-one"
                           onClick={handleCreateProjectForGuest}
                         >
-                          START NEW PROJECT
+                          START NEW PROJECT 2
                         </a>
                       )}
                       {isGuestUser !== false && createProjectClicked && (

@@ -2,7 +2,12 @@ import React, { useContext, useState, useEffect } from "react";
 import { ReactSession } from "react-client-session";
 
 import { toast } from "react-toastify";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  useNavigate,
+  useSearchParams,
+  useLocation,
+  matchPath,
+} from "react-router-dom";
 import { AccountContext } from "./Account";
 import { validateInput } from "../config";
 import UserPool from "../UserPool";
@@ -13,6 +18,8 @@ import LinkButton from "./LinkButton";
 import "../assets/styles/login.css";
 import Slider from "./slider/Slider";
 import useEnterKeyListener from "../helpers/useEnterKeyListener";
+import { Routes } from "../navigation/Routes";
+import Navbar from "./Navbar";
 
 function Login() {
   const navigate = useNavigate();
@@ -22,7 +29,10 @@ function Login() {
     ReactSession.get("is_logged_in"),
   );
   const isGuestUser = searchParams.get("skip") || false;
+  const projectName = searchParams.get("name") ? searchParams.get("name") : "";
+
   const { logout } = useContext(AccountContext);
+  const location = useLocation();
 
   const [skipClicked, setSkipClicked] = useState(false);
   const [loginClicked, setLoginClicked] = useState(false);
@@ -301,6 +311,22 @@ function Login() {
     }
   };
 
+  const handleRedirection = (userId) => {
+    if (matchPath(location.pathname, Routes.createProject)) {
+      setTimeout(
+        window.location.replace(`${Routes.createProject}?name=` + projectName),
+        2000,
+      );
+    } else if (matchPath(location.pathname, Routes.beModel)) {
+      setTimeout(
+        window.location.replace(`${Routes.beModel}?name=` + projectName),
+        2000,
+      );
+    } else {
+      setTimeout((window.location.href = "/dashboard"), 2000);
+    }
+  };
+
   const validateOTP = () => {
     const errorOTP = [];
     const otpElm = ["digit1", "digit2", "digit3", "digit4", "digit5", "digit6"];
@@ -336,9 +362,7 @@ function Login() {
             { toastId: "toast11" },
           );
         } else {
-          console.log(data);
-
-          ReactSession.set("building_user", emailReg);
+          ReactSession.set("building_user", emailReg || username);
           ReactSession.set("is_logged_in", "true");
           ReactSession.set("user_email_registered", "true");
 
@@ -346,13 +370,14 @@ function Login() {
           toast.success("Account verified successfully.", {
             toastId: "toast12",
           });
-          setTimeout((window.location.href = "/dashboard"), 2000);
+
+          handleRedirection(emailReg || username);
         }
       });
     }
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     setLoginClicked(true);
     setIsPendingConfirmCode(false);
@@ -377,15 +402,16 @@ function Login() {
         return false;
       }
 
-      authenticate(username, password)
+      await authenticate(username, password)
         .then((data) => {
-          console.log(data);
-
           ReactSession.set("building_user", username);
           ReactSession.set("is_logged_in", "true");
 
           toast.success("login success.", { toastId: "toast12" });
-          setTimeout((window.location.href = "/dashboard"), 2000);
+
+          if (data?.idToken?.payload?.email) {
+            handleRedirection(data?.idToken?.payload?.email);
+          }
         })
         .catch((err) => {
           console.log(err, "UserNotConfirmedException");
@@ -568,147 +594,7 @@ function Login() {
 
   return (
     <div>
-      <div className="main-nav mb-95px">
-        <div className="brdr-bottom full">
-          <header className="header bg-img header-sticky ">
-            <nav className="navbar">
-              <a className="logo-link" onClick={() => navigate("/")}>
-                <img src="assets/img/Home-Page/Asset 8@3x@2x.png" alt="" />
-              </a>
-              <input type="checkbox" id="nav" className="hidden" />
-              <label htmlFor="nav" className="nav-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-              </label>
-              <div className="wrapper">
-                <ul className="menu m-0 p-0">
-                  <li className="menu-item">
-                    <a
-                      className="link-itme active"
-                      onClick={() => navigate("/")}
-                    >
-                      Home
-                    </a>
-                  </li>
-                  <li className="menu-item">
-                    <a
-                      className="link-itme reg-mark-icon"
-                      onClick={navigateToDashboard}
-                    >
-                      BE Modeler{" "}
-                      <sup>
-                        <img src="" className="rr" alt="" />
-                      </sup>
-                    </a>
-                  </li>
-                  <li className="menu-item">
-                    <a
-                      className="link-itme"
-                      onClick={() => scrollToElm("main-parant-5")}
-                    >
-                      Pricing
-                    </a>
-                  </li>
-                  <li className="menu-item">
-                    <a
-                      className="link-itme"
-                      onClick={() => scrollToElm("main-parant-6")}
-                    >
-                      Contact us
-                    </a>
-                  </li>
-                  <li className="menu-item">
-                    <a
-                      className="link-itme"
-                      onClick={() => scrollToElm("main-parant-5")}
-                    >
-                      About us
-                    </a>
-                  </li>
-                  {/* <!-- <li className="menu-item">
-                      <a className="link-itme flex" href="#" >
-                          <img src="assets/img/Home-Page/profile.png" className="profil" alt="" />
-                          <img src="assets/img/Home-Page/homeFinal/Polygon 3.svg" alt="" />
-                      </a>
-                  </li> --> */}
-                </ul>
-              </div>
-              <div className="main-login-btns">
-                <div className="dropdown">
-                  <button onClick={toggleDropdown} className="dropbtn">
-                    <img
-                      src="assets/img/Home–new/NoPath@2x.png"
-                      className="profil lang"
-                      alt=""
-                    />
-                    English
-                    <img src="assets/img/Home–new/gry-arrow.svg" alt="" />
-                  </button>
-                  <div id="myDropdown" className="dropdown-content">
-                    <a className="active">
-                      <img
-                        src="assets/img/Home–new/NoPath@2x.png"
-                        className="profil lang"
-                        alt=""
-                      />{" "}
-                      English <span className="selected-lang"></span>
-                    </a>
-                    <a>
-                      <img
-                        src="assets/img/Home–new/german.png"
-                        className="profil lang"
-                        alt=""
-                      />{" "}
-                      German
-                    </a>
-                  </div>
-                </div>
-
-                {isLoggedIn === "true" && isGuestUser === false ? (
-                  <div className="login-btn">
-                    <a
-                      className="Register-done"
-                      data-bs-toggle="modal"
-                      data-bs-target="#LOGOUT"
-                      data-backdrop="static"
-                      data-keyboard="false"
-                    >
-                      <img
-                        src="assets/img/Home-Page/profile.png"
-                        className="profil"
-                        alt=""
-                      />
-                      500 Credits
-                      <img src="assets/img/Home–new/wihte-drop.svg" alt="" />
-                    </a>
-                  </div>
-                ) : (
-                  <div className="login-btn">
-                    <a
-                      href=""
-                      className="Login"
-                      data-bs-toggle="modal"
-                      data-bs-target="#SIGNIN"
-                    >
-                      Log in
-                    </a>
-                    <a
-                      href=""
-                      className="Register"
-                      data-bs-toggle="modal"
-                      data-bs-target="#SIGNup"
-                    >
-                      Register
-                    </a>
-                  </div>
-                )}
-              </div>
-            </nav>
-          </header>
-        </div>
-      </div>
-
+      <Navbar />
       <Slider />
       <div id="main-parant-2" className="main-parant-2">
         <section className="sec-1">

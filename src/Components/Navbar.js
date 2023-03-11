@@ -17,8 +17,9 @@ import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 import { Routes } from "../navigation/Routes";
 import LinkButton from "./LinkButton";
 import useEnterKeyListener from "../helpers/useEnterKeyListener";
+import { updateGuestLogin, getPlans } from "./Services/UserService";
 
-function Navbar() {
+function Navbar(props) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const location = useLocation();
@@ -35,6 +36,7 @@ function Navbar() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState("");
   const [code, setCode] = useState("");
   const [newpassword, setNewPassword] = useState("");
   const { authenticate } = useContext(AccountContext);
@@ -43,6 +45,8 @@ function Navbar() {
   const [showRegPassword, setShowRegPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [regClicked, setRegClicked] = useState(false);
+  const [verifyAccountClicked, setVerifyAccountClicked] = useState(false);
 
   // ---- Register ---
 
@@ -52,6 +56,15 @@ function Navbar() {
   const [TCAccepted, setTCAccepted] = useState("");
   const [verifyProcess, setVerifyProcess] = useState(false);
   const [OTP, setOTP] = useState({});
+  const [currentPlanDetails, setCurrentPlanDetails] = useState([]);
+
+  const isCreateProjectUrl = matchPath(location.pathname, Routes.createProject);
+  const isBemodalUrl = matchPath(location.pathname, Routes.beModel);
+  const isHomeUrl = matchPath(location.pathname, Routes.home);
+  const isDashboardUrl = matchPath(location.pathname, Routes.dashboard);
+  const isPricingUrl = matchPath(location.pathname, Routes.pricing);
+  const isContactUsUrl = matchPath(location.pathname, Routes.contactUs);
+  const isAboutUsUrl = matchPath(location.pathname, Routes.aboutUs);
 
   const navigateToModule = (module) => {
     if (isGuestUser) {
@@ -81,6 +94,7 @@ function Navbar() {
 
   const onSubmitSignup = (e) => {
     e.preventDefault();
+
     const attributeList = [];
 
     let emailElm = document.getElementById("emailRegister");
@@ -122,6 +136,7 @@ function Navbar() {
         toast.error("Comfirm password couldn't match.", { toastId: "toast11" });
         return false;
       }
+      setRegClicked(true);
 
       userSignUp()
         .then((data) => {
@@ -138,11 +153,16 @@ function Navbar() {
           } else {
             toast.error(e);
           }
+        })
+        .finally(() => {
+          setRegClicked(false);
         });
     } else {
       toast.error("Please enter all required input values.", {
         toastId: "toast11",
       });
+      setRegClicked(false);
+
       return false;
     }
   };
@@ -229,15 +249,86 @@ function Navbar() {
     return !errorOTP.length;
   };
 
+  const handleUpdateGuestLogin = (uId) => {
+    const payload = {
+      id: ReactSession.get("project_id"),
+      userId: uId,
+    };
+    console.log({ payload });
+
+    try {
+      return updateGuestLogin(payload).then((response) => {
+        if (response.error) {
+          toast.error(response.error);
+          return false;
+        } else {
+          ReactSession.set("guest_user_id", null);
+          console.log(response);
+          return true;
+          // const path = ReactSession.get("guest_state");
+          // navigate(path);
+        }
+      });
+    } catch (error) {
+      toast.error(error);
+      return false;
+    }
+  };
+
+  const checkPlans = (ID) => {
+    if (!ID) {
+      return false;
+    }
+    console.log("Check Plans ..", ID);
+
+    const payload = {
+      type: "VERIFY",
+      userId: ID,
+    };
+    getPlans(payload).then((response) => {
+      if (response.error) {
+        toast.error(response.error);
+      } else if (response?.msg && response?.msg?.Count > 0) {
+        setCurrentPlanDetails(response?.msg?.Items);
+
+        // document.getElementById("enablePlans").click();
+      }
+    });
+  };
+
+  const handleRedirection = async (userId) => {
+    if (isCreateProjectUrl) {
+      const result = await handleUpdateGuestLogin(userId);
+      if (result) {
+        setTimeout(
+          window.location.replace(
+            `${Routes.createProject}?name=` + projectName,
+          ),
+          2000,
+        );
+      }
+    } else if (isBemodalUrl) {
+      const result = await handleUpdateGuestLogin(userId);
+      if (result) {
+        setTimeout(
+          window.location.replace(`${Routes.beModel}?name=` + projectName),
+          2000,
+        );
+      }
+    } else {
+      setTimeout((window.location.href = "/dashboard"), 2000);
+    }
+  };
+
   const verifyAccount = (e) => {
     e.preventDefault();
-
+    setVerifyAccountClicked(true);
     const checkOTP = validateOTP();
     if (checkOTP) {
       const otpVal = OTP.d1 + OTP.d2 + OTP.d3 + OTP.d4 + OTP.d5 + OTP.d6;
 
       const user = new CognitoUser({
-        Username: emailReg,
+        Username: emailReg || username,
         Pool: UserPool,
       });
 
@@ -249,18 +340,22 @@ function Navbar() {
             { toastId: "toast11" },
           );
         } else {
-          console.log(data);
           ReactSession.set("is_logged_in", "true");
-          ReactSession.set("building_user", emailReg);
+          ReactSession.set("building_user", emailReg || username);
           toast.success("Account verified successfully.");
-          setTimeout((window.location.href = "/dashboard"), 2000);
+
+          handleRedirection(emailReg || username);
         }
+        setVerifyAccountClicked(false);
       });
+    } else {
+      setVerifyAccountClicked(false);
     }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     let usernameElm = document.getElementById("username");
     let passwordElm = document.getElementById("loginPass");
@@ -280,30 +375,29 @@ function Navbar() {
         });
         return false;
       }
-
       authenticate(username, password)
         .then((data) => {
           console.log(data);
           toast.success("login success.");
           ReactSession.set("building_user", username);
           ReactSession.set("is_logged_in", "true");
-          if (matchPath(location.pathname, Routes.createProject)) {
-            setTimeout(
-              window.location.replace("/create-project?name=" + projectName),
-              2000,
-            );
-          } else {
-            setTimeout((window.location.href = "/dashboard"), 2000);
+
+          if (data?.idToken?.payload?.email) {
+            handleRedirection(data?.idToken?.payload?.email);
           }
         })
         .catch((err) => {
           console.log(err);
           toast.error("Incorrect email or password.", { toastId: "toast11" });
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     } else {
       toast.error("Please enter all required input values.", {
         toastId: "toast11",
       });
+      setIsLoading(false);
       return false;
     }
   };
@@ -398,13 +492,25 @@ function Navbar() {
 
   useEffect(() => {
     ReactSession.set("guest_state", location.pathname);
-
+    let IDVal = null;
     if (
       ReactSession.get("amplify-signin-with-hostedUI") == "true" ||
       ReactSession.get("amplify-redirected-from-hosted-ui") == "true"
     ) {
       ReactSession.set("is_logged_in", "true");
       setLoggedInStatus("true");
+    }
+
+    if (isGuestUser) {
+      IDVal = ReactSession.get("guest_user_id");
+      setUserId(IDVal);
+    } else {
+      IDVal =
+        ReactSession.get("building_user") &&
+        ReactSession.get("building_user") !== "null"
+          ? ReactSession.get("building_user")
+          : ReactSession.get("building_social_user");
+      setUserId(IDVal);
     }
 
     const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
@@ -428,6 +534,7 @@ function Navbar() {
         // console.dir(idToken);
         let email = idToken.payload.email;
         let name = idToken.payload.name;
+        !IDVal && setUserId(email);
         // console.log("__email_", email);
         // console.log('__name_', name);
         ReactSession.set("building_social_user", email);
@@ -441,6 +548,7 @@ function Navbar() {
     Auth.currentAuthenticatedUser()
       .then((currentUser) => {
         setUser(currentUser);
+
         ReactSession.set(
           "building_social_user",
           currentUser?.attributes?.email,
@@ -456,6 +564,12 @@ function Navbar() {
 
     return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    if (userId) {
+      checkPlans(userId);
+    }
+  }, [userId]);
 
   const handleLoginWithGoogle = async () => {
     try {
@@ -488,14 +602,19 @@ function Navbar() {
             <div className="wrapper">
               <ul className="menu m-0 p-0">
                 <li className="menu-item">
-                  <a className="link-itme" onClick={() => navigate("/")}>
+                  <a
+                    className={`link-itme ${isHomeUrl ? "active" : ""}`}
+                    onClick={() => navigate("/")}
+                  >
                     Home
                   </a>
                 </li>
                 <li className="menu-item">
                   <a
                     id="dashboard-link"
-                    className="link-itme reg-mark-icon active"
+                    className={`link-itme reg-mark-icon ${
+                      isDashboardUrl ? "active" : ""
+                    }`}
                     onClick={() => navigateToModule("dashboard")}
                   >
                     BE Modeler{" "}
@@ -506,18 +625,18 @@ function Navbar() {
                 </li>
                 <li className="menu-item">
                   <a
-                    id="contact-link"
-                    className="link-itme"
-                    onClick={() => navigateToModule("contact-us")}
+                    id="price-link"
+                    className={`link-itme ${isPricingUrl ? "active" : ""}`}
+                    onClick={() => navigateToModule("pricing")}
                   >
                     Pricing
                   </a>
                 </li>
                 <li className="menu-item">
                   <a
-                    id="price-link"
-                    className="link-itme"
-                    onClick={() => navigateToModule("pricing")}
+                    id="contact-link"
+                    className={`link-itme ${isContactUsUrl ? "active" : ""}`}
+                    onClick={() => navigateToModule("contact-us")}
                   >
                     Contact us
                   </a>
@@ -525,7 +644,7 @@ function Navbar() {
                 <li className="menu-item">
                   <a
                     id="about-link"
-                    className="link-itme"
+                    className={`link-itme ${isAboutUsUrl ? "active" : ""}`}
                     onClick={() => navigateToModule("about-us")}
                   >
                     About us
@@ -584,7 +703,9 @@ function Navbar() {
                       className="profil"
                       alt=""
                     />
-                    500 Credits
+                    {currentPlanDetails?.[0]?.creditAmount
+                      ? currentPlanDetails?.[0]?.creditAmount + " Credits"
+                      : ""}
                     <img src="assets/img/Home–new/wihte-drop.svg" alt="" />
                   </a>
                 </div>
@@ -913,9 +1034,18 @@ function Navbar() {
                       </p>
                     </div>
                     <div className="signup-bottom">
-                      <a className="signin-btn" onClick={onSubmitSignup}>
+                      <LinkButton
+                        className={`signin-btn ${
+                          regClicked ? "loading-button" : ""
+                        }`}
+                        onClick={onSubmitSignup}
+                        isLoading={regClicked}
+                        isDisable={regClicked}
+                        title="Register"
+                      />
+                      {/* <a className="signin-btn" onClick={onSubmitSignup}>
                         Register
-                      </a>
+                      </a> */}
                       <a
                         id="getOTP"
                         data-bs-dismiss="modal"
@@ -1060,13 +1190,14 @@ function Navbar() {
               />
             </div>
             <div>
-              <a
-                className="signin-btn"
+              <LinkButton
+                className={`signin-btn ${regClicked ? "loading-button" : ""}`}
                 onClick={verifyAccount}
+                isLoading={verifyAccountClicked}
+                isDisable={verifyAccountClicked}
+                title="Next"
                 id="btnSubmitOtp"
-              >
-                Next
-              </a>
+              />
             </div>
             <div className="modal-fo">
               <p className="Account-btn">Didn't Receive an email?</p>

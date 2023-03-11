@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ReactSession } from "react-client-session";
 import { toast } from "react-toastify";
 import { createProject } from "../Services/UserService";
+import { Auth } from "aws-amplify";
+
 import "./slider.css";
 
 function Slider() {
@@ -10,6 +12,18 @@ function Slider() {
   );
   const [clicked, setClicked] = useState(false);
   const [skipClicked, setSkipClicked] = useState(false);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    Auth.currentSession()
+      .then((data) => {
+        let idToken = data.getIdToken();
+        let email = idToken.payload.email;
+
+        setUserId(email);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleCreateProjectForGuest = (clickedStatus) => {
     if (clickedStatus) {
@@ -17,11 +31,11 @@ function Slider() {
     } else {
       setSkipClicked(true);
     }
-
-    let guestUserId = `${Math.floor(Date.now() / 1000)}`;
-
-    ReactSession.set("guest_user_id", guestUserId);
-    ReactSession.set("bp3dJson", null);
+    let guestUserId = userId ?? `${Math.floor(Date.now() / 1000)}`;
+    if (!userId) {
+      ReactSession.set("guest_user_id", guestUserId);
+      ReactSession.set("bp3dJson", null);
+    }
     const guestProjectName = "project" + new Date().getTime();
     const payload = {
       name: guestProjectName,
@@ -31,8 +45,10 @@ function Slider() {
       if (response.error) {
         toast.error(response.error);
       } else {
-        if (response && response.msg) {
-          ReactSession.set("project_id", response.msg[0].id);
+        console.log({ response });
+
+        if (response?.msg) {
+          ReactSession.set("project_id", response?.msg?.[0]?.id);
           if (isLoggedIn == "true") {
             setTimeout(
               (window.location.href =
