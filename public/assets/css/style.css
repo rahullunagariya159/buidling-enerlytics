@@ -825,7 +825,9 @@ p.foter-links {
 .modal-dialog.signin {
   max-width: 450px;
 }
-
+.line-height-none {
+  line-height: 0 !important;
+}
 h1.sign-title {
   font: normal normal bold 24px/35px Poppins;
   letter-spacing: 0.48px;
@@ -1151,11 +1153,11 @@ p.wlcm-pra {
 }
 
 .main-parant-9 {
-  height: 87vh;
-  background-image: url(./../img/new-wlcm.png);
+  height: 85vh;
+  background-image: url(./../img/modeler.jpg);
   background-position: bottom;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
 }
 
 .cntr-area {
