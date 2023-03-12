@@ -615,7 +615,30 @@ function Navbar(props) {
       }
     }
   };
+  const updateValidation = (value) => {
+    let emailElm = document.getElementById("emailRegister");
+    let passwordElm = document.getElementById("passwordRegister");
+    let confirmPasswordElm = document.getElementById("confirmPasswordReg");
+    let termsCheckElm = document.getElementById("TCAccepted");
 
+    switch (value) {
+      case "terms":
+        if (!tcAccepted) {
+          validateInput(termsCheckElm);
+        }
+        break;
+      case "email":
+        validateInput(emailElm);
+        break;
+      case "password":
+        validateInput(passwordElm);
+        break;
+      case "cPassword":
+        validateInput(confirmPasswordElm);
+        break;
+      default:
+    }
+  };
   return (
     <div className="main-nav mb-95px">
       <div className="brdr-bottom full">
@@ -962,7 +985,10 @@ function Navbar(props) {
                           type="email"
                           id="emailRegister"
                           value={emailReg}
-                          onChange={(e) => setEmailReg(e.target.value)}
+                          onChange={(e) => {
+                            setEmailReg(e.target.value);
+                            updateValidation("email");
+                          }}
                           placeholder="Email"
                           className="sign-in-input wigt"
                         />
@@ -975,6 +1001,7 @@ function Navbar(props) {
                           onChange={(e) => {
                             setPasswordReg(e.target.value);
                             setRegError("");
+                            updateValidation("password");
                           }}
                           placeholder="Password"
                           className="sign-in-input wigt"
@@ -1019,6 +1046,7 @@ function Navbar(props) {
                           onChange={(e) => {
                             setConfirmPassReg(e.target.value);
                             setRegError("");
+                            updateValidation("cPassword");
                           }}
                           placeholder="Confirm password"
                           className="sign-in-input wigt"
@@ -1061,14 +1089,17 @@ function Navbar(props) {
                     )}
                     <div className="flex-check">
                       <div className="custom-radio-wrap">
-                        <form>
+                        <form className="line-height-none">
                           <div className="formroup tc-accepted">
                             <input
                               id="TCAccepted"
                               type="checkbox"
                               disabled={verifyProcess}
                               checked={tcAccepted}
-                              onChange={(e) => setTCAccepted(!tcAccepted)}
+                              onChange={() => {
+                                setTCAccepted(!tcAccepted);
+                                updateValidation("terms");
+                              }}
                               required
                             />
                             <label
