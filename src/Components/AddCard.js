@@ -215,6 +215,7 @@ function AddCard(props) {
                 <CardCvcElement
                   /* Specify styles here */
                   options={{
+                    placeholder: "CVV",
                     style: {
                       base: inputStyle,
                     },

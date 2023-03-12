@@ -1080,7 +1080,7 @@ a.signup-btn {
 .signup-grid {
   display: grid;
   gap: 24px;
-  padding: 40px 0 32px;
+  padding: 40px 0 15px;
 }
 
 input.sign-in-input.wigt {
