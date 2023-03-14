@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Switch } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 
 import "./App.css";
@@ -17,6 +17,7 @@ import BuildingMaterial from "./Components/BuildingMaterial";
 import ContactUs from "./Components/ContactUs";
 import Pricing from "./Components/Pricing";
 import AboutUs from "./Components/AboutUs";
+import { AuthProvider } from "./Context/AuthProvider";
 
 Amplify.configure({
   // Auth: {
@@ -59,17 +60,19 @@ function App() {
       <Status />
       <ToastContainer />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/load-project" element={<LoadProject />} />
-          <Route path="/create-project" element={<BEModal />} />
-          <Route path="/be-model" element={<BEModalFull />} />
-          <Route path="/building-material" element={<BuildingMaterial />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/about-us" element={<AboutUs />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/load-project" element={<LoadProject />} />
+            <Route path="/create-project" element={<BEModal />} />
+            <Route path="/be-model" element={<BEModalFull />} />
+            <Route path="/building-material" element={<BuildingMaterial />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/about-us" element={<AboutUs />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </Account>
   );
