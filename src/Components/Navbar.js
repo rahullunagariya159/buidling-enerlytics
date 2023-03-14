@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { ReactSession } from "react-client-session";
 
 import { toast } from "react-toastify";
@@ -11,16 +11,16 @@ import {
 import { AccountContext } from "./Account";
 import { validateInput } from "../config";
 import UserPool from "../UserPool";
-import { Auth, Hub } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import { CognitoUser } from "amazon-cognito-identity-js";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 import { Routes } from "../navigation/Routes";
 import LinkButton from "./LinkButton";
 import useEnterKeyListener from "../helpers/useEnterKeyListener";
-import { updateGuestLogin, getPlans } from "./Services/UserService";
+import { updateGuestLogin } from "./Services/UserService";
 import { checkPassword } from "../utils";
 import { useAuth } from "../Context/AuthProvider";
-
+import ChoosePlan from "./ChoosePlan";
 import "../assets/styles/login.css";
 
 function Navbar(props) {
@@ -1348,6 +1348,8 @@ function Navbar(props) {
           </div>
         </div>
       </div>
+
+      <ChoosePlan />
     </div>
   );
 }

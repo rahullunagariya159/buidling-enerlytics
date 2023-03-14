@@ -31,7 +31,7 @@ export function AuthProvider({ children }) {
   const [errorstate, setErrorState] = useState(false);
   const [customState, setCustomState] = useState(null);
   const [currentPlanDetails, setCurrentPlanDetails] = useState([]);
-
+  const [isOpenChoosePlanPopup, setIsOpenChoosePlanPopup] = useState(false);
   const [searchParams] = useSearchParams();
   const isGuestUser = searchParams.get("skip") || false;
   const [isLoggedIn, setLoggedInStatus] = useState(
@@ -53,10 +53,10 @@ export function AuthProvider({ children }) {
     getPlans(payload).then((response) => {
       if (response.error) {
         toast.error(response.error);
-      } else if (response?.msg && response?.msg?.Count > 0) {
+      } else if (response?.msg?.Count > 0) {
         setCurrentPlanDetails(response?.msg?.Items);
-
-        // document.getElementById("enablePlans").click();
+      } else if (response?.msg?.Count === 0) {
+        setIsOpenChoosePlanPopup(true);
       }
     });
   };
@@ -180,6 +180,8 @@ export function AuthProvider({ children }) {
     userId,
     isLoggedIn,
     currentPlanDetails,
+    setCurrentPlanDetails,
+    isOpenChoosePlanPopup,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
