@@ -2676,9 +2676,10 @@ head-img {
 
 .Account-btn.skip {
   color: #ffbb1c;
-  padding-top: 12px;
+  margin-top: 12px;
   cursor: pointer;
   display: inline-block;
+  background-color: transparent;
 }
 
 .modal-dialog.signup {

@@ -921,8 +921,18 @@ function Navbar(props) {
                   Register
                 </span>
               </p>
-              {/* <a className="Account-btn skip" data-bs-dismiss="modal" onClick={handleCreateProjectForGuest}>Skip for now <img
-                src="assets/img/Home-Page/homeFinal/Path 66.svg" className="right-ic" alt="" /></a> */}
+              <button
+                type="button"
+                className="Account-btn skip"
+                data-bs-dismiss="modal"
+              >
+                Skip for now
+                <img
+                  src="assets/img/Home-Page/homeFinal/Path 66.svg"
+                  className="right-ic"
+                  alt=""
+                />
+              </button>
             </div>
           </div>
         </div>
@@ -1149,9 +1159,18 @@ function Navbar(props) {
                           Log in
                         </span>
                       </p>
-                      {/* <p className="Account-btn clr pt-3" onClick={handleCreateProjectForGuest}>Skip for now <img
-                        src="assets/img/Home-Page/homeFinal/Path 66.svg" className="right-ic" alt="" />
-                      </p> */}
+                      <button
+                        type="button"
+                        className="Account-btn skip"
+                        data-bs-dismiss="modal"
+                      >
+                        Skip for now
+                        <img
+                          src="assets/img/Home-Page/homeFinal/Path 66.svg"
+                          className="right-ic"
+                          alt=""
+                        />
+                      </button>
                     </div>
                   </div>
                 </div>
