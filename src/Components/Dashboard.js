@@ -580,8 +580,8 @@ function Dashboard() {
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog signin">
-          <div className="modal-content signin START">
+        <div className="modal-dialog project">
+          <div className="modal-content signin START project">
             <div>
               <button
                 type="button clickable"
@@ -592,36 +592,41 @@ function Dashboard() {
                 x
               </button>
             </div>
-            <div className="modal-header-flex">
-              <h1 className="start-title">
-                <span className="botm-brdr">START N</span>EW PROJECT
-              </h1>
-            </div>
-            <div className="start-grid">
+            <div className="project-content">
+              <div></div>
               <div>
-                <input
-                  type="text"
-                  id="projectName"
-                  placeholder="Project Name"
-                  className="Project-input pop-create"
-                />
-              </div>
-              {/* <div className="positionq">
+                <div className="modal-header-flex">
+                  <h1 className="start-title">
+                    <span className="botm-brdr">Create n</span>ew project
+                  </h1>
+                </div>
+                <div className="start-grid">
+                  <div>
+                    <input
+                      type="text"
+                      id="projectName"
+                      placeholder="Project Name"
+                      className="Project-input pop-create"
+                    />
+                  </div>
+                  {/* <div className="positionq">
                 <input type="text" placeholder="Project Type" className="Project-input" />
                 <img src="assets/img/Home-Page/homeFinal/Path 42.svg" className="arrow-ic" alt="" />
               </div> */}
-            </div>
-            <div className="CONTINUE-space">
-              <a
-                className="CONTINUE-btn clickable"
-                onClick={() => {
-                  !userID && !createProjectClicked
-                    ? handleCreateProjectForGuest()
-                    : handleCreateProject();
-                }}
-              >
-                CONTINUE
-              </a>
+                </div>
+                <div className="my-5">
+                  <a
+                    className="CONTINUE-btn clickable"
+                    onClick={() => {
+                      !userID && !createProjectClicked
+                        ? handleCreateProjectForGuest()
+                        : handleCreateProject();
+                    }}
+                  >
+                    CONTINUE
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

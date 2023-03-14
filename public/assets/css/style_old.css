@@ -1174,9 +1174,9 @@ a.PROJECT-one.tow {
   justify-content: center;
 }
 
-.modal-content.signin.START {
-  background-image: url(./../img/Home-Page/02.png);
-  background-position: right bottom;
+.modal-content.signin.START.project {
+  background-image: url(./../img/Home-Page/create_new_project.jpg);
+  /* background-position: right bottom; */
 }
 
 .CONTINUE-space {
