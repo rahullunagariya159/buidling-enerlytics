@@ -1118,7 +1118,7 @@ function Navbar(props) {
               />
               <input
                 autoComplete="off"
-                type="text"
+                type="number"
                 className="otp-input"
                 onChange={(e) => {
                   SetOtpFunc(e, 2);
@@ -1131,7 +1131,7 @@ function Navbar(props) {
               />
               <input
                 autoComplete="off"
-                type="text"
+                type="number"
                 className="otp-input"
                 onChange={(e) => {
                   SetOtpFunc(e, 3);
@@ -1144,7 +1144,7 @@ function Navbar(props) {
               />
               <input
                 autoComplete="off"
-                type="text"
+                type="number"
                 className="otp-input"
                 onChange={(e) => {
                   SetOtpFunc(e, 4);
@@ -1157,7 +1157,7 @@ function Navbar(props) {
               />
               <input
                 autoComplete="off"
-                type="text"
+                type="number"
                 className="otp-input"
                 onChange={(e) => {
                   SetOtpFunc(e, 5);
@@ -1170,7 +1170,7 @@ function Navbar(props) {
               />
               <input
                 autoComplete="off"
-                type="text"
+                type="number"
                 className="otp-input"
                 onChange={(e) => {
                   SetOtpFunc(e, 6);
