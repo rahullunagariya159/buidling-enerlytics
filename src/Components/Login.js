@@ -11,7 +11,7 @@ import {
 import { AccountContext } from "./Account";
 import { validateInput } from "../config";
 import UserPool from "../UserPool";
-import { Auth, Hub } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import { CognitoUser } from "amazon-cognito-identity-js";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 import LinkButton from "./LinkButton";
@@ -28,7 +28,7 @@ function Login() {
   const [isLoggedIn, setLoggedInStatus] = useState(
     ReactSession.get("is_logged_in"),
   );
-  const isGuestUser = searchParams.get("skip") || false;
+
   const projectName = searchParams.get("name") ? searchParams.get("name") : "";
 
   const { logout } = useContext(AccountContext);
@@ -50,8 +50,6 @@ function Login() {
   const [regError, setRegError] = useState("");
 
   const { authenticate } = useContext(AccountContext);
-
-  const [user, setUser] = useState(null);
 
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showRegPassword, setShowRegPassword] = useState(false);
@@ -506,12 +504,6 @@ function Login() {
     }
   };
 
-  const getUser = () => {
-    return Auth.currentAuthenticatedUser()
-      .then((userData) => userData)
-      .catch(() => console.log("Not signed in"));
-  };
-
   const scrollToElm = (elm) => {
     let myElement = document.getElementById(elm);
     myElement.scrollIntoView();
@@ -552,24 +544,6 @@ function Login() {
         document.getElementById("fFloor").classList.remove("active");
     }
   };
-
-  useEffect(() => {
-    Hub.listen("auth", ({ payload: { event, data } }) => {
-      switch (event) {
-        case "signIn":
-        case "cognitoHostedUI":
-          getUser().then((userData) => setUser(userData));
-          break;
-        case "signOut":
-          setUser(null);
-          break;
-        case "signIn_failure":
-        case "cognitoHostedUI_failure":
-          console.log("Sign in failure", data);
-          break;
-      }
-    });
-  }, []);
 
   const handleLoginWithGoogle = async () => {
     try {

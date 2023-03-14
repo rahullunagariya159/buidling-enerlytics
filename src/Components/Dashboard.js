@@ -12,12 +12,11 @@ import {
   saveCard,
 } from "./Services/UserService";
 import { validateInput } from "../config";
-import { Auth } from "aws-amplify";
 import Navbar from "./Navbar";
 import AddCard from "./AddCard";
 import Button from "./Button";
 import LinkButton from "./LinkButton";
-
+import { useAuth } from "../Context/AuthProvider";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
@@ -32,7 +31,6 @@ function Dashboard() {
   const [searchParams] = useSearchParams();
   const [projectList, setProjectList] = useState([]);
   const [planData, setPlanData] = useState([]);
-  const [userID, setUserId] = useState("");
   const [promo, setPromo] = useState("");
   const [selectedPlan, setSelectedPlan] = useState("Trial");
   const [selectedCredit, setSelectedCredit] = useState(1);
@@ -47,10 +45,10 @@ function Dashboard() {
   const [applyPromoLoading, setApplyPromoLoading] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState({});
-  const [isLoggedIn, setLoggedInStatus] = useState(
-    ReactSession.get("is_logged_in"),
-  );
+
   const isGuestUser = searchParams.get("skip") || false;
+
+  const { userId: userID } = useAuth();
 
   const handleCreateProjectForGuest = () => {
     let guestUserId = `${Math.floor(Date.now() / 1000)}`;
@@ -175,6 +173,7 @@ function Dashboard() {
       if (response.error) {
         toast.error(response.error);
       } else if (response?.msg && response?.msg?.Count === 0) {
+        console.log("call --->>");
         // document.getElementById('CHOOSEPLAN').classList.remove('show');
         // document.getElementById('SECURE-RELIABLE').classList.remove('show');
         // document.getElementById('PROMOCODE').classList.add('show');
@@ -396,28 +395,6 @@ function Dashboard() {
   useEffect(() => {
     ReactSession.set("bp3dJson", null);
 
-    let IDVal = null;
-    if (isGuestUser) {
-      IDVal = ReactSession.get("guest_user_id");
-      setUserId(IDVal);
-    } else {
-      IDVal =
-        ReactSession.get("building_user") &&
-        ReactSession.get("building_user") !== "null"
-          ? ReactSession.get("building_user")
-          : ReactSession.get("building_social_user");
-      setUserId(IDVal);
-    }
-
-    if (
-      localStorage.getItem("amplify-signin-with-hostedUI") == "true" ||
-      localStorage.getItem("amplify-redirected-from-hosted-ui") == "true" ||
-      ReactSession.get("user_email_registered") == "true"
-    ) {
-      ReactSession.set("is_logged_in", "true");
-      setLoggedInStatus("true");
-    }
-
     var input = document.getElementById("projectName");
     input.addEventListener("keypress", function (event) {
       if (event.key === "Enter") {
@@ -426,27 +403,14 @@ function Dashboard() {
       }
     });
 
-    Auth.currentSession()
-      .then((data) => {
-        let idToken = data.getIdToken();
-        let email = idToken.payload.email;
-        ReactSession.set("building_social_user", email);
-        ReactSession.set("is_logged_in", "true");
-        !IDVal && setUserId(email);
-      })
-      .catch((err) => console.log(err));
-
     if (ReactSession.get("is_logged_in")) {
       if (ReactSession.get("guest_user_id")) {
         handleUpdateGuestLogin();
       }
     }
-    // else {
-    //   navigate('/');
-    // }
   }, []);
 
-  useMemo(() => {
+  useEffect(() => {
     if (userID) {
       checkPlans(userID);
       handleListProjects(userID);

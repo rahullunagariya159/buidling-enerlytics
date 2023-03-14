@@ -19,29 +19,24 @@ import LinkButton from "./LinkButton";
 import useEnterKeyListener from "../helpers/useEnterKeyListener";
 import { updateGuestLogin, getPlans } from "./Services/UserService";
 import { checkPassword } from "../utils";
+import { useAuth } from "../Context/AuthProvider";
+
 import "../assets/styles/login.css";
 
 function Navbar(props) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const location = useLocation();
-  const { logout } = useContext(AccountContext);
-  // let isLoggedIn = ReactSession.get("is_logged_in");
-  const [isLoggedIn, setLoggedInStatus] = useState(
-    ReactSession.get("is_logged_in"),
-  );
-  const isGuestUser = searchParams.get("skip") || false;
+  const { logout, authenticate } = useContext(AccountContext);
+
+  // const isGuestUser = searchParams.get("skip") || false;
   const projectName = searchParams.get("name") ? searchParams.get("name") : "";
 
-  const [user, setUser] = useState(null);
-  const [customState, setCustomState] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [userId, setUserId] = useState("");
   const [code, setCode] = useState("");
   const [newpassword, setNewPassword] = useState("");
-  const { authenticate } = useContext(AccountContext);
 
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showRegPassword, setShowRegPassword] = useState(false);
@@ -50,6 +45,7 @@ function Navbar(props) {
   const [regClicked, setRegClicked] = useState(false);
   const [verifyAccountClicked, setVerifyAccountClicked] = useState(false);
   const [regError, setRegError] = useState("");
+  const { userId, currentPlanDetails, isLoggedIn, isGuestUser } = useAuth();
 
   // ---- Register ---
 
@@ -59,7 +55,6 @@ function Navbar(props) {
   const [tcAccepted, setTCAccepted] = useState("");
   const [verifyProcess, setVerifyProcess] = useState(false);
   const [OTP, setOTP] = useState({});
-  const [currentPlanDetails, setCurrentPlanDetails] = useState([]);
 
   const isCreateProjectUrl = matchPath(location.pathname, Routes.createProject);
   const isBemodalUrl = matchPath(location.pathname, Routes.beModel);
@@ -184,7 +179,6 @@ function Navbar(props) {
   };
 
   const resendOTP = async () => {
-    console.log({ emailReg });
     const user = new CognitoUser({
       Username: emailReg || username,
       Pool: UserPool,
@@ -206,7 +200,6 @@ function Navbar(props) {
   const userSignUp = () => {
     return new Promise((resolve, reject) => {
       UserPool.signUp(emailReg, passwordReg, [], null, (error, result) => {
-        console.log(error, result);
         if (error) {
           // TODO this code shouldn't know about graphql errors. refactor to use separate layers
           if (error.code === "UsernameExistsException") {
@@ -272,7 +265,6 @@ function Navbar(props) {
       id: ReactSession.get("project_id"),
       userId: uId,
     };
-    console.log({ payload });
 
     try {
       return updateGuestLogin(payload).then((response) => {
@@ -291,27 +283,6 @@ function Navbar(props) {
       toast.error(error);
       return false;
     }
-  };
-
-  const checkPlans = (ID) => {
-    if (!ID) {
-      return false;
-    }
-    console.log("Check Plans ..", ID);
-
-    const payload = {
-      type: "VERIFY",
-      userId: ID,
-    };
-    getPlans(payload).then((response) => {
-      if (response.error) {
-        toast.error(response.error);
-      } else if (response?.msg && response?.msg?.Count > 0) {
-        setCurrentPlanDetails(response?.msg?.Items);
-
-        // document.getElementById("enablePlans").click();
-      }
-    });
   };
 
   const handleRedirection = async (userId) => {
@@ -445,7 +416,6 @@ function Navbar(props) {
           toast.success(
             "Code sent to: " + data.CodeDeliveryDetails.Destination,
           );
-          console.log(JSON.stringify(data));
 
           document.getElementById("forgotBtn").click();
         },
@@ -509,87 +479,6 @@ function Navbar(props) {
       document.getElementById(elmData.id).type = elmData.type;
     }
   };
-
-  useEffect(() => {
-    ReactSession.set("guest_state", location.pathname);
-    let IDVal = null;
-    if (
-      ReactSession.get("amplify-signin-with-hostedUI") == "true" ||
-      ReactSession.get("amplify-redirected-from-hosted-ui") == "true"
-    ) {
-      ReactSession.set("is_logged_in", "true");
-      setLoggedInStatus("true");
-    }
-
-    if (isGuestUser) {
-      IDVal = ReactSession.get("guest_user_id");
-      setUserId(IDVal);
-    } else {
-      IDVal =
-        ReactSession.get("building_user") &&
-        ReactSession.get("building_user") !== "null"
-          ? ReactSession.get("building_user")
-          : ReactSession.get("building_social_user");
-      setUserId(IDVal);
-    }
-
-    const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
-      switch (event) {
-        case "signIn":
-          console.log("SETTING USER DATA => ", data);
-          setUser(data);
-          break;
-        case "signOut":
-          setUser(null);
-          break;
-        case "customOAuthState":
-          setCustomState(data);
-        // console.log("__state", data);
-      }
-    });
-
-    Auth.currentSession()
-      .then((data) => {
-        let idToken = data.getIdToken();
-        // console.dir(idToken);
-        let email = idToken.payload.email;
-        let name = idToken.payload.name;
-        !IDVal && setUserId(email);
-        // console.log("__email_", email);
-        // console.log('__name_', name);
-        ReactSession.set("building_social_user", email);
-        ReactSession.set("is_logged_in", "true");
-        setLoggedInStatus("true");
-      })
-      .catch((err) => {
-        console.log("set building_social_user", err);
-      });
-
-    Auth.currentAuthenticatedUser()
-      .then((currentUser) => {
-        setUser(currentUser);
-
-        ReactSession.set(
-          "building_social_user",
-          currentUser?.attributes?.email,
-        );
-        ReactSession.set("is_logged_in", "true");
-        setLoggedInStatus("true");
-      })
-      .catch((error) => {
-        console.log("Not navbar signed in", error);
-      });
-
-    setLoggedInStatus(ReactSession.get("is_logged_in"));
-
-    return unsubscribe;
-  }, []);
-
-  useEffect(() => {
-    if (userId) {
-      checkPlans(userId);
-    }
-  }, [userId]);
 
   const handleLoginWithGoogle = async () => {
     try {
@@ -726,9 +615,7 @@ function Navbar(props) {
                 <div
                   id="myDropdown"
                   className={`dropdown-content ${
-                    isLoggedIn == "true" && isGuestUser == false
-                      ? "position-fixed"
-                      : ""
+                    isLoggedIn == "true" && userId ? "position-fixed" : ""
                   } `}
                 >
                   <a className="active">
@@ -750,7 +637,7 @@ function Navbar(props) {
                 </div>
               </div>
 
-              {isLoggedIn == "true" && isGuestUser == false ? (
+              {isLoggedIn == "true" && userId ? (
                 <div className="login-btn">
                   <a
                     className="Register-done clickable"
