@@ -18,6 +18,7 @@ import ContactUs from "./Components/ContactUs";
 import Pricing from "./Components/Pricing";
 import AboutUs from "./Components/AboutUs";
 import { AuthProvider } from "./Context/AuthProvider";
+import MyAccount from "./Components/myAccount/MyAccount";
 
 Amplify.configure({
   // Auth: {
@@ -71,6 +72,7 @@ function App() {
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/my-account" element={<MyAccount />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>
