@@ -3077,6 +3077,12 @@ a.show-ic {
   right: 16px;
   top: 10px;
 }
+a.show-ic.forgot-pwd {
+  position: absolute;
+  right: 22%;
+  top: 58%;
+  cursor: pointer;
+}
 
 img.right-ic {
   height: 15px;

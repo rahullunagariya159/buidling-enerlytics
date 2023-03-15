@@ -1272,9 +1272,16 @@ function Navbar(props) {
       >
         <div className="modal-dialog signin">
           <div className="modal-content signin">
-            {/* <div>
-              <button type="button" className="x-btn" data-bs-dismiss="modal" aria-label="Close">x</button>
-            </div> */}
+            <div>
+              <button
+                type="button"
+                className="x-btn"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                x
+              </button>
+            </div>
             <div className="modal-header-flex">
               <h1 className="sign-title">Forgot Password</h1>
               <p className="Your-Email">
@@ -1302,6 +1309,35 @@ function Navbar(props) {
                   placeholder="New Password"
                   className="sign-in-input"
                 />
+                <a className="show-ic forgot-pwd">
+                  {showLoginPassword ? (
+                    <img
+                      src="assets/img/LoadExisting/8674868_ic_fluent_eye_show_regular_icon.svg"
+                      alt=""
+                      onClick={() =>
+                        setShowPassword({
+                          isVisible: false,
+                          id: "newPassword",
+                          elem: "login",
+                          type: "password",
+                        })
+                      }
+                    />
+                  ) : (
+                    <img
+                      src="assets/img/LoadExisting/8674983_ic_fluent_eye_hide_regular_icon.svg"
+                      alt=""
+                      onClick={() =>
+                        setShowPassword({
+                          isVisible: true,
+                          id: "newPassword",
+                          elem: "login",
+                          type: "text",
+                        })
+                      }
+                    />
+                  )}
+                </a>
               </div>
             </div>
             <div>
