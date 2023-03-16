@@ -1,15 +1,13 @@
 import React from "react";
 import PlanCard from "./PlanCard.js";
-import "./style.js";
-import { Wrapper } from "./style.js";
+import { HeaderWrapper } from "./style.js";
 import UserInfo from "./UserInfo.js";
-
 const ProfileHeader = () => {
   return (
-    <Wrapper>
+    <HeaderWrapper>
       <UserInfo />
       <PlanCard />
-    </Wrapper>
+    </HeaderWrapper>
   );
 };
 

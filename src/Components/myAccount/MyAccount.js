@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../Navbar";
-import ProfileHeader from "./profileHeader/ProfileHeader";
+import Profile from "./profile/Profile";
+import PromoCode from "./promoCode/PromoCode";
 import "./style.js";
 import {
   ContentWrapper,
@@ -13,6 +14,7 @@ import {
   TextWrp,
   Title,
 } from "./style.js";
+import SubscriptionPlan from "./subscriptionPlan/SubscriptionPlan";
 
 const MyAccount = () => {
   const [active, setActive] = useState(0);
@@ -47,7 +49,11 @@ const MyAccount = () => {
             Promo Code
           </MenuItems>
         </SidebarMenu>
-        <RightContent>{active === 0 && <ProfileHeader />}</RightContent>
+        <RightContent>
+          {active === 0 && <Profile />}
+          {active === 1 && <SubscriptionPlan />}
+          {active === 2 && <PromoCode />}
+        </RightContent>
       </ContentWrapper>
     </div>
   );

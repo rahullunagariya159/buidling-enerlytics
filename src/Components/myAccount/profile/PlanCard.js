@@ -15,7 +15,7 @@ const PlanCard = () => {
   const [plan, setPlan] = useState(true);
   return (
     <PlanInfo>
-      <PlanVerticalLine></PlanVerticalLine>
+      <PlanVerticalLine />
       <ActiveCard plan={plan}>
         <ActivePlanContent>
           <YellowLabel plan={plan}>Active plan</YellowLabel>

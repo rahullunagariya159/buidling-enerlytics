@@ -70,6 +70,5 @@ export const TextWrp = styled.div`
 
 export const RightContent = styled.div`
   padding: 40px;
-  display: flex;
   width: 100%;
 `;

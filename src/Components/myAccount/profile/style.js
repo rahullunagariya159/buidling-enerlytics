@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  gap: 60px;
+`;
+export const HeaderWrapper = styled.div`
+  display: flex;
   justify-content: space-between;
   width: 100%;
   align-items: center;
@@ -21,6 +26,7 @@ export const BlueLabel = styled.div`
   font: normal normal medium 12px/18px Poppins;
   letter-spacing: 0px;
   color: #00ade4;
+  cursor: pointer;
 `;
 export const Label = styled.div`
   font: normal normal medium 12px/18px Poppins;
@@ -84,7 +90,7 @@ export const ContactWrp = styled.div`
 export const LocationWrp = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   img {
     width: 11px;
     height: 12px;
@@ -93,7 +99,7 @@ export const LocationWrp = styled.div`
 export const PhoneWrp = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   img {
     width: 13px;
     height: 13px;
@@ -102,7 +108,7 @@ export const PhoneWrp = styled.div`
 export const EmailWrp = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   img {
     width: 12px;
     height: 8px;
@@ -151,4 +157,9 @@ export const UnderlineText = styled.div`
   color: #1c1c1c;
   margin-top: 15px;
   cursor: pointer;
+`;
+export const ProfileContent = styled.div`
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
 `;
