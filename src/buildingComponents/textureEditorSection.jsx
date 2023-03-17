@@ -1,6 +1,5 @@
 import React from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {  toast } from "react-toastify";
 import CustomTitle from "./customTitle";
 import {
   floorTextures,
@@ -170,17 +169,6 @@ export default class TextureEditorSection extends React.Component {
         <CustomTitle title="Texture Editor" onClose={this.props.onClose} />
         {this._renderFloorTexturePanel()}
         {this._renderEdgeTexturePanel()}
-        <ToastContainer
-          position="bottom-center"
-          autoClose={3000}
-          hideProgressBar={true}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
       </div>
     );
   }

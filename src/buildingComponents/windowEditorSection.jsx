@@ -4,7 +4,6 @@ import InputWithUnit from "./inputWithUnit";
 import categories from "../products/category";
 import CustomTitle from "./customTitle";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default class WindowEditorSection extends React.Component {
   state = {

@@ -1,7 +1,4 @@
 import React from "react";
-import ReactTooltip from "react-tooltip";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default class LeftToolbar extends React.Component {
   handleToggleLock = () => {
@@ -161,18 +158,7 @@ export default class LeftToolbar extends React.Component {
             </div>
           );
         })}
-        <ToastContainer
-          position="bottom-center"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
-        <ReactTooltip />
+        
       </div>
     );
   }

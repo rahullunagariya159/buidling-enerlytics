@@ -45,6 +45,7 @@ function Navbar(props) {
   const [regClicked, setRegClicked] = useState(false);
   const [verifyAccountClicked, setVerifyAccountClicked] = useState(false);
   const [regError, setRegError] = useState("");
+  const [loginError, setLoginError] = useState("");
   const { userId, currentPlanDetails, isLoggedIn, isGuestUser } = useAuth();
 
   // ---- Register ---
@@ -116,15 +117,12 @@ function Navbar(props) {
           toastId: "toast11",
         });
         return false;
-      }
-
-      if (passwordReg.length < 6) {
+      } else if (passwordReg.length < 6) {
         toast.error("Please enter at least 6 digits for password.", {
           toastId: "toast11",
         });
         return false;
       } else if (!checkPassword(passwordReg)) {
-        setRegClicked(false);
         setRegError(
           "Password contains at least 8 characters or more, 1 number, 1 letter, 1 lower case letter, and 1 upper case letter required",
         );
@@ -133,11 +131,9 @@ function Navbar(props) {
         confirmPasswordElm.classList.add("error");
         return false;
       } else if (passwordReg !== confirmPassReg) {
-        toast.error("Comfirm password couldn't match.", { toastId: "toast11" });
+        toast.error("Confirm password couldn't match.", { toastId: "toast11" });
         return false;
-      }
-
-      if (!checkTerms) {
+      } else if (!checkTerms) {
         toast.error("Please accept terms and conditions.", {
           toastId: "toast11",
         });
@@ -145,7 +141,6 @@ function Navbar(props) {
       }
 
       setRegClicked(true);
-
       userSignUp()
         .then((data) => {
           setVerifyProcess(true);
@@ -173,7 +168,6 @@ function Navbar(props) {
         toastId: "toast11",
       });
       setRegClicked(false);
-
       return false;
     }
   };
@@ -357,12 +351,14 @@ function Navbar(props) {
         toast.error("Please enter all required input values.", {
           toastId: "toast11",
         });
+        setLoginError("Please enter email address and password");
         setIsLoading(false);
         return false;
       } else if (username && !checkUN) {
         toast.error("Please enter a valid email address.", {
           toastId: "toast11",
         });
+        setLoginError("Please enter a valid email address.");
         setIsLoading(false);
         return false;
       }
@@ -379,6 +375,7 @@ function Navbar(props) {
         })
         .catch((err) => {
           console.log(err);
+          setLoginError("Incorrect email or password.");
           toast.error("Incorrect email or password.", { toastId: "toast11" });
         })
         .finally(() => {
@@ -388,6 +385,7 @@ function Navbar(props) {
       toast.error("Please enter all required input values.", {
         toastId: "toast11",
       });
+      setLoginError("Please enter email address and password");
       setIsLoading(false);
       return false;
     }
@@ -786,6 +784,7 @@ function Navbar(props) {
                   Forgot Password?
                 </a>
               </div>
+              {/* {loginError && <span>{loginError}</span>} */}
             </div>
             <div>
               <LinkButton

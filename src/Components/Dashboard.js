@@ -222,7 +222,9 @@ function Dashboard() {
                         id="loadProjects"
                         className="PROJECT-one tow load-existing"
                         onClick={() => navigate("/load-project")}
-                        disabled={isGuestUser || projectList.length === 0}
+                        disabled={
+                          isGuestUser || projectList.length === 0 || !userID
+                        }
                       >
                         LOAD AN EXISTING PROJECT
                       </a>
