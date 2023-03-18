@@ -2748,7 +2748,9 @@ span.HAVE-blockw {
   padding: 10px 0;
 }
 
-input.otp-input {
+input.otp-input,
+.otp-input,
+.otp-input input {
   background: #dcdcdc 0% 0% no-repeat padding-box;
   border: none;
   outline: none;
@@ -2770,6 +2772,10 @@ input.otp-input {
   gap: 16px;
   padding-bottom: 32px;
   text-align: center;
+}
+
+.otp-container{
+  gap: 16px;
 }
 
 h6.EXISTING-title {

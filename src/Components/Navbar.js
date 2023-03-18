@@ -21,6 +21,9 @@ import { updateGuestLogin } from "./Services/UserService";
 import { checkPassword } from "../utils";
 import { useAuth } from "../Context/AuthProvider";
 import ChoosePlan from "./ChoosePlan";
+import Text from "../Components/Text";
+import OtpInput from "react-otp-input";
+
 import "../assets/styles/login.css";
 
 function Navbar(props) {
@@ -46,6 +49,7 @@ function Navbar(props) {
   const [verifyAccountClicked, setVerifyAccountClicked] = useState(false);
   const [regError, setRegError] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [otp, setOtp] = useState("");
   const { userId, currentPlanDetails, isLoggedIn, isGuestUser } = useAuth();
 
   // ---- Register ---
@@ -121,14 +125,6 @@ function Navbar(props) {
         toast.error("Please enter at least 6 digits for password.", {
           toastId: "toast11",
         });
-        return false;
-      } else if (!checkPassword(passwordReg)) {
-        setRegError(
-          "Password contains at least 8 characters or more, 1 number, 1 letter, 1 lower case letter, and 1 upper case letter required",
-        );
-
-        passwordElm.classList.add("error");
-        confirmPasswordElm.classList.add("error");
         return false;
       } else if (passwordReg !== confirmPassReg) {
         toast.error("Confirm password couldn't match.", { toastId: "toast11" });
@@ -242,16 +238,10 @@ function Navbar(props) {
   };
 
   const validateOTP = () => {
-    const errorOTP = [];
-    const otpElm = ["digit1", "digit2", "digit3", "digit4", "digit5", "digit6"];
-    otpElm.forEach((element) => {
-      let otpDigitElm = document.getElementById(element);
-      let checkOTPDigit = validateInput(otpDigitElm);
-      if (!checkOTPDigit) {
-        errorOTP.push(element);
-      }
-    });
-    return !errorOTP.length;
+    if (otp.length === 6) {
+      return true;
+    }
+    return false;
   };
 
   const handleUpdateGuestLogin = (uId) => {
@@ -308,7 +298,7 @@ function Navbar(props) {
     setVerifyAccountClicked(true);
     const checkOTP = validateOTP();
     if (checkOTP) {
-      const otpVal = OTP.d1 + OTP.d2 + OTP.d3 + OTP.d4 + OTP.d5 + OTP.d6;
+      const otpVal = otp;
 
       const user = new CognitoUser({
         Username: emailReg || username,
@@ -333,6 +323,7 @@ function Navbar(props) {
       });
     } else {
       setVerifyAccountClicked(false);
+      toast.error("Please enter a valid otp.");
     }
   };
 
@@ -348,16 +339,10 @@ function Navbar(props) {
 
     if (checkPass) {
       if (!username) {
-        toast.error("Please enter all required input values.", {
-          toastId: "toast11",
-        });
         setLoginError("Please enter email address and password");
         setIsLoading(false);
         return false;
       } else if (username && !checkUN) {
-        toast.error("Please enter a valid email address.", {
-          toastId: "toast11",
-        });
         setLoginError("Please enter a valid email address.");
         setIsLoading(false);
         return false;
@@ -365,7 +350,7 @@ function Navbar(props) {
       authenticate(username, password)
         .then((data) => {
           console.log(data);
-          toast.success("login success.");
+          // toast.success("login success.");
           ReactSession.set("building_user", username);
           ReactSession.set("is_logged_in", "true");
 
@@ -526,6 +511,11 @@ function Navbar(props) {
       default:
     }
   };
+
+  const handleOnChangeOtp = (otpValue) => {
+    setOtp(otpValue);
+  };
+
   return (
     <div className="main-nav mb-95px">
       <div className="brdr-bottom full">
@@ -784,7 +774,7 @@ function Navbar(props) {
                   Forgot Password?
                 </a>
               </div>
-              {/* {loginError && <span>{loginError}</span>} */}
+              {loginError && <Text text={loginError} type="error" />}
             </div>
             <div>
               <LinkButton
@@ -1101,84 +1091,14 @@ function Navbar(props) {
               <p className="Your-Email">Enter verification code</p>
             </div>
             <div className="otp-flex">
-              <input
-                autoComplete="off"
-                type="number"
+              <OtpInput
+                value={otp}
+                onChange={handleOnChangeOtp}
+                numInputs={6}
                 className="otp-input"
-                onChange={(e) => {
-                  SetOtpFunc(e, 1);
-                }}
-                id="digit1"
-                onKeyDown={keypressed}
-                minLength="1"
-                maxLength="1"
-                required
-                autoFocus
-              />
-              <input
-                autoComplete="off"
-                type="number"
-                className="otp-input"
-                onChange={(e) => {
-                  SetOtpFunc(e, 2);
-                }}
-                onKeyDown={keypressed}
-                id="digit2"
-                minLength="1"
-                maxLength="1"
-                required
-              />
-              <input
-                autoComplete="off"
-                type="number"
-                className="otp-input"
-                onChange={(e) => {
-                  SetOtpFunc(e, 3);
-                }}
-                onKeyDown={keypressed}
-                id="digit3"
-                minLength="1"
-                maxLength="1"
-                required
-              />
-              <input
-                autoComplete="off"
-                type="number"
-                className="otp-input"
-                onChange={(e) => {
-                  SetOtpFunc(e, 4);
-                }}
-                onKeyDown={keypressed}
-                id="digit4"
-                minLength="1"
-                maxLength="1"
-                required
-              />
-              <input
-                autoComplete="off"
-                type="number"
-                className="otp-input"
-                onChange={(e) => {
-                  SetOtpFunc(e, 5);
-                }}
-                onKeyDown={keypressed}
-                id="digit5"
-                minLength="1"
-                maxLength="1"
-                required
-              />
-              <input
-                autoComplete="off"
-                type="number"
-                className="otp-input"
-                onChange={(e) => {
-                  SetOtpFunc(e, 6);
-                }}
-                onKeyDown={keypressed}
-                id="digit6"
-                minLength="1"
-                maxLength="1"
-                required
+                containerStyle="otp-container"
+                isInputNum
+                shouldAutoFocus
               />
             </div>
             <div>
