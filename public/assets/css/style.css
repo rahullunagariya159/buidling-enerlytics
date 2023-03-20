@@ -911,7 +911,7 @@ p.or-log {
 }
 
 .top-sign {
-  padding: 40px 0;
+  padding: 30px 0;
   display: grid;
   gap: 16px;
 }
@@ -2770,11 +2770,11 @@ input.otp-input,
   display: flex;
   justify-content: center;
   gap: 16px;
-  padding-bottom: 32px;
+  padding-bottom: 22px;
   text-align: center;
 }
 
-.otp-container{
+.otp-container {
   gap: 16px;
 }
 
