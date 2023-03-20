@@ -230,6 +230,8 @@ function Dashboard() {
                         onClick={() => navigate("/load-project")}
                         disabled={
                           isGuestUser || projectList.length === 0 || !userID
+                            ? true
+                            : false
                         }
                       >
                         LOAD AN EXISTING PROJECT
