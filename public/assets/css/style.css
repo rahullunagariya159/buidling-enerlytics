@@ -3034,9 +3034,6 @@ a.five-btn-s-width {
   align-items: center;
   gap: 24px;
 }
-.five-flex-smae-btn a:hover {
-  color: #fff !important;
-}
 
 a.five-btn-s-width.black {
   background: #1c1c1c 0% 0% no-repeat padding-box;
