@@ -18,7 +18,10 @@ body {
   background-color: #f7f7f7;
   color: #111111;
 }
-
+body.modal-open {
+  overflow: auto !important;
+  padding-right: 0 !important;
+}
 a.PROJECT-one:hover,
 a.Register-done:hover,
 a.yes-logout:hover,

@@ -504,7 +504,7 @@ function Navbar(props) {
   };
 
   const handleOnChangeOtp = (otpValue) => {
-    setOtp(otpValue);
+    setOtp(otpValue.replace(/\D/g, ""));
     setVerificationError("");
   };
 
@@ -1098,7 +1098,7 @@ function Navbar(props) {
                 numInputs={6}
                 className="otp-input"
                 containerStyle="otp-container"
-                isInputNum
+                isInputNum={true}
                 shouldAutoFocus
               />
             </div>
