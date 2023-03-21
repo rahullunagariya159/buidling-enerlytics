@@ -11,18 +11,20 @@ import {
 import { validateInput } from "../config";
 import Navbar from "./Navbar";
 import { useAuth } from "../Context/AuthProvider";
+import Text from "./Text";
 
 function Dashboard() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [projectList, setProjectList] = useState([]);
   const [createProjectClicked, setCreateProjectClicked] = useState(false);
-
+  const [createProjectError, setCreateProjectError] = useState("");
   const isGuestUser = searchParams.get("skip") || false;
 
   const { userId: userID } = useAuth();
 
   const handleCreateProjectForGuest = () => {
+    setCreateProjectError("");
     let guestUserId = `${Math.floor(Date.now() / 1000)}`;
     ReactSession.set("guest_user_id", guestUserId);
     setCreateProjectClicked(true);
@@ -37,7 +39,7 @@ function Dashboard() {
       .then((response) => {
         setCreateProjectClicked(false);
         if (response.error) {
-          toast.error(response.error);
+          setCreateProjectError(response.error);
         } else {
           if (response && response.msg) {
             ReactSession.set("project_id", response.msg[0].id);
@@ -59,10 +61,14 @@ function Dashboard() {
       })
       .catch((err) => {
         setCreateProjectClicked(false);
+        setCreateProjectError(
+          "We are sorry, but something went wrong. Please try again later.",
+        );
       });
   };
 
   const handleCreateProject = () => {
+    setCreateProjectError("");
     let projectNameElm = document.getElementById("projectName");
     let checkPName = validateInput(projectNameElm);
 
@@ -74,7 +80,7 @@ function Dashboard() {
 
       createProject(payload).then((response) => {
         if (response.error) {
-          toast.error(response.error);
+          setCreateProjectError(response.error);
         } else {
           if (response && response.msg) {
             ReactSession.set("project_id", response.msg[0].id);
@@ -97,7 +103,7 @@ function Dashboard() {
         }
       });
     } else {
-      toast.error("Please enter a project name.", { toastId: "toast11" });
+      setCreateProjectError("Please enter a project name.");
     }
   };
 
@@ -224,6 +230,8 @@ function Dashboard() {
                         onClick={() => navigate("/load-project")}
                         disabled={
                           isGuestUser || projectList.length === 0 || !userID
+                            ? true
+                            : false
                         }
                       >
                         LOAD AN EXISTING PROJECT
@@ -272,6 +280,7 @@ function Dashboard() {
                       id="projectName"
                       placeholder="Project Name"
                       className="Project-input pop-create"
+                      onChange={() => setCreateProjectError("")}
                     />
                   </div>
                   {/* <div className="positionq">
@@ -279,6 +288,8 @@ function Dashboard() {
                 <img src="assets/img/Home-Page/homeFinal/Path 42.svg" className="arrow-ic" alt="" />
               </div> */}
                 </div>
+                <Text type="error" text={createProjectError} />
+
                 <div className="my-5">
                   <a
                     className="CONTINUE-btn clickable"

@@ -10,6 +10,7 @@ import AddCard from "../AddCard";
 import { getPlans, getPromoDetails, saveCard } from "../Services/UserService";
 import { validateInput } from "../../config";
 import { Routes } from "../../navigation/Routes";
+import Text from "../Text";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -31,6 +32,9 @@ const ChoosePlan = () => {
   const [applyPromoClicked, setApplyPromoClicked] = useState(false);
   const [applyPromoLoading, setApplyPromoLoading] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
+  const [promoCodeError, setPromoCodeError] = useState("");
+  const [buyPlanError, setBuyPlanError] = useState("");
+
   const [promo, setPromo] = useState("");
 
   const [searchParams] = useSearchParams();
@@ -118,6 +122,7 @@ const ChoosePlan = () => {
   };
 
   const removePromo = () => {
+    setPromoCodeError("");
     setPromo("");
     setDiscount(0);
     setPromoApplied(false);
@@ -125,6 +130,7 @@ const ChoosePlan = () => {
   };
 
   const handleBuyPlan = () => {
+    setBuyPlanError("");
     if (!userID) {
       return false;
     }
@@ -143,7 +149,10 @@ const ChoosePlan = () => {
 
     getPlans(payload).then((response) => {
       if (response.error) {
-        toast.error(response.error);
+        setBuyPlanError(
+          response.error ||
+            "We are sorry, but something went wrong. Please try again later.",
+        );
       } else {
         // data comes here..
         console.log(response);
@@ -171,11 +180,13 @@ const ChoosePlan = () => {
     } else {
       setPayClicked(false);
       document.getElementById("paymentMethod").classList.add("no-card-added");
-      toast.error("Add your payment details.", { toastId: "toast11" });
+      // toast.error("Add your payment details.", { toastId: "toast11" });
+      setBuyPlanError("Add your payment details.");
     }
   };
 
   const handlePromoInput = () => {
+    setPromoCodeError("");
     if (applyPromoClicked) {
       const promoElm = document.getElementById("promoCode");
       promoElm.classList.remove("error");
@@ -184,6 +195,7 @@ const ChoosePlan = () => {
   };
 
   const applyPromo = () => {
+    setPromoCodeError("");
     setApplyPromoClicked(true);
     const promoElm = document.getElementById("promoCode");
     const checkPromo = validateInput(promoElm);
@@ -195,7 +207,10 @@ const ChoosePlan = () => {
       getPromoDetails(payload)
         .then((response) => {
           if (response?.error) {
-            toast.error(response?.error);
+            setPromoCodeError(
+              response?.error ||
+                "We are sorry, but something went wrong. Please try again later.",
+            );
           } else if (response) {
             if (response?.data) {
               toast.success("Promocode applied successfully.", {
@@ -209,7 +224,7 @@ const ChoosePlan = () => {
         })
         .catch((err) => {
           promoElm.classList.add("error");
-          toast.error("Invalid Promo Code.", { toastId: "toast11" });
+          setPromoCodeError("Invalid Promo Code.");
         })
         .finally(() => {
           setApplyPromoLoading(false);
@@ -224,7 +239,7 @@ const ChoosePlan = () => {
 
   const getPaymentData = (data) => {
     console.log("PAYMENT_____", data);
-
+    setBuyPlanError("");
     if (data && data.paymentMethod) {
       const payload = {
         userId: userID,
@@ -237,7 +252,7 @@ const ChoosePlan = () => {
         .then((response) => {
           setAddCardClicked(false);
           if (response.error) {
-            toast.error(response.error);
+            setBuyPlanError(response.error);
           } else if (response) {
             if (response.data) {
               let cardData = {
@@ -264,9 +279,8 @@ const ChoosePlan = () => {
         .catch((err) => {
           console.log(err);
           setAddCardClicked(false);
-          toast.error(
+          setBuyPlanError(
             "Something went wrong while making the payment. Please try again.",
-            { toastId: "toast11" },
           );
         });
     }
@@ -731,6 +745,11 @@ const ChoosePlan = () => {
                         title="Remove"
                       />
                     </div>
+                    <Text
+                      type="error"
+                      text={promoCodeError}
+                      className="lbl-verification-err"
+                    />
                     <div>
                       <p className="Terms-pr">Terms & conditions applied</p>
                     </div>
@@ -807,6 +826,7 @@ const ChoosePlan = () => {
                       <p className="drk-grey">Total cost</p>
                       <p className="totle-grt">€{totalCost}</p>
                     </div>
+                    <Text text={buyPlanError} type="error" />
                   </div>
                   <div className="pay-back-flex">
                     <Button

@@ -18,7 +18,6 @@ import { Routes } from "../navigation/Routes";
 import LinkButton from "./LinkButton";
 import useEnterKeyListener from "../helpers/useEnterKeyListener";
 import { updateGuestLogin } from "./Services/UserService";
-import { checkPassword } from "../utils";
 import { useAuth } from "../Context/AuthProvider";
 import ChoosePlan from "./ChoosePlan";
 import Text from "../Components/Text";
@@ -50,6 +49,10 @@ function Navbar(props) {
   const [regError, setRegError] = useState("");
   const [loginError, setLoginError] = useState("");
   const [otp, setOtp] = useState("");
+  const [verificationError, setVerificationError] = useState("");
+  const [forgotPasswordError, setForgotPasswordError] = useState("");
+  const [resetNewPasswordError, setResetNewPasswordError] = useState("");
+  const [resetNewPasswordLoading, setResetNewPasswordLoading] = useState("");
   const { userId, currentPlanDetails, isLoggedIn, isGuestUser } = useAuth();
 
   // ---- Register ---
@@ -97,7 +100,7 @@ function Navbar(props) {
 
   const onSubmitSignup = (e) => {
     e.preventDefault();
-
+    setRegError("");
     const attributeList = [];
 
     let emailElm = document.getElementById("emailRegister");
@@ -112,27 +115,19 @@ function Navbar(props) {
 
     if (checkPass && checkCP) {
       if (!emailReg) {
-        toast.error("Please enter all required input values.", {
-          toastId: "toast11",
-        });
+        setRegError("Please enter all required input values.");
         return false;
       } else if (emailReg && !checkEmail) {
-        toast.error("Please enter valid email address.", {
-          toastId: "toast11",
-        });
+        setRegError("Please enter valid email address.");
         return false;
       } else if (passwordReg.length < 6) {
-        toast.error("Please enter at least 6 digits for password.", {
-          toastId: "toast11",
-        });
+        setRegError("Please enter at least 6 digits for password.");
         return false;
       } else if (passwordReg !== confirmPassReg) {
-        toast.error("Confirm password couldn't match.", { toastId: "toast11" });
+        setRegError("Confirm password couldn't match.");
         return false;
       } else if (!checkTerms) {
-        toast.error("Please accept terms and conditions.", {
-          toastId: "toast11",
-        });
+        setRegError("Please accept terms and conditions.");
         return false;
       }
 
@@ -146,23 +141,21 @@ function Navbar(props) {
         .catch((e) => {
           if (e === "UsernameExistsException") {
             console.log(e);
-            toast.error("Already register with this email address");
+            setRegError("Already register with this email address");
           } else if (e === "InvalidPasswordException") {
             passwordElm.classList.add("error");
-            toast.error("Please enter a valid password.", {
-              toastId: "toast11",
-            });
+            setRegError("Please enter a valid password.");
           } else {
-            toast.error(e);
+            setRegError(
+              "We are sorry, but something went wrong. Please try again later.",
+            );
           }
         })
         .finally(() => {
           setRegClicked(false);
         });
     } else {
-      toast.error("Please enter all required input values.", {
-        toastId: "toast11",
-      });
+      setRegError("Please enter all required input values.");
       setRegClicked(false);
       return false;
     }
@@ -296,6 +289,7 @@ function Navbar(props) {
   const verifyAccount = (e) => {
     e.preventDefault();
     setVerifyAccountClicked(true);
+    setVerificationError("");
     const checkOTP = validateOTP();
     if (checkOTP) {
       const otpVal = otp;
@@ -308,9 +302,8 @@ function Navbar(props) {
       user.confirmRegistration(otpVal, true, (err, data) => {
         if (err) {
           console.log(err);
-          toast.error(
+          setVerificationError(
             "Couldn't verify your account, please enter a valid OTP.",
-            { toastId: "toast11" },
           );
         } else {
           ReactSession.set("is_logged_in", "true");
@@ -323,12 +316,13 @@ function Navbar(props) {
       });
     } else {
       setVerifyAccountClicked(false);
-      toast.error("Please enter a valid otp.");
+      setVerificationError("Please enter a valid otp.");
     }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setLoginError("");
     setIsLoading(true);
 
     let usernameElm = document.getElementById("username");
@@ -350,7 +344,6 @@ function Navbar(props) {
       authenticate(username, password)
         .then((data) => {
           console.log(data);
-          // toast.success("login success.");
           ReactSession.set("building_user", username);
           ReactSession.set("is_logged_in", "true");
 
@@ -361,15 +354,11 @@ function Navbar(props) {
         .catch((err) => {
           console.log(err);
           setLoginError("Incorrect email or password.");
-          toast.error("Incorrect email or password.", { toastId: "toast11" });
         })
         .finally(() => {
           setIsLoading(false);
         });
     } else {
-      toast.error("Please enter all required input values.", {
-        toastId: "toast11",
-      });
       setLoginError("Please enter email address and password");
       setIsLoading(false);
       return false;
@@ -379,7 +368,7 @@ function Navbar(props) {
   const onForgotPassword = () => {
     let userEmailElm = document.getElementById("userEmail");
     let checkUE = validateInput(userEmailElm);
-
+    setForgotPasswordError("");
     if (checkUE) {
       const user = new CognitoUser({
         Username: email,
@@ -392,7 +381,7 @@ function Navbar(props) {
           console.log("CodeDeliveryData from forgotPassword: " + data);
         },
         onFailure: function (err) {
-          toast.error(err.message || JSON.stringify(err));
+          setForgotPasswordError(err.message || JSON.stringify(err));
         },
         //Optional automatic callback
         inputVerificationCode: function (data) {
@@ -404,13 +393,13 @@ function Navbar(props) {
         },
       });
     } else {
-      toast.error("Enter valid email address to reset password!", {
-        toastId: "toast11",
-      });
+      setForgotPasswordError("Enter valid email address to reset password!");
     }
   };
 
   const onSubmitPassword = () => {
+    setResetNewPasswordError("");
+    setResetNewPasswordLoading(true);
     var code = document.getElementById("verificationCode");
     var newPassword = document.getElementById("newPassword");
 
@@ -419,9 +408,10 @@ function Navbar(props) {
 
     if (checkCode && checkNP) {
       if (newPassword.value.length < 6) {
-        toast.error("Please enter atleast 6 digits for password.", {
-          toastId: "toast11",
-        });
+        setResetNewPasswordError(
+          "Please enter at least 6 digits for password.",
+        );
+        setResetNewPasswordLoading(false);
         return false;
       }
 
@@ -434,13 +424,14 @@ function Navbar(props) {
         onSuccess() {
           toast.success("Password reset successfully.");
           setTimeout((window.location.href = "/"), 2000);
+          setResetNewPasswordLoading(false);
         },
         onFailure(err) {
           console.log(err);
-          toast.error(
+          setResetNewPasswordError(
             "Password couldn't be updated, please check your verification code.",
-            { toastId: "toast11" },
           );
+          setResetNewPasswordLoading(false);
         },
       });
     }
@@ -514,6 +505,7 @@ function Navbar(props) {
 
   const handleOnChangeOtp = (otpValue) => {
     setOtp(otpValue);
+    setVerificationError("");
   };
 
   return (
@@ -716,7 +708,10 @@ function Navbar(props) {
                     placeholder="Email"
                     className="sign-in-input"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                      setLoginError("");
+                    }}
                   />
                 </div>
                 <div className="input-position">
@@ -729,6 +724,7 @@ function Navbar(props) {
                     onChange={(e) => {
                       setPassword(e.target.value);
                       setRegError("");
+                      setLoginError("");
                     }}
                     minLength={6}
                     maxLength={16}
@@ -774,7 +770,13 @@ function Navbar(props) {
                   Forgot Password?
                 </a>
               </div>
-              {loginError && <Text text={loginError} type="error" />}
+              {
+                <Text
+                  text={loginError}
+                  type="error"
+                  className="lbl-login-error"
+                />
+              }
             </div>
             <div>
               <LinkButton
@@ -874,6 +876,7 @@ function Navbar(props) {
                           onChange={(e) => {
                             setEmailReg(e.target.value);
                             updateValidation("email");
+                            setRegError("");
                           }}
                           placeholder="Email"
                           className="sign-in-input wigt"
@@ -985,6 +988,7 @@ function Navbar(props) {
                               onChange={() => {
                                 setTCAccepted(!tcAccepted);
                                 updateValidation("terms");
+                                setRegError("");
                               }}
                               required
                             />
@@ -1010,9 +1014,6 @@ function Navbar(props) {
                         isDisable={regClicked}
                         title="Register"
                       />
-                      {/* <a className="signin-btn" onClick={onSubmitSignup}>
-                        Register
-                      </a> */}
                       <a
                         id="getOTP"
                         data-bs-dismiss="modal"
@@ -1101,6 +1102,13 @@ function Navbar(props) {
                 shouldAutoFocus
               />
             </div>
+            {
+              <Text
+                type="error"
+                text={verificationError}
+                className="lbl-verification-err"
+              />
+            }
             <div>
               <LinkButton
                 className={`signin-btn ${regClicked ? "loading-button" : ""}`}
@@ -1156,7 +1164,10 @@ function Navbar(props) {
                   id="userEmail"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setForgotPasswordError("");
+                  }}
                   placeholder="Enter your email address"
                   className="sign-in-input"
                 />
@@ -1171,6 +1182,11 @@ function Navbar(props) {
                 </a>
               </div>
             </div>
+            <Text
+              type="error"
+              text={forgotPasswordError}
+              className="forgotpassword-error"
+            />
             <div>
               {/* data-bs-dismiss="modal"  */}
               <a className="signin-btn" onClick={onForgotPassword}>
@@ -1216,7 +1232,10 @@ function Navbar(props) {
                   id="verificationCode"
                   type="number"
                   value={code}
-                  onChange={(e) => setCode(e.target.value)}
+                  onChange={(e) => {
+                    setCode(e.target.value);
+                    setResetNewPasswordError("");
+                  }}
                   placeholder="Enter verification code sent on email"
                   className="sign-in-input"
                 />
@@ -1224,7 +1243,10 @@ function Navbar(props) {
                   id="newPassword"
                   type="password"
                   value={newpassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  onChange={(e) => {
+                    setNewPassword(e.target.value);
+                    setResetNewPasswordError("");
+                  }}
                   placeholder="New Password"
                   className="sign-in-input"
                 />
@@ -1259,11 +1281,22 @@ function Navbar(props) {
                 </a>
               </div>
             </div>
+            <Text
+              type="error"
+              text={resetNewPasswordError}
+              className="forgotpassword-error"
+            />
             <div>
               {/* data-bs-dismiss="modal"  */}
-              <a className="signin-btn" onClick={onSubmitPassword}>
-                Submit
-              </a>
+              <LinkButton
+                className={`signin-btn ${
+                  resetNewPasswordLoading ? "loading-button" : ""
+                }`}
+                title="Submit"
+                isLoading={resetNewPasswordLoading}
+                isDisable={resetNewPasswordLoading}
+                onClick={onSubmitPassword}
+              />
             </div>
           </div>
         </div>
