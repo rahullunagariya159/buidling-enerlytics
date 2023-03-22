@@ -16,8 +16,11 @@ const LinkButton = ({
       disabled={isDisable}
       id={id || randomId}
     >
-      {isLoading && <i className="fa fa-spinner fa-spin link-spinner-icon"></i>}{" "}
-      {title}
+      {isLoading ? (
+        <i className="fa fa-spinner fa-spin link-spinner-icon"></i>
+      ) : (
+        title
+      )}
     </a>
   );
 };
