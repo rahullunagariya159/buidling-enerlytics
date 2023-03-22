@@ -15,6 +15,7 @@
     "bootstrap": "^5.2.3",
     "concaveman": "^1.2.1",
     "date-fns": "^2.29.3",
+    "formik": "^2.2.9",
     "html2canvas": "^1.4.1",
     "hull.js": "^1.0.2",
     "imask": "^6.0.7",
@@ -36,6 +37,7 @@
     "three": "0.124.0",
     "three-csg-ts": "^3.1.10",
     "web-vitals": "^1.0.1",
+    "yup": "^1.0.2",
     "zen-push": "^0.3.1"
   },
   "scripts": {

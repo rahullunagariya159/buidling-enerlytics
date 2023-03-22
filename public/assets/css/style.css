@@ -1265,18 +1265,9 @@ h1.start-title {
 }
 
 input.Project-input {
-  /* font: normal normal normal 14px/21px Poppins;
-    letter-spacing: 0.28px;
-    color: #8D8D8D;
-    text-transform: capitalize;
-    border-bottom: 3px solid #DCDCDC !important;
-    border: none;
-    padding-bottom: 12px;
-    width: 70%; */
-
-  font: normal normal normal 10px/16px Poppins;
+  font: normal normal normal 12px/18px Poppins;
   letter-spacing: 0.28px;
-  color: #013a67;
+  color: #000;
   background: #dcdcdc 0% 0% no-repeat padding-box;
   border-radius: 4px;
   padding: 14px 20px;

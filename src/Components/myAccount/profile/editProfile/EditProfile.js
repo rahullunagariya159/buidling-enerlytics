@@ -1,5 +1,4 @@
 import React from "react";
-import { Container, Row } from "react-bootstrap";
 import {
   BlueLabel,
   ContactHeader,
@@ -19,7 +18,6 @@ import {
   FormSection,
   Items,
   RowWrp,
-  FormContent,
   DecoratedLabel,
 } from "./style.js";
 const EditProfile = () => {
@@ -49,40 +47,52 @@ const EditProfile = () => {
       <FormSection>
         <Title>EDIT PROFILE</Title>
       </FormSection>
-      {/* <div>
+      <div>
         <SectionTitle>PERSONAL DETAILS</SectionTitle>
-        <RowWrp>
-          <Items>
-            <Label>First name</Label>
-            <input type="text" placeholder="First name" />
-          </Items>
-          <Items>
-            <Label>Last name</Label>
-            <input type="text" placeholder="Last name" />
-          </Items>
-        </RowWrp>
-        <RowWrp>
-          <Items>
-            <Label>Password</Label>
-            <input type="password" placeholder="Password" />
-          </Items>
-          <Items>
-            <Label>User id</Label>
-            <input type="text" placeholder="User id" />
-          </Items>
-        </RowWrp>
-        <DecoratedLabel>Change password</DecoratedLabel>
+        <form>
+          <RowWrp>
+            <Items>
+              <Label>First name</Label>
+              <input type="text" placeholder="First name" />
+            </Items>
+            <Items>
+              <Label>Last name</Label>
+              <input type="text" placeholder="Last name" />
+            </Items>
+          </RowWrp>
+          <RowWrp>
+            <Items>
+              <Label>Password</Label>
+              <input type="password" placeholder="Password" />
+            </Items>
+            <Items>
+              <Label>User id</Label>
+              <input type="text" placeholder="User id" />
+            </Items>
+          </RowWrp>
+          <DecoratedLabel>Change password</DecoratedLabel>
+        </form>
       </div>
       <div>
         <SectionTitle>ADDRESS DETAILS</SectionTitle>
         <RowWrp>
           <Items>
             <Label>Country</Label>
-            <input type="text" placeholder="First name" />
+            <select id="Country" name="Country">
+              <option value="">Select</option>
+              <option value="India">India</option>
+              <option value="Japan">Japan</option>
+              <option value="Australia">Australia</option>
+            </select>
           </Items>
           <Items>
             <Label>City</Label>
-            <input type="text" placeholder="Last name" />
+            <select id="City" name="City">
+              <option value="">Select</option>
+              <option value="India">India</option>
+              <option value="Japan">Japan</option>
+              <option value="Australia">Australia</option>
+            </select>
           </Items>
         </RowWrp>
         <RowWrp>
@@ -101,8 +111,7 @@ const EditProfile = () => {
             <input type="text" placeholder="Apt, suite, etc" />
           </Items>
         </RowWrp>
-        <DecoratedLabel>Change password</DecoratedLabel>
-      </div> */}
+      </div>
     </MainWrapper>
   );
 };

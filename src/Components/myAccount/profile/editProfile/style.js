@@ -31,6 +31,10 @@ export const RowWrp = styled.div`
   margin-top: 20px;
 `;
 export const Items = styled.div`
+  position: relative;
+  display: flex;
+  gap: 7px;
+  flex-direction: column;
   Label {
     font: normal normal 300 12px/18px Poppins;
     letter-spacing: 0px;
@@ -41,11 +45,29 @@ export const Items = styled.div`
     letter-spacing: 0px;
     color: #1c1c1c;
     padding: 12px 20px;
-    max-width: 274px;
+    min-width: 274px;
     height: 40px;
     background: #ffffff 0% 0% no-repeat padding-box;
     border: 1px solid #dcdcdc;
     border-radius: 4px;
+  }
+  select {
+    font: normal normal 600 12px/18px Poppins;
+    letter-spacing: 0px;
+    color: #1c1c1c;
+    padding: 5px 20px;
+    min-width: 274px;
+    height: 40px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    background-image: url("assets/img/profile/dropDownArrow.svg");
+    background-position: calc(100% - 20px) calc(1em + 2px),
+      calc(100% - 15px) calc(1em + 2px), 100% 0;
+    background-size: 11px 8px;
   }
 `;
 export const SectionTitle = styled.div`
