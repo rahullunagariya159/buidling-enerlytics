@@ -1,4 +1,6 @@
 import React from "react";
+import CancelButton from "../../../CancelButton.js";
+import LinkButton from "../../../LinkButton.js";
 import {
   BlueLabel,
   ContactHeader,
@@ -19,6 +21,7 @@ import {
   Items,
   RowWrp,
   DecoratedLabel,
+  FooterButton,
 } from "./style.js";
 const EditProfile = () => {
   return (
@@ -112,6 +115,38 @@ const EditProfile = () => {
           </Items>
         </RowWrp>
       </div>
+      <div>
+        <SectionTitle>CONTACT DETAILS</SectionTitle>
+        <RowWrp>
+          <Items>
+            <Label>Phone number</Label>
+            <select>
+              <option value="">+91</option>
+              <option value="India">+21</option>
+              <option value="Japan">+15</option>
+              <option value="Australia">+18</option>
+            </select>
+          </Items>
+          <Items>
+            <Label>E-mail</Label>
+            <input type="email" placeholder="Email" />
+          </Items>
+        </RowWrp>
+        <RowWrp>
+          <Items>
+            <Label>Company name</Label>
+            <input type="text" placeholder="Company name" />
+          </Items>
+          <Items>
+            <Label>Website</Label>
+            <input type="text" placeholder="Website" />
+          </Items>
+        </RowWrp>
+      </div>
+      <FooterButton>
+        <LinkButton className={`signin-btn `} title="Save" />
+        <CancelButton title="Cancel" />
+      </FooterButton>
     </MainWrapper>
   );
 };

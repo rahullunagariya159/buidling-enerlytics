@@ -4247,3 +4247,12 @@ img.hgyu {
   position: relative;
   z-index: 111;
 }
+.cancel-btn {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #8d8d8d;
+  border-radius: 4px;
+  color: #8d8d8d;
+  padding: 8px 40px;
+  font: normal normal normal 10px/16px Poppins;
+  letter-spacing: 0.2px;
+}

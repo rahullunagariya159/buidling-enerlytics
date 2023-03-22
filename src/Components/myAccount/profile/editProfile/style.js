@@ -84,3 +84,8 @@ export const DecoratedLabel = styled.div`
   color: #1c1c1c;
   margin-top: 10px;
 `;
+export const FooterButton = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 20px;
+`;
