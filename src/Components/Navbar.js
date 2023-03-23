@@ -397,7 +397,7 @@ function Navbar(props) {
     }
   };
 
-  const onSubmitPassword = () => {
+  const onSubmitPassword = async () => {
     setResetNewPasswordError("");
     setResetNewPasswordLoading(true);
     var code = document.getElementById("verificationCode");
@@ -420,7 +420,7 @@ function Navbar(props) {
         Pool: UserPool,
       });
 
-      user.confirmPassword(code.value, newPassword.value, {
+      await user.confirmPassword(code.value, newPassword.value, {
         onSuccess() {
           toast.success("Password reset successfully.");
           setTimeout((window.location.href = "/"), 2000);
@@ -434,6 +434,8 @@ function Navbar(props) {
           setResetNewPasswordLoading(false);
         },
       });
+    } else {
+      setResetNewPasswordLoading(false);
     }
   };
 

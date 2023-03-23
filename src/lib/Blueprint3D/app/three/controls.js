@@ -162,16 +162,16 @@ export var Controls = function (object, domElement) {
       // orthographic
       scope.panLeft(
         (delta.x * (scope.object.right - scope.object.left)) /
-          element.clientWidth
+          element.clientWidth,
       );
       scope.panUp(
         (delta.y * (scope.object.top - scope.object.bottom)) /
-          element.clientHeight
+          element.clientHeight,
       );
     } else {
       // camera neither orthographic or perspective - warn user
       console.warn(
-        "WARNING: OrbitControls.js encountered an unknown camera type - pan disabled."
+        "WARNING: OrbitControls.js encountered an unknown camera type - pan disabled.",
       );
     }
 
@@ -210,7 +210,7 @@ export var Controls = function (object, domElement) {
     // angle from y-axis
     let phi = Math.atan2(
       Math.sqrt(offset.x * offset.x + offset.z * offset.z),
-      offset.y
+      offset.y,
     );
 
     if (this.autoRotate) {
@@ -314,17 +314,17 @@ export var Controls = function (object, domElement) {
       // rotating across whole screen goes 360 degrees around
       scope.rotateLeft(
         ((2 * Math.PI * rotateDelta.x) / element.clientWidth) *
-          scope.rotateSpeed
+          scope.rotateSpeed,
       );
       // rotating up and down along whole screen attempts to go 360, but limited to 180
       scope.rotateUp(
         ((2 * Math.PI * rotateDelta.y) / element.clientHeight) *
-          scope.rotateSpeed
+          scope.rotateSpeed,
       );
 
       rotateStart.copy(rotateEnd);
     } else if (state === STATE.DOLLY) {
-      console.log('DOLLY__');
+      console.log("DOLLY__");
       if (scope.noZoom === true) return;
 
       dollyEnd.set(event.clientX, event.clientY);
@@ -338,7 +338,7 @@ export var Controls = function (object, domElement) {
 
       dollyStart.copy(dollyEnd);
     } else if (state === STATE.PAN) {
-      console.log('PAN__');
+      console.log("PAN__");
       if (scope.noPan === true) return;
 
       panEnd.set(event.clientX, event.clientY);
@@ -364,6 +364,8 @@ export var Controls = function (object, domElement) {
   }
 
   function onMouseWheel(event) {
+    event.preventDefault();
+    event.stopPropagation();
     if (scope.enabled === false || scope.noZoom === true) return;
 
     let delta = 0;
@@ -483,12 +485,12 @@ export var Controls = function (object, domElement) {
         // rotating across whole screen goes 360 degrees around
         scope.rotateLeft(
           ((2 * Math.PI * rotateDelta.x) / element.clientWidth) *
-            scope.rotateSpeed
+            scope.rotateSpeed,
         );
         // rotating up and down along whole screen attempts to go 360, but limited to 180
         scope.rotateUp(
           ((2 * Math.PI * rotateDelta.y) / element.clientHeight) *
-            scope.rotateSpeed
+            scope.rotateSpeed,
         );
 
         rotateStart.copy(rotateEnd);
@@ -551,7 +553,7 @@ export var Controls = function (object, domElement) {
     (event) => {
       event.preventDefault();
     },
-    false
+    false,
   );
   this.domElement.addEventListener("mousedown", onMouseDown, false);
   this.domElement.addEventListener("mousewheel", onMouseWheel, false);

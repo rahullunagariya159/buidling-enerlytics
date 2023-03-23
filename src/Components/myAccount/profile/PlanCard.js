@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.js";
 import {
   PlanInfo,
@@ -11,8 +10,23 @@ import {
   YellowLargeLabel,
   UnderlineText,
 } from "./style.js";
+import { useAuth } from "../../../Context/AuthProvider";
+
 const PlanCard = () => {
-  const [plan, setPlan] = useState(true);
+  const [plan, setPlan] = useState(false);
+  const { userProfileDetails } = useAuth();
+
+  const handleUpgrdePlan = (e) => {
+    e.preventDefault();
+    document.getElementById("enablePlans").click();
+  };
+
+  useEffect(() => {
+    if (userProfileDetails?.plan !== "Trial") {
+      setPlan(true);
+    }
+  }, [userProfileDetails?.plan]);
+
   return (
     <PlanInfo>
       <PlanVerticalLine />
@@ -20,9 +34,9 @@ const PlanCard = () => {
         <ActivePlanContent>
           <YellowLabel plan={plan}>Active plan</YellowLabel>
           <YellowLargeLabel plan={plan}>
-            {plan ? "Trial" : "Home"}
+            {userProfileDetails?.plan ? userProfileDetails?.plan : "Trial"}
           </YellowLargeLabel>
-          <UnderlineText onClick={() => setPlan(!plan)}>
+          <UnderlineText onClick={(e) => handleUpgrdePlan(e)}>
             Upgrade now
           </UnderlineText>
         </ActivePlanContent>

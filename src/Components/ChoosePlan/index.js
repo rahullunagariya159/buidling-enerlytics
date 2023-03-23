@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useSearchParams, useLocation, matchPath } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthProvider";
 import LinkButton from "../LinkButton";
 import Button from "../Button";
@@ -45,10 +46,13 @@ const ChoosePlan = () => {
 
   const projectName = searchParams.get("name") ? searchParams.get("name") : "";
 
+  const navigate = useNavigate();
+
   const {
     userId: userID,
     setCurrentPlanDetails,
     isOpenChoosePlanPopup,
+    userProfileDetails,
   } = useAuth();
 
   const handleRedirection = async () => {
@@ -71,6 +75,13 @@ const ChoosePlan = () => {
     if (!userID) {
       return false;
     }
+
+    if (userID || !userProfileDetails?.plan) {
+      document.getElementById("CHOOSEPLAN").classList.remove("show");
+      // document.getElementsByClassName("modal-backdrop").style.opacity = 0;
+      return false;
+    }
+
     const payload = {
       type: "buy",
       userId: userID,
@@ -145,6 +156,10 @@ const ChoosePlan = () => {
 
     if (cardAdded && selectedCard.cardId) {
       payload.cardId = selectedCard.cardId;
+    }
+
+    if (promoApplied) {
+      payload.promoCodeName = document.getElementById("promoCode").value;
     }
 
     getPlans(payload).then((response) => {
@@ -358,6 +373,7 @@ const ChoosePlan = () => {
               </div>
               <div className="col-lg-3 text-end">
                 <button
+                  id="btnChoosePlanClose"
                   type="button"
                   className="x-btn"
                   onClick={() => skipToBuy("Trial")}
