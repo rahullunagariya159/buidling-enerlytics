@@ -86,6 +86,56 @@ export const DecoratedLabel = styled.div`
 `;
 export const FooterButton = styled.div`
   display: flex;
-  gap: 0.5rem;
-  margin-top: 20px;
+  gap: 1rem;
+  margin-top: 50px;
+`;
+export const PhoneNumberItems = styled.div`
+  position: relative;
+  display: flex;
+  gap: 7px;
+  flex-direction: column;
+`;
+export const SelectWrp = styled.div`
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  max-width: 274px;
+  display: flex;
+  align-items: center;
+  select {
+    font: normal normal 600 12px/18px Poppins;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+    letter-spacing: 0px;
+    color: #1c1c1c;
+    padding: 5px 25px 5px 5px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    background-image: url("assets/img/profile/dropDownArrow.svg");
+    background-position: calc(100% - 10px) calc(1em + 2px),
+      calc(100% - 5px) calc(1em + 2px), 100% 0;
+    background-size: 9px 12px;
+  }
+  input {
+    font: normal normal 600 12px/18px Poppins;
+    letter-spacing: 0px;
+    color: #1c1c1c;
+    padding: 12px 11px;
+    height: 40px;
+    min-width: 140px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border-left: 1px solid #dcdcdc !important;
+    border-right: none;
+    border-bottom: none;
+    border-top: none;
+    border-radius: 0;
+  }
+  label {
+    font: normal normal normal 12px/16px Poppins;
+    letter-spacing: 0px;
+    color: #00ade4;
+    padding: 0 10px;
+  }
 `;

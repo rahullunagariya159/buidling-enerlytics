@@ -22,6 +22,8 @@ import {
   RowWrp,
   DecoratedLabel,
   FooterButton,
+  PhoneNumberItems,
+  SelectWrp,
 } from "./style.js";
 const EditProfile = () => {
   return (
@@ -118,15 +120,19 @@ const EditProfile = () => {
       <div>
         <SectionTitle>CONTACT DETAILS</SectionTitle>
         <RowWrp>
-          <Items>
+          <PhoneNumberItems>
             <Label>Phone number</Label>
-            <select>
-              <option value="">+91</option>
-              <option value="India">+21</option>
-              <option value="Japan">+15</option>
-              <option value="Australia">+18</option>
-            </select>
-          </Items>
+            <SelectWrp>
+              <select>
+                <option value="">+91</option>
+                <option value="India">+21</option>
+                <option value="Japan">+15</option>
+                <option value="Australia">+18</option>
+              </select>
+              <input type="text" />
+              <label>Verified</label>
+            </SelectWrp>
+          </PhoneNumberItems>
           <Items>
             <Label>E-mail</Label>
             <input type="email" placeholder="Email" />
