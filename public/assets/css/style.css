@@ -3285,6 +3285,22 @@ a.Register {
   box-shadow: 0px 4px 10px #d8d8d8;
   border-radius: 0px 0px 4px 4px;
 }
+.dropdown-content-filter {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  overflow: auto;
+  box-shadow: 0px 8px 16px -5px rgb(0 0 0 / 20%);
+  z-index: 999;
+  top: 56px;
+  right: 0;
+  border-radius: 8px;
+  width: 168px;
+  padding: 16px 8px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 4px 10px #d8d8d8;
+  border-radius: 0px 0px 4px 4px;
+}
 .position-fixed {
   right: 14.5% !important;
 }
@@ -4255,4 +4271,28 @@ img.hgyu {
   padding: 8px 40px;
   font: normal normal normal 10px/16px Poppins;
   letter-spacing: 0.2px;
+}
+.sub-plan {
+  width: fit-content;
+  padding: 8px 30px !important;
+  margin-top: 20px;
+}
+.upgrade-now-btn {
+  padding: 15px 20px;
+  background: transparent linear-gradient(90deg, #f7931e 0%, #f15a24 100%) 0% 0%
+    no-repeat padding-box;
+  border-radius: 4px;
+  font: 500 14px/14px Poppins;
+  letter-spacing: 0.37px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.upgrade-now-btn:hover {
+  color: #fff;
+  box-shadow: 0px 0px 8px #0000004d;
+  transition: 0.2s;
+  cursor: pointer;
 }

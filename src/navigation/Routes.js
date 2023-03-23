@@ -8,4 +8,5 @@ export const Routes = {
   contactUs: "/contact-us",
   pricing: "/pricing",
   aboutUs: "/about-us",
+  profile: "/my-account",
 };

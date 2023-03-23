@@ -7,6 +7,7 @@ const LinkButton = ({
   className,
   onClick,
   id,
+  icon,
 }) => {
   const randomId = (Math.random() + 1).toString(36).substring(7);
   return (
@@ -21,6 +22,7 @@ const LinkButton = ({
       ) : (
         title
       )}
+      {icon && <i className="fa fa-spinner fa-spin link-spinner-icon"></i>}
     </a>
   );
 };

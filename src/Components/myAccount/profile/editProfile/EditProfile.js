@@ -25,7 +25,7 @@ import {
   PhoneNumberItems,
   SelectWrp,
 } from "./style.js";
-const EditProfile = () => {
+const EditProfile = ({ childToParent }) => {
   return (
     <MainWrapper>
       <HeaderWrapper>
@@ -151,7 +151,7 @@ const EditProfile = () => {
       </div>
       <FooterButton>
         <LinkButton className={`signin-btn `} title="Save" />
-        <CancelButton title="Cancel" />
+        <CancelButton title="Cancel" onClick={() => childToParent()} />
       </FooterButton>
     </MainWrapper>
   );

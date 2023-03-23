@@ -16,7 +16,7 @@ import {
 } from "./style.js";
 import { useAuth } from "../../../../Context/AuthProvider";
 
-const PersonalDetails = () => {
+const PersonalDetails = ({ childToParent }) => {
   const { userProfileDetails } = useAuth();
 
   const handleUpgrdePlan = (e) => {
@@ -28,7 +28,7 @@ const PersonalDetails = () => {
     <Wrapper>
       <Header>
         <HeaderTitle>PERSONAL DETAILS</HeaderTitle>
-        <EditProfile>
+        <EditProfile onClick={() => childToParent()}>
           <img src="assets/img/profile/edit.svg" alt="editProfile" />
           <DecorationText>Edit profile</DecorationText>
         </EditProfile>

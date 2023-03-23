@@ -36,7 +36,7 @@ export const SidebarMenu = styled.div`
   border-right: 1px solid #f1f1f1;
   position: static;
   top: 8rem;
-  height: 100vh;
+  /* height: 100vh; */
 `;
 
 export const SettingTitle = styled.div`

@@ -22,7 +22,6 @@ import { useAuth } from "../Context/AuthProvider";
 import ChoosePlan from "./ChoosePlan";
 import Text from "../Components/Text";
 import OtpInput from "react-otp-input";
-
 import "../assets/styles/login.css";
 
 function Navbar(props) {
@@ -80,6 +79,10 @@ function Navbar(props) {
     }
   };
 
+  const profileScreen = () => {
+    // navigate(`${Routes.profile}`);
+    window.location.replace(`${Routes.profile}`);
+  };
   const logoutSession = () => {
     logout();
 
@@ -1333,6 +1336,9 @@ function Navbar(props) {
               </a>
               <a className="signin-btn cancel-logout" data-bs-dismiss="modal">
                 Cancel
+              </a>
+              <a className="signin-btn yes-logout" onClick={profileScreen}>
+                Profile
               </a>
             </div>
           </div>
