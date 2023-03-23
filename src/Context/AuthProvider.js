@@ -5,6 +5,7 @@ import { ReactSession } from "react-client-session";
 import { toast } from "react-toastify";
 
 import { getPlans } from "../Components/Services/UserService";
+import { getUserDetails } from "../Components/Services/UserProfileService";
 
 const AuthContext = React.createContext();
 
@@ -27,6 +28,8 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   // user detail
   const [userdetails, setUserDetails] = useState(null);
+  const [userProfileDetails, setUserProfileDetails] = useState({});
+
   // error state
   const [errorstate, setErrorState] = useState(false);
   const [customState, setCustomState] = useState(null);
@@ -41,6 +44,17 @@ export function AuthProvider({ children }) {
   // ========================================================================
   // FUNCTIONS
   // =========================================================================
+
+  const getUserInfo = async (userId) => {
+    await getUserDetails(userId).then((response) => {
+      if (response?.error) {
+        toast.error(response?.error || "Something went wrong");
+      }
+      if (response?.status === 200 && response?.data?.data) {
+        setUserProfileDetails(response?.data?.data);
+      }
+    });
+  };
 
   const checkPlans = (ID) => {
     if (!ID) {
@@ -168,6 +182,7 @@ export function AuthProvider({ children }) {
   useMemo(() => {
     if (userId) {
       checkPlans(userId);
+      getUserInfo(userId);
     }
   }, [userId]);
 
@@ -182,6 +197,7 @@ export function AuthProvider({ children }) {
     currentPlanDetails,
     setCurrentPlanDetails,
     isOpenChoosePlanPopup,
+    userProfileDetails,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

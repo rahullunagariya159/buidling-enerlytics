@@ -14,7 +14,16 @@ import {
   ValuesWrp,
   Wrapper,
 } from "./style.js";
+import { useAuth } from "../../../../Context/AuthProvider";
+
 const PersonalDetails = () => {
+  const { userProfileDetails } = useAuth();
+
+  const handleUpgrdePlan = (e) => {
+    e.preventDefault();
+    document.getElementById("enablePlans").click();
+  };
+
   return (
     <Wrapper>
       <Header>
@@ -33,16 +42,21 @@ const PersonalDetails = () => {
           <GrayLabel>Company name</GrayLabel>
         </ItemsWrp>
         <ValuesWrp>
-          <ValueLabel>Golden Designs</ValueLabel>
-          <ValueLabel>xyz.com</ValueLabel>
+          <ValueLabel>
+            {" "}
+            {(userProfileDetails?.first_name || "") +
+              " " +
+              (userProfileDetails?.last_name || "")}
+          </ValueLabel>
+          <ValueLabel>{userProfileDetails?.website || "-"}</ValueLabel>
           <UpgradeWrp>
-            <ValueLabel>Home</ValueLabel>
-            <UpgradeButton>
+            <ValueLabel>{userProfileDetails?.plan || "-"}</ValueLabel>
+            <UpgradeButton onClick={(e) => handleUpgrdePlan(e)}>
               Upgrade
               <img src="assets/img/profile/upArrow.svg" alt="" />
             </UpgradeButton>
           </UpgradeWrp>
-          <ValueLabel>Building Enerlytics</ValueLabel>
+          <ValueLabel>{userProfileDetails?.company_name || "-"}</ValueLabel>
         </ValuesWrp>
       </PersonalInfo>
       <HeaderTitle>ADDRESS DETAILS</HeaderTitle>
@@ -56,11 +70,11 @@ const PersonalDetails = () => {
           <GrayLabel>Postal code</GrayLabel>
         </ItemsWrp>
         <ValuesWrp>
-          <ValueLabel>Canada</ValueLabel>
-          <ValueLabel>41 light-catcher street</ValueLabel>
-          <ValueLabel>Daden oaks</ValueLabel>
-          <ValueLabel>Torronto</ValueLabel>
-          <ValueLabel>L6P 1N6</ValueLabel>
+          <ValueLabel>{userProfileDetails?.country || "-"}</ValueLabel>
+          <ValueLabel>{userProfileDetails?.address || "-"}</ValueLabel>
+          <ValueLabel>{userProfileDetails?.apt || "-"}</ValueLabel>
+          <ValueLabel>{userProfileDetails?.city || "-"}</ValueLabel>
+          <ValueLabel>{userProfileDetails?.postal_code || "-"}</ValueLabel>
         </ValuesWrp>
       </PersonalInfo>
     </Wrapper>

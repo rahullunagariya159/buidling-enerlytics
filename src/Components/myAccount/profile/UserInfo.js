@@ -19,39 +19,56 @@ import {
   LocationWrp,
   PhoneWrp,
 } from "./style.js";
+import { useAuth } from "../../../Context/AuthProvider";
+
 const UserInfo = () => {
+  const { userProfileDetails } = useAuth();
+
   return (
     <ProfileWrp>
       <UserLogo>
         <ImageWrp>
-          <img src="assets/img/profile/userLogo.png" alt="" />
+          <img
+            src={
+              userProfileDetails?.profile_pic ||
+              "assets/img/profile/userLogo.png"
+            }
+            alt=""
+          />
         </ImageWrp>
         <BlueLabel>Change</BlueLabel>
       </UserLogo>
       <ProfileInfo>
         <ContactHeader>
           <div>
-            <UserName>Golden Designs</UserName>
+            <UserName>
+              {(userProfileDetails?.first_name || "") +
+                " " +
+                (userProfileDetails?.last_name || "")}
+            </UserName>
             <Role>golden_design12</Role>
           </div>
           <VerticalLine></VerticalLine>
           <CreditWrp>
             <SmallLabel>Available credits</SmallLabel>
-            <CreditLabel>500</CreditLabel>
+            <CreditLabel>{userProfileDetails?.credits || 0}</CreditLabel>
           </CreditWrp>
         </ContactHeader>
         <ContactWrp>
           <LocationWrp>
             <img src="assets/img/profile/location.png" alt=" " />
-            <Label>Canada, Ontario</Label>
+            <Label>
+              {userProfileDetails?.address}, {userProfileDetails?.city}{" "}
+              {userProfileDetails?.country}{" "}
+            </Label>
           </LocationWrp>
           <PhoneWrp>
             <img src="assets/img/profile/phone.png" alt=" " />
-            <Label>9876541234</Label>
+            <Label>{userProfileDetails?.phone_no || ""}</Label>
           </PhoneWrp>
           <EmailWrp>
             <img src="assets/img/profile/mail.png" alt=" " />
-            <Label>xyz@gmail.com</Label>
+            <Label>{userProfileDetails?.email || ""}</Label>
           </EmailWrp>
         </ContactWrp>
       </ProfileInfo>

@@ -32,6 +32,10 @@ export const Label = styled.div`
   font: normal normal medium 12px/18px Poppins;
   letter-spacing: 0px;
   color: #a2a2a2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 180px;
 `;
 export const ImageWrp = styled.div`
   img {
@@ -138,7 +142,7 @@ export const ActiveCard = styled.div`
   height: 128px;
 `;
 export const ActivePlanContent = styled.div`
-  padding: 21px 0 18px 27px;
+  padding: 21px 0 18px 13px;
 `;
 export const YellowLabel = styled.div`
   font: normal normal 500 12px/18px Poppins;

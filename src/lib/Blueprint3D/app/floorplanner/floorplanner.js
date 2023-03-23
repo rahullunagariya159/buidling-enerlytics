@@ -6,7 +6,7 @@ import FloorplannerView, {
 } from "./floorplanner_view";
 
 const snapTolerance = Core.Configuration.getNumericValue(
-  Core.configSnapTolernance
+  Core.configSnapTolernance,
 );
 
 const cmPerFoot = 30.48;
@@ -133,7 +133,7 @@ export default class Floorplanner {
     this.updateGrid();
 
     this.canvasElement.addEventListener("wheel", (event) =>
-      scope.mouseWheel(event)
+      scope.mouseWheel(event),
     );
 
     this.canvasElement.addEventListener("mousedown", (event) => {
@@ -289,7 +289,7 @@ export default class Floorplanner {
       let snapPoint = this.getSnapPoint();
       const distanceFromLastNode = Math.sqrt(
         (this.mouseX - this.lastNode.x) ** 2 +
-          (this.mouseY - this.lastNode.y) ** 2
+          (this.mouseY - this.lastNode.y) ** 2,
       );
       if (distanceFromLastNode < snapTolerance) {
         this.targetX = this.lastNode.x;
@@ -425,7 +425,7 @@ export default class Floorplanner {
         this.mouseX,
         this.mouseY,
         0,
-        this.selectedWall
+        this.selectedWall,
       );
       const hoverWall = this.floorplan.overlappedWall(this.mouseX, this.mouseY);
 
@@ -476,20 +476,20 @@ export default class Floorplanner {
           ];
           if (walls.length > 1 && walls.includes(this.selectedWall)) {
             this.activeCorner = this.selectedWall.detachCorner(
-              this.activeCorner
+              this.activeCorner,
             );
           }
         }
         const point = this.getCornerSnapPoint(
           this.activeCorner,
           this.mouseX,
-          this.mouseY
+          this.mouseY,
         );
         this.activeCorner.move(
           point ? point.x : this.mouseX,
           point ? point.y : this.mouseY,
           Core.Configuration.getBooleanValue(Core.configSnapMode),
-          false
+          false,
         );
         this.isDragging = true;
       } else if (this.activeWall) {
@@ -607,7 +607,7 @@ export default class Floorplanner {
     this.mode = mode;
     // this.modeResetCallbacks.fire(mode);
     this.modeResetCallbacks.forEach(
-      (cb) => typeof cb === "function" && cb(mode)
+      (cb) => typeof cb === "function" && cb(mode),
     );
     this.selectedCorner = null;
     this.selectedWall = null;
