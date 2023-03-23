@@ -8,7 +8,7 @@ import { ProfileContent, Wrapper } from "./style.js";
 const Profile = () => {
   return (
     <Wrapper>
-      <EditProfile />
+      {/* <EditProfile /> */}
       <ProfileHeader />
       <ProfileContent>
         <PersonalDetails />
