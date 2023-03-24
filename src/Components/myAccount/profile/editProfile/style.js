@@ -139,3 +139,12 @@ export const SelectWrp = styled.div`
     padding: 0 10px;
   }
 `;
+
+export const EditProfileHeaderLabel = styled.div`
+  font: normal normal medium 12px/18px Poppins;
+  letter-spacing: 0px;
+  color: #a2a2a2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+`;

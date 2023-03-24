@@ -53,6 +53,9 @@ const ChoosePlan = () => {
     setCurrentPlanDetails,
     isOpenChoosePlanPopup,
     userProfileDetails,
+    isAddingCard,
+    setIsAddingCard,
+    getCreditCards,
   } = useAuth();
 
   const handleRedirection = async () => {
@@ -130,6 +133,7 @@ const ChoosePlan = () => {
 
   const showChoosePlanDialog = () => {
     document.getElementById("CHOOSEPLAN").classList.add("show");
+    setIsAddingCard(false);
   };
 
   const removePromo = () => {
@@ -283,11 +287,15 @@ const ChoosePlan = () => {
               document
                 .getElementById("paymentMethod")
                 .classList.remove("no-card-added");
-              document.getElementById("enablePromo").click();
+              if (!isAddingCard) {
+                document.getElementById("enablePromo").click();
+              }
               document
                 .getElementById("SECURE-RELIABLE")
                 .classList.remove("show");
               document.getElementById("SECURE-RELIABLE").style.display = "none";
+              setIsAddingCard(false);
+              getCreditCards(userID);
             }
           }
         })
@@ -809,6 +817,7 @@ const ChoosePlan = () => {
                             data-bs-dismiss="modal"
                             data-bs-toggle="modal"
                             data-bs-target="#SECURE-RELIABLE"
+                            id="addNewCard"
                           >
                             Add now
                           </a>

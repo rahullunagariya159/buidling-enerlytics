@@ -40,32 +40,39 @@ function BEModal() {
         name: "Basic",
         image: image,
       };
-      set3dJSONData(payload).then((response) => {
-        if (response.error) {
-          toast.error(response.error);
-        } else {
-          console.log(response);
-          if (isGuestUser) {
-            setTimeout(
-              navigate({
-                pathname: "/building-material",
-                search: "?name=" + projectName + "&&skip=true",
-                state: b3Data,
-              }),
-              2000,
-            );
+      set3dJSONData(payload)
+        .then((response) => {
+          if (response.error) {
+            toast.error(response.error);
           } else {
-            setTimeout(
-              navigate({
-                pathname: "/building-material",
-                search: "?name=" + projectName,
-                state: b3Data,
-              }),
-              2000,
-            );
+            console.log(response);
+            if (isGuestUser) {
+              setTimeout(
+                navigate({
+                  pathname: "/building-material",
+                  search: "?name=" + projectName + "&&skip=true",
+                  state: b3Data,
+                }),
+                2000,
+              );
+            } else {
+              setTimeout(
+                navigate({
+                  pathname: "/building-material",
+                  search: "?name=" + projectName,
+                  state: b3Data,
+                }),
+                2000,
+              );
+            }
           }
-        }
-      });
+        })
+        .catch((error) => {
+          console.log({ error });
+        })
+        .finally(() => {
+          setBtnClicked(false);
+        });
     }
   };
 

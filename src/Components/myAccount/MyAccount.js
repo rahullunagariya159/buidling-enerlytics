@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar";
 import Profile from "./profile/Profile";
 import PromoCode from "./promoCode/PromoCode";
@@ -15,9 +16,14 @@ import {
   Title,
 } from "./style.js";
 import SubscriptionPlan from "./subscriptionPlan/SubscriptionPlan";
+import { useAuth } from "../../Context/AuthProvider";
+import { Routes } from "../../navigation/Routes";
 
 const MyAccount = () => {
   const [active, setActive] = useState(0);
+  const { userId } = useAuth();
+  const navigate = useNavigate();
+
   return (
     <div>
       <Navbar />

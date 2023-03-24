@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ReactSession } from "react-client-session";
 
 import { validateInput } from "../config";
+import { useAuth } from "../Context/AuthProvider";
 
 import {
   useStripe,
@@ -16,6 +17,7 @@ function AddCard(props) {
   const [selectedCardName, setSelectedCardName] = useState("Credit Card");
   const [cardType, setCardType] = useState("");
   const [cardName, setCardName] = useState("");
+  const { isAddingCard, setIsAddingCard } = useAuth();
 
   const { getPaymentData } = props;
 
@@ -35,8 +37,6 @@ function AddCard(props) {
   const elements = useElements();
 
   const handleChange = async (e) => {
-    console.log("On Change..", e);
-
     if (e.elementType === "cardNumber") {
       if (e.complete) {
         setCardType(e.brand);
@@ -247,7 +247,8 @@ function AddCard(props) {
               className="Back-btn"
               data-bs-dismiss="modal"
               data-bs-toggle="modal"
-              data-bs-target="#PROMOCODE"
+              data-bs-target={isAddingCard ? "" : "#PROMOCODE"}
+              onClick={() => setIsAddingCard(false)}
             >
               Close
             </a>

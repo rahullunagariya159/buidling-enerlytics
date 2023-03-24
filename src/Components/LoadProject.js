@@ -6,6 +6,7 @@ import { listProjects } from "./Services/UserService";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
 import Navbar from "./Navbar";
+import { useAuth } from "../Context/AuthProvider";
 
 function LoadProject() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function LoadProject() {
   const [btnClass, setBtnClass] = useState("btn-disabled");
   const [configSelected, setConfigSelected] = useState(0);
   const [selectedProjects, setSelectedProjects] = useState([]);
-  const [userID, setUserId] = useState("");
+  const { userId: userID } = useAuth();
 
   const handleCardClick = (selectedItem, index) => {
     setSelectedProjects(selectedItem);
@@ -77,10 +78,9 @@ function LoadProject() {
       ReactSession.get("building_user") !== "null"
         ? ReactSession.get("building_user")
         : ReactSession.get("building_social_user");
-    setUserId(IDVal);
 
-    if (ReactSession.get("is_logged_in")) {
-      handleListProjects(IDVal);
+    if (ReactSession.get("is_logged_in") && userID) {
+      handleListProjects(userID);
     } else {
       navigate("/");
     }

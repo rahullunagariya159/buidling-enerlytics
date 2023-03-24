@@ -38,3 +38,15 @@ export const uploadImage = async (payload) => {
       });
   });
 };
+
+export const getCreditCardsList = async (userId) => {
+  return new Promise((resolve, reject) => {
+    ApiGet(`/credit-card?userId=${userId}`)
+      .then(function (response) {
+        resolve(response);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  });
+};

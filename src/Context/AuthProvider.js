@@ -5,7 +5,10 @@ import { ReactSession } from "react-client-session";
 import { toast } from "react-toastify";
 
 import { getPlans } from "../Components/Services/UserService";
-import { getUserDetails } from "../Components/Services/UserProfileService";
+import {
+  getUserDetails,
+  getCreditCardsList,
+} from "../Components/Services/UserProfileService";
 
 const AuthContext = React.createContext();
 
@@ -35,6 +38,8 @@ export function AuthProvider({ children }) {
   const [customState, setCustomState] = useState(null);
   const [currentPlanDetails, setCurrentPlanDetails] = useState([]);
   const [isOpenChoosePlanPopup, setIsOpenChoosePlanPopup] = useState(false);
+  const [creditCardList, setCreditCardList] = useState([]);
+  const [isAddingCard, setIsAddingCard] = useState(false);
   const [searchParams] = useSearchParams();
   const isGuestUser = searchParams.get("skip") || false;
   const [isLoggedIn, setLoggedInStatus] = useState(
@@ -44,6 +49,17 @@ export function AuthProvider({ children }) {
   // ========================================================================
   // FUNCTIONS
   // =========================================================================
+
+  const getCreditCards = async (userId) => {
+    await getCreditCardsList(userId).then((response) => {
+      if (response?.error) {
+        toast.error(response?.error || "Something went wrong");
+      }
+      if (response?.status === 200 && response?.data?.data) {
+        setCreditCardList(response?.data?.data);
+      }
+    });
+  };
 
   const getUserInfo = async (userId) => {
     await getUserDetails(userId).then((response) => {
@@ -183,6 +199,7 @@ export function AuthProvider({ children }) {
     if (userId) {
       checkPlans(userId);
       getUserInfo(userId);
+      getCreditCards(userId);
     }
   }, [userId]);
 
@@ -198,6 +215,10 @@ export function AuthProvider({ children }) {
     setCurrentPlanDetails,
     isOpenChoosePlanPopup,
     userProfileDetails,
+    creditCardList,
+    isAddingCard,
+    setIsAddingCard,
+    getCreditCards,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
