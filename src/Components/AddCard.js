@@ -235,7 +235,7 @@ function AddCard(props) {
           <div className="pay-back-flex p-0">
             {props.addCardClicked ? (
               <button className="Pay-btn loading-button" type="submit">
-                <i className="fa fa-spinner fa-spin"></i> Add
+                <i className="fa fa-spinner fa-spin"></i>
               </button>
             ) : (
               <button className="Pay-btn" type="submit">

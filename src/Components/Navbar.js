@@ -61,6 +61,7 @@ function Navbar(props) {
   const [confirmPassReg, setConfirmPassReg] = useState("");
   const [tcAccepted, setTCAccepted] = useState("");
   const [verifyProcess, setVerifyProcess] = useState(false);
+  const [toggle, setToggle] = useState(false);
   const [OTP, setOTP] = useState({});
 
   const isCreateProjectUrl = matchPath(location.pathname, Routes.createProject);
@@ -623,24 +624,50 @@ function Navbar(props) {
               </div>
 
               {isLoggedIn == "true" && userId ? (
-                <div className="login-btn">
-                  <a
-                    className="Register-done clickable"
-                    data-bs-toggle="modal"
-                    data-bs-target="#LOGOUT"
-                    data-bs-keyboard="false"
-                    data-bs-backdrop="static"
-                  >
-                    <img
-                      src="assets/img/Home-Page/profile.png"
-                      className="profil"
-                      alt=""
-                    />
-                    {currentPlanDetails?.[0]?.creditAmount
-                      ? currentPlanDetails?.[0]?.creditAmount + " Credits"
-                      : ""}
-                    <img src="assets/img/Home–new/wihte-drop.svg" alt="" />
-                  </a>
+                <div className="profile-dropdown-wrapper">
+                  <div className="profile-dropdown">
+                    <a
+                      className="profile-title"
+                      onClick={() => setToggle(!toggle)}
+                    >
+                      <img
+                        src="assets/img/Home-Page/profile.png"
+                        className="profil"
+                        alt=""
+                      />
+                      {currentPlanDetails?.[0]?.creditAmount
+                        ? currentPlanDetails?.[0]?.creditAmount + " Credits"
+                        : "0 Credits"}
+                      {toggle ? (
+                        <img src="assets/img/Home–new/upArrow.svg" alt="" />
+                      ) : (
+                        <img src="assets/img/Home–new/downArrow.svg" alt="" />
+                      )}
+                    </a>
+                    {toggle && (
+                      <>
+                        <span className="horizontalLine"></span>
+                        <LinkButton
+                          onClick={profileScreen}
+                          title={"My profile"}
+                          className={"profile-dropdown-tab"}
+                        />
+                        <LinkButton
+                          title={"My projects"}
+                          className={"profile-dropdown-tab"}
+                        />
+                        <a
+                          data-bs-toggle="modal"
+                          data-bs-target="#LOGOUT"
+                          data-bs-keyboard="false"
+                          data-bs-backdrop="static"
+                          className={"profile-dropdown-tab"}
+                        >
+                          Logout
+                        </a>
+                      </>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div className="login-btn">
@@ -1336,9 +1363,6 @@ function Navbar(props) {
               </a>
               <a className="signin-btn cancel-logout" data-bs-dismiss="modal">
                 Cancel
-              </a>
-              <a className="signin-btn yes-logout" onClick={profileScreen}>
-                Profile
               </a>
             </div>
           </div>
