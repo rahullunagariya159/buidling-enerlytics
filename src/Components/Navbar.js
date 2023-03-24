@@ -624,12 +624,12 @@ function Navbar(props) {
               </div>
 
               {isLoggedIn == "true" && userId ? (
-                <div className="profile-dropdown-wrapper">
+                <div
+                  onClick={() => setToggle(!toggle)}
+                  className="profile-dropdown-wrapper"
+                >
                   <div className="profile-dropdown">
-                    <a
-                      className="profile-title"
-                      onClick={() => setToggle(!toggle)}
-                    >
+                    <a className="profile-title">
                       <img
                         src="assets/img/Home-Page/profile.png"
                         className="profil"

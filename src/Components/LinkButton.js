@@ -22,7 +22,14 @@ const LinkButton = ({
       ) : (
         title
       )}
-      {icon && <i className="fa fa-spinner fa-spin link-spinner-icon"></i>}
+      {icon && (
+        <img
+          src="assets/img/profile/upArrowRound.png"
+          height={15}
+          width={15}
+          alt=""
+        />
+      )}
     </a>
   );
 };

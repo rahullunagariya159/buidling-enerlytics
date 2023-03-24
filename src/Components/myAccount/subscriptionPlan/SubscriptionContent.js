@@ -89,12 +89,85 @@ const SubscriptionContent = () => {
               <TitleWrp onClick={toggleDropdown}>
                 <img src="assets/img/profile/filter.png" alt="" />
               </TitleWrp>
-              <div id="myDropdownFilter" className={`dropdown-content-filter `}>
-                <button className="active">
-                  Date <span className="selected-lang"></span>
+              <div id="myDropdownFilter" className="dropdown-content-filter">
+                <button>
+                  Date
+                  <img src="assets/img/profile/rightArrow.png" alt="" />
                 </button>
               </div>
             </TableHeader>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Invoice number</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <span>Invoice234</span>
+                    </td>
+                    <td>November 22, 2022</td>
+                    <td>35$ CAD</td>
+                    <td>Success</td>
+                    <td>
+                      <div>
+                        <img
+                          src="assets/img/profile/download.png"
+                          alt=""
+                          height={15}
+                          width={15}
+                        />
+                        Download
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span>Invoice234</span>
+                    </td>
+                    <td>November 22, 2022</td>
+                    <td>35$ CAD</td>
+                    <td>Success</td>
+                    <td>
+                      <div>
+                        <img
+                          src="assets/img/profile/download.png"
+                          alt=""
+                          height={15}
+                          width={15}
+                        />
+                        Download
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span>Invoice234</span>
+                    </td>
+                    <td>November 22, 2022</td>
+                    <td>35$ CAD</td>
+                    <td>Success</td>
+                    <td>
+                      <div>
+                        <img
+                          src="assets/img/profile/download.png"
+                          alt=""
+                          height={15}
+                          width={15}
+                        />
+                        Download
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </TableWrapper>
         </>
       )}

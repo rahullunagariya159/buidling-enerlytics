@@ -3289,18 +3289,81 @@ a.Register {
 .dropdown-content-filter {
   display: none;
   position: absolute;
-  background-color: #fff;
-  overflow: auto;
-  box-shadow: 0px 8px 16px -5px rgb(0 0 0 / 20%);
   z-index: 999;
   top: 56px;
   right: 0;
-  border-radius: 8px;
-  width: 168px;
+  border-radius: 4px;
   padding: 16px 8px;
-  background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 4px 10px #d8d8d8;
-  border-radius: 0px 0px 4px 4px;
+  background: #fff;
+}
+.dropdown-content-filter button {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  justify-content: space-between;
+  min-width: 145px;
+  background: #f1f1f1 0% 0% no-repeat padding-box;
+  border: 1px solid #f1f1f1;
+  border-radius: 4px;
+}
+.table-responsive {
+  border: none;
+  border-radius: 6px;
+}
+.table-responsive table {
+  margin-bottom: 0 !important;
+  border: none;
+}
+.table-responsive table thead {
+  background-color: #f1f1f1;
+  height: 48px;
+  vertical-align: middle;
+}
+.table th,
+.table td {
+  font: 500 15px/18px Poppins;
+  color: #8d8d8d;
+  border: none;
+}
+.table > :not(:last-child) > :last-child > * {
+  border: none !important;
+}
+.table-responsive table > tbody {
+  vertical-align: middle !important;
+  border: 1px solid #f1f1f1 !important;
+  border-radius: 6px !important;
+}
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+  height: 48px;
+}
+.table th,
+.table td {
+  border: none !important;
+  padding: 5px 10px;
+  cursor: default !important;
+}
+.table-responsive table tbody tr td span {
+  color: #1c1c1c;
+  font: 600 14px/21px Poppins;
+}
+.table-responsive table tbody tr td div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: normal normal medium 14px/21px Poppins;
+  letter-spacing: 0px;
+  color: #00bdee;
+  cursor: pointer;
+}
+.table tbody tr:hover {
+  background-color: #fff;
+  cursor: none;
 }
 .position-fixed {
   right: 14.5% !important;

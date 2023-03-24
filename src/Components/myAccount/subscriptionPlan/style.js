@@ -93,6 +93,9 @@ export const SmallTextBlack = styled.span`
 `;
 export const TableWrapper = styled.span`
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 export const TableHeader = styled.span`
   display: flex;
