@@ -44,21 +44,24 @@ function LoadProject() {
         toast.error(response.error);
       } else {
         // data comes here..
-        console.log(response);
-        setProjectList(response.data);
-        setSelectedProjects(response.data[0]);
-        document.querySelector(`.selected-item-0`).classList.add("active");
+        if (response?.data?.length > 0) {
+          console.log(response);
+          setProjectList(response?.data);
+          setSelectedProjects(response?.data?.[0]);
+          document.querySelector(`.selected-item-0`).classList.add("active");
+        }
       }
     });
   };
 
   const handleLoadProject = () => {
-    console.log(selectedProjects);
-    ReactSession.set("project_id", selectedProjects.id);
-    setTimeout(
-      (window.location.href = "/be-model?name=" + selectedProjects.name),
-      2000,
-    );
+    if (selectedProjects?.id) {
+      ReactSession.set("project_id", selectedProjects.id);
+      setTimeout(
+        (window.location.href = "/be-model?name=" + selectedProjects?.name),
+        2000,
+      );
+    }
   };
 
   const handleConfigSelect = (value) => {
@@ -237,10 +240,9 @@ function LoadProject() {
                               <div className="small-img-box">
                                 <img
                                   src={
-                                    selectedProjects &&
-                                    selectedProjects.configurations &&
-                                    selectedProjects.configurations.length
-                                      ? selectedProjects.configurations[0].image
+                                    selectedProjects?.configurations?.length > 0
+                                      ? selectedProjects?.configurations?.[0]
+                                          ?.image
                                       : "assets/img/LoadExisting/3d Project page.png"
                                   }
                                   className="w3d-small"
@@ -297,7 +299,7 @@ function LoadProject() {
                         <div className="table-boxew">
                           <div className="grid-8pxs">
                             <p className="STELLA-titr">
-                              {selectedProjects.name}
+                              {selectedProjects?.name}
                             </p>
                             <p className="Select-12px-var">
                               <img
@@ -325,9 +327,8 @@ function LoadProject() {
                                   <td className="main-td-head">ENERGY COST</td>
                                 </tr>
                               </thead>
-                              {selectedProjects &&
-                                selectedProjects.configurations &&
-                                selectedProjects.configurations.map(
+                              {selectedProjects?.configurations?.length > 0 &&
+                                selectedProjects?.configurations?.map(
                                   (item, index) => (
                                     <tbody>
                                       <tr className="main-tr-row">
