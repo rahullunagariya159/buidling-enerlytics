@@ -266,6 +266,7 @@ const ChoosePlan = () => {
         last4: data.paymentMethod.card.last4,
         card_name: data.name,
         card_brand: data.paymentMethod.card.brand,
+        expiry_date: `${data.paymentMethod.card.exp_month}/${data.paymentMethod.card.exp_year}`,
       };
       saveCard(payload)
         .then((response) => {

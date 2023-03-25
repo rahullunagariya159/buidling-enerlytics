@@ -36,7 +36,7 @@ const EditProfile = ({ childToParent }) => {
   const [inputVal, setInputVal] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { userId, userProfileDetails } = useAuth();
+  const { userId, userProfileDetails, getUserInfo } = useAuth();
 
   const onChangeHandler = (evt) => {
     setError("");
@@ -76,6 +76,7 @@ const EditProfile = ({ childToParent }) => {
       .then((response) => {
         if (response?.status === 200 && response?.data?.msg) {
           toast.success("Your profile updated successfully");
+          getUserInfo();
         } else {
           setError(response?.error || somethingWentWrongError);
         }
@@ -294,7 +295,7 @@ const EditProfile = ({ childToParent }) => {
             <input
               type="email"
               placeholder="Email"
-              value={inputVal?.email}
+              value={userProfileDetails?.email}
               disabled
             />
           </Items>

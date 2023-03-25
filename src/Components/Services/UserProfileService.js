@@ -31,7 +31,7 @@ export const uploadProfileImage = async (payload) => {
       payload.file,
       {
         headers: {
-          "Content-Type": "application/octet-stream",
+          "Content-Type": payload.fileType,
         },
       },
     )

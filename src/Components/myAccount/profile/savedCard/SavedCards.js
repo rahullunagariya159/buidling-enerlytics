@@ -111,7 +111,9 @@ const SavedCards = () => {
                 <CardDetails>
                   <ActionWrp>
                     <SmallText>Expiry date:</SmallText>
-                    <SmallTextGray>01/25</SmallTextGray>
+                    <SmallTextGray>
+                      {creditCard?.expiryDate || "-"}{" "}
+                    </SmallTextGray>
                     <SmallVerticalLine />
                     <SmallText>CVV:</SmallText>
                     <SmallTextGray>***</SmallTextGray>
