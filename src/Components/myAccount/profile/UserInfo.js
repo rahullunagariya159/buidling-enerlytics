@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
+
 import "./style.js";
 import {
   ContactHeader,
@@ -20,9 +22,46 @@ import {
   PhoneWrp,
 } from "./style.js";
 import { useAuth } from "../../../Context/AuthProvider";
+import { uploadProfileImage } from "../../Services/UserProfileService";
 
 const UserInfo = () => {
-  const { userProfileDetails } = useAuth();
+  const { userProfileDetails, getUserInfo } = useAuth();
+  const [error, setError] = useState("");
+
+  const onDrop = useCallback((acceptedFiles) => {
+    // Do something with the files
+    if (acceptedFiles.length === 0) {
+      setError("Please upload only jpeg,jpg, or png image");
+      return false;
+    }
+
+    const uploadFile = acceptedFiles[0];
+    const fileName = uploadFile.name || "";
+    const formData = new FormData();
+    formData.append("file", uploadFile);
+    const uploadData = {
+      file: formData,
+      name: fileName,
+      fileType: uploadFile.type,
+    };
+
+    uploadProfileImage(uploadData)
+      .then((response) => {
+        console.log({ response });
+        if (response.status === 200) {
+          getUserInfo();
+        }
+      })
+      .catch((error) => {
+        console.log({ error });
+      });
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: "image/*",
+    type: "file",
+  });
 
   return (
     <ProfileWrp>
@@ -36,7 +75,10 @@ const UserInfo = () => {
             alt=""
           />
         </ImageWrp>
-        <BlueLabel>Change</BlueLabel>
+        <BlueLabel {...getRootProps()}>
+          <input {...getInputProps()} />
+          Change
+        </BlueLabel>
       </UserLogo>
       <ProfileInfo>
         <ContactHeader>
@@ -46,7 +88,7 @@ const UserInfo = () => {
                 " " +
                 (userProfileDetails?.last_name || "")}
             </UserName>
-            <Role>golden_design12</Role>
+            <Role>{userProfileDetails?.user_name}</Role>
           </div>
           <VerticalLine></VerticalLine>
           <CreditWrp>

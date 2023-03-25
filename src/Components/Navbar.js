@@ -84,6 +84,11 @@ function Navbar(props) {
     // navigate(`${Routes.profile}`);
     window.location.replace(`${Routes.profile}`);
   };
+
+  const myProjectsScreen = () => {
+    navigate(`${Routes.loadProject}`);
+  };
+
   const logoutSession = () => {
     logout();
 
@@ -655,6 +660,7 @@ function Navbar(props) {
                         <LinkButton
                           title={"My projects"}
                           className={"profile-dropdown-tab"}
+                          onClick={myProjectsScreen}
                         />
                         <a
                           data-bs-toggle="modal"
@@ -802,13 +808,12 @@ function Navbar(props) {
                   Forgot Password?
                 </a>
               </div>
-              {
-                <Text
-                  text={loginError}
-                  type="error"
-                  className="lbl-login-error"
-                />
-              }
+
+              <Text
+                text={loginError}
+                type="error"
+                className="lbl-login-error"
+              />
             </div>
             <div>
               <LinkButton

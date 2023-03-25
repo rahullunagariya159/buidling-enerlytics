@@ -1,5 +1,5 @@
 import { ApiGet, ApiPut } from "../../utils/Networking";
-
+import { BUCKET_FOLDER, BUCKET_SUB_FOLDER } from "../../Constants/";
 export const getUserDetails = async (userId) => {
   return new Promise((resolve, reject) => {
     ApiGet(`/user/${userId}`)
@@ -24,11 +24,16 @@ export const updateUserDetails = async (payload) => {
   });
 };
 
-export const uploadImage = async (payload) => {
+export const uploadProfileImage = async (payload) => {
   return new Promise((resolve, reject) => {
     ApiPut(
-      `/user/${payload.folder}/${payload.subFolder}/${payload.folder}`,
-      payload,
+      `/user/${BUCKET_FOLDER}/${BUCKET_SUB_FOLDER}/${payload.name}`,
+      payload.file,
+      {
+        headers: {
+          "Content-Type": "application/octet-stream",
+        },
+      },
     )
       .then(function (response) {
         resolve(response);

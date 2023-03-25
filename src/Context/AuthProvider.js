@@ -219,6 +219,7 @@ export function AuthProvider({ children }) {
     isAddingCard,
     setIsAddingCard,
     getCreditCards,
+    getUserInfo,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

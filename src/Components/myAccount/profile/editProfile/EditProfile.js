@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CancelButton from "../../../CancelButton";
 import LinkButton from "../../../LinkButton";
 import {
@@ -28,14 +28,18 @@ import {
 } from "./style.js";
 import { updateUserDetails } from "../../../Services/UserProfileService";
 import { useAuth } from "../../../../Context/AuthProvider";
+import { toast } from "react-toastify";
+import Text from "../../../Text";
+import { somethingWentWrongError } from "../../../../Constants/";
 
 const EditProfile = ({ childToParent }) => {
   const [inputVal, setInputVal] = useState({});
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const { userId, userProfileDetails } = useAuth();
-  // console.log({ inputVal });
 
   const onChangeHandler = (evt) => {
+    setError("");
     const value = evt.target.value;
     setInputVal({
       ...inputVal,
@@ -44,6 +48,7 @@ const EditProfile = ({ childToParent }) => {
   };
 
   const handleEditProfileDetails = () => {
+    setError("");
     if (!userId) {
       return false;
     }
@@ -61,6 +66,7 @@ const EditProfile = ({ childToParent }) => {
       first_name: inputVal?.firstName,
       country_code: inputVal?.countryCode,
       user_name: inputVal?.userName,
+      profile_pic: userProfileDetails?.profile_pic,
     };
 
     updateProfileValues.userId = userId;
@@ -68,15 +74,40 @@ const EditProfile = ({ childToParent }) => {
     setLoading(true);
     updateUserDetails(updateProfileValues)
       .then((response) => {
-        console.log({ response });
+        if (response?.status === 200 && response?.data?.msg) {
+          toast.success("Your profile updated successfully");
+        } else {
+          setError(response?.error || somethingWentWrongError);
+        }
       })
       .catch((error) => {
-        console.log({ error });
+        setError(error || somethingWentWrongError);
       })
       .finally(() => {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    if (userId) {
+      const defaultValues = {
+        website: userProfileDetails?.website,
+        phoneNumber: userProfileDetails?.phone_no,
+        apt: userProfileDetails?.apt,
+        address: userProfileDetails?.address,
+        country: userProfileDetails?.country,
+        postalCode: userProfileDetails?.postal_code,
+        city: userProfileDetails?.city,
+        companyName: userProfileDetails?.company_name,
+        lastName: userProfileDetails?.last_name,
+        firstName: userProfileDetails?.first_name,
+        countryCode: userProfileDetails?.country_code,
+        userName: userProfileDetails?.user_name,
+        profilePic: userProfileDetails?.profile_pic,
+      };
+      setInputVal(defaultValues);
+    }
+  }, [userId]);
 
   return (
     <MainWrapper>
@@ -292,6 +323,7 @@ const EditProfile = ({ childToParent }) => {
             />
           </Items>
         </RowWrp>
+        <Text text={error} type="error" className="lbl-login-error" />
       </div>
       <FooterButton>
         <LinkButton
