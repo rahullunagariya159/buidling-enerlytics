@@ -115,7 +115,7 @@ const EditProfile = ({ childToParent }) => {
       <HeaderWrapper>
         <ProfileWrp>
           <ImageWrp>
-            <img src="assets/img/profile/userLogo.png" alt="" />
+            <img src={userProfileDetails?.profile_pic} alt="user_avatar" />
           </ImageWrp>
           <ProfileInfo>
             <ContactHeader>

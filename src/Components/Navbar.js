@@ -52,7 +52,13 @@ function Navbar(props) {
   const [forgotPasswordError, setForgotPasswordError] = useState("");
   const [resetNewPasswordError, setResetNewPasswordError] = useState("");
   const [resetNewPasswordLoading, setResetNewPasswordLoading] = useState("");
-  const { userId, currentPlanDetails, isLoggedIn, isGuestUser } = useAuth();
+  const {
+    userId,
+    currentPlanDetails,
+    isLoggedIn,
+    isGuestUser,
+    userProfileDetails,
+  } = useAuth();
 
   // ---- Register ---
 
@@ -636,7 +642,7 @@ function Navbar(props) {
                   <div className="profile-dropdown">
                     <a className="profile-title">
                       <img
-                        src="assets/img/Home-Page/profile.png"
+                        src={userProfileDetails?.profile_pic}
                         className="profil"
                         alt=""
                       />
