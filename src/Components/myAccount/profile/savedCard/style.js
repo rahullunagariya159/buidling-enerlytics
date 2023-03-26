@@ -2,10 +2,10 @@ import styled from "styled-components";
 export const CardSection = styled.div`
   display: flex;
   margin: 30px 0 40px 0;
-  gap: 28px;
+  gap: 40px;
   align-items: center;
   max-width: 508px;
-  word-wrap: break-word;
+  flex-wrap: wrap;
 `;
 export const EmptyCard = styled.div`
   font: normal normal medium 16px/25px Poppins;
@@ -22,7 +22,7 @@ export const AddCard = styled.div`
   align-items: center;
   cursor: pointer;
   gap: 7px;
-  margin-left: 50px;
+  /* margin-left: 50px; */
   img {
     width: 23px;
     height: 23px;
@@ -73,9 +73,6 @@ export const CardWrp = styled.div`
 export const CheckBoxWrp = styled.div`
   width: 14px;
   height: 14px;
-  /* background: #ffffff 0% 0% no-repeat padding-box;
-  border: 2px solid #8d8d8d;
-  border-radius: 4px; */
   position: absolute;
   right: -6px;
   top: -10px;
