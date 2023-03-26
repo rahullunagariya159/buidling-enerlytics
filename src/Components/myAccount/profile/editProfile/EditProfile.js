@@ -47,7 +47,7 @@ const EditProfile = ({ childToParent }) => {
     });
   };
 
-  const handleEditProfileDetails = () => {
+  const handleEditProfileDetails = async () => {
     setError("");
     if (!userId) {
       return false;
@@ -72,11 +72,11 @@ const EditProfile = ({ childToParent }) => {
     updateProfileValues.userId = userId;
 
     setLoading(true);
-    updateUserDetails(updateProfileValues)
-      .then((response) => {
+    await updateUserDetails(updateProfileValues)
+      .then(async (response) => {
         if (response?.status === 200 && response?.data?.msg) {
+          await getUserInfo(userId);
           toast.success("Your profile updated successfully");
-          getUserInfo();
         } else {
           setError(response?.error || somethingWentWrongError);
         }
