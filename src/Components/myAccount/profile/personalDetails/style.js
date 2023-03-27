@@ -69,8 +69,9 @@ export const UpgradeWrp = styled.div`
   gap: 10px;
   align-items: center;
   img {
-    width: 9px;
-    height: 9px;
+    width: 13px;
+    height: 13px;
+    margin-top: 4px;
   }
 `;
 export const UpgradeButton = styled.div`

@@ -44,7 +44,7 @@ const PersonalDetails = ({ childToParent }) => {
         <ValuesWrp>
           <ValueLabel>
             {" "}
-            {(userProfileDetails?.first_name || "") +
+            {(userProfileDetails?.first_name || "-") +
               " " +
               (userProfileDetails?.last_name || "")}
           </ValueLabel>
@@ -52,7 +52,7 @@ const PersonalDetails = ({ childToParent }) => {
           <UpgradeWrp>
             <ValueLabel>{userProfileDetails?.plan || "-"}</ValueLabel>
             <UpgradeButton onClick={(e) => handleUpgrdePlan(e)}>
-              Upgrade
+              <span>Upgrade</span>
               <img src="assets/img/profile/upArrow.svg" alt="" />
             </UpgradeButton>
           </UpgradeWrp>

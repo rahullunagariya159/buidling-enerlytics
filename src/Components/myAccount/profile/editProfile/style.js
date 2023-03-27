@@ -41,7 +41,7 @@ export const Items = styled.div`
     color: #8d8d8d;
   }
   input {
-    font: normal normal 600 12px/18px Poppins;
+    font: normal normal 300 12px/18px Poppins;
     letter-spacing: 0px;
     color: #1c1c1c;
     padding: 12px 20px;
@@ -52,7 +52,7 @@ export const Items = styled.div`
     border-radius: 4px;
   }
   select {
-    font: normal normal 600 12px/18px Poppins;
+    font: normal normal 300 12px/18px Poppins;
     letter-spacing: 0px;
     color: #1c1c1c;
     padding: 5px 20px;
@@ -102,7 +102,7 @@ export const SelectWrp = styled.div`
   display: flex;
   align-items: center;
   select {
-    font: normal normal 600 12px/18px Poppins;
+    font: normal normal 500 12px/18px Poppins;
     height: 40px;
     border-radius: 4px;
     border: none;
@@ -119,7 +119,7 @@ export const SelectWrp = styled.div`
     background-size: 9px 12px;
   }
   input {
-    font: normal normal 600 12px/18px Poppins;
+    font: normal normal 300 12px/18px Poppins;
     letter-spacing: 0px;
     color: #1c1c1c;
     padding: 12px 11px;

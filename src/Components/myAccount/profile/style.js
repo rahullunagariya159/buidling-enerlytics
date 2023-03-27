@@ -20,13 +20,13 @@ export const UserLogo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 11px;
 `;
 export const BlueLabel = styled.div`
   font: normal normal medium 12px/18px Poppins;
   letter-spacing: 0px;
   color: #00ade4;
   cursor: pointer;
+  margin-top: 11px;
 `;
 export const Label = styled.div`
   font: normal normal medium 12px/18px Poppins;
@@ -39,8 +39,12 @@ export const Label = styled.div`
 `;
 export const ImageWrp = styled.div`
   img {
-    width: 99px;
-    height: 99px;
+    width: 106px;
+    height: 106px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #0000001a;
+    border: 2px solid #f1f1f1;
+    border-radius: 100%;
   }
 `;
 export const ProfileInfo = styled.div`
