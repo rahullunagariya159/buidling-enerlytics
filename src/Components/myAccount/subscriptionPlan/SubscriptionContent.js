@@ -21,7 +21,7 @@ import {
   YellowLargeLabel,
 } from "./style.js";
 import LinkButton from "../../LinkButton";
-import { CardNumberText, SmallTextGray } from "../profile/savedCard/style.js";
+import { CardNumberText } from "../profile/savedCard/style.js";
 
 const SubscriptionContent = () => {
   const toggleDropdown = () => {
@@ -104,8 +104,8 @@ const SubscriptionContent = () => {
                 </button>
               </div>
             </TableHeader>
-            <div class="table-responsive">
-              <table class="table">
+            <div className="table-responsive">
+              <table className="table">
                 <thead>
                   <tr>
                     <th>Invoice number</th>
