@@ -29,7 +29,7 @@ export const EditProfile = styled.div`
 `;
 export const DecorationText = styled.div`
   text-decoration: underline;
-  font: normal normal medium 12px/18px Poppins;
+  font: normal normal 500 12px/18px Poppins;
   letter-spacing: 0px;
   color: #1c1c1c;
 `;
@@ -42,7 +42,12 @@ export const HorizontalLine = styled.div`
 export const PersonalInfo = styled.div`
   display: flex;
   margin: 30px 0 40px 0;
-  gap: 100px;
+  gap: 130px;
+`;
+export const AddressInfo = styled.div`
+  display: flex;
+  margin: 30px 0 40px 0;
+  gap: 88px;
 `;
 export const ItemsWrp = styled.div`
   display: flex;
@@ -52,15 +57,15 @@ export const ItemsWrp = styled.div`
 export const ValuesWrp = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 `;
 export const GrayLabel = styled.div`
-  font: normal normal normal 12px/18px Poppins;
+  font: normal normal 400 13px/18px Poppins;
   letter-spacing: 0px;
   color: #8d8d8d;
 `;
 export const ValueLabel = styled.div`
-  font: normal normal medium 12px/18px Poppins;
+  font: normal normal 500 14px/18px Poppins;
   letter-spacing: 0px;
   color: #1c1c1c;
 `;
@@ -75,7 +80,7 @@ export const UpgradeWrp = styled.div`
   }
 `;
 export const UpgradeButton = styled.div`
-  font: normal normal medium 10px/16px Poppins;
+  font: normal normal 600 13px/19px Poppins;
   letter-spacing: 0px;
   color: #00ade4;
   display: flex;

@@ -34,9 +34,8 @@ export const ContentWrapper = styled.div`
 export const SidebarMenu = styled.div`
   min-width: 252px;
   border-right: 1px solid #f1f1f1;
-  position: static;
-  top: 8rem;
-  /* height: 100vh; */
+  position: sticky;
+  top: 30%;
 `;
 
 export const SettingTitle = styled.div`

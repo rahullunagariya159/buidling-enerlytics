@@ -84,6 +84,13 @@ export const Items = styled.div`
   gap: 2px;
   flex-direction: column;
 `;
+export const SmallText = styled.div`
+  letter-spacing: 0px;
+  color: #1c1c1c;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Inter;
+`;
 export const SmallTextBlack = styled.span`
   letter-spacing: 0px;
   color: #1c1c1c;
@@ -103,7 +110,7 @@ export const TableHeader = styled.span`
   position: relative;
 `;
 export const SmallGrayLabel = styled.span`
-  font: normal normal 400 14px/21px Poppins;
+  font: normal normal 300 14px/21px Poppins;
   letter-spacing: 0px;
   color: #c2c2c2;
 `;

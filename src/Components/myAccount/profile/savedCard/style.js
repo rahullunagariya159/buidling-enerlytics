@@ -13,7 +13,7 @@ export const EmptyCard = styled.div`
   color: #dcdcdc;
 `;
 export const SmallText = styled.div`
-  font: normal normal medium 10px/16px Poppins;
+  font: normal normal 600 13px/16px Poppins;
   letter-spacing: 0px;
   color: #1c1c1c;
 `;
@@ -34,7 +34,7 @@ export const CardDetails = styled.div`
   justify-content: space-between;
 `;
 export const CardTitle = styled.div`
-  font: normal normal medium 12px/18px Poppins;
+  font: normal normal 500 14px/18px Poppins;
   letter-spacing: 0px;
   color: #8d8d8d;
 `;
@@ -43,6 +43,11 @@ export const ActionWrp = styled.div`
   align-items: center;
   gap: 15px;
 `;
+export const CvvWrp = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
 export const SmallVerticalLine = styled.div`
   width: 0px;
   height: 13px;
@@ -50,9 +55,9 @@ export const SmallVerticalLine = styled.div`
 `;
 export const EditButton = styled.div`
   text-decoration: underline;
-  font: normal normal medium 10px/16px Poppins;
+  font: normal normal 600 13px/16px Poppins;
   letter-spacing: 0px;
-  color: #b9b9b9;
+  color: #1c1c1c;
 `;
 export const EmptyCardWrp = styled.div`
   min-height: 111px;
@@ -71,11 +76,17 @@ export const CardWrp = styled.div`
   }
 `;
 export const CheckBoxWrp = styled.div`
-  width: 14px;
-  height: 14px;
   position: absolute;
-  right: -6px;
-  top: -10px;
+  right: -8px;
+  top: -6px;
+`;
+export const CardNumberText = styled.div`
+  height: 23px;
+  padding-top: 2px;
+`;
+export const CvvText = styled.div`
+  height: 23px;
+  padding-top: 0;
 `;
 
 export const CardDetailsContent = styled.div`
@@ -88,20 +99,27 @@ export const CardDetailsContent = styled.div`
   gap: 10px;
   margin-bottom: 40px;
 `;
-export const SmallTextGray = styled.span`
+export const SmallTextGrayTitle = styled.span`
   letter-spacing: 0px;
   color: #b9b9b9;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   font-family: poppins;
 `;
+export const SmallTextGray = styled.span`
+  letter-spacing: 1px;
+  color: #b9b9b9;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Inter;
+`;
 export const SmallTextTopaz = styled.div`
-  font: normal normal medium 10px/16px Poppins;
+  font: normal normal 500 13px/16px Poppins;
   letter-spacing: 0px;
   color: #00bec1;
 `;
 export const CardNumber = styled.div`
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 `;

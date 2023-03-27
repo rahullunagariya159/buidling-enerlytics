@@ -11,6 +11,7 @@ import {
   PlanLogo,
   SmallGrayLabel,
   SmallLabel,
+  SmallText,
   SmallTextBlack,
   TableHeader,
   TableWrapper,
@@ -20,6 +21,7 @@ import {
   YellowLargeLabel,
 } from "./style.js";
 import LinkButton from "../../LinkButton";
+import { CardNumberText, SmallTextGray } from "../profile/savedCard/style.js";
 
 const SubscriptionContent = () => {
   const toggleDropdown = () => {
@@ -62,12 +64,18 @@ const SubscriptionContent = () => {
               <Items>
                 <GrayLabel>Payment method</GrayLabel>
                 <CardNumber>
-                  <SmallTextBlack>****</SmallTextBlack>
-                  <SmallTextBlack>-</SmallTextBlack>
-                  <SmallTextBlack>****</SmallTextBlack>
-                  <SmallTextBlack>-</SmallTextBlack>
-                  <SmallTextBlack>****</SmallTextBlack>
-                  <SmallTextBlack>-</SmallTextBlack>
+                  <CardNumberText>
+                    <SmallText>****</SmallText>
+                  </CardNumberText>
+                  <SmallText>-</SmallText>
+                  <CardNumberText>
+                    <SmallText>****</SmallText>
+                  </CardNumberText>
+                  <SmallText>-</SmallText>
+                  <CardNumberText>
+                    <SmallText>****</SmallText>
+                  </CardNumberText>
+                  <SmallText>-</SmallText>
                   <SmallTextBlack>0000</SmallTextBlack>
                 </CardNumber>
               </Items>

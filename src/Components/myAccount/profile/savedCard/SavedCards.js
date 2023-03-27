@@ -6,15 +6,19 @@ import {
   CardDetails,
   CardDetailsContent,
   CardNumber,
+  CardNumberText,
   CardSection,
   CardTitle,
   CardWrp,
   CheckBoxWrp,
+  CvvText,
+  CvvWrp,
   EditButton,
   EmptyCard,
   EmptyCardWrp,
   SmallText,
   SmallTextGray,
+  SmallTextGrayTitle,
   SmallTextTopaz,
   SmallVerticalLine,
 } from "./style";
@@ -51,12 +55,12 @@ const SavedCards = () => {
             return (
               <CardWrp>
                 <img src="assets/img/profile/visaCard.png" alt="" />
-                <CheckBoxWrp>
+                <CheckBoxWrp className="checkBoxOutline">
                   <input
                     type="checkbox"
                     id="check1"
                     checked={defaultCardId === card.id}
-                    defaultChecked={card?.isDefault}
+                    // defaultChecked={card?.isDefault}
                     onChange={() => setDefaultCardId(card.id)}
                   />
                 </CheckBoxWrp>
@@ -82,7 +86,7 @@ const SavedCards = () => {
               <CardDetails>
                 <CardTitle>Card details</CardTitle>
                 <ActionWrp>
-                  <CardTitle>Remove</CardTitle>
+                  <SmallText>Remove</SmallText>
                   <SmallVerticalLine />
                   <EditButton>Edit</EditButton>
                 </ActionWrp>
@@ -93,30 +97,41 @@ const SavedCards = () => {
                   <ActionWrp>
                     <SmallText>{creditCard?.cardName}</SmallText>
                     <SmallVerticalLine />
-                    <SmallTextGray>Credit card</SmallTextGray>
+                    <SmallTextGrayTitle>Credit card</SmallTextGrayTitle>
                   </ActionWrp>
                   {creditCard?.isDefault && (
                     <SmallTextTopaz>Default</SmallTextTopaz>
                   )}
                 </CardDetails>
                 <CardNumber>
-                  <SmallTextGray>****</SmallTextGray>
+                  <CardNumberText>
+                    <SmallTextGray>****</SmallTextGray>
+                  </CardNumberText>
                   <SmallTextGray>-</SmallTextGray>
-                  <SmallTextGray>****</SmallTextGray>
+                  <CardNumberText>
+                    <SmallTextGray>****</SmallTextGray>
+                  </CardNumberText>
                   <SmallTextGray>-</SmallTextGray>
-                  <SmallTextGray>****</SmallTextGray>
+                  <CardNumberText>
+                    <SmallTextGray>****</SmallTextGray>
+                  </CardNumberText>
                   <SmallTextGray>-</SmallTextGray>
                   <SmallTextGray>{creditCard?.last4}</SmallTextGray>
                 </CardNumber>
                 <CardDetails>
                   <ActionWrp>
-                    <SmallText>Expiry date:</SmallText>
-                    <SmallTextGray>
-                      {creditCard?.expiryDate || "-"}{" "}
-                    </SmallTextGray>
-                    <SmallVerticalLine />
-                    <SmallText>CVV:</SmallText>
-                    <SmallTextGray>***</SmallTextGray>
+                    <CvvWrp>
+                      <SmallText>Expiry date:</SmallText>
+                      <SmallTextGrayTitle>
+                        {creditCard?.expiryDate || "-"}{" "}
+                      </SmallTextGrayTitle>
+                    </CvvWrp>
+                    <CvvWrp>
+                      <SmallText>CVV:</SmallText>
+                      <CvvText>
+                        <SmallTextGray>****</SmallTextGray>
+                      </CvvText>
+                    </CvvWrp>
                   </ActionWrp>
                   <img src="assets/img/profile/visa-credit-card.png" alt="" />
                 </CardDetails>

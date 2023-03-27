@@ -57,7 +57,7 @@ const MyAccount = () => {
         </SidebarMenu>
         <RightContent>
           {active === 0 && <Profile />}
-          {active === 1 && <SubscriptionPlan />}
+          {active === 1 && <SubscriptionPlan active={1} />}
           {active === 2 && <PromoCode />}
         </RightContent>
       </ContentWrapper>

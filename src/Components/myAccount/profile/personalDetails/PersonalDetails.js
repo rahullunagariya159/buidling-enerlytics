@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  AddressInfo,
   DecorationText,
   EditProfile,
   GrayLabel,
@@ -37,7 +38,6 @@ const PersonalDetails = ({ childToParent }) => {
       <PersonalInfo>
         <ItemsWrp>
           <GrayLabel>Name</GrayLabel>
-          <GrayLabel>Website</GrayLabel>
           <GrayLabel>Subscription type</GrayLabel>
           <GrayLabel>Company name</GrayLabel>
         </ItemsWrp>
@@ -48,7 +48,6 @@ const PersonalDetails = ({ childToParent }) => {
               " " +
               (userProfileDetails?.last_name || "")}
           </ValueLabel>
-          <ValueLabel>{userProfileDetails?.website || "-"}</ValueLabel>
           <UpgradeWrp>
             <ValueLabel>{userProfileDetails?.plan || "-"}</ValueLabel>
             <UpgradeButton onClick={(e) => handleUpgrdePlan(e)}>
@@ -61,7 +60,7 @@ const PersonalDetails = ({ childToParent }) => {
       </PersonalInfo>
       <HeaderTitle>ADDRESS DETAILS</HeaderTitle>
       <HorizontalLine />
-      <PersonalInfo>
+      <AddressInfo>
         <ItemsWrp>
           <GrayLabel>Country</GrayLabel>
           <GrayLabel>Address</GrayLabel>
@@ -76,7 +75,7 @@ const PersonalDetails = ({ childToParent }) => {
           <ValueLabel>{userProfileDetails?.city || "-"}</ValueLabel>
           <ValueLabel>{userProfileDetails?.postal_code || "-"}</ValueLabel>
         </ValuesWrp>
-      </PersonalInfo>
+      </AddressInfo>
     </Wrapper>
   );
 };

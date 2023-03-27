@@ -29,7 +29,7 @@ export const BlueLabel = styled.div`
   margin-top: 11px;
 `;
 export const Label = styled.div`
-  font: normal normal medium 12px/18px Poppins;
+  font: normal normal 500 13px/18px Poppins;
   letter-spacing: 0px;
   color: #a2a2a2;
   text-overflow: ellipsis;
@@ -73,7 +73,7 @@ export const PlanVerticalLine = styled.div`
   border: 1px solid #f1f1f1;
 `;
 export const SmallLabel = styled.div`
-  font: normal normal normal 12px/18px Poppins;
+  font: normal normal 500 13px/18px Poppins;
   letter-spacing: 0.24px;
   color: #1c1c1c;
 `;
