@@ -115,7 +115,13 @@ const EditProfile = ({ childToParent }) => {
       <HeaderWrapper>
         <ProfileWrp>
           <ImageWrp>
-            <img src={userProfileDetails?.profile_pic} alt="user_avatar" />
+            <img
+              src={
+                userProfileDetails?.profile_pic ||
+                "assets/img/profile/default-user-avatar.jpeg"
+              }
+              alt="user_avatar"
+            />
           </ImageWrp>
           <ProfileInfo>
             <ContactHeader>
@@ -169,10 +175,10 @@ const EditProfile = ({ childToParent }) => {
             </Items>
           </RowWrp>
           <RowWrp>
-            <Items>
+            {/* <Items>
               <Label>Password</Label>
               <input type="password" placeholder="Password" />
-            </Items>
+            </Items> */}
             <Items>
               <Label>User id</Label>
               <input
@@ -184,7 +190,7 @@ const EditProfile = ({ childToParent }) => {
               />
             </Items>
           </RowWrp>
-          <DecoratedLabel>Change password</DecoratedLabel>
+          {/* <DecoratedLabel>Change password</DecoratedLabel> */}
         </form>
       </div>
       <div>
@@ -287,7 +293,7 @@ const EditProfile = ({ childToParent }) => {
                 value={inputVal?.phoneNumber}
                 onChange={onChangeHandler}
               />
-              <label>Verified</label>
+              {inputVal?.phoneNumber && <label>Verified</label>}
             </SelectWrp>
           </PhoneNumberItems>
           <Items>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { HeaderTitle, HorizontalLine, Wrapper } from "../personalDetails/style";
 import {
   ActionWrp,
@@ -21,13 +22,19 @@ import {
   SmallTextGrayTitle,
   SmallTextTopaz,
   SmallVerticalLine,
+  SmallRemoveText,
 } from "./style";
 import { useAuth } from "../../../../Context/AuthProvider";
+import {
+  makeDefaultCard,
+  removeCard,
+} from "../../../Services/UserProfileService";
+import { somethingWentWrongError } from "../../../../Constants";
 
 const SavedCards = () => {
   const [emptyCard, setEmptyCard] = useState(false);
   const [defaultCardId, setDefaultCardId] = useState("");
-  const { creditCardList, setIsAddingCard } = useAuth();
+  const { creditCardList, setIsAddingCard, userId, getCreditCards } = useAuth();
 
   useEffect(() => {
     if (creditCardList?.length === 0) {
@@ -43,6 +50,45 @@ const SavedCards = () => {
     document.getElementById("addNewCard").click();
   };
 
+  const handleMakeDefaultCard = async (id) => {
+    setDefaultCardId(id);
+    let defaultCardPayload = {
+      id: id,
+      userId,
+    };
+    await makeDefaultCard(defaultCardPayload)
+      .then((response) => {
+        if (response?.status === 200 && response?.data?.msg) {
+          getCreditCards(userId);
+          toast.success("Card made default successfully");
+        }
+      })
+      .catch((error) => {
+        console.log({ error });
+        toast.error(error || somethingWentWrongError);
+      })
+      .finally(() => {});
+  };
+
+  const handleRemoveCard = async (id) => {
+    setDefaultCardId(id);
+    let defaultCardPayload = {
+      id: id,
+      userId,
+    };
+    await removeCard(defaultCardPayload)
+      .then((response) => {
+        if (response?.status === 200 && response?.data?.msg) {
+          getCreditCards(userId);
+          toast.success("Card Removed successfully");
+        }
+      })
+      .catch((error) => {
+        toast.error(error || somethingWentWrongError);
+      })
+      .finally(() => {});
+  };
+
   return (
     <Wrapper>
       <HeaderTitle>SAVED CARDS</HeaderTitle>
@@ -53,7 +99,11 @@ const SavedCards = () => {
           creditCardList?.length > 0 &&
           creditCardList.map((card) => {
             return (
-              <CardWrp>
+              <CardWrp
+                onClick={() => {
+                  !card?.isDefault && handleMakeDefaultCard(card.id);
+                }}
+              >
                 <img src="assets/img/profile/visaCard.png" alt="" />
                 <CheckBoxWrp className="checkBoxOutline">
                   <input
@@ -61,7 +111,6 @@ const SavedCards = () => {
                     id="check1"
                     checked={defaultCardId === card.id}
                     // defaultChecked={card?.isDefault}
-                    onChange={() => setDefaultCardId(card.id)}
                   />
                 </CheckBoxWrp>
               </CardWrp>
@@ -86,9 +135,15 @@ const SavedCards = () => {
               <CardDetails>
                 <CardTitle>Card details</CardTitle>
                 <ActionWrp>
-                  <SmallText>Remove</SmallText>
-                  <SmallVerticalLine />
-                  <EditButton>Edit</EditButton>
+                  {!creditCard?.isDefault && (
+                    <SmallRemoveText
+                      onClick={() => handleRemoveCard(creditCard.id)}
+                    >
+                      Remove
+                    </SmallRemoveText>
+                  )}
+                  {/* <SmallVerticalLine /> */}
+                  {/* <EditButton>Edit</EditButton> */}
                 </ActionWrp>
               </CardDetails>
 

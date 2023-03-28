@@ -17,6 +17,12 @@ export const SmallText = styled.div`
   letter-spacing: 0px;
   color: #1c1c1c;
 `;
+export const SmallRemoveText = styled.div`
+  font: normal normal 600 13px/16px Poppins;
+  letter-spacing: 0px;
+  color: #1c1c1c;
+  cursor: pointer;
+`;
 export const AddCard = styled.div`
   display: flex;
   align-items: center;
@@ -37,6 +43,7 @@ export const CardTitle = styled.div`
   font: normal normal 500 14px/18px Poppins;
   letter-spacing: 0px;
   color: #8d8d8d;
+  cursor: pointer;
 `;
 export const ActionWrp = styled.div`
   display: flex;
@@ -74,6 +81,7 @@ export const CardWrp = styled.div`
     width: 109px;
     height: 70px;
   }
+  cursor: pointer;
 `;
 export const CheckBoxWrp = styled.div`
   position: absolute;
@@ -87,6 +95,7 @@ export const CardNumberText = styled.div`
 export const CvvText = styled.div`
   height: 23px;
   padding-top: 0;
+  cursor: pointer;
 `;
 
 export const CardDetailsContent = styled.div`

@@ -70,7 +70,7 @@ const UserInfo = (active) => {
           <img
             src={
               userProfileDetails?.profile_pic ||
-              "assets/img/profile/userLogo.png"
+              "assets/img/profile/default-user-avatar.jpeg"
             }
             alt=""
           />

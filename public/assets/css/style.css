@@ -3894,9 +3894,12 @@ p.Terms-pr {
   width: 450px;
   background: #f9f9f9 0% 0% no-repeat padding-box;
   border-radius: 4px;
-  display: flex;
   align-items: center;
   padding: 0 30px;
+}
+
+.no-credit-card-container{
+    display: flex;
 }
 
 .no-card-added {
@@ -4024,6 +4027,7 @@ p.totle-grt {
 
 .padin-pss {
   padding: 0 30px;
+  margin-top: 10px;
 }
 
 .cost-grid {

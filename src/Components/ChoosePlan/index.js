@@ -12,6 +12,7 @@ import { getPlans, getPromoDetails, saveCard } from "../Services/UserService";
 import { validateInput } from "../../config";
 import { Routes } from "../../navigation/Routes";
 import Text from "../Text";
+import { CardListContainer } from "./style";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -56,6 +57,7 @@ const ChoosePlan = () => {
     isAddingCard,
     setIsAddingCard,
     getCreditCards,
+    creditCardList,
   } = useAuth();
 
   const handleRedirection = async () => {
@@ -79,7 +81,7 @@ const ChoosePlan = () => {
       return false;
     }
 
-    if (userID || !userProfileDetails?.plan) {
+    if (userID && userProfileDetails?.plan) {
       document.getElementById("CHOOSEPLAN").classList.remove("show");
       // document.getElementsByClassName("modal-backdrop").style.opacity = 0;
       return false;
@@ -99,7 +101,6 @@ const ChoosePlan = () => {
         toast.error(response.error);
       } else {
         // data comes here..
-        console.log(response);
         toast.success(
           `Your ${planName.toLowerCase()} plan successfully activated.`,
           { toastId: "toast12" },
@@ -442,6 +443,10 @@ const ChoosePlan = () => {
                     <a
                       className="Try-now-btn clickable"
                       onClick={() => skipToBuy("Trial")}
+                      style={{
+                        pointerEvents:
+                          userID && userProfileDetails?.plan ? "none" : "auto",
+                      }}
                     >
                       Try now
                     </a>
@@ -779,7 +784,53 @@ const ChoosePlan = () => {
                       <p className="Terms-pr">Terms & conditions applied</p>
                     </div>
                   </div>
-                  <div className="main-Credit-aline" id="paymentMethod">
+                  <div
+                    className={`main-Credit-aline ${
+                      creditCardList?.length === 0
+                        ? "no-credit-card-container"
+                        : ""
+                    }`}
+                    id="paymentMethod"
+                  >
+                    {creditCardList?.length > 0 && (
+                      <CardListContainer className="card-list-container">
+                        {creditCardList?.length > 0 &&
+                          creditCardList?.map((creditCard) => {
+                            return (
+                              <div className="w-100">
+                                <div className="Credit-box">
+                                  <div className="card-Credit-box">
+                                    <p className="Harry-name">
+                                      {creditCard?.cardName}
+                                    </p>
+                                    <p className="Credit-card">Credit</p>
+                                    <p className="Default">
+                                      {creditCard?.isDefault ? "Default" : ""}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    {/* <a className="Change-promo" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#SECURE-RELIABLE">Change</a> */}
+                                    {/* <a className="Change-promo">Change</a> */}
+                                  </div>
+                                </div>
+                                <div className="visa-flex">
+                                  <p className="number-card">
+                                    ****-****-****-
+                                    <span className="pt-1">
+                                      {creditCard?.last4}
+                                    </span>
+                                  </p>
+                                  <img
+                                    src="assets/img/Home–new/visa-credit-card.png"
+                                    className="visa-ixs"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            );
+                          })}
+                      </CardListContainer>
+                    )}
                     {cardAdded ? (
                       <div className="w-100">
                         <div className="Credit-box">
@@ -811,7 +862,9 @@ const ChoosePlan = () => {
                       <div className="w-100">
                         <div className="visa-flex p-0">
                           <p className="payment-card">
-                            No payment method added yet
+                            {creditCardList?.length > 0
+                              ? "Add more payment method"
+                              : "No payment method added yet"}
                           </p>
                           <a
                             className="Add-promo"
