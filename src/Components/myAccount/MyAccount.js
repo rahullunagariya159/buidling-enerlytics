@@ -28,7 +28,7 @@ const MyAccount = () => {
     <div>
       <Navbar />
       <HeaderWrapper>
-        <PathTitle>{"Home > BE Modeler"}</PathTitle>
+        <PathTitle>{"Home > Profile"}</PathTitle>
         <Title>MY ACCOUNT</Title>
       </HeaderWrapper>
       <ContentWrapper>

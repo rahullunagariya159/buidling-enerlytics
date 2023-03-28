@@ -76,7 +76,7 @@ export const UpgradeWrp = styled.div`
   img {
     width: 13px;
     height: 13px;
-    margin-top: 4px;
+    margin-top: 0px;
   }
 `;
 export const UpgradeButton = styled.div`
