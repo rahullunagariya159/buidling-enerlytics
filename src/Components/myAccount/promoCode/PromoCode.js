@@ -39,6 +39,50 @@ const PromoCode = () => {
     document.getElementById("myDropdownFilter").classList.toggle("show");
   };
   const [selected, setSelected] = useState(0);
+  const colors = [
+    { c1: "#da64c8", c2: "#4436e2" },
+    { c1: "#51f2f1", c2: "#04c5b5" },
+    { c1: "#ffa967", c2: "#ff4f96" },
+    { c1: "#fed672", c2: "#fe8a00" },
+  ];
+  const data = [
+    {
+      percentage: "10",
+      credits: "20",
+      code: "YYKK234YP8",
+      date: "22-01-2022",
+    },
+    {
+      percentage: "20",
+      credits: "20",
+      code: "YYKK234YP8",
+      date: "22-01-2022",
+    },
+    {
+      percentage: "50",
+      credits: "20",
+      code: "YYKK234YP8",
+      date: "22-01-2022",
+    },
+    {
+      percentage: "10",
+      credits: "20",
+      code: "YYKK234YP8",
+      date: "22-01-2022",
+    },
+    {
+      percentage: "90",
+      credits: "20",
+      code: "YYKK234YP8",
+      date: "22-01-2022",
+    },
+    {
+      percentage: "40",
+      credits: "20",
+      code: "YYKK234YP8",
+      date: "22-01-2022",
+    },
+  ];
   return (
     <div>
       <HeaderWrapper>
@@ -102,153 +146,53 @@ const PromoCode = () => {
       </CardWrp>
       {selected === 0 && (
         <ContentCard>
-          <CardInfo>
-            <ItemsCard>
-              <PromoCard>
-                <PromoTitle>
-                  <span>10% off</span>
-                  <p>Promo code</p>
-                </PromoTitle>
-                <img src="assets/img/profile/promoItems.png" alt="" />
-              </PromoCard>
-              <PromoCardCredit>
-                <span>20 Credits</span>
-                <span>YYKK234YP8</span>
-              </PromoCardCredit>
-            </ItemsCard>
-            <BottomWrp>Activate now</BottomWrp>
-          </CardInfo>
-          <CardInfo>
-            <ItemsCard>
-              <PromoCard>
-                <PromoTitle>
-                  <span>10% off</span>
-                  <p>Promo code</p>
-                </PromoTitle>
-                <img src="assets/img/profile/promoItems.png" alt="" />
-              </PromoCard>
-              <PromoCardCredit>
-                <span>20 Credits</span>
-                <span>YYKK234YP8</span>
-              </PromoCardCredit>
-            </ItemsCard>
-            <BottomWrp>Activate now</BottomWrp>
-          </CardInfo>
-          <CardInfo>
-            <ItemsCard>
-              <PromoCard>
-                <PromoTitle>
-                  <span>10% off</span>
-                  <p>Promo code</p>
-                </PromoTitle>
-                <img src="assets/img/profile/promoItems.png" alt="" />
-              </PromoCard>
-              <PromoCardCredit>
-                <span>20 Credits</span>
-                <span>YYKK234YP8</span>
-              </PromoCardCredit>
-            </ItemsCard>
-            <BottomWrp>Activate now</BottomWrp>
-          </CardInfo>
+          {data.map((items, index) => (
+            <CardInfo key={index}>
+              <ItemsCard
+                color={colors[Math.round((index + 1) % colors.length)]}
+              >
+                <PromoCard>
+                  <PromoTitle>
+                    <span>{items.percentage}% off</span>
+                    <p>Promo code</p>
+                  </PromoTitle>
+                  <img src="assets/img/profile/promoItems.png" alt="" />
+                </PromoCard>
+                <PromoCardCredit>
+                  <span>{items.credits} Credits</span>
+                  <span>{items.code}</span>
+                </PromoCardCredit>
+              </ItemsCard>
+              <BottomWrp>Activate now</BottomWrp>
+            </CardInfo>
+          ))}
         </ContentCard>
       )}
       {selected === 1 && (
         <ContentCard>
-          <CardInfo>
-            <ItemsCard>
-              <PromoCard>
-                <PromoTitle>
-                  <span>10% off</span>
-                  <p>Promo code</p>
-                </PromoTitle>
-                <img src="assets/img/profile/promoItems.png" alt="" />
-              </PromoCard>
-              <PromoCardCredit>
-                <span>20 Credits</span>
-                <span>YYKK234YP8</span>
-              </PromoCardCredit>
-            </ItemsCard>
-            <BottomWrpTab>
-              <span>Activate on</span>
-              <p>22-01-2022</p>
-            </BottomWrpTab>
-          </CardInfo>
-          <CardInfo>
-            <ItemsCard>
-              <PromoCard>
-                <PromoTitle>
-                  <span>10% off</span>
-                  <p>Promo code</p>
-                </PromoTitle>
-                <img src="assets/img/profile/promoItems.png" alt="" />
-              </PromoCard>
-              <PromoCardCredit>
-                <span>20 Credits</span>
-                <span>YYKK234YP8</span>
-              </PromoCardCredit>
-            </ItemsCard>
-            <BottomWrpTab>
-              <span>Activate on</span>
-              <p>22-01-2022</p>
-            </BottomWrpTab>
-          </CardInfo>
-          <CardInfo>
-            <ItemsCard>
-              <PromoCard>
-                <PromoTitle>
-                  <span>10% off</span>
-                  <p>Promo code</p>
-                </PromoTitle>
-                <img src="assets/img/profile/promoItems.png" alt="" />
-              </PromoCard>
-              <PromoCardCredit>
-                <span>20 Credits</span>
-                <span>YYKK234YP8</span>
-              </PromoCardCredit>
-            </ItemsCard>
-            <BottomWrpTab>
-              <span>Activate on</span>
-              <p>22-01-2022</p>
-            </BottomWrpTab>
-          </CardInfo>
-          <CardInfo>
-            <ItemsCard>
-              <PromoCard>
-                <PromoTitle>
-                  <span>10% off</span>
-                  <p>Promo code</p>
-                </PromoTitle>
-                <img src="assets/img/profile/promoItems.png" alt="" />
-              </PromoCard>
-              <PromoCardCredit>
-                <span>20 Credits</span>
-                <span>YYKK234YP8</span>
-              </PromoCardCredit>
-            </ItemsCard>
-            <BottomWrpTab>
-              <span>Activate on</span>
-              <p>22-01-2022</p>
-            </BottomWrpTab>
-          </CardInfo>
-          <CardInfo>
-            <ItemsCard>
-              <PromoCard>
-                <PromoTitle>
-                  <span>10% off</span>
-                  <p>Promo code</p>
-                </PromoTitle>
-                <img src="assets/img/profile/promoItems.png" alt="" />
-              </PromoCard>
-              <PromoCardCredit>
-                <span>20 Credits</span>
-                <span>YYKK234YP8</span>
-              </PromoCardCredit>
-            </ItemsCard>
-            <BottomWrpTab>
-              <span>Activate on</span>
-              <p>22-01-2022</p>
-            </BottomWrpTab>
-          </CardInfo>
+          {data.map((items, index) => (
+            <CardInfo>
+              <ItemsCard
+                color={colors[Math.round((index + 1) % colors.length)]}
+              >
+                <PromoCard>
+                  <PromoTitle>
+                    <span>{items.percentage}% off</span>
+                    <p>Promo code</p>
+                  </PromoTitle>
+                  <img src="assets/img/profile/promoItems.png" alt="" />
+                </PromoCard>
+                <PromoCardCredit>
+                  <span>{items.credits} Credits</span>
+                  <span>{items.code}</span>
+                </PromoCardCredit>
+              </ItemsCard>
+              <BottomWrpTab>
+                <span>Activate on</span>
+                <p>22-01-2022</p>
+              </BottomWrpTab>
+            </CardInfo>
+          ))}
           <PlusCard>
             <img src="assets/img/profile/plus.png" alt="" />
           </PlusCard>

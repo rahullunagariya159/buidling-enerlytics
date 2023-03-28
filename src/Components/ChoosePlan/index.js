@@ -82,8 +82,8 @@ const ChoosePlan = () => {
     }
 
     if (userID && userProfileDetails?.plan) {
-      document.getElementById("CHOOSEPLAN").classList.remove("show");
-      // document.getElementsByClassName("modal-backdrop").style.opacity = 0;
+      // document.getElementById("CHOOSEPLAN").classList.remove("show");
+
       return false;
     }
 
@@ -386,6 +386,7 @@ const ChoosePlan = () => {
                   id="btnChoosePlanClose"
                   type="button"
                   className="x-btn"
+                  data-bs-dismiss="modal"
                   onClick={() => skipToBuy("Trial")}
                 >
                   x

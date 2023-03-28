@@ -34,9 +34,8 @@ export const ContentWrapper = styled.div`
 export const SidebarMenu = styled.div`
   min-width: 252px;
   border-right: 1px solid #f1f1f1;
-  position: sticky;
-  top: 28%;
-  min-height: 496px;
+  position: fixed;
+  height: 100%;
 `;
 
 export const SettingTitle = styled.div`
@@ -69,6 +68,6 @@ export const TextWrp = styled.div`
 `;
 
 export const RightContent = styled.div`
-  padding: 40px;
+  padding: 40px 40px 40px 292px;
   width: 100%;
 `;

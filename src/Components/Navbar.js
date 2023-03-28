@@ -642,8 +642,10 @@ function Navbar(props) {
                   <div className="profile-dropdown">
                     <a className="profile-title">
                       <img
-                        src={userProfileDetails?.profile_pic ||
-                          "assets/img/profile/default-user-avatar.jpeg"}
+                        src={
+                          userProfileDetails?.profile_pic ||
+                          "assets/img/profile/default-user-avatar.jpeg"
+                        }
                         className="profil"
                         alt=""
                       />

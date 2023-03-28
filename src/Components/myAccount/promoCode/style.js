@@ -72,14 +72,13 @@ export const ItemsCard = styled.div`
   padding: 9px 20px;
   min-width: 227px;
   min-height: 110px;
-  background: transparent linear-gradient(245deg, #da64c8 0%, #4436e2 100%) 0%
-    0% no-repeat padding-box;
-  /* background: transparent linear-gradient(244deg, #51f2f1 0%, #04c5b5 100%) 0%
-    0% no-repeat padding-box;
-  background: transparent linear-gradient(244deg, #ffa967 0%, #ff4f96 100%) 0%
-    0% no-repeat padding-box;
-  background: transparent linear-gradient(244deg, #fed672 0%, #fe8a00 100%) 0%
-    0% no-repeat padding-box; */
+  background: transparent
+    linear-gradient(
+      245deg,
+      ${(props) => props.color.c1} 0%,
+      ${(props) => props.color.c2} 100%
+    )
+    0% 0% no-repeat padding-box;
   border-radius: 6px;
 `;
 export const PromoCard = styled.div`
