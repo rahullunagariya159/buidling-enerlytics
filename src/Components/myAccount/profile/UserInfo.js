@@ -20,6 +20,7 @@ import {
   EmailWrp,
   LocationWrp,
   PhoneWrp,
+  CreditMainWrp,
 } from "./style.js";
 import { useAuth } from "../../../Context/AuthProvider";
 import { uploadProfileImage } from "../../Services/UserProfileService";
@@ -92,11 +93,13 @@ const UserInfo = (active) => {
             </UserName>
             <Role>{userProfileDetails?.user_name}</Role>
           </div>
-          <VerticalLine></VerticalLine>
-          <CreditWrp>
-            <SmallLabel>Available credits</SmallLabel>
-            <CreditLabel>{userProfileDetails?.credits || 0}</CreditLabel>
-          </CreditWrp>
+          <CreditMainWrp>
+            <VerticalLine></VerticalLine>
+            <CreditWrp>
+              <SmallLabel>Available credits</SmallLabel>
+              <CreditLabel>{userProfileDetails?.credits || 0}</CreditLabel>
+            </CreditWrp>
+          </CreditMainWrp>
         </ContactHeader>
         <ContactWrp>
           <LocationWrp>

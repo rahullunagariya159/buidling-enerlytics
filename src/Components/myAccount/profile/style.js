@@ -50,7 +50,7 @@ export const ImageWrp = styled.div`
 export const ProfileInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 `;
 export const UserName = styled.div`
   font: normal normal 600 26px/39px Poppins;
@@ -58,7 +58,7 @@ export const UserName = styled.div`
   color: #1c1c1c;
 `;
 export const Role = styled.div`
-  font: normal normal medium 12px/18px Poppins;
+  font: normal normal 500 14px/18px Poppins;
   letter-spacing: 0px;
   color: #1c1c1c;
 `;
@@ -77,9 +77,14 @@ export const SmallLabel = styled.div`
   letter-spacing: 0.24px;
   color: #1c1c1c;
 `;
+export const CreditMainWrp = styled.div`
+  display: flex;
+  gap: 20px;
+`;
 export const CreditWrp = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `;
 export const ContactHeader = styled.div`
   display: flex;
@@ -110,7 +115,7 @@ export const PhoneWrp = styled.div`
   gap: 5px;
   img {
     width: 13px;
-    height: 13px;
+    height: 12px;
   }
 `;
 export const EmailWrp = styled.div`
