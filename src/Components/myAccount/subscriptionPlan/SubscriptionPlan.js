@@ -3,10 +3,10 @@ import { HorizontalLine } from "../profile/editProfile/style";
 import ProfileHeader from "../profile/ProfileHeader";
 import { Wrapper } from "./style.js";
 import SubscriptionContent from "./SubscriptionContent";
-const SubscriptionPlan = (active) => {
+const SubscriptionPlan = () => {
   return (
     <Wrapper>
-      <ProfileHeader active={active} />
+      <ProfileHeader />
       <HorizontalLine />
       <SubscriptionContent />
     </Wrapper>

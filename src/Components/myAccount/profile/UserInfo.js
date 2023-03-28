@@ -25,10 +25,9 @@ import {
 import { useAuth } from "../../../Context/AuthProvider";
 import { uploadProfileImage } from "../../Services/UserProfileService";
 
-const UserInfo = (active) => {
+const UserInfo = () => {
   const { userProfileDetails, getUserInfo } = useAuth();
   const [error, setError] = useState("");
-  const activeData = active?.active?.active?.active;
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
     if (acceptedFiles.length === 0) {
@@ -76,12 +75,10 @@ const UserInfo = (active) => {
             alt=""
           />
         </ImageWrp>
-        {activeData === 1 && (
-          <BlueLabel {...getRootProps()}>
-            <input {...getInputProps()} />
-            Change
-          </BlueLabel>
-        )}
+        <BlueLabel {...getRootProps()}>
+          <input {...getInputProps()} />
+          Change
+        </BlueLabel>
       </UserLogo>
       <ProfileInfo>
         <ContactHeader>
