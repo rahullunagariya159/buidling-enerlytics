@@ -26,15 +26,7 @@ export const updateUserDetails = async (payload) => {
 
 export const uploadProfileImage = async (payload) => {
   return new Promise((resolve, reject) => {
-    ApiPut(
-      `/${BUCKET_FOLDER}/${BUCKET_SUB_FOLDER}/${payload.name}`,
-      payload.file,
-      {
-        headers: {
-          "Content-Type": payload.fileType,
-        },
-      },
-    )
+    ApiPost(`/upload-image`, payload)
       .then(function (response) {
         resolve(response);
       })
@@ -71,6 +63,18 @@ export const makeDefaultCard = async (payload) => {
 export const removeCard = async (payload) => {
   return new Promise((resolve, reject) => {
     ApiDelete(`/credit-card/${payload.id}`, payload)
+      .then(function (response) {
+        resolve(response);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  });
+};
+
+export const getPromoCodesList = async (payload) => {
+  return new Promise((resolve, reject) => {
+    ApiGet(`/promo-code?userId=${payload?.userId}&type=${payload?.type}`)
       .then(function (response) {
         resolve(response);
       })

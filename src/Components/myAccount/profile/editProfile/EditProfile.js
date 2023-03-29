@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 import CancelButton from "../../../CancelButton";
 import LinkButton from "../../../LinkButton";
 import {
@@ -26,15 +27,20 @@ import {
   SelectWrp,
   EditProfileHeaderLabel,
 } from "./style.js";
-import { updateUserDetails } from "../../../Services/UserProfileService";
+import {
+  updateUserDetails,
+  uploadProfileImage,
+} from "../../../Services/UserProfileService";
 import { useAuth } from "../../../../Context/AuthProvider";
 import { toast } from "react-toastify";
 import Text from "../../../Text";
-import { somethingWentWrongError } from "../../../../Constants/";
+import { somethingWentWrongError } from "../../../../Constants";
+import { getBase64 } from "../../../../utils/";
 
 const EditProfile = ({ childToParent }) => {
   const [inputVal, setInputVal] = useState({});
   const [loading, setLoading] = useState(false);
+  const [profileImgUrl, setProfileImgUrl] = useState("");
   const [error, setError] = useState("");
   const { userId, userProfileDetails, getUserInfo } = useAuth();
 
@@ -66,7 +72,7 @@ const EditProfile = ({ childToParent }) => {
       first_name: inputVal?.firstName,
       country_code: inputVal?.countryCode,
       user_name: inputVal?.userName,
-      profile_pic: userProfileDetails?.profile_pic,
+      profile_pic: profileImgUrl || userProfileDetails?.profile_pic,
     };
 
     updateProfileValues.userId = userId;
@@ -77,6 +83,7 @@ const EditProfile = ({ childToParent }) => {
         if (response?.status === 200 && response?.data?.msg) {
           await getUserInfo(userId);
           toast.success("Your profile updated successfully");
+          childToParent();
         } else {
           setError(response?.error || somethingWentWrongError);
         }
@@ -107,8 +114,42 @@ const EditProfile = ({ childToParent }) => {
         profilePic: userProfileDetails?.profile_pic,
       };
       setInputVal(defaultValues);
+      setProfileImgUrl(userProfileDetails?.profile_pic);
     }
   }, [userId]);
+
+  const onDrop = useCallback((acceptedFiles) => {
+    // Do something with the files
+    if (acceptedFiles.length === 0) {
+      setError("Please upload only jpeg,jpg, or png image");
+      return false;
+    }
+
+    const uploadFile = acceptedFiles[0];
+
+    getBase64(uploadFile, (result) => {
+      const fileData = {
+        user_avatar: result,
+      };
+
+      uploadProfileImage(fileData)
+        .then((response) => {
+          if (response?.status === 200 && response?.data?.Location) {
+            setProfileImgUrl(response?.data?.Location);
+          }
+        })
+        .catch((error) => {
+          console.log({ error });
+          setError("Please upload only jpeg,jpg, or png image");
+        });
+    });
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: "image/*",
+    type: "file",
+  });
 
   return (
     <MainWrapper>
@@ -117,8 +158,7 @@ const EditProfile = ({ childToParent }) => {
           <ImageWrp>
             <img
               src={
-                userProfileDetails?.profile_pic ||
-                "assets/img/profile/default-user-avatar.jpeg"
+                profileImgUrl || "assets/img/profile/default-user-avatar.jpeg"
               }
               alt="user_avatar"
             />
@@ -140,7 +180,10 @@ const EditProfile = ({ childToParent }) => {
           </ProfileInfo>
         </ProfileWrp>
         <UpdateWrp>
-          <BlueLabel>Change</BlueLabel>
+          <BlueLabel {...getRootProps()}>
+            <input {...getInputProps()} />
+            Change
+          </BlueLabel>
         </UpdateWrp>
       </HeaderWrapper>
       <HorizontalLine />
@@ -293,7 +336,7 @@ const EditProfile = ({ childToParent }) => {
                 value={inputVal?.phoneNumber}
                 onChange={onChangeHandler}
               />
-              {inputVal?.phoneNumber && <label>Verified</label>}
+              {/* {inputVal?.phoneNumber && <label>Verified</label>} */}
             </SelectWrp>
           </PhoneNumberItems>
           <Items>

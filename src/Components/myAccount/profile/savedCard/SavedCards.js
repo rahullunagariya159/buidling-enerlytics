@@ -47,7 +47,7 @@ const SavedCards = () => {
 
   const handleAddCard = () => {
     setIsAddingCard(true);
-    document.getElementById("addNewCard").click();
+    document.getElementById("addNewCardModal").click();
   };
 
   const handleMakeDefaultCard = async (id) => {

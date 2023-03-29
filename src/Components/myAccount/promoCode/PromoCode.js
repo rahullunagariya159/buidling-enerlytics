@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
   EditProfileHeaderLabel,
@@ -33,67 +32,75 @@ import {
   TabWrp,
   VerticalLine,
 } from "./style";
+import { useAuth } from "../../../Context/AuthProvider";
+import { getPromoCodesList } from "../../Services/UserProfileService";
 
 const PromoCode = () => {
+  const { userProfileDetails, userId } = useAuth();
+  const [availablePromoCodes, setAvailablePromoCodes] = useState([]);
+  const [usedPromoCodes, setUsedPromoCodes] = useState([]);
+  const [selected, setSelected] = useState(0);
+
+  const handleGetPromoCodeList = (type) => {
+    const promoCodePayload = {
+      userId: userId,
+      type: type,
+    };
+    getPromoCodesList(promoCodePayload)
+      .then((response) => {
+        console.log({ response });
+        if (response?.status === 200 && response?.data?.data) {
+          if (selected === 0) {
+            setAvailablePromoCodes(response?.data?.data);
+          } else {
+            setUsedPromoCodes(response?.data?.data);
+          }
+        }
+      })
+      .catch((error) => {
+        console.log({ error });
+      });
+  };
+
+  useEffect(() => {
+    if (userId) {
+      handleGetPromoCodeList("AVAILABLE");
+    }
+  }, [userId]);
+
   const toggleDropdown = () => {
     document.getElementById("myDropdownFilter").classList.toggle("show");
   };
-  const [selected, setSelected] = useState(0);
+
   const colors = [
     { c1: "#da64c8", c2: "#4436e2" },
     { c1: "#51f2f1", c2: "#04c5b5" },
     { c1: "#ffa967", c2: "#ff4f96" },
     { c1: "#fed672", c2: "#fe8a00" },
   ];
-  const data = [
-    {
-      percentage: "10",
-      credits: "20",
-      code: "YYKK234YP8",
-      date: "22-01-2022",
-    },
-    {
-      percentage: "20",
-      credits: "20",
-      code: "YYKK234YP8",
-      date: "22-01-2022",
-    },
-    {
-      percentage: "50",
-      credits: "20",
-      code: "YYKK234YP8",
-      date: "22-01-2022",
-    },
-    {
-      percentage: "10",
-      credits: "20",
-      code: "YYKK234YP8",
-      date: "22-01-2022",
-    },
-    {
-      percentage: "90",
-      credits: "20",
-      code: "YYKK234YP8",
-      date: "22-01-2022",
-    },
-    {
-      percentage: "40",
-      credits: "20",
-      code: "YYKK234YP8",
-      date: "22-01-2022",
-    },
-  ];
+
   return (
     <div>
       <HeaderWrapper>
         <ProfileWrp>
           <ImageWrp>
-            <img src="assets/img/profile/userLogo.png" alt="" />
+            <img
+              src={
+                userProfileDetails?.profile_pic ||
+                "assets/img/profile/default-user-avatar.jpeg"
+              }
+              alt=""
+            />
           </ImageWrp>
           <ProfileInfo>
             <ContactHeader>
               <div>
-                <UserName>Golden Designs</UserName>
+                <UserName>
+                  {" "}
+                  {(userProfileDetails?.first_name || "") +
+                    " " +
+                    (userProfileDetails?.last_name || "")}
+                </UserName>
                 <EditProfileHeaderLabel>
                   Manage your personal information, Password and more
                 </EditProfileHeaderLabel>
@@ -111,7 +118,10 @@ const PromoCode = () => {
           <NavLink
             to="#"
             selected={selected === 0 ? "selected" : ""}
-            onClick={() => setSelected(0)}
+            onClick={() => {
+              setSelected(0);
+              handleGetPromoCodeList("AVAILABLE");
+            }}
             className={() => "nav-link " + (selected === 0 ? "selected" : "")}
           >
             Available
@@ -120,7 +130,10 @@ const PromoCode = () => {
           <NavLink
             to="#"
             selected={selected === 1 ? "selected" : ""}
-            onClick={() => setSelected(1)}
+            onClick={() => {
+              setSelected(1);
+              handleGetPromoCodeList("USED");
+            }}
             className={() => "nav-link " + (selected === 1 ? "selected" : "")}
           >
             Used
@@ -146,31 +159,57 @@ const PromoCode = () => {
       </CardWrp>
       {selected === 0 && (
         <ContentCard>
-          {data.map((items, index) => (
-            <CardInfo key={index}>
-              <ItemsCard
-                color={colors[Math.round((index + 1) % colors.length)]}
-              >
-                <PromoCard>
-                  <PromoTitle>
-                    <span>{items.percentage}% off</span>
-                    <p>Promo code</p>
-                  </PromoTitle>
-                  <img src="assets/img/profile/promoItems.png" alt="" />
-                </PromoCard>
-                <PromoCardCredit>
-                  <span>{items.credits} Credits</span>
-                  <span>{items.code}</span>
-                </PromoCardCredit>
-              </ItemsCard>
-              <BottomWrp>Activate now</BottomWrp>
-            </CardInfo>
-          ))}
+          {availablePromoCodes?.length > 0 &&
+            availablePromoCodes?.map((items, index) => (
+              <CardInfo key={index}>
+                <ItemsCard
+                  color={colors[Math.round((index + 1) % colors.length)]}
+                >
+                  <PromoCard>
+                    <PromoTitle>
+                      <span>{items?.discount}% off</span>
+                      <p>{items?.promo_code}</p>
+                    </PromoTitle>
+                    <img src="assets/img/profile/promoItems.png" alt="" />
+                  </PromoCard>
+                  <PromoCardCredit>
+                    <span>20 Credits</span>
+                    <span>YYKK234YP8</span>
+                  </PromoCardCredit>
+                </ItemsCard>
+                <BottomWrp>Activate now</BottomWrp>
+              </CardInfo>
+            ))}
         </ContentCard>
       )}
       {selected === 1 && (
         <ContentCard>
-          {data.map((items, index) => (
+          {usedPromoCodes?.length > 0 &&
+            usedPromoCodes.map((items, index) => (
+              <CardInfo>
+                <ItemsCard
+                  color={colors[Math.round((index + 1) % colors.length)]}
+                >
+                  <PromoCard>
+                    <PromoTitle>
+                      <span>{items?.discount}% off</span>
+                      <p>{items?.promo_code}</p>
+                    </PromoTitle>
+                    <img src="assets/img/profile/promoItems.png" alt="" />
+                  </PromoCard>
+                  <PromoCardCredit>
+                    <span>200 Credits</span>
+                    <span>YYKK234YP8</span>
+                  </PromoCardCredit>
+                </ItemsCard>
+                <BottomWrpTab>
+                  <span>Activate on</span>
+                  <p>22-01-2022</p>
+                </BottomWrpTab>
+              </CardInfo>
+            ))}
+
+          {/* {data.map((items, index) => (
             <CardInfo>
               <ItemsCard
                 color={colors[Math.round((index + 1) % colors.length)]}
@@ -192,7 +231,7 @@ const PromoCode = () => {
                 <p>22-01-2022</p>
               </BottomWrpTab>
             </CardInfo>
-          ))}
+          ))} */}
           <PlusCard>
             <img src="assets/img/profile/plus.png" alt="" />
           </PlusCard>

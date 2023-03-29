@@ -1,5 +1,4 @@
-import React, { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import React, { useState } from "react";
 
 import "./style.js";
 import {
@@ -23,45 +22,10 @@ import {
   CreditMainWrp,
 } from "./style.js";
 import { useAuth } from "../../../Context/AuthProvider";
-import { uploadProfileImage } from "../../Services/UserProfileService";
 
 const UserInfo = () => {
-  const { userProfileDetails, getUserInfo } = useAuth();
+  const { userProfileDetails } = useAuth();
   const [error, setError] = useState("");
-  const onDrop = useCallback((acceptedFiles) => {
-    // Do something with the files
-    if (acceptedFiles.length === 0) {
-      setError("Please upload only jpeg,jpg, or png image");
-      return false;
-    }
-
-    const uploadFile = acceptedFiles[0];
-    const fileName = uploadFile.name || "";
-    const formData = new FormData();
-    formData.append("file", uploadFile);
-    const uploadData = {
-      file: formData,
-      name: fileName,
-      fileType: uploadFile.type,
-    };
-
-    uploadProfileImage(uploadData)
-      .then((response) => {
-        console.log({ response });
-        if (response.status === 200) {
-          getUserInfo();
-        }
-      })
-      .catch((error) => {
-        console.log({ error });
-      });
-  }, []);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: "image/*",
-    type: "file",
-  });
 
   return (
     <ProfileWrp>
@@ -75,10 +39,10 @@ const UserInfo = () => {
             alt=""
           />
         </ImageWrp>
-        <BlueLabel {...getRootProps()}>
+        {/* <BlueLabel {...getRootProps()}>
           <input {...getInputProps()} />
           Change
-        </BlueLabel>
+        </BlueLabel> */}
       </UserLogo>
       <ProfileInfo>
         <ContactHeader>
@@ -102,8 +66,7 @@ const UserInfo = () => {
           <LocationWrp>
             <img src="assets/img/profile/location.png" alt=" " />
             <Label>
-              {userProfileDetails?.address}, {userProfileDetails?.city}{" "}
-              {userProfileDetails?.country}{" "}
+              {userProfileDetails?.country}, {userProfileDetails?.city}
             </Label>
           </LocationWrp>
           <PhoneWrp>

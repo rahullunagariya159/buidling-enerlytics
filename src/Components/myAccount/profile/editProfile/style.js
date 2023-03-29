@@ -124,7 +124,7 @@ export const SelectWrp = styled.div`
     color: #1c1c1c;
     padding: 12px 11px;
     height: 40px;
-    min-width: 140px;
+    min-width: 221px;
     background: #ffffff 0% 0% no-repeat padding-box;
     border-left: 1px solid #dcdcdc !important;
     border-right: none;

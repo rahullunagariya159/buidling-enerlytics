@@ -127,6 +127,7 @@ export const BottomWrp = styled.div`
   font: normal normal 600 12px/16px Poppins;
   letter-spacing: 0px;
   color: #1c1c1c;
+  cursor: pointer;
 `;
 export const BottomWrpTab = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;

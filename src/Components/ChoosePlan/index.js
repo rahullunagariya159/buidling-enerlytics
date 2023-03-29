@@ -60,6 +60,23 @@ const ChoosePlan = () => {
     creditCardList,
   } = useAuth();
 
+  useEffect(() => {
+    if (creditCardList?.length > 0) {
+      setCardAdded(true);
+      const defaultCreditCard = creditCardList.find((c) => c.isDefault);
+
+      const cardDetails = {
+        cardType: defaultCreditCard.cardBrand,
+        last4: defaultCreditCard?.last4 || "",
+        isDefault: defaultCreditCard?.isDefault,
+        name: defaultCreditCard?.cardName,
+        cardId: defaultCreditCard?.id,
+      };
+
+      setSelectedCard(cardDetails);
+    }
+  }, [creditCardList]);
+
   const handleRedirection = async () => {
     if (isCreateProjectUrl) {
       setTimeout(
@@ -148,6 +165,8 @@ const ChoosePlan = () => {
   const handleBuyPlan = () => {
     setBuyPlanError("");
     if (!userID) {
+      setPayClicked(false);
+
       return false;
     }
 
@@ -167,28 +186,33 @@ const ChoosePlan = () => {
       payload.promoCodeName = document.getElementById("promoCode").value;
     }
 
-    getPlans(payload).then((response) => {
-      if (response.error) {
-        setBuyPlanError(
-          response.error ||
-            "We are sorry, but something went wrong. Please try again later.",
-        );
-      } else {
-        // data comes here..
-        console.log(response);
-
-        if (response && response.msg) {
-          setPlanData(response.msg);
-          toast.success(
-            `Your ${selectedPlan.toLowerCase()} plan successfully activated.`,
-            { toastId: "toast12" },
+    getPlans(payload)
+      .then((response) => {
+        if (response.error) {
+          setBuyPlanError(
+            response.error ||
+              "We are sorry, but something went wrong. Please try again later.",
           );
+        } else {
+          // data comes here..
+          console.log(response);
+
+          if (response && response.msg) {
+            setPlanData(response.msg);
+            toast.success(
+              `Your ${selectedPlan.toLowerCase()} plan successfully activated.`,
+              { toastId: "toast12" },
+            );
+          }
+          // ReactSession.set("user_email_registered", "true");
+          handleRedirection();
         }
-        // ReactSession.set("user_email_registered", "true");
-        handleRedirection();
-      }
-      setPayClicked(false);
-    });
+        setPayClicked(false);
+      })
+      .catch(() => {})
+      .finally(() => {
+        setPayClicked(false);
+      });
   };
 
   const buyPlan = () => {
@@ -344,6 +368,16 @@ const ChoosePlan = () => {
         hidden
       >
         Choose Card
+      </a>
+      <a
+        className="Add-promo"
+        data-bs-dismiss="modal"
+        data-bs-toggle="modal"
+        data-bs-target="#SECURE-RELIABLE"
+        id="addNewCardModal"
+        hidden
+      >
+        Add now
       </a>
       {/* <!-- CHOOSE YOUR PLAN Modal --> */}
       <div
@@ -785,53 +819,7 @@ const ChoosePlan = () => {
                       <p className="Terms-pr">Terms & conditions applied</p>
                     </div>
                   </div>
-                  <div
-                    className={`main-Credit-aline ${
-                      creditCardList?.length === 0
-                        ? "no-credit-card-container"
-                        : ""
-                    }`}
-                    id="paymentMethod"
-                  >
-                    {creditCardList?.length > 0 && (
-                      <CardListContainer className="card-list-container">
-                        {creditCardList?.length > 0 &&
-                          creditCardList?.map((creditCard) => {
-                            return (
-                              <div className="w-100">
-                                <div className="Credit-box">
-                                  <div className="card-Credit-box">
-                                    <p className="Harry-name">
-                                      {creditCard?.cardName}
-                                    </p>
-                                    <p className="Credit-card">Credit</p>
-                                    <p className="Default">
-                                      {creditCard?.isDefault ? "Default" : ""}
-                                    </p>
-                                  </div>
-                                  <div>
-                                    {/* <a className="Change-promo" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#SECURE-RELIABLE">Change</a> */}
-                                    {/* <a className="Change-promo">Change</a> */}
-                                  </div>
-                                </div>
-                                <div className="visa-flex">
-                                  <p className="number-card">
-                                    ****-****-****-
-                                    <span className="pt-1">
-                                      {creditCard?.last4}
-                                    </span>
-                                  </p>
-                                  <img
-                                    src="assets/img/Home–new/visa-credit-card.png"
-                                    className="visa-ixs"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                            );
-                          })}
-                      </CardListContainer>
-                    )}
+                  <div className={`main-Credit-aline`} id="paymentMethod">
                     {cardAdded ? (
                       <div className="w-100">
                         <div className="Credit-box">
