@@ -1395,10 +1395,35 @@ img.okik {
   height: 20px;
 }
 
-.row.piuuw {
-  padding: 32px 32px 0 16px;
+.main-building {
+  display: flex;
+  gap: 29px;
 }
-
+.building-content {
+  padding: 28px 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.left-wrp {
+  min-width: 457px;
+}
+.right-wrp {
+  min-width: 560px;
+  position: relative;
+}
+.main-table .main-title {
+  height: 40px;
+  background: #fcfcfc 0% 0% no-repeat padding-box;
+  border: 1px solid #f1f1f1;
+  border-radius: 4px 4px 0px 0px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  font: normal normal 600 13px/22px Poppins;
+  letter-spacing: 0.37px;
+  color: #1c1c1c;
+}
 .serach {
   padding: 16px 0;
   display: grid;
@@ -1425,11 +1450,11 @@ p.rotet {
   letter-spacing: 0.43px;
   color: #ffbb1c;
   position: absolute;
-  right: -28px;
   border: 1px solid #f1f1f1;
   padding: 2px 26px 2px 16px;
-  top: 23.05%;
+  top: 8.3%;
   margin: 0;
+  left: -99px;
 }
 
 a.next-btnes {
@@ -1450,16 +1475,17 @@ a.next-btnes {
 .end-flex {
   display: flex;
   align-items: flex-end;
-  height: 95%;
+  margin-top: 43px;
   justify-content: end;
 }
 
 .main-table {
   border: 1px solid #f1f1f1;
+  border-radius: 4px;
 }
 
-p.stepce {
-  font: normal normal normal 12px/18px Poppins;
+.stepce {
+  font: normal normal 600 12px/18px Poppins;
   letter-spacing: 0.37px;
   color: #013a67;
   margin: 0;
@@ -1472,10 +1498,10 @@ p.stepce {
 }
 
 .table-pading h1 {
+  margin: 0;
   font: normal normal 600 14px/21px Poppins;
   letter-spacing: 0.43px;
   color: #013a67;
-  margin: 0;
 }
 
 .one-boex {
@@ -1483,7 +1509,7 @@ p.stepce {
 }
 
 label.no-1 {
-  font: normal normal normal 12px/18px Poppins;
+  font: normal normal 400 12px/18px Poppins;
   letter-spacing: 0.37px;
   color: #8d8d8d;
 }
@@ -1507,14 +1533,14 @@ label.no-1.tow {
 .table-pading {
   display: grid;
   gap: 20px;
-  padding: 32px 16px 32px;
+  padding: 32px 48px 25px 16px;
 }
 
 .second-gride {
   display: flex;
 }
 
-p.stepce.qw {
+.stepce.qw {
   color: #013a67;
   background: #c2c2c2 0% 0% no-repeat padding-box;
 }
@@ -1532,26 +1558,33 @@ label.no-1.qw {
 .one-boex.side-brdr {
   border-left: 1px solid #f1f1f1;
 }
-
-a.country-links {
+.nav12 {
+  width: 100%;
+  justify-content: space-between;
+  padding-right: 17px;
+  display: flex;
+  align-items: center;
+}
+.mt {
+  margin-top: 20px;
+}
+.vertical-line {
+  width: 0px;
+  height: 39px;
+  border: 1px solid #f1f1f1;
+}
+.country-links {
   font: normal normal normal 12px/18px Poppins;
   letter-spacing: 0.37px;
   color: #013a67;
-  display: inline-flex;
-  gap: 50px;
-  justify-content: space-between;
   padding: 16px;
-  border-right: 1px solid #f1f1f1;
-  margin: 32px 0 4px;
   cursor: pointer;
 }
-
 .Country-flexre {
+  width: 100%;
   display: flex;
-}
-
-a.country-links:last-child {
-  border-right: unset;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* .side-left::after {
@@ -3898,8 +3931,8 @@ p.Terms-pr {
   padding: 0 30px;
 }
 
-.no-credit-card-container{
-    display: flex;
+.no-credit-card-container {
+  display: flex;
 }
 
 .no-card-added {

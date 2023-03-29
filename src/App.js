@@ -13,7 +13,7 @@ import { Amplify } from "aws-amplify";
 import LoadProject from "./Components/LoadProject";
 import BEModal from "./Components/BEModal";
 import BEModalFull from "./Components/BEModalFull";
-import BuildingMaterial from "./Components/BuildingMaterial";
+import BuildingMaterial from "./Components/buildingMaterial/BuildingMaterial";
 import ContactUs from "./Components/ContactUs";
 import Pricing from "./Components/Pricing";
 import AboutUs from "./Components/AboutUs";

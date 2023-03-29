@@ -6,6 +6,7 @@ import { updateProjectName } from "./Services/UserService";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 import Button from "./Button";
+import { Routes } from "../navigation/Routes";
 
 function LeftSidebar(props) {
   const navigate = useNavigate();
@@ -36,6 +37,9 @@ function LeftSidebar(props) {
     } else {
       navigate({ pathname: "/create-project", search: "?name=" + projectName });
     }
+  };
+  const navigateToBuilding = () => {
+    navigate(`${Routes.buildingMaterial}`);
   };
 
   const handleUpdateProjectName = () => {
@@ -140,16 +144,14 @@ function LeftSidebar(props) {
         </p>
       </div>
       <div className="brdrt">
-        <div id="BE" className="side-link-flex">
+        <div id="BE" className="side-link-flex" onClick={navigateToProject}>
           <div className="flex-side">
             <img
               className="side-icon"
               src="assets/img/Home-Page/homeFinal/home.svg"
               alt=""
             />
-            <a className="MODELw" onClick={navigateToProject}>
-              BUILDING MODEL
-            </a>
+            <a className="MODELw">BUILDING MODEL</a>
           </div>
           <div className="be-status">
             <a>
@@ -160,7 +162,7 @@ function LeftSidebar(props) {
             </a>
           </div>
         </div>
-        <div id="BM" className="side-link-flex">
+        <div id="BM" className="side-link-flex" onClick={navigateToBuilding}>
           <div className="flex-side">
             <img
               className="side-icon"

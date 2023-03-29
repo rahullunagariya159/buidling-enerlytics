@@ -1505,10 +1505,6 @@ a.country-links {
   margin-bottom: 10px;
 }
 
-a.country-links:last-child {
-  border-right: unset;
-}
-
 .side-left::after {
   background: 0% 0% no-repeat padding-box padding-box rgb(251, 251, 251);
   width: 100%;
