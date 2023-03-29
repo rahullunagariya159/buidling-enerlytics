@@ -83,3 +83,15 @@ export const getPromoCodesList = async (payload) => {
       });
   });
 };
+
+export const getSubscriptionAndHistory = async (payload) => {
+  return new Promise((resolve, reject) => {
+    ApiGet(`/subscriptions?userId=${payload?.userId}`)
+      .then(function (response) {
+        resolve(response);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  });
+};
