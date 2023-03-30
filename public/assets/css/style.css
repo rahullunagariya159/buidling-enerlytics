@@ -1303,7 +1303,7 @@ a.link-itme.flex {
 
 .side-left {
   background: #fbfbfb 0% 0% no-repeat padding-box;
-  padding: 16px;
+  padding: 12px;
   position: relative;
 }
 
@@ -1415,14 +1415,79 @@ img.okik {
 .main-table .main-title {
   height: 40px;
   background: #fcfcfc 0% 0% no-repeat padding-box;
-  border: 1px solid #f1f1f1;
   border-radius: 4px 4px 0px 0px;
   padding: 12px 18px;
   display: flex;
   align-items: center;
-  font: normal normal 600 13px/22px Poppins;
+  font: normal normal 700 13px/22px Poppins;
   letter-spacing: 0.37px;
   color: #1c1c1c;
+}
+.main-table .sub-title {
+  height: 40px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  font: normal normal 600 12px/22px Poppins;
+  letter-spacing: 0.37px;
+  color: #ffbb1c;
+  margin-top: 8px;
+}
+.border-btm {
+  border: 1px solid #f1f1f1;
+  margin: 0px 18px;
+}
+.items-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 28px;
+}
+.items-row .items {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.items-row .items p {
+  font: normal normal 600 12px/22px Poppins;
+  letter-spacing: 0.31px;
+  color: #8d8d8d;
+  margin-bottom: 0;
+}
+.items-row .items input {
+  font: normal normal 600 12px/18px Poppins;
+  letter-spacing: 0.37px;
+  color: #013a67;
+  padding: 5px 15px;
+  min-width: 225px;
+  height: 40px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+}
+.items-row .items input::placeholder {
+  color: #013a67;
+  opacity: 1; /* Firefox */
+}
+.items-row .items select {
+  font: normal normal 600 12px/18px Poppins;
+  letter-spacing: 0.37px;
+  color: #013a67;
+  padding: 5px 15px;
+  min-width: 225px;
+  height: 40px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  display: inline-block;
+  background-image: url("../img//Home-Page/homeFinal/Path\ 311.svg");
+  background-position: calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px), 100% 0;
+  background-size: 11px 8px;
 }
 .serach {
   padding: 16px 0;
@@ -1452,7 +1517,7 @@ p.rotet {
   position: absolute;
   border: 1px solid #f1f1f1;
   padding: 2px 26px 2px 16px;
-  top: 8.3%;
+  top: 64px;
   margin: 0;
   left: -99px;
 }
@@ -1481,7 +1546,7 @@ a.next-btnes {
 
 .main-table {
   border: 1px solid #f1f1f1;
-  border-radius: 4px;
+  padding-bottom: 15px;
 }
 
 .stepce {

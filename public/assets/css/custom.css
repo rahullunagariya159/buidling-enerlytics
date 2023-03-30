@@ -355,7 +355,7 @@ a.link-itme.flex.signin-btn.btn-nav {
 
 .main-parant-11,
 .main-parant-10 {
-  padding: 0 25px;
+  padding: 0 20px;
 }
 
 .nav-logged-in {
@@ -405,7 +405,7 @@ a.link-itme.flex.signin-btn.btn-nav {
 }
 
 .left-side-bar-container {
-  width: 290px !important;
+  max-width: 275px !important;
 }
 
 .check-disable {
