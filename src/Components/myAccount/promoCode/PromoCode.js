@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { format } from "date-fns";
 import {
   EditProfileHeaderLabel,
   FormSection,
@@ -41,16 +42,15 @@ const PromoCode = () => {
   const [usedPromoCodes, setUsedPromoCodes] = useState([]);
   const [selected, setSelected] = useState(0);
 
-  const handleGetPromoCodeList = (type) => {
+  const handleGetPromoCodeList = (type, selectionTab) => {
     const promoCodePayload = {
       userId: userId,
       type: type,
     };
     getPromoCodesList(promoCodePayload)
       .then((response) => {
-        console.log({ response });
         if (response?.status === 200 && response?.data?.data) {
-          if (selected === 0) {
+          if (selectionTab === 0) {
             setAvailablePromoCodes(response?.data?.data);
           } else {
             setUsedPromoCodes(response?.data?.data);
@@ -64,7 +64,7 @@ const PromoCode = () => {
 
   useEffect(() => {
     if (userId) {
-      handleGetPromoCodeList("AVAILABLE");
+      handleGetPromoCodeList("AVAILABLE", 0);
     }
   }, [userId]);
 
@@ -120,7 +120,7 @@ const PromoCode = () => {
             selected={selected === 0 ? "selected" : ""}
             onClick={() => {
               setSelected(0);
-              handleGetPromoCodeList("AVAILABLE");
+              handleGetPromoCodeList("AVAILABLE", 0);
             }}
             className={() => "nav-link " + (selected === 0 ? "selected" : "")}
           >
@@ -132,7 +132,7 @@ const PromoCode = () => {
             selected={selected === 1 ? "selected" : ""}
             onClick={() => {
               setSelected(1);
-              handleGetPromoCodeList("USED");
+              handleGetPromoCodeList("USED", 1);
             }}
             className={() => "nav-link " + (selected === 1 ? "selected" : "")}
           >
@@ -168,13 +168,13 @@ const PromoCode = () => {
                   <PromoCard>
                     <PromoTitle>
                       <span>{items?.discount}% off</span>
-                      <p>{items?.promo_code}</p>
+                      <p>Promo code</p>
                     </PromoTitle>
                     <img src="assets/img/profile/promoItems.png" alt="" />
                   </PromoCard>
                   <PromoCardCredit>
                     <span>20 Credits</span>
-                    <span>YYKK234YP8</span>
+                    <span>{items?.promo_code}</span>
                   </PromoCardCredit>
                 </ItemsCard>
                 <BottomWrp>Activate now</BottomWrp>
@@ -193,18 +193,25 @@ const PromoCode = () => {
                   <PromoCard>
                     <PromoTitle>
                       <span>{items?.discount}% off</span>
-                      <p>{items?.promo_code}</p>
+                      <p>Promo code</p>
                     </PromoTitle>
                     <img src="assets/img/profile/promoItems.png" alt="" />
                   </PromoCard>
                   <PromoCardCredit>
                     <span>200 Credits</span>
-                    <span>YYKK234YP8</span>
+                    <span>{items?.promo_code}</span>
                   </PromoCardCredit>
                 </ItemsCard>
                 <BottomWrpTab>
                   <span>Activate on</span>
-                  <p>22-01-2022</p>
+                  <p>
+                    {items?.created_at
+                      ? format(
+                          new Date(parseInt(items?.created_at)),
+                          "dd-MM-yyyy",
+                        )
+                      : "-"}
+                  </p>
                 </BottomWrpTab>
               </CardInfo>
             ))}

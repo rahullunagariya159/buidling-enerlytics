@@ -99,8 +99,7 @@ const ChoosePlan = () => {
     }
 
     if (userID && userProfileDetails?.plan) {
-      // document.getElementById("CHOOSEPLAN").classList.remove("show");
-
+      document.getElementById("btnChoosePlanClose").click();
       return false;
     }
 

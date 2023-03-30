@@ -28,7 +28,6 @@ import { getSubscriptionAndHistory } from "../../../Components/Services/UserProf
 
 const SubscriptionContent = () => {
   const { userId } = useAuth();
-  const [show, setShow] = useState(true);
   const [invoices, setInvoices] = useState([]);
   const [subscription, setSubscription] = useState({});
 
@@ -50,6 +49,10 @@ const SubscriptionContent = () => {
       .finally(() => {});
   };
 
+  const handleChoosePlan = () => {
+    document.getElementById("enablePlans").click();
+  };
+
   useEffect(() => {
     if (userId) {
       handleGetSubscriptionsAndHistory();
@@ -61,13 +64,13 @@ const SubscriptionContent = () => {
       <FormSection>
         <Title>MY SUBSCRIPTION PLAN</Title>
       </FormSection>
-      {Object.keys(subscription).length === 0 ? (
+      {Object.keys(subscription)?.length === 0 ? (
         <div>
           <SmallLabel>
             You Currently don't have any subscription plan.
           </SmallLabel>
           <LinkButton
-            // onClick={() => setShow(false)}
+            onClick={() => handleChoosePlan()}
             className={`signin-btn sub-plan`}
             title="Choose now"
           />
@@ -118,6 +121,7 @@ const SubscriptionContent = () => {
             className={`upgrade-now-btn`}
             title="Upgrade now"
             icon={true}
+            onClick={() => handleChoosePlan()}
           />
         </CardWrp>
       )}
