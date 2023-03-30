@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Navbar from "../Navbar";
 import LeftSidebar from "../LeftSidebar";
 
 const BuildingMaterial = () => {
+  const [toggle, setToggle] = useState(true);
   return (
     <div>
       <Navbar />
@@ -58,40 +59,40 @@ const BuildingMaterial = () => {
                       <div className="mt">
                         <div className="Country-flexre">
                           <div className="nav12">
-                            <div className="country-links">Country</div>
-                            <img
-                              src="assets/img/Home-Page/homeFinal/Path 311.svg"
-                              alt=""
-                            />
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
                           </div>
                           <div className="vertical-line"></div>
                           <div className="nav12">
-                            <div className="country-links">Building Type</div>
-                            <img
-                              src="assets/img/Home-Page/homeFinal/Path 311.svg"
-                              alt=""
-                            />
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
                           </div>
                         </div>
                         <div className="Country-flexre">
                           <div className="nav12">
-                            <div className="country-links">
-                              Construction Year
-                            </div>
-                            <img
-                              src="assets/img/Home-Page/homeFinal/Path 311.svg"
-                              alt=""
-                            />
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
                           </div>
                           <div className="vertical-line"></div>
                           <div className="nav12">
-                            <div className="country-links">
-                              Building Appearance
-                            </div>
-                            <img
-                              src="assets/img/Home-Page/homeFinal/Path 311.svg"
-                              alt=""
-                            />
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -143,205 +144,210 @@ const BuildingMaterial = () => {
                   </div>
                 </div>
                 <div className="right-wrp">
-                  <div>
-                    <p className="rotet">
-                      SHOW DETAILS{" "}
-                      <img
-                        src="assets/img/Home-Page/homeFinal/Path 66.svg"
-                        className="porte"
-                        alt=""
-                      />
-                    </p>
-                  </div>
-                  <div className="main-table">
-                    <div className="main-title">General</div>
-                    <div className="items-row">
-                      <div className="items">
-                        <p>Heat tramission</p>
-                        <select name="heatTramission">
-                          <option value="">Custom</option>
-                          <option value="india">India</option>
-                          <option value="japan">Japan</option>
-                          <option value="australia">Australia</option>
-                        </select>
+                  <p
+                    className="rotet cursor-pointer"
+                    onClick={() => setToggle(!toggle)}
+                  >
+                    SHOW DETAILS
+                    <img
+                      src="assets/img/Home-Page/homeFinal/Path 66.svg"
+                      className="porte"
+                      alt=""
+                    />
+                  </p>
+                  {toggle && (
+                    <div className="rightContent">
+                      <div className="main-table">
+                        <div className="main-title">General</div>
+                        <div className="items-row">
+                          <div className="items">
+                            <p>Heat tramission</p>
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
+                          </div>
+                          <div className="items">
+                            <p>Infiltration rates</p>
+                            <input type="text" placeholder="Custom" />
+                          </div>
+                        </div>
+                        <div className="items-row">
+                          <div className="items">
+                            <p>Energy bridges</p>
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
+                          </div>
+                          <div className="items">
+                            <p>U-value</p>
+                            <input type="text" placeholder="Custom" />
+                          </div>
+                        </div>
+                        <div className="items-row">
+                          <div className="items">
+                            <p>Building density</p>
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
+                          </div>
+                          <div className="items">
+                            <p>Absortvity</p>
+                            <input type="text" placeholder="Custom" />
+                          </div>
+                        </div>
                       </div>
-                      <div className="items">
-                        <p>Infiltration rates</p>
-                        <input type="text" placeholder="Custom" />
+                      <div className="main-table">
+                        <div className="main-title">Opaque surfaces</div>
+                        <div className="sub-title">Walls</div>
+                        <div className="border-btm"></div>
+                        <div className="items-row">
+                          <div className="items">
+                            <p>Color</p>
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
+                          </div>
+                          <div className="items">
+                            <p>Absorption coefficient</p>
+                            <input type="text" placeholder="Custom" />
+                          </div>
+                        </div>
+                        <div className="items-row">
+                          <div className="items">
+                            <p>Thermal conductivity</p>
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
+                          </div>
+                          <div className="items">
+                            <p>U-value</p>
+                            <input type="text" placeholder="Custom" />
+                          </div>
+                        </div>
+                        <div className="sub-title">Floor</div>
+                        <div className="border-btm"></div>
+                        <div className="items-row">
+                          <div className="items">
+                            <p>Thermal conductivity</p>
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
+                          </div>
+                          <div className="items">
+                            <p>U-value</p>
+                            <input type="text" placeholder="Custom" />
+                          </div>
+                        </div>
+                        <div className="sub-title">Roof</div>
+                        <div className="border-btm"></div>
+                        <div className="items-row">
+                          <div className="items">
+                            <p>Color</p>
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
+                          </div>
+                          <div className="items">
+                            <p>Absorption coefficient</p>
+                            <input type="text" placeholder="Custom" />
+                          </div>
+                        </div>
+                        <div className="items-row">
+                          <div className="items">
+                            <p>Thermal conductivity</p>
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
+                          </div>
+                          <div className="items">
+                            <p>U-value</p>
+                            <input type="text" placeholder="Custom" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="main-table">
+                        <div className="main-title">Windows</div>
+                        <div className="sub-title">Glazing</div>
+                        <div className="border-btm"></div>
+                        <div className="items-row">
+                          <div className="items">
+                            <p>Color</p>
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
+                          </div>
+                          <div className="items">
+                            <p>Absorption coefficient</p>
+                            <input type="text" placeholder="Custom" />
+                          </div>
+                        </div>
+                        <div className="items-row">
+                          <div className="items">
+                            <p>Thermal conductivity</p>
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
+                          </div>
+                          <div className="items">
+                            <p>U-value</p>
+                            <input type="text" placeholder="Custom" />
+                          </div>
+                        </div>
+                        <div className="sub-title">Floor</div>
+                        <div className="border-btm"></div>
+                        <div className="items-row">
+                          <div className="items">
+                            <p>Thermal conductivity</p>
+                            <select name="heatTramission">
+                              <option value="">Custom</option>
+                              <option value="india">India</option>
+                              <option value="japan">Japan</option>
+                              <option value="australia">Australia</option>
+                            </select>
+                          </div>
+                          <div className="items">
+                            <p>U-value</p>
+                            <input type="text" placeholder="Custom" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="end-flex">
+                        <a href="" className="next-btnes">
+                          NEXT
+                        </a>
                       </div>
                     </div>
-                    <div className="items-row">
-                      <div className="items">
-                        <p>Energy bridges</p>
-                        <select name="heatTramission">
-                          <option value="">Custom</option>
-                          <option value="india">India</option>
-                          <option value="japan">Japan</option>
-                          <option value="australia">Australia</option>
-                        </select>
-                      </div>
-                      <div className="items">
-                        <p>U-value</p>
-                        <input type="text" placeholder="Custom" />
-                      </div>
-                    </div>
-                    <div className="items-row">
-                      <div className="items">
-                        <p>Building density</p>
-                        <select name="heatTramission">
-                          <option value="">Custom</option>
-                          <option value="india">India</option>
-                          <option value="japan">Japan</option>
-                          <option value="australia">Australia</option>
-                        </select>
-                      </div>
-                      <div className="items">
-                        <p>Absortvity</p>
-                        <input type="text" placeholder="Custom" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="main-table">
-                    <div className="main-title">Opaque surfaces</div>
-                    <div className="sub-title">Walls</div>
-                    <div className="border-btm"></div>
-                    <div className="items-row">
-                      <div className="items">
-                        <p>Color</p>
-                        <select name="heatTramission">
-                          <option value="">Custom</option>
-                          <option value="india">India</option>
-                          <option value="japan">Japan</option>
-                          <option value="australia">Australia</option>
-                        </select>
-                      </div>
-                      <div className="items">
-                        <p>Absorption coefficient</p>
-                        <input type="text" placeholder="Custom" />
-                      </div>
-                    </div>
-                    <div className="items-row">
-                      <div className="items">
-                        <p>Thermal conductivity</p>
-                        <select name="heatTramission">
-                          <option value="">Custom</option>
-                          <option value="india">India</option>
-                          <option value="japan">Japan</option>
-                          <option value="australia">Australia</option>
-                        </select>
-                      </div>
-                      <div className="items">
-                        <p>U-value</p>
-                        <input type="text" placeholder="Custom" />
-                      </div>
-                    </div>
-                    <div className="sub-title">Floor</div>
-                    <div className="border-btm"></div>
-                    <div className="items-row">
-                      <div className="items">
-                        <p>Thermal conductivity</p>
-                        <select name="heatTramission">
-                          <option value="">Custom</option>
-                          <option value="india">India</option>
-                          <option value="japan">Japan</option>
-                          <option value="australia">Australia</option>
-                        </select>
-                      </div>
-                      <div className="items">
-                        <p>U-value</p>
-                        <input type="text" placeholder="Custom" />
-                      </div>
-                    </div>
-                    <div className="sub-title">Roof</div>
-                    <div className="border-btm"></div>
-                    <div className="items-row">
-                      <div className="items">
-                        <p>Color</p>
-                        <select name="heatTramission">
-                          <option value="">Custom</option>
-                          <option value="india">India</option>
-                          <option value="japan">Japan</option>
-                          <option value="australia">Australia</option>
-                        </select>
-                      </div>
-                      <div className="items">
-                        <p>Absorption coefficient</p>
-                        <input type="text" placeholder="Custom" />
-                      </div>
-                    </div>
-                    <div className="items-row">
-                      <div className="items">
-                        <p>Thermal conductivity</p>
-                        <select name="heatTramission">
-                          <option value="">Custom</option>
-                          <option value="india">India</option>
-                          <option value="japan">Japan</option>
-                          <option value="australia">Australia</option>
-                        </select>
-                      </div>
-                      <div className="items">
-                        <p>U-value</p>
-                        <input type="text" placeholder="Custom" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="main-table">
-                    <div className="main-title">Windows</div>
-                    <div className="sub-title">Glazing</div>
-                    <div className="border-btm"></div>
-                    <div className="items-row">
-                      <div className="items">
-                        <p>Color</p>
-                        <select name="heatTramission">
-                          <option value="">Custom</option>
-                          <option value="india">India</option>
-                          <option value="japan">Japan</option>
-                          <option value="australia">Australia</option>
-                        </select>
-                      </div>
-                      <div className="items">
-                        <p>Absorption coefficient</p>
-                        <input type="text" placeholder="Custom" />
-                      </div>
-                    </div>
-                    <div className="items-row">
-                      <div className="items">
-                        <p>Thermal conductivity</p>
-                        <select name="heatTramission">
-                          <option value="">Custom</option>
-                          <option value="india">India</option>
-                          <option value="japan">Japan</option>
-                          <option value="australia">Australia</option>
-                        </select>
-                      </div>
-                      <div className="items">
-                        <p>U-value</p>
-                        <input type="text" placeholder="Custom" />
-                      </div>
-                    </div>
-                    <div className="sub-title">Floor</div>
-                    <div className="border-btm"></div>
-                    <div className="items-row">
-                      <div className="items">
-                        <p>Thermal conductivity</p>
-                        <select name="heatTramission">
-                          <option value="">Custom</option>
-                          <option value="india">India</option>
-                          <option value="japan">Japan</option>
-                          <option value="australia">Australia</option>
-                        </select>
-                      </div>
-                      <div className="items">
-                        <p>U-value</p>
-                        <input type="text" placeholder="Custom" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="end-flex">
-                    <a href="" className="next-btnes">
-                      NEXT
-                    </a>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

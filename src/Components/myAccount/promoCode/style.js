@@ -140,6 +140,9 @@ export const BottomWrpTab = styled.div`
   justify-content: space-between;
   span {
     color: #b9b9b9;
+    font: normal normal 400 12px/16px Poppins;
+    letter-spacing: 0px;
+    color: #b9b9b9;
   }
   p {
     font: normal normal 600 12px/16px Poppins;
@@ -165,4 +168,10 @@ export const PlusCard = styled.div`
   border: 1px solid #f1f1f1;
   border-radius: 6px;
   cursor: pointer;
+`;
+export const TitleBold = styled.div`
+  font: normal normal bold 26px/39px Poppins;
+  letter-spacing: 0px;
+  color: #1c1c1c;
+  padding: 50px 0 0 0;
 `;

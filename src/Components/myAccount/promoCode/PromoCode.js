@@ -6,7 +6,6 @@ import {
   FormSection,
   HeaderWrapper,
   HorizontalLine,
-  Title,
 } from "../profile/editProfile/style";
 import {
   ContactHeader,
@@ -31,6 +30,7 @@ import {
   PromoCardCredit,
   PromoTitle,
   TabWrp,
+  TitleBold,
   VerticalLine,
 } from "./style";
 import { useAuth } from "../../../Context/AuthProvider";
@@ -111,7 +111,7 @@ const PromoCode = () => {
       </HeaderWrapper>
       <HorizontalLine />
       <FormSection>
-        <Title>PROMO CODE</Title>
+        <TitleBold>PROMO CODE</TitleBold>
       </FormSection>
       <CardWrp>
         <TabWrp>
@@ -215,30 +215,6 @@ const PromoCode = () => {
                 </BottomWrpTab>
               </CardInfo>
             ))}
-
-          {/* {data.map((items, index) => (
-            <CardInfo>
-              <ItemsCard
-                color={colors[Math.round((index + 1) % colors.length)]}
-              >
-                <PromoCard>
-                  <PromoTitle>
-                    <span>{items.percentage}% off</span>
-                    <p>Promo code</p>
-                  </PromoTitle>
-                  <img src="assets/img/profile/promoItems.png" alt="" />
-                </PromoCard>
-                <PromoCardCredit>
-                  <span>{items.credits} Credits</span>
-                  <span>{items.code}</span>
-                </PromoCardCredit>
-              </ItemsCard>
-              <BottomWrpTab>
-                <span>Activate on</span>
-                <p>22-01-2022</p>
-              </BottomWrpTab>
-            </CardInfo>
-          ))} */}
           <PlusCard>
             <img src="assets/img/profile/plus.png" alt="" />
           </PlusCard>

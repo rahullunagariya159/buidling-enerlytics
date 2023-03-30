@@ -22,7 +22,7 @@ const PlanCard = () => {
   };
 
   useEffect(() => {
-    if (userProfileDetails?.plan !== "Trial") {
+    if (userProfileDetails?.plan === "Trial") {
       setPlan(true);
     }
   }, [userProfileDetails?.plan]);

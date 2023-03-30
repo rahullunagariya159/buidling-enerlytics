@@ -287,7 +287,7 @@ a.link-itme.flex.signin-btn.btn-nav {
 
 .BEmodal-container {
   /* border: 2px solid #013A67; */
-  padding: 0 !important;
+  /* padding: 0 !important; */
 }
 
 .modal-next-container {
@@ -406,6 +406,7 @@ a.link-itme.flex.signin-btn.btn-nav {
 
 .left-side-bar-container {
   max-width: 275px !important;
+  position: fixed;
 }
 
 .check-disable {

@@ -163,12 +163,12 @@ function BEModal() {
       <Navbar />
       <div className="main-parant-11">
         <section className="sec-1">
-          <div className="container-be BEmodal-container">
-            <div className="row">
-              <div className="col-lg-3 left-side-bar-container">
+          <div className="container-be ">
+            <div className="">
+              <div className="left-side-bar-container">
                 <LeftSidebar module="BE" />
               </div>
-              <div className="col-lg-9 no-padding relative">
+              <div className="be-modal">
                 {/* //BE-Modal here */}
                 <a
                   className="edit-model-btn clickable"
