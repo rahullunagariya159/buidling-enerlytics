@@ -159,6 +159,14 @@ function Dashboard() {
   useEffect(() => {
     if (userID) {
       handleListProjects(userID);
+
+      if (
+        ReactSession.get("is_logged_in") &&
+        ReactSession.get("login_method") === "google" &&
+        ReactSession.get("guest_user_id")
+      ) {
+        handleUpdateGuestLogin();
+      }
     }
   }, [userID]);
 

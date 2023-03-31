@@ -40,11 +40,14 @@ export function AuthProvider({ children }) {
   const [isOpenChoosePlanPopup, setIsOpenChoosePlanPopup] = useState(false);
   const [creditCardList, setCreditCardList] = useState([]);
   const [isAddingCard, setIsAddingCard] = useState(false);
+  // const [authIdentity, setAuthIdentity] = useState();
   const [searchParams] = useSearchParams();
   const isGuestUser = searchParams.get("skip") || false;
   const [isLoggedIn, setLoggedInStatus] = useState(
     ReactSession.get("is_logged_in"),
   );
+
+  // console.log({ authIdentity });
 
   // ========================================================================
   // FUNCTIONS
@@ -68,6 +71,12 @@ export function AuthProvider({ children }) {
       }
       if (response?.status === 200 && response?.data?.data) {
         setUserProfileDetails(response?.data?.data);
+        if (
+          !response?.data?.data?.plan &&
+          Number(response?.data?.data?.credits) === 0
+        ) {
+          setIsOpenChoosePlanPopup(true);
+        }
       }
     });
   };
@@ -97,6 +106,8 @@ export function AuthProvider({ children }) {
       const currentSession = await Auth.currentSession();
       let idToken = currentSession.getIdToken();
 
+      console.log({ currentSession });
+      // setAuthIdentity(idToken?.payload?.identities?.[0]?.providerName);
       if (user) {
         setUser(user);
 
@@ -144,6 +155,7 @@ export function AuthProvider({ children }) {
       const unsubscribe = Hub.listen("auth", (data) => {
         const { payload } = data;
         console.log("A new auth event has happened: ", data);
+        // console.log("check auth provider",data?.payload?.da)
         if (payload.event === "signIn") {
           signintoapp();
         }
@@ -197,7 +209,6 @@ export function AuthProvider({ children }) {
 
   useMemo(() => {
     if (userId) {
-      checkPlans(userId);
       getUserInfo(userId);
       getCreditCards(userId);
     }

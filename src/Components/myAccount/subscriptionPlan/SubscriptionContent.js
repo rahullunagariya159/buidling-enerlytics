@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
+import { orderBy } from "lodash";
 import {
   ActiveCard,
   ActivePlanContent,
@@ -25,17 +26,21 @@ import LinkButton from "../../LinkButton";
 import { CardNumberText } from "../profile/savedCard/style.js";
 import { useAuth } from "../../../Context/AuthProvider";
 import { getSubscriptionAndHistory } from "../../../Components/Services/UserProfileService";
+import LoadingCover from "../../LoadingCover";
 
 const SubscriptionContent = () => {
-  const { userId } = useAuth();
+  const { userId, userProfileDetails } = useAuth();
   const [invoices, setInvoices] = useState([]);
   const [subscription, setSubscription] = useState({});
+  const [isAscOrder, setIsAscOrder] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
 
   const toggleDropdown = () => {
     document.getElementById("myDropdownFilter").classList.toggle("show");
   };
 
   const handleGetSubscriptionsAndHistory = () => {
+    setShowLoading(true);
     getSubscriptionAndHistory({ userId })
       .then((response) => {
         if (response?.status === 200 && response?.data) {
@@ -46,18 +51,30 @@ const SubscriptionContent = () => {
       .catch((error) => {
         console.log({ error });
       })
-      .finally(() => {});
+      .finally(() => {
+        setShowLoading(false);
+      });
   };
 
   const handleChoosePlan = () => {
     document.getElementById("enablePlans").click();
   };
 
+  const handleSorting = (isAscOrderType) => {
+    const orderedInvoices = orderBy(
+      invoices,
+      ["created_at"],
+      [isAscOrderType ? "asc" : "desc"],
+    );
+    setIsAscOrder(!isAscOrder);
+    setInvoices(orderedInvoices);
+  };
+
   useEffect(() => {
     if (userId) {
       handleGetSubscriptionsAndHistory();
     }
-  }, [userId]);
+  }, [userId, userProfileDetails]);
 
   return (
     <>
@@ -80,7 +97,7 @@ const SubscriptionContent = () => {
           <ActiveCard>
             <ActivePlanContent>
               <YellowLabel>Active plan</YellowLabel>
-              <YellowLargeLabel>{subscription?.plan}</YellowLargeLabel>
+              <YellowLargeLabel>{userProfileDetails?.plan}</YellowLargeLabel>
             </ActivePlanContent>
             <PlanLogo>
               <img src="assets/img/profile/premium.png" alt="" />
@@ -136,7 +153,10 @@ const SubscriptionContent = () => {
             <img src="assets/img/profile/filter.png" alt="" />
           </TitleWrp>
           <div id="myDropdownFilter" className="dropdown-content-filter">
-            <button>
+            <button
+              onClick={() => handleSorting(!isAscOrder)}
+              className={isAscOrder ? "asc-order" : ""}
+            >
               Date
               <img src="assets/img/profile/rightArrow.png" alt="" />
             </button>
@@ -194,6 +214,7 @@ const SubscriptionContent = () => {
           </table>
         </div>
       </TableWrapper>
+      <LoadingCover show={showLoading} />
     </>
   );
 };

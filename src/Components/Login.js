@@ -89,11 +89,10 @@ function Login() {
     ReactSession.set("building_user", null);
     ReactSession.set("building_social_user", null);
     ReactSession.set("user_email_registered", null);
+    ReactSession.set("login_method", null);
     localStorage.setItem("amplify-signin-with-hostedUI", null);
     localStorage.setItem("amplify-redirected-from-hosted-ui", null);
     logout();
-    // localStorage.clear();
-    // ReactSession.clear();
 
     setTimeout(window.location.reload(), 2000);
   };
@@ -550,6 +549,7 @@ function Login() {
       await Auth.federatedSignIn({
         provider: CognitoHostedUIIdentityProvider.Google,
       });
+      ReactSession.set("login_method", "google");
     } catch (error) {
       console.log({ error });
     }

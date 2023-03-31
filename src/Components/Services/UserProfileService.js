@@ -1,5 +1,5 @@
 import { ApiDelete, ApiGet, ApiPost, ApiPut } from "../../utils/Networking";
-import { BUCKET_FOLDER, BUCKET_SUB_FOLDER } from "../../Constants/";
+
 export const getUserDetails = async (userId) => {
   return new Promise((resolve, reject) => {
     ApiGet(`/user/${userId}`)
@@ -87,6 +87,18 @@ export const getPromoCodesList = async (payload) => {
 export const getSubscriptionAndHistory = async (payload) => {
   return new Promise((resolve, reject) => {
     ApiGet(`/subscriptions?userId=${payload?.userId}`)
+      .then(function (response) {
+        resolve(response);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  });
+};
+
+export const activatePromocode = (payload) => {
+  return new Promise((resolve, reject) => {
+    ApiPost(`/promo-code/activate`, payload)
       .then(function (response) {
         resolve(response);
       })

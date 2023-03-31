@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   AddressInfo,
   DecorationText,
@@ -16,14 +16,24 @@ import {
   Wrapper,
 } from "./style.js";
 import { useAuth } from "../../../../Context/AuthProvider";
+import LoadingCover from "../../../LoadingCover";
 
 const PersonalDetails = ({ childToParent }) => {
   const { userProfileDetails } = useAuth();
+  const [showLoading, setShowLoading] = useState(false);
 
   const handleUpgrdePlan = (e) => {
     e.preventDefault();
     document.getElementById("enablePlans").click();
   };
+
+  useEffect(() => {
+    setShowLoading(true);
+
+    setTimeout(() => {
+      setShowLoading(false);
+    }, 1500);
+  }, []);
 
   return (
     <Wrapper>
@@ -76,6 +86,7 @@ const PersonalDetails = ({ childToParent }) => {
           <ValueLabel>{userProfileDetails?.postal_code || "-"}</ValueLabel>
         </ValuesWrp>
       </AddressInfo>
+      <LoadingCover show={showLoading} />
     </Wrapper>
   );
 };

@@ -3462,6 +3462,7 @@ a.Register {
   box-shadow: 0px 4px 10px #d8d8d8;
   background: #fff;
 }
+
 .dropdown-content-filter button {
   display: flex;
   align-items: center;
@@ -3472,6 +3473,12 @@ a.Register {
   border: 1px solid #f1f1f1;
   border-radius: 4px;
 }
+
+.asc-order {
+  background: transparent linear-gradient(111deg, #f7931e 0%, #f15a24 100%) 0%
+    0% no-repeat padding-box !important;
+}
+
 .dropdown-promoCode-filter {
   display: none;
   position: absolute;
@@ -3484,6 +3491,11 @@ a.Register {
   background: #fff;
   min-width: 121px;
 }
+
+.selected-promocode-sort {
+  color: orange !important;
+}
+
 .table-responsive {
   border: none;
   border-radius: 6px;
@@ -4018,6 +4030,7 @@ input.promo-input {
   border: 1px solid #dcdcdc;
   border-radius: 4px;
   padding: 0 20px;
+  text-transform: uppercase;
 }
 
 .Apply-btn-flex {
@@ -4061,9 +4074,6 @@ p.Terms-pr {
   border-radius: 4px;
   align-items: center;
   padding: 0 30px;
-}
-
-.no-credit-card-container {
   display: flex;
 }
 

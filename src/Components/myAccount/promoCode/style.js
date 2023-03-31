@@ -128,6 +128,10 @@ export const BottomWrp = styled.div`
   letter-spacing: 0px;
   color: #1c1c1c;
   cursor: pointer;
+
+  .btn-active-now {
+    background: transparent;
+  }
 `;
 export const BottomWrpTab = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;

@@ -35,18 +35,28 @@ import { useAuth } from "../../../../Context/AuthProvider";
 import { toast } from "react-toastify";
 import Text from "../../../Text";
 import { somethingWentWrongError } from "../../../../Constants";
-import { getBase64 } from "../../../../utils/";
+import { getBase64, validateUserName } from "../../../../utils/";
+import LoadingCover from "../../../LoadingCover";
 
 const EditProfile = ({ childToParent }) => {
   const [inputVal, setInputVal] = useState({});
   const [loading, setLoading] = useState(false);
   const [profileImgUrl, setProfileImgUrl] = useState("");
   const [error, setError] = useState("");
+  const [showLoading, setShowLoading] = useState(false);
   const { userId, userProfileDetails, getUserInfo } = useAuth();
 
   const onChangeHandler = (evt) => {
     setError("");
     const value = evt.target.value;
+
+    if (evt.target.name === "userName") {
+      setInputVal({
+        ...inputVal,
+        [evt.target.name]: validateUserName(value),
+      });
+      return true;
+    }
     setInputVal({
       ...inputVal,
       [evt.target.name]: value,
@@ -124,6 +134,7 @@ const EditProfile = ({ childToParent }) => {
       setError("Please upload only jpeg,jpg, or png image");
       return false;
     }
+    setShowLoading(true);
 
     const uploadFile = acceptedFiles[0];
 
@@ -141,6 +152,9 @@ const EditProfile = ({ childToParent }) => {
         .catch((error) => {
           console.log({ error });
           setError("Please upload only jpeg,jpg, or png image");
+        })
+        .finally(() => {
+          setShowLoading(false);
         });
     });
   }, []);
@@ -385,6 +399,7 @@ const EditProfile = ({ childToParent }) => {
         />
         <CancelButton title="Cancel" onClick={() => childToParent()} />
       </FooterButton>
+      <LoadingCover show={showLoading} />
     </MainWrapper>
   );
 };

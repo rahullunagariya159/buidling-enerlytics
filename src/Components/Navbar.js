@@ -52,13 +52,7 @@ function Navbar(props) {
   const [forgotPasswordError, setForgotPasswordError] = useState("");
   const [resetNewPasswordError, setResetNewPasswordError] = useState("");
   const [resetNewPasswordLoading, setResetNewPasswordLoading] = useState("");
-  const {
-    userId,
-    currentPlanDetails,
-    isLoggedIn,
-    isGuestUser,
-    userProfileDetails,
-  } = useAuth();
+  const { userId, isLoggedIn, isGuestUser, userProfileDetails } = useAuth();
 
   // ---- Register ---
 
@@ -105,10 +99,9 @@ function Navbar(props) {
     ReactSession.set("building_user", null);
     ReactSession.set("building_social_user", null);
     ReactSession.set("user_email_registered", null);
+    ReactSession.set("login_method", null);
     localStorage.setItem("amplify-signin-with-hostedUI", null);
     localStorage.setItem("amplify-redirected-from-hosted-ui", null);
-    // localStorage.clear();
-    // ReactSession.clear();
 
     setTimeout((window.location.href = "/"), 2000);
   };
@@ -476,8 +469,10 @@ function Navbar(props) {
       await Auth.federatedSignIn({
         provider: CognitoHostedUIIdentityProvider.Google,
       });
+      ReactSession.set("login_method", "google");
     } catch (error) {
       console.log("--->>navbar login error", error);
+      ReactSession.set("login_method", "null");
     }
   };
 
@@ -649,8 +644,8 @@ function Navbar(props) {
                         className="profil"
                         alt=""
                       />
-                      {currentPlanDetails?.[0]?.creditAmount
-                        ? currentPlanDetails?.[0]?.creditAmount + " Credits"
+                      {userProfileDetails?.credits
+                        ? userProfileDetails?.credits + " Credits"
                         : "0 Credits"}
                       {toggle ? (
                         <img src="assets/img/Home–new/upArrow.svg" alt="" />

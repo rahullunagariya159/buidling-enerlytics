@@ -44,6 +44,7 @@ const ChoosePlan = () => {
 
   const isCreateProjectUrl = matchPath(location.pathname, Routes.createProject);
   const isBemodalUrl = matchPath(location.pathname, Routes.beModel);
+  const isProfileUrl = matchPath(location.pathname, Routes.profile);
 
   const projectName = searchParams.get("name") ? searchParams.get("name") : "";
 
@@ -58,6 +59,7 @@ const ChoosePlan = () => {
     setIsAddingCard,
     getCreditCards,
     creditCardList,
+    getUserInfo,
   } = useAuth();
 
   useEffect(() => {
@@ -88,6 +90,16 @@ const ChoosePlan = () => {
         window.location.replace(`${Routes.beModel}?name=` + projectName),
         2000,
       );
+    } else if (isProfileUrl) {
+      // let promoCodeModal = document.getElementById("PROMOCODE");
+      // let promoCodeModalBackdrop =
+      //   promoCodeModal.getElementsByClassName("modal-backdrop");
+      // promoCodeModal.style.display = "none";
+      // promoCodeModalBackdrop.style.display = "none";
+
+      document.getElementById("btnCloseOrderSummery").click();
+
+      window.location.reload();
     } else {
       setTimeout((window.location.href = "/dashboard"), 2000);
     }
@@ -128,6 +140,7 @@ const ChoosePlan = () => {
           setCurrentPlanDetails(response?.msg?.Items);
         }
         // ReactSession.set("user_email_registered", "true");
+        getUserInfo(userID);
         handleRedirection();
       }
     });
@@ -182,7 +195,9 @@ const ChoosePlan = () => {
     }
 
     if (promoApplied) {
-      payload.promoCodeName = document.getElementById("promoCode").value;
+      payload.promoCodeName = document
+        .getElementById("promoCode")
+        .value.toUpperCase();
     }
 
     getPlans(payload)
@@ -198,6 +213,7 @@ const ChoosePlan = () => {
 
           if (response && response.msg) {
             setPlanData(response.msg);
+            getUserInfo(userID);
             toast.success(
               `Your ${selectedPlan.toLowerCase()} plan successfully activated.`,
               { toastId: "toast12" },
@@ -378,6 +394,7 @@ const ChoosePlan = () => {
       >
         Add now
       </a>
+
       {/* <!-- CHOOSE YOUR PLAN Modal --> */}
       <div
         className="modal fade"
@@ -575,7 +592,7 @@ const ChoosePlan = () => {
                     <a
                       className="Try-now-btn orn clickable"
                       onClick={() =>
-                        redirectToBuy({ plan: "Basic", credit: 100, cost: 30 })
+                        redirectToBuy({ plan: "Home", credit: 100, cost: 30 })
                       }
                     >
                       Start now
@@ -781,6 +798,14 @@ const ChoosePlan = () => {
               <div className="col-lg-6 p-0">
                 <div className="right-promo-box">
                   <div className="PROMO-main-box">
+                    <a
+                      id="btnCloseOrderSummery"
+                      className="x-btn close_iconw"
+                      data-bs-dismiss="modal"
+                      hidden
+                    >
+                      x
+                    </a>
                     <div className="grid-promo">
                       <h6 className="add-title-promo">ADD PROMO CODE</h6>
                       <p className="enter-promo">Enter promo code</p>
@@ -791,7 +816,6 @@ const ChoosePlan = () => {
                         type="text"
                         placeholder="Promo code here"
                         className="promo-input"
-                        maxLength={10}
                         onInput={handlePromoInput}
                       />
                       <LinkButton
@@ -880,7 +904,7 @@ const ChoosePlan = () => {
                       <p className="Plan-cst">Promo code</p>
                       {promoApplied && (
                         <p className="Plan-cst-back flex">
-                          {promo}
+                          {promo.toUpperCase()}
                           <img
                             src="assets/img/Home–new/chk-blue.svg"
                             className="chk-ic"

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { format } from "date-fns";
+import { orderBy } from "lodash";
+import { toast } from "react-toastify";
 import {
   EditProfileHeaderLabel,
   FormSection,
@@ -34,19 +36,53 @@ import {
   VerticalLine,
 } from "./style";
 import { useAuth } from "../../../Context/AuthProvider";
-import { getPromoCodesList } from "../../Services/UserProfileService";
+import {
+  getPromoCodesList,
+  activatePromocode,
+} from "../../Services/UserProfileService";
+import Button from "../../Button";
+import { somethingWentWrongError } from "../../../Constants";
+import LoadingCover from "../../LoadingCover";
 
 const PromoCode = () => {
   const { userProfileDetails, userId } = useAuth();
   const [availablePromoCodes, setAvailablePromoCodes] = useState([]);
   const [usedPromoCodes, setUsedPromoCodes] = useState([]);
   const [selected, setSelected] = useState(0);
+  const [isCreditsAsc, setIsCredAsc] = useState(false);
+  const [isActivatedAsc, setIsActivatedAsc] = useState(false);
+  const [isDiscountAsc, setIsDiscountAsc] = useState(false);
+  const [selectedSortOption, setSelectedSortOption] = useState("");
+  const [activeNowLoading, setActiveNowLoading] = useState("");
+  const [showLoading, setShowLoading] = useState(false);
+
+  const handleActivePromoCode = (promoCodeDetail) => {
+    const payload = {
+      promoCode: promoCodeDetail?.promo_code,
+      userId: userId,
+      credits: promoCodeDetail?.credits,
+    };
+    setActiveNowLoading(promoCodeDetail?.id);
+    activatePromocode(payload)
+      .then((response) => {
+        if (response?.status === 200 && response?.data?.msg) {
+          toast.success("Promo code activated successfully");
+        }
+      })
+      .catch((error) => {
+        toast.error(error?.message || somethingWentWrongError);
+      })
+      .finally(() => {
+        setActiveNowLoading("");
+      });
+  };
 
   const handleGetPromoCodeList = (type, selectionTab) => {
     const promoCodePayload = {
       userId: userId,
       type: type,
     };
+    setShowLoading(true);
     getPromoCodesList(promoCodePayload)
       .then((response) => {
         if (response?.status === 200 && response?.data?.data) {
@@ -59,6 +95,9 @@ const PromoCode = () => {
       })
       .catch((error) => {
         console.log({ error });
+      })
+      .finally(() => {
+        setShowLoading(false);
       });
   };
 
@@ -78,6 +117,25 @@ const PromoCode = () => {
     { c1: "#ffa967", c2: "#ff4f96" },
     { c1: "#fed672", c2: "#fe8a00" },
   ];
+
+  const handleSorting = (isAscOrderType, orderFieldName) => {
+    setSelectedSortOption(orderFieldName);
+    if (selected === 0) {
+      const orderedPromocodes = orderBy(
+        availablePromoCodes,
+        [orderFieldName],
+        [isAscOrderType ? "asc" : "desc"],
+      );
+      setAvailablePromoCodes(orderedPromocodes);
+    } else {
+      const orderedPromocodes = orderBy(
+        usedPromoCodes,
+        [orderFieldName],
+        [isAscOrderType ? "asc" : "desc"],
+      );
+      setUsedPromoCodes(orderedPromocodes);
+    }
+  };
 
   return (
     <div>
@@ -145,14 +203,56 @@ const PromoCode = () => {
           </TitleWrp>
           <div id="myDropdownFilter" className="dropdown-promoCode-filter">
             <FilterDropdown>
-              <span>Sort by date</span>
-              <button>Date</button>
+              {/* <span>Sort by date</span> */}
+              {/* <button>Date</button> */}
+              {/* <HorizontalLineDropdown /> */}
+              <button
+                onClick={() => {
+                  handleSorting(!isCreditsAsc, "credits");
+                  setIsCredAsc(!isCreditsAsc);
+                }}
+                className={
+                  selectedSortOption === "credits" && isCreditsAsc
+                    ? "selected-promocode-sort"
+                    : ""
+                }
+              >
+                Credits
+              </button>
+              {/* <HorizontalLineDropdown />
+              <button>Expiring on</button> */}
+              {selected === 1 && (
+                <>
+                  <HorizontalLineDropdown />
+                  <button
+                    onClick={() => {
+                      handleSorting(!isActivatedAsc, "appliedOn");
+                      setIsActivatedAsc(!isActivatedAsc);
+                    }}
+                    className={
+                      selectedSortOption === "appliedOn" && isActivatedAsc
+                        ? "selected-promocode-sort"
+                        : ""
+                    }
+                  >
+                    Activated on
+                  </button>
+                </>
+              )}
               <HorizontalLineDropdown />
-              <button>Credits</button>
-              <HorizontalLineDropdown />
-              <button>Expiring on</button>
-              <HorizontalLineDropdown />
-              <button>Activated on</button>
+              <button
+                onClick={() => {
+                  handleSorting(!isDiscountAsc, "discount");
+                  setIsDiscountAsc(!isDiscountAsc);
+                }}
+                className={
+                  selectedSortOption === "discount" && isDiscountAsc
+                    ? "selected-promocode-sort"
+                    : ""
+                }
+              >
+                Discount
+              </button>
             </FilterDropdown>
           </div>
         </FilterWrp>
@@ -177,7 +277,15 @@ const PromoCode = () => {
                     <span>{items?.promo_code}</span>
                   </PromoCardCredit>
                 </ItemsCard>
-                <BottomWrp>Activate now</BottomWrp>
+                <BottomWrp>
+                  <Button
+                    isLoading={activeNowLoading === items?.id}
+                    isDisable={activeNowLoading === items?.id}
+                    className="btn-active-now"
+                    title="Activate now"
+                    onClick={() => handleActivePromoCode(items)}
+                  />
+                </BottomWrp>
               </CardInfo>
             ))}
         </ContentCard>
@@ -198,16 +306,16 @@ const PromoCode = () => {
                     <img src="assets/img/profile/promoItems.png" alt="" />
                   </PromoCard>
                   <PromoCardCredit>
-                    <span>200 Credits</span>
+                    <span>{items?.credits} Credits</span>
                     <span>{items?.promo_code}</span>
                   </PromoCardCredit>
                 </ItemsCard>
                 <BottomWrpTab>
                   <span>Activate on</span>
                   <p>
-                    {items?.created_at
+                    {items?.appliedOn
                       ? format(
-                          new Date(parseInt(items?.created_at)),
+                          new Date(parseInt(items?.appliedOn)),
                           "dd-MM-yyyy",
                         )
                       : "-"}
@@ -220,6 +328,7 @@ const PromoCode = () => {
           </PlusCard>
         </ContentCard>
       )}
+      <LoadingCover show={showLoading} />
     </div>
   );
 };

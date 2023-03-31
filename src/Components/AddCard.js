@@ -142,12 +142,12 @@ function AddCard(props) {
                   >
                     Credit card
                   </li>
-                  <li
+                  {/* <li
                     className="card-bord-none"
                     onClick={() => selectedCardFn("debit", "Debit card")}
                   >
                     Debit card
-                  </li>
+                  </li> */}
                 </ul>
               </label>
             </div>
@@ -244,6 +244,7 @@ function AddCard(props) {
             )}
 
             <a
+              id="closeAddCardModal"
               className="Back-btn"
               data-bs-dismiss="modal"
               data-bs-toggle="modal"
