@@ -39,7 +39,7 @@ function ModalDialog() {
             </div>
             <div className="cost-title">
               <div>Cost </div>
-              <div>${inputVal?.credits}</div>
+              <div>€{inputVal?.credits}</div>
             </div>
           </div>
         </Modal.Body>
