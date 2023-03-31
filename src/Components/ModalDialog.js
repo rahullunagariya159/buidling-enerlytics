@@ -22,7 +22,7 @@ function ModalDialog() {
       />
       <Modal show={isShow}>
         <Modal.Header closeButton onClick={() => invokeModal(!isShow)}>
-          <Modal.Title>Amount</Modal.Title>
+          <Modal.Title>Buy Credits</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="main-credits">
