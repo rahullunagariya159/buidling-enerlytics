@@ -11,6 +11,7 @@ import {
   UnderlineText,
 } from "./style.js";
 import { useAuth } from "../../../Context/AuthProvider";
+import ModalDialog from "../../ModalDialog.js";
 
 const PlanCard = () => {
   const [plan, setPlan] = useState(false);
@@ -26,9 +27,9 @@ const PlanCard = () => {
       setPlan(true);
     }
   }, [userProfileDetails?.plan]);
-
   return (
     <PlanInfo>
+      <ModalDialog />
       <PlanVerticalLine />
       <ActiveCard plan={plan}>
         <ActivePlanContent>
