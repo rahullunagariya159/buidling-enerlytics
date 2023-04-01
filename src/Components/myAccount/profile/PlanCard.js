@@ -11,7 +11,7 @@ import {
   UnderlineText,
 } from "./style.js";
 import { useAuth } from "../../../Context/AuthProvider";
-import ModalDialog from "../../ModalDialog.js";
+import BuyCredits from "../../BuyCredits";
 
 const PlanCard = () => {
   const [plan, setPlan] = useState(false);
@@ -29,7 +29,7 @@ const PlanCard = () => {
   }, [userProfileDetails?.plan]);
   return (
     <PlanInfo>
-      <ModalDialog />
+      <BuyCredits />
       <PlanVerticalLine />
       <ActiveCard plan={plan}>
         <ActivePlanContent>

@@ -3,25 +3,51 @@ import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import CancelButton from "./CancelButton";
 import LinkButton from "./LinkButton";
-function ModalDialog() {
+import { useAuth } from "../Context/AuthProvider";
+import Text from "./Text";
+
+function BuyCredits() {
   const [inputVal, setInputVal] = useState("");
   const [isShow, invokeModal] = useState(false);
+  const [error, setError] = useState("");
+  const { creditCardList } = useAuth();
+
   const onChangeHandler = (evt) => {
+    setError("");
     const value = evt.target.value;
     setInputVal({
       ...inputVal,
       [evt.target.name]: value,
     });
   };
+
+  const handlePayForCredits = () => {
+    setError("");
+    if (!inputVal?.credits) {
+      setError("Please enter a number of credits");
+      return false;
+    } else if (creditCardList?.length === 0) {
+      setError("Please add your credit card");
+      return false;
+    }
+    invokeModal(!isShow);
+  };
+
+  const onCloseHandler = () => {
+    setInputVal("");
+    setError("");
+    invokeModal(!isShow);
+  };
+
   return (
     <>
       <LinkButton
-        onClick={() => invokeModal(!isShow)}
+        onClick={() => onCloseHandler()}
         className={`signin-btn sub-plan`}
         title="Buy Credits"
       />
       <Modal show={isShow}>
-        <Modal.Header closeButton onClick={() => invokeModal(!isShow)}>
+        <Modal.Header closeButton onClick={() => onCloseHandler()}>
           <Modal.Title>Buy Credits</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -29,7 +55,7 @@ function ModalDialog() {
             <div className="items-title">
               <div>Number of credits</div>
               <input
-                type="text"
+                type="number"
                 placeholder="Enter credit"
                 onChange={onChangeHandler}
                 name="credits"
@@ -41,18 +67,20 @@ function ModalDialog() {
               <div>Cost </div>
               <div>€{inputVal?.credits}</div>
             </div>
+
+            <Text type="error" text={error} />
           </div>
         </Modal.Body>
         <Modal.Footer>
           <LinkButton
-            onClick={() => invokeModal(!isShow)}
+            onClick={() => handlePayForCredits()}
             className={`signin-btn `}
             title="Pay"
           />
-          <CancelButton title="Cancel" onClick={() => invokeModal(!isShow)} />
+          <CancelButton title="Cancel" onClick={() => onCloseHandler()} />
         </Modal.Footer>
       </Modal>
     </>
   );
 }
-export default ModalDialog;
+export default BuyCredits;

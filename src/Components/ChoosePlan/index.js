@@ -36,6 +36,9 @@ const ChoosePlan = () => {
   const [selectedCard, setSelectedCard] = useState({});
   const [promoCodeError, setPromoCodeError] = useState("");
   const [buyPlanError, setBuyPlanError] = useState("");
+  const [btnTrialLoader, setBtnTrialLoader] = useState(false);
+  const [btnHomeLoader, setBtnHomeLoader] = useState(false);
+  const [btnProfessionalLoader, setBtnProfessionalLoader] = useState(false);
 
   const [promo, setPromo] = useState("");
 
@@ -113,6 +116,8 @@ const ChoosePlan = () => {
     if (userID && userProfileDetails?.plan) {
       document.getElementById("btnChoosePlanClose").click();
       return false;
+    } else if (userID && userProfileDetails?.plan) {
+      return false;
     }
 
     const payload = {
@@ -122,28 +127,35 @@ const ChoosePlan = () => {
       creditAmount: selectedCredit,
       amount: 0,
     };
-    getPlans(payload).then((response) => {
-      setPayClicked(false);
+    setBtnTrialLoader(true);
+    setPayClicked(true);
 
-      if (response.error) {
-        toast.error(response.error);
-      } else {
-        // data comes here..
-        toast.success(
-          `Your ${planName.toLowerCase()} plan successfully activated.`,
-          { toastId: "toast12" },
-        );
-        if (response && response.msg) {
-          setPlanData(response.msg);
+    getPlans(payload)
+      .then((response) => {
+        if (response.error) {
+          toast.error(response.error);
+        } else {
+          // data comes here..
+          toast.success(
+            `Your ${planName.toLowerCase()} plan successfully activated.`,
+            { toastId: "toast12" },
+          );
+          if (response && response.msg) {
+            setPlanData(response.msg);
+          }
+          if (response?.msg?.Count > 0) {
+            setCurrentPlanDetails(response?.msg?.Items);
+          }
+          // ReactSession.set("user_email_registered", "true");
+          getUserInfo(userID);
+          handleRedirection();
         }
-        if (response?.msg?.Count > 0) {
-          setCurrentPlanDetails(response?.msg?.Items);
-        }
-        // ReactSession.set("user_email_registered", "true");
-        getUserInfo(userID);
-        handleRedirection();
-      }
-    });
+      })
+      .catch(() => {})
+      .finally(() => {
+        setBtnTrialLoader(false);
+        setPayClicked(false);
+      });
   };
 
   const redirectToBuy = (planInfo) => {
@@ -491,16 +503,17 @@ const ChoosePlan = () => {
                     </p>
                   </div>
                   <div>
-                    <a
+                    <LinkButton
                       className="Try-now-btn clickable"
                       onClick={() => skipToBuy("Trial")}
                       style={{
                         pointerEvents:
                           userID && userProfileDetails?.plan ? "none" : "auto",
                       }}
-                    >
-                      Try now
-                    </a>
+                      isDisable={btnTrialLoader}
+                      isLoading={btnTrialLoader}
+                      title="Try now"
+                    />
                   </div>
                 </div>
               </div>
@@ -594,6 +607,12 @@ const ChoosePlan = () => {
                       onClick={() =>
                         redirectToBuy({ plan: "Home", credit: 100, cost: 30 })
                       }
+                      style={{
+                        pointerEvents:
+                          userID && userProfileDetails?.plan === "Home"
+                            ? "none"
+                            : "auto",
+                      }}
                     >
                       Start now
                     </a>

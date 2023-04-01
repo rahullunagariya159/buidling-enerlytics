@@ -12,6 +12,8 @@ import { validateInput } from "../config";
 import Navbar from "./Navbar";
 import { useAuth } from "../Context/AuthProvider";
 import Text from "./Text";
+import { somethingWentWrongError } from "../Constants";
+import LinkButton from "./LinkButton";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -19,6 +21,8 @@ function Dashboard() {
   const [projectList, setProjectList] = useState([]);
   const [createProjectClicked, setCreateProjectClicked] = useState(false);
   const [createProjectError, setCreateProjectError] = useState("");
+  const [checkProjectListLoading, setCheckProjectListLoading] = useState(true);
+
   const isGuestUser = searchParams.get("skip") || false;
 
   const { userId: userID } = useAuth();
@@ -61,9 +65,7 @@ function Dashboard() {
       })
       .catch((err) => {
         setCreateProjectClicked(false);
-        setCreateProjectError(
-          "We are sorry, but something went wrong. Please try again later.",
-        );
+        setCreateProjectError(somethingWentWrongError);
       });
   };
 
@@ -78,30 +80,34 @@ function Dashboard() {
         userId: userID,
       };
 
-      createProject(payload).then((response) => {
-        if (response.error) {
-          setCreateProjectError(response.error);
-        } else {
-          if (response && response.msg) {
-            ReactSession.set("project_id", response.msg[0].id);
-            if (isGuestUser) {
-              setTimeout(
-                (window.location.href =
-                  "/create-project?name=" +
-                  projectNameElm.value +
-                  "&&skip=true"),
-                2000,
-              );
-            } else {
-              setTimeout(
-                (window.location.href =
-                  "/create-project?name=" + projectNameElm.value),
-                2000,
-              );
+      createProject(payload)
+        .then((response) => {
+          if (response.error) {
+            setCreateProjectError(response.error);
+          } else {
+            if (response && response.msg) {
+              ReactSession.set("project_id", response.msg[0].id);
+              if (isGuestUser) {
+                setTimeout(
+                  (window.location.href =
+                    "/create-project?name=" +
+                    projectNameElm.value +
+                    "&&skip=true"),
+                  2000,
+                );
+              } else {
+                setTimeout(
+                  (window.location.href =
+                    "/create-project?name=" + projectNameElm.value),
+                  2000,
+                );
+              }
             }
           }
-        }
-      });
+        })
+        .catch((error) => {
+          setCreateProjectError(error || somethingWentWrongError);
+        });
     } else {
       setCreateProjectError("Please enter a project name.");
     }
@@ -111,14 +117,22 @@ function Dashboard() {
     const payload = {
       userId: ID,
     };
-    listProjects(payload).then((response) => {
-      if (response.error) {
-        toast.error(response.error);
-      } else {
-        // data comes here..
-        setProjectList(response.data);
-      }
-    });
+    setCheckProjectListLoading(true);
+    listProjects(payload)
+      .then((response) => {
+        if (response.error) {
+          toast.error(response.error);
+        } else {
+          // data comes here..
+          setProjectList(response.data);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setCheckProjectListLoading(false);
+      });
   };
 
   const handleUpdateGuestLogin = () => {
@@ -232,18 +246,21 @@ function Dashboard() {
                         </a>
                       )}
 
-                      <a
+                      <LinkButton
                         id="loadProjects"
+                        title="LOAD AN EXISTING PROJECT"
                         className="PROJECT-one tow load-existing"
                         onClick={() => navigate("/load-project")}
-                        disabled={
-                          isGuestUser || projectList.length === 0 || !userID
+                        isDisable={
+                          isGuestUser ||
+                          projectList.length === 0 ||
+                          !userID ||
+                          checkProjectListLoading
                             ? true
                             : false
                         }
-                      >
-                        LOAD AN EXISTING PROJECT
-                      </a>
+                        isLoading={checkProjectListLoading}
+                      />
                     </div>
                   </div>
                 </div>
