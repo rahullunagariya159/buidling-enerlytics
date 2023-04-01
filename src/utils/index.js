@@ -1,3 +1,5 @@
+import { Country, State, City } from "country-state-city";
+
 export const checkPassword = (str) => {
   // var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
   const re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
@@ -19,4 +21,19 @@ export const getBase64 = (file, cb) => {
 
 export const validateUserName = (value) => {
   return value.replace(/[&@!=/\#,+()$~%'":*?<>{}^ ]/g, "");
+};
+
+export const getCountries = (countryCode) => {
+  if (countryCode) {
+    return Country.getCountryByCode(countryCode);
+  }
+  return Country.getAllCountries();
+};
+
+export const getCities = (countryCode) => {
+  if (countryCode) {
+    console.log({ countryCode });
+    return City.getCitiesOfCountry(countryCode);
+  }
+  return City.getAllCities;
 };

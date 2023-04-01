@@ -81,8 +81,8 @@ function Navbar(props) {
   };
 
   const profileScreen = () => {
-    // navigate(`${Routes.profile}`);
-    window.location.replace(`${Routes.profile}`);
+    navigate(`${Routes.profile}`);
+    // window.location.replace(`${Routes.profile}`);
   };
 
   const myProjectsScreen = () => {
@@ -360,8 +360,12 @@ function Navbar(props) {
           }
         })
         .catch((err) => {
-          console.log(err);
-          setLoginError("Incorrect email or password.");
+          console.log(err.code);
+          if (e.code === "UserNotConfirmedException") {
+            resendOTP();
+          } else {
+            setLoginError("Incorrect email or password.");
+          }
         })
         .finally(() => {
           setIsLoading(false);

@@ -19,6 +19,8 @@ import Pricing from "./Components/Pricing";
 import AboutUs from "./Components/AboutUs";
 import { AuthProvider } from "./Context/AuthProvider";
 import MyAccount from "./Components/myAccount/MyAccount";
+import PrivateRoute from "./Layout/PrivateRoute";
+import { Routes as appRoutes } from "./navigation/Routes";
 
 Amplify.configure({
   // Auth: {
@@ -63,16 +65,21 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/load-project" element={<LoadProject />} />
-            <Route path="/create-project" element={<BEModal />} />
-            <Route path="/be-model" element={<BEModalFull />} />
-            <Route path="/building-material" element={<BuildingMaterial />} />
-            <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/about-us" element={<AboutUs />} />
-            <Route path="/my-account" element={<MyAccount />} />
+            <Route path={appRoutes.home} element={<Login />} />
+            <Route path={appRoutes.dashboard} element={<Dashboard />} />
+            <Route path={appRoutes.loadProject} element={<LoadProject />} />
+            <Route path={appRoutes.createProject} element={<BEModal />} />
+            <Route path={appRoutes.beModel} element={<BEModalFull />} />
+            <Route
+              path={appRoutes.buildingMaterial}
+              element={<BuildingMaterial />}
+            />
+            <Route path={appRoutes.contactUs} element={<ContactUs />} />
+            <Route path={appRoutes.pricing} element={<Pricing />} />
+            <Route path={appRoutes.aboutUs} element={<AboutUs />} />
+            <Route exact path={appRoutes.home} element={<PrivateRoute />}>
+              <Route path={appRoutes.profile} element={<MyAccount />} />
+            </Route>
           </Routes>
         </AuthProvider>
       </BrowserRouter>

@@ -35,7 +35,12 @@ import { useAuth } from "../../../../Context/AuthProvider";
 import { toast } from "react-toastify";
 import Text from "../../../Text";
 import { somethingWentWrongError } from "../../../../Constants";
-import { getBase64, validateUserName } from "../../../../utils/";
+import {
+  getBase64,
+  validateUserName,
+  getCountries,
+  getCities,
+} from "../../../../utils/";
 import LoadingCover from "../../../LoadingCover";
 
 const EditProfile = ({ childToParent }) => {
@@ -44,6 +49,9 @@ const EditProfile = ({ childToParent }) => {
   const [profileImgUrl, setProfileImgUrl] = useState("");
   const [error, setError] = useState("");
   const [showLoading, setShowLoading] = useState(false);
+  const [countryList, setCountryList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+
   const { userId, userProfileDetails, getUserInfo } = useAuth();
 
   const onChangeHandler = (evt) => {
@@ -57,10 +65,15 @@ const EditProfile = ({ childToParent }) => {
       });
       return true;
     }
+
     setInputVal({
       ...inputVal,
       [evt.target.name]: value,
     });
+  };
+
+  const handleGetCitiesById = (countryCode) => {
+    setCityList(getCities(countryCode));
   };
 
   const handleEditProfileDetails = async () => {
@@ -125,6 +138,9 @@ const EditProfile = ({ childToParent }) => {
       };
       setInputVal(defaultValues);
       setProfileImgUrl(userProfileDetails?.profile_pic);
+
+      setCountryList(getCountries());
+      setCityList(getCities());
     }
   }, [userId]);
 
@@ -262,9 +278,17 @@ const EditProfile = ({ childToParent }) => {
               value={inputVal?.country}
             >
               <option value="">Select</option>
-              <option value="india">India</option>
-              <option value="japan">Japan</option>
-              <option value="australia">Australia</option>
+              {countryList?.length > 0 &&
+                countryList?.map((country) => {
+                  return (
+                    <option
+                      value={country?.name}
+                      onChange={() => handleGetCitiesById(country?.countryCode)}
+                    >
+                      {country?.name}
+                    </option>
+                  );
+                })}
             </select>
           </Items>
           <Items>
@@ -276,15 +300,21 @@ const EditProfile = ({ childToParent }) => {
               value={inputVal?.city}
             >
               <option value="">Select</option>
-              <option value="mumbai">Mumbai</option>
-              <option value="delhi">Delhi</option>
-              <option value="bangalore">Bangalore</option>
-              <option value="chandigarh">Chandigarh</option>
-              <option value="chandigarh">Handa</option>
-              <option value="seto">Seto</option>
-              <option value="tsushima">Tsushima</option>
-              <option value="anjō">Anjō</option>
-              <option value="tokoname">Tokoname</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Newyork">Newyork</option>
+              <option value="Dallas">Dallas</option>
+              <option value="Losangeles">Losangeles</option>
+              <option value="Berlin">Berlin</option>
+              <option value="Hamburg">Hamburg</option>
+              <option value="Munich">Munich</option>
+              <option value="Paris">Paris</option>
+              <option value="Marseille">Marseille</option>
+              <option value="Lyon">Lyon</option>
+
+              {/* {cityList?.length > 0 &&
+                cityList?.map((city) => {
+                  return <option value={city?.name}>{city?.name}</option>;
+                })} */}
             </select>
           </Items>
         </RowWrp>

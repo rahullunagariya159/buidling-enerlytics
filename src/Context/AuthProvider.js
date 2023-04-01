@@ -29,6 +29,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState();
   const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   // user detail
   const [userdetails, setUserDetails] = useState(null);
   const [userProfileDetails, setUserProfileDetails] = useState({});
@@ -46,8 +47,6 @@ export function AuthProvider({ children }) {
   const [isLoggedIn, setLoggedInStatus] = useState(
     ReactSession.get("is_logged_in"),
   );
-
-  // console.log({ authIdentity });
 
   // ========================================================================
   // FUNCTIONS
@@ -231,6 +230,8 @@ export function AuthProvider({ children }) {
     setIsAddingCard,
     getCreditCards,
     getUserInfo,
+    isAuthenticated,
+    setIsAuthenticated,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
