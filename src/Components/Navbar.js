@@ -361,8 +361,9 @@ function Navbar(props) {
         })
         .catch((err) => {
           console.log(err.code);
-          if (e.code === "UserNotConfirmedException") {
+          if (err?.code === "UserNotConfirmedException") {
             resendOTP();
+            document.getElementById("getOTP").click();
           } else {
             setLoginError("Incorrect email or password.");
           }
