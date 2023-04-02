@@ -19,7 +19,7 @@ const BuildingMaterial = () => {
                 <div className="left-wrp">
                   <div className="main-table">
                     <div className="one-boex ">
-                      <div className="stepce">Step 1</div>
+                      <div className="stepce border-l">Step 1</div>
                       <div className="table-pading">
                         <h1>
                           Do you have details knowledge about your Building

@@ -1434,6 +1434,28 @@ img.okik {
   justify-content: space-between;
   padding-left: 295px !important;
 }
+@media only screen and (max-width: 1504px) and (min-width: 1024px) {
+  .left-wrp {
+    max-width: 485px !important;
+  }
+  .rightContent {
+    max-width: 500px !important;
+  }
+  .nav12 {
+    padding: 0 !important;
+    justify-content: center !important;
+  }
+  .items-row {
+    justify-content: center !important;
+  }
+  .mt {
+    margin-top: 30px !important;
+  }
+  .nav12 select {
+    max-width: 50px !important;
+    min-width: 217px !important;
+  }
+}
 .be-modal {
   padding: 28px 0 0 295px !important;
 }
@@ -1654,6 +1676,9 @@ label.no-1.tow {
 .stepce.qw {
   color: #013a67;
   background: #c2c2c2 0% 0% no-repeat padding-box;
+}
+.border-l {
+  border-radius: 4px 0px 0px 0px;
 }
 
 h1.wsw {
