@@ -23,6 +23,12 @@ export const validateUserName = (value) => {
   return value.replace(/[&@!=/\#,+()$~%'":*?<>{}^ ]/g, "");
 };
 
+export const getCountryCodeByCountryName = async (countryName) => {
+  return await Country.getAllCountries()?.find(
+    (country) => country?.name === countryName,
+  );
+};
+
 export const getCountries = (countryCode) => {
   if (countryCode) {
     return Country.getCountryByCode(countryCode);
@@ -32,8 +38,17 @@ export const getCountries = (countryCode) => {
 
 export const getCities = (countryCode) => {
   if (countryCode) {
-    console.log({ countryCode });
     return City.getCitiesOfCountry(countryCode);
   }
-  return City.getAllCities;
+  return City.getAllCities();
+};
+
+export const getCitiesByCountryName = async (countryName) => {
+  if (countryName) {
+    const countryDetails = await getCountryCodeByCountryName(countryName);
+    if (countryDetails?.isoCode) {
+      const citiesList = City.getCitiesOfCountry(countryDetails?.isoCode);
+      return citiesList || [];
+    }
+  }
 };

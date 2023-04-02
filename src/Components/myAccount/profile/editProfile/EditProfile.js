@@ -40,6 +40,7 @@ import {
   validateUserName,
   getCountries,
   getCities,
+  getCitiesByCountryName,
 } from "../../../../utils/";
 import LoadingCover from "../../../LoadingCover";
 
@@ -72,8 +73,11 @@ const EditProfile = ({ childToParent }) => {
     });
   };
 
-  const handleGetCitiesById = (countryCode) => {
-    setCityList(getCities(countryCode));
+  const handleGetCitiesByCoName = async (country) => {
+    setShowLoading(true);
+    const cityList = await getCitiesByCountryName(country);
+    setCityList(cityList);
+    setShowLoading(false);
   };
 
   const handleEditProfileDetails = async () => {
@@ -126,7 +130,7 @@ const EditProfile = ({ childToParent }) => {
         phoneNumber: userProfileDetails?.phone_no,
         apt: userProfileDetails?.apt,
         address: userProfileDetails?.address,
-        country: userProfileDetails?.country,
+        country: userProfileDetails?.country || "Canada",
         postalCode: userProfileDetails?.postal_code,
         city: userProfileDetails?.city,
         companyName: userProfileDetails?.company_name,
@@ -140,7 +144,7 @@ const EditProfile = ({ childToParent }) => {
       setProfileImgUrl(userProfileDetails?.profile_pic);
 
       setCountryList(getCountries());
-      setCityList(getCities());
+      handleGetCitiesByCoName(userProfileDetails?.country || "Canada");
     }
   }, [userId]);
 
@@ -274,20 +278,16 @@ const EditProfile = ({ childToParent }) => {
             <select
               id="country"
               name="country"
-              onChange={onChangeHandler}
+              onChange={(e) => {
+                onChangeHandler(e);
+                handleGetCitiesByCoName(e?.target?.value);
+              }}
               value={inputVal?.country}
             >
               <option value="">Select</option>
               {countryList?.length > 0 &&
                 countryList?.map((country) => {
-                  return (
-                    <option
-                      value={country?.name}
-                      onChange={() => handleGetCitiesById(country?.countryCode)}
-                    >
-                      {country?.name}
-                    </option>
-                  );
+                  return <option value={country?.name}>{country?.name}</option>;
                 })}
             </select>
           </Items>
@@ -300,21 +300,10 @@ const EditProfile = ({ childToParent }) => {
               value={inputVal?.city}
             >
               <option value="">Select</option>
-              <option value="Mumbai">Mumbai</option>
-              <option value="Newyork">Newyork</option>
-              <option value="Dallas">Dallas</option>
-              <option value="Losangeles">Losangeles</option>
-              <option value="Berlin">Berlin</option>
-              <option value="Hamburg">Hamburg</option>
-              <option value="Munich">Munich</option>
-              <option value="Paris">Paris</option>
-              <option value="Marseille">Marseille</option>
-              <option value="Lyon">Lyon</option>
-
-              {/* {cityList?.length > 0 &&
+              {cityList?.length > 0 &&
                 cityList?.map((city) => {
                   return <option value={city?.name}>{city?.name}</option>;
-                })} */}
+                })}
             </select>
           </Items>
         </RowWrp>
