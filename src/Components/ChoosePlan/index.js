@@ -347,8 +347,12 @@ const ChoosePlan = () => {
                 .getElementById("SECURE-RELIABLE")
                 .classList.remove("show");
               document.getElementById("SECURE-RELIABLE").style.display = "none";
+
               setIsAddingCard(false);
               getCreditCards(userID);
+              if (isAddingCard) {
+                window.location.reload();
+              }
             }
           }
         })
@@ -456,8 +460,12 @@ const ChoosePlan = () => {
               </div>
             </div>
             <div className="plan-box">
-              <div className="first-box">
-                <div className="first-space">
+              <div
+                className={`first-box  ${
+                  userID && userProfileDetails?.plan ? "disable-plan-card" : ""
+                }`}
+              >
+                <div className={`first-space`}>
                   <h6 className="top-titel">TRIAL</h6>
                   <p className="top-pra">
                     Try out the most robust & user-friendly web tool accessible
@@ -521,14 +529,30 @@ const ChoosePlan = () => {
                 <div className="bast-ss">
                   <p className="selling">Best selling</p>
                 </div>
-                <div className="first-space brdt">
+                <div
+                  className={`first-space brdt ${
+                    userID &&
+                    (userProfileDetails?.plan === "Home" ||
+                      userProfileDetails?.plan === "Premium")
+                      ? "disable-plan-card"
+                      : ""
+                  }`}
+                >
                   <h6 className="top-titel orn">HOME</h6>
                   <p className="top-pra orn">
                     Try out the most robust & user-friendly web tool accessible
                     right now.
                   </p>
                 </div>
-                <div className="sec-spece">
+                <div
+                  className={`sec-spece ${
+                    userID &&
+                    (userProfileDetails?.plan === "Home" ||
+                      userProfileDetails?.plan === "Premium")
+                      ? "disable-plan-card"
+                      : ""
+                  }`}
+                >
                   <div>
                     <h1 className="plan-title orn">€30</h1>
                     <p className="plan-pra orn">
@@ -609,7 +633,9 @@ const ChoosePlan = () => {
                       }
                       style={{
                         pointerEvents:
-                          userID && userProfileDetails?.plan === "Home"
+                          userID &&
+                          (userProfileDetails?.plan === "Home" ||
+                            userProfileDetails?.plan === "Premium")
                             ? "none"
                             : "auto",
                       }}

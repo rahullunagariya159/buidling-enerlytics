@@ -39,8 +39,8 @@ import {
   getBase64,
   validateUserName,
   getCountries,
-  getCities,
   getCitiesByCountryName,
+  getCountryCodeByCountryName,
 } from "../../../../utils/";
 import LoadingCover from "../../../LoadingCover";
 
@@ -52,6 +52,7 @@ const EditProfile = ({ childToParent }) => {
   const [showLoading, setShowLoading] = useState(false);
   const [countryList, setCountryList] = useState([]);
   const [cityList, setCityList] = useState([]);
+  const [phoneCode, setPhoneCode] = useState("91");
 
   const { userId, userProfileDetails, getUserInfo } = useAuth();
 
@@ -77,6 +78,13 @@ const EditProfile = ({ childToParent }) => {
     setShowLoading(true);
     const cityList = await getCitiesByCountryName(country);
     setCityList(cityList);
+    const countryDetails = await getCountryCodeByCountryName(country);
+    console.log("-->countryDetails?.phonecode", countryDetails?.phonecode);
+    setInputVal({
+      ...inputVal,
+      countryCode: countryDetails?.phonecode,
+    });
+    setPhoneCode(countryDetails?.phonecode);
     setShowLoading(false);
   };
 
@@ -354,13 +362,19 @@ const EditProfile = ({ childToParent }) => {
               <select
                 name="countryCode"
                 id="countryCode"
-                value={inputVal?.countryCode}
+                value={phoneCode}
                 onChange={onChangeHandler}
+                defaultValue={phoneCode}
               >
-                <option value="+91">+91</option>
-                <option value="+21">+21</option>
-                <option value="+15">+15</option>
-                <option value="+18">+18</option>
+                <option value={`+${phoneCode}`}>+{phoneCode}</option>
+                {/* {countryList?.length > 0 &&
+                  countryList?.map((country) => {
+                    return (
+                      <option value={`+${country?.phonecode}`}>
+                        +{country?.phonecode}
+                      </option>
+                    );
+                  })} */}
               </select>
               <input
                 type="number"

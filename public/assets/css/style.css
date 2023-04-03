@@ -3794,6 +3794,10 @@ a.Try-now-btn {
   display: inline-block;
 }
 
+.disable-plan-card {
+  background: silver 0% 0% no-repeat padding-box;
+}
+
 .first-space {
   padding: 24px;
   display: grid;

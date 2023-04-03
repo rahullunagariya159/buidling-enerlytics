@@ -107,3 +107,27 @@ export const activatePromocode = (payload) => {
       });
   });
 };
+
+export const buyCredits = (payload) => {
+  return new Promise((resolve, reject) => {
+    ApiPost(`/credits`, payload)
+      .then(function (response) {
+        resolve(response);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  });
+};
+
+export const checkUserEmailExist = (userId) => {
+  return new Promise((resolve, reject) => {
+    ApiPost(`/check-email`, { userId })
+      .then(function (response) {
+        resolve(response);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  });
+};
