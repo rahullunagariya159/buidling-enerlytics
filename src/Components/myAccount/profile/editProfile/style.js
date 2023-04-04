@@ -118,6 +118,7 @@ export const SelectWrp = styled.div`
       calc(100% - 5px) calc(1em + 2px), 100% 0;
     background-size: 9px 12px;
     max-width: 50px;
+    min-width: 50px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
