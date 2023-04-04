@@ -39,8 +39,8 @@ import {
   getBase64,
   validateUserName,
   getCountries,
-  getCities,
   getCitiesByCountryName,
+  getCountryCodeByCountryName,
 } from "../../../../utils/";
 import LoadingCover from "../../../LoadingCover";
 
@@ -52,6 +52,7 @@ const EditProfile = ({ childToParent }) => {
   const [showLoading, setShowLoading] = useState(false);
   const [countryList, setCountryList] = useState([]);
   const [cityList, setCityList] = useState([]);
+  const [phoneCode, setPhoneCode] = useState("+91");
 
   const { userId, userProfileDetails, getUserInfo } = useAuth();
 
@@ -77,6 +78,9 @@ const EditProfile = ({ childToParent }) => {
     setShowLoading(true);
     const cityList = await getCitiesByCountryName(country);
     setCityList(cityList);
+    const countryDetails = await getCountryCodeByCountryName(country);
+
+    setPhoneCode(`+${countryDetails?.phonecode}`);
     setShowLoading(false);
   };
 
@@ -97,7 +101,7 @@ const EditProfile = ({ childToParent }) => {
       company_name: inputVal?.companyName,
       last_name: inputVal?.lastName,
       first_name: inputVal?.firstName,
-      country_code: inputVal?.countryCode,
+      country_code: phoneCode,
       user_name: inputVal?.userName,
       profile_pic: profileImgUrl || userProfileDetails?.profile_pic,
     };
@@ -116,7 +120,7 @@ const EditProfile = ({ childToParent }) => {
         }
       })
       .catch((error) => {
-        setError(error || somethingWentWrongError);
+        setError(error?.message || somethingWentWrongError);
       })
       .finally(() => {
         setLoading(false);
@@ -132,7 +136,7 @@ const EditProfile = ({ childToParent }) => {
         address: userProfileDetails?.address,
         country: userProfileDetails?.country || "Canada",
         postalCode: userProfileDetails?.postal_code,
-        city: userProfileDetails?.city,
+        city: userProfileDetails?.city || "Torento",
         companyName: userProfileDetails?.company_name,
         lastName: userProfileDetails?.last_name,
         firstName: userProfileDetails?.first_name,
@@ -354,13 +358,19 @@ const EditProfile = ({ childToParent }) => {
               <select
                 name="countryCode"
                 id="countryCode"
-                value={inputVal?.countryCode}
+                value={phoneCode}
                 onChange={onChangeHandler}
+                defaultValue={phoneCode}
               >
-                <option value="+91">+91</option>
-                <option value="+21">+21</option>
-                <option value="+15">+15</option>
-                <option value="+18">+18</option>
+                <option value={`${phoneCode}`}>{phoneCode}</option>
+                {/* {countryList?.length > 0 &&
+                  countryList?.map((country) => {
+                    return (
+                      <option value={`+${country?.phonecode}`}>
+                        +{country?.phonecode}
+                      </option>
+                    );
+                  })} */}
               </select>
               <input
                 type="number"

@@ -108,7 +108,7 @@ export const SelectWrp = styled.div`
     border: none;
     letter-spacing: 0px;
     color: #1c1c1c;
-    padding: 5px 25px 5px 5px;
+    padding: 5px 5px 5px 5px;
     background: #ffffff 0% 0% no-repeat padding-box;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -117,6 +117,11 @@ export const SelectWrp = styled.div`
     background-position: calc(100% - 10px) calc(1em + 2px),
       calc(100% - 5px) calc(1em + 2px), 100% 0;
     background-size: 9px 12px;
+    max-width: 50px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    display: inline-block;
   }
   input {
     font: normal normal 300 12px/18px Poppins;

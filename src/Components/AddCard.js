@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ReactSession } from "react-client-session";
 
 import { validateInput } from "../config";
@@ -114,8 +114,6 @@ function AddCard(props) {
     setSelectedCard(cardId);
     setSelectedCardName(cardName);
   };
-
-  useEffect(() => {}, []);
 
   return (
     <div>

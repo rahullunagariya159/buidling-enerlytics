@@ -1,16 +1,20 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
+import { toast } from "react-toastify";
 import CancelButton from "./CancelButton";
 import LinkButton from "./LinkButton";
 import { useAuth } from "../Context/AuthProvider";
+import { buyCredits } from "./Services/UserProfileService";
+import { somethingWentWrongError } from "../Constants";
 import Text from "./Text";
 
 function BuyCredits() {
   const [inputVal, setInputVal] = useState("");
   const [isShow, invokeModal] = useState(false);
+  const [cost, setCost] = useState(0);
   const [error, setError] = useState("");
-  const { creditCardList } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const { creditCardList, userId, getUserInfo } = useAuth();
 
   const onChangeHandler = (evt) => {
     setError("");
@@ -21,16 +25,43 @@ function BuyCredits() {
     });
   };
 
-  const handlePayForCredits = () => {
+  const handlePayForCredits = async () => {
     setError("");
     if (!inputVal?.credits) {
       setError("Please enter a number of credits");
+      return false;
+    } else if (
+      Math.sign(inputVal?.credits) === -1 ||
+      Number(inputVal?.credits) <= 0
+    ) {
+      setError("Please enter valid number");
       return false;
     } else if (creditCardList?.length === 0) {
       setError("Please add your credit card");
       return false;
     }
-    invokeModal(!isShow);
+
+    setLoading(true);
+    const creditPayload = {
+      userId: userId,
+      credits: inputVal?.credits,
+      amount: cost,
+    };
+
+    await buyCredits(creditPayload)
+      .then(async (response) => {
+        if (response?.status === 200 && response?.data?.msg) {
+          await getUserInfo(userId);
+          toast.success("Credits purchased successfully");
+          invokeModal(!isShow);
+        }
+      })
+      .catch((error) => {
+        setError(error?.message || somethingWentWrongError);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const onCloseHandler = () => {
@@ -38,6 +69,16 @@ function BuyCredits() {
     setError("");
     invokeModal(!isShow);
   };
+
+  useEffect(() => {
+    if (inputVal?.credits) {
+      const calcCost = (inputVal?.credits * 15) / 100;
+
+      setCost(calcCost);
+    } else {
+      setCost(0);
+    }
+  }, [inputVal?.credits]);
 
   return (
     <>
@@ -65,7 +106,7 @@ function BuyCredits() {
             </div>
             <div className="cost-title">
               <div>Cost </div>
-              <div>€{inputVal?.credits}</div>
+              <div>€{cost.toFixed(2)}</div>
             </div>
 
             <Text type="error" text={error} />
@@ -76,6 +117,8 @@ function BuyCredits() {
             onClick={() => handlePayForCredits()}
             className={`signin-btn `}
             title="Pay"
+            isLoading={loading}
+            isDisable={loading}
           />
           <CancelButton title="Cancel" onClick={() => onCloseHandler()} />
         </Modal.Footer>

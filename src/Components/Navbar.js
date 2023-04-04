@@ -18,6 +18,7 @@ import { Routes } from "../navigation/Routes";
 import LinkButton from "./LinkButton";
 import useEnterKeyListener from "../helpers/useEnterKeyListener";
 import { updateGuestLogin } from "./Services/UserService";
+import { checkUserEmailExist } from "./Services/UserProfileService";
 import { useAuth } from "../Context/AuthProvider";
 import ChoosePlan from "./ChoosePlan";
 import Text from "../Components/Text";
@@ -253,8 +254,8 @@ function Navbar(props) {
 
     try {
       return updateGuestLogin(payload).then((response) => {
-        if (response.error) {
-          toast.error(response.error);
+        if (response?.error) {
+          toast.error(response?.error);
           return false;
         } else {
           ReactSession.set("guest_user_id", null);
@@ -265,7 +266,7 @@ function Navbar(props) {
         }
       });
     } catch (error) {
-      toast.error(error);
+      toast.error(error?.message || "Something went wrong");
       return false;
     }
   };
@@ -378,35 +379,54 @@ function Navbar(props) {
     }
   };
 
-  const onForgotPassword = () => {
-    let userEmailElm = document.getElementById("userEmail");
+  const onForgotPassword = async () => {
+    let userEmailElm = document.getElementById("userEmail").value;
     let checkUE = validateInput(userEmailElm);
     setForgotPasswordError("");
+
     if (checkUE) {
       const user = new CognitoUser({
         Username: email,
         Pool: UserPool,
       });
 
-      user.forgotPassword({
-        onSuccess: function (data) {
-          // successfully initiated reset password request
-          console.log("CodeDeliveryData from forgotPassword: " + data);
-        },
-        onFailure: function (err) {
-          setForgotPasswordError(err.message || JSON.stringify(err));
-        },
-        //Optional automatic callback
-        inputVerificationCode: function (data) {
-          toast.success(
-            "Code sent to: " + data.CodeDeliveryDetails.Destination,
-          );
+      setIsLoading(true);
+      await checkUserEmailExist(userEmailElm)
+        .then((response) => {
+          if (response?.status === 200 && response?.data?.msg)
+            user.forgotPassword({
+              onSuccess: function (data) {
+                // successfully initiated reset password request
+                console.log("CodeDeliveryData from forgotPassword: " + data);
+              },
+              onFailure: function (err) {
+                setForgotPasswordError(err.message || JSON.stringify(err));
+                setIsLoading(false);
+              },
+              //Optional automatic callback
+              inputVerificationCode: function (data) {
+                toast.success(
+                  "Code sent to: " + data.CodeDeliveryDetails.Destination,
+                );
 
-          document.getElementById("forgotBtn").click();
-        },
-      });
+                document.getElementById("forgotBtn").click();
+              },
+            });
+        })
+        .catch((e) => {
+          console.log({ e });
+          if (e) {
+            setForgotPasswordError(
+              "Looks like provided email is not registered with us!",
+            );
+          }
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     } else {
       setForgotPasswordError("Enter valid email address to reset password!");
+      setIsLoading(false);
     }
   };
 
@@ -1235,9 +1255,13 @@ function Navbar(props) {
             />
             <div>
               {/* data-bs-dismiss="modal"  */}
-              <a className="signin-btn" onClick={onForgotPassword}>
-                Submit
-              </a>
+              <LinkButton
+                title="Submit"
+                className="signin-btn"
+                onClick={onForgotPassword}
+                isLoading={isLoading}
+                isDisable={isLoading}
+              />
             </div>
           </div>
         </div>
