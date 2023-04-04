@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
 import { orderBy } from "lodash";
 import {
@@ -27,6 +27,7 @@ import { CardNumberText } from "../profile/savedCard/style.js";
 import { useAuth } from "../../../Context/AuthProvider";
 import { getSubscriptionAndHistory } from "../../../Components/Services/UserProfileService";
 import LoadingCover from "../../LoadingCover";
+import { FilterWrp } from "../promoCode/style.js";
 
 const SubscriptionContent = () => {
   const { userId, userProfileDetails } = useAuth();
@@ -35,10 +36,19 @@ const SubscriptionContent = () => {
   const [isAscOrder, setIsAscOrder] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
 
-  const toggleDropdown = () => {
-    document.getElementById("myDropdownFilter").classList.toggle("show");
-  };
-
+  const ref = useRef();
+  const [toggleDropdown, setToggleDropdown] = useState(false);
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (toggleDropdown && ref.current && !ref.current.contains(e.target)) {
+        setToggleDropdown(false);
+      }
+    };
+    document.addEventListener("click", checkIfClickedOutside, true);
+    return () => {
+      document.removeEventListener("click", checkIfClickedOutside, true);
+    };
+  }, [toggleDropdown]);
   const handleGetSubscriptionsAndHistory = () => {
     setShowLoading(true);
     getSubscriptionAndHistory({ userId })
@@ -149,18 +159,22 @@ const SubscriptionContent = () => {
             <label>Payment history ({invoices?.length})</label>
             <SmallGrayLabel>Find all your payment plan invoices</SmallGrayLabel>
           </TitleWrp>
-          <TitleWrp onClick={toggleDropdown}>
-            <img src="assets/img/profile/filter.png" alt="" />
-          </TitleWrp>
-          <div id="myDropdownFilter" className="dropdown-content-filter">
-            <button
-              onClick={() => handleSorting(!isAscOrder)}
-              className={isAscOrder ? "asc-order" : ""}
-            >
-              Date
-              <img src="assets/img/profile/rightArrow.png" alt="" />
-            </button>
-          </div>
+          <FilterWrp ref={ref}>
+            <TitleWrp onClick={() => setToggleDropdown(!toggleDropdown)}>
+              <img src="assets/img/profile/filter.png" alt="" />
+            </TitleWrp>
+            {toggleDropdown && (
+              <div className="dropdown-content-filter">
+                <button
+                  onClick={() => handleSorting(!isAscOrder)}
+                  className={isAscOrder ? "asc-order" : ""}
+                >
+                  Date
+                  <img src="assets/img/profile/rightArrow.png" alt="" />
+                </button>
+              </div>
+            )}
+          </FilterWrp>
         </TableHeader>
         <div className="table-responsive">
           <table className="table">

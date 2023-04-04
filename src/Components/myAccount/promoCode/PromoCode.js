@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { format } from "date-fns";
 import { orderBy } from "lodash";
@@ -56,6 +56,20 @@ const PromoCode = () => {
   const [activeNowLoading, setActiveNowLoading] = useState("");
   const [showLoading, setShowLoading] = useState(false);
 
+  const ref = useRef();
+  const [toggleDropdown, setToggleDropdown] = useState(false);
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (toggleDropdown && ref.current && !ref.current.contains(e.target)) {
+        setToggleDropdown(false);
+      }
+    };
+    document.addEventListener("click", checkIfClickedOutside, true);
+    return () => {
+      document.removeEventListener("click", checkIfClickedOutside, true);
+    };
+  }, [toggleDropdown]);
+
   const handleActivePromoCode = (promoCodeDetail) => {
     const payload = {
       promoCode: promoCodeDetail?.promo_code,
@@ -106,10 +120,6 @@ const PromoCode = () => {
       handleGetPromoCodeList("AVAILABLE", 0);
     }
   }, [userId]);
-
-  const toggleDropdown = () => {
-    document.getElementById("myDropdownFilter").classList.toggle("show");
-  };
 
   const colors = [
     { c1: "#da64c8", c2: "#4436e2" },
@@ -197,64 +207,66 @@ const PromoCode = () => {
             Used
           </NavLink>
         </TabWrp>
-        <FilterWrp>
-          <TitleWrp onClick={toggleDropdown}>
+        <FilterWrp ref={ref}>
+          <TitleWrp onClick={() => setToggleDropdown(!toggleDropdown)}>
             <img src="assets/img/profile/filter.png" alt="" />
           </TitleWrp>
-          <div id="myDropdownFilter" className="dropdown-promoCode-filter">
-            <FilterDropdown>
-              {/* <span>Sort by date</span> */}
-              {/* <button>Date</button> */}
-              {/* <HorizontalLineDropdown /> */}
-              <button
-                onClick={() => {
-                  handleSorting(!isCreditsAsc, "credits");
-                  setIsCredAsc(!isCreditsAsc);
-                }}
-                className={
-                  selectedSortOption === "credits" && isCreditsAsc
-                    ? "selected-promocode-sort"
-                    : ""
-                }
-              >
-                Credits
-              </button>
-              {/* <HorizontalLineDropdown />
+          {toggleDropdown && (
+            <div className="dropdown-promoCode-filter">
+              <FilterDropdown>
+                {/* <span>Sort by date</span> */}
+                {/* <button>Date</button> */}
+                {/* <HorizontalLineDropdown /> */}
+                <button
+                  onClick={() => {
+                    handleSorting(!isCreditsAsc, "credits");
+                    setIsCredAsc(!isCreditsAsc);
+                  }}
+                  className={
+                    selectedSortOption === "credits" && isCreditsAsc
+                      ? "selected-promocode-sort"
+                      : ""
+                  }
+                >
+                  Credits
+                </button>
+                {/* <HorizontalLineDropdown />
               <button>Expiring on</button> */}
-              {selected === 1 && (
-                <>
-                  <HorizontalLineDropdown />
-                  <button
-                    onClick={() => {
-                      handleSorting(!isActivatedAsc, "appliedOn");
-                      setIsActivatedAsc(!isActivatedAsc);
-                    }}
-                    className={
-                      selectedSortOption === "appliedOn" && isActivatedAsc
-                        ? "selected-promocode-sort"
-                        : ""
-                    }
-                  >
-                    Activated on
-                  </button>
-                </>
-              )}
-              <HorizontalLineDropdown />
-              <button
-                onClick={() => {
-                  handleSorting(!isDiscountAsc, "discount");
-                  setIsDiscountAsc(!isDiscountAsc);
-                }}
-                className={
-                  selectedSortOption === "discount" && isDiscountAsc
-                    ? "selected-promocode-sort"
-                    : ""
-                }
-              >
-                Discount
-              </button>
-            </FilterDropdown>
-          </div>
+                {selected === 1 && (
+                  <>
+                    <HorizontalLineDropdown />
+                    <button
+                      onClick={() => {
+                        handleSorting(!isActivatedAsc, "appliedOn");
+                        setIsActivatedAsc(!isActivatedAsc);
+                      }}
+                      className={
+                        selectedSortOption === "appliedOn" && isActivatedAsc
+                          ? "selected-promocode-sort"
+                          : ""
+                      }
+                    >
+                      Activated on
+                    </button>
+                  </>
+                )}
+                <HorizontalLineDropdown />
+                <button
+                  onClick={() => {
+                    handleSorting(!isDiscountAsc, "discount");
+                    setIsDiscountAsc(!isDiscountAsc);
+                  }}
+                  className={
+                    selectedSortOption === "discount" && isDiscountAsc
+                      ? "selected-promocode-sort"
+                      : ""
+                  }
+                >
+                  Discount
+                </button>
+              </FilterDropdown>
+            </div>
+          )}
         </FilterWrp>
       </CardWrp>
       {selected === 0 && (

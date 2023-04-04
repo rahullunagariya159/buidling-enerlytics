@@ -3479,10 +3479,9 @@ a.Register {
   border-radius: 0px 0px 4px 4px;
 }
 .dropdown-content-filter {
-  display: none;
   position: absolute;
   z-index: 999;
-  top: 56px;
+  top: 30px;
   right: 0;
   border-radius: 4px;
   padding: 16px 8px;
@@ -3507,7 +3506,6 @@ a.Register {
 }
 
 .dropdown-promoCode-filter {
-  display: none;
   position: absolute;
   z-index: 999;
   top: 31px;
