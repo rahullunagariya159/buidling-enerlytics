@@ -80,11 +80,7 @@ const EditProfile = ({ childToParent }) => {
     setCityList(cityList);
     const countryDetails = await getCountryCodeByCountryName(country);
 
-    setInputVal({
-      ...inputVal,
-      countryCode: countryDetails?.phonecode,
-    });
-    setPhoneCode(countryDetails?.phonecode);
+    setPhoneCode(`+${countryDetails?.phonecode}`);
     setShowLoading(false);
   };
 
@@ -105,7 +101,7 @@ const EditProfile = ({ childToParent }) => {
       company_name: inputVal?.companyName,
       last_name: inputVal?.lastName,
       first_name: inputVal?.firstName,
-      country_code: inputVal?.countryCode,
+      country_code: phoneCode,
       user_name: inputVal?.userName,
       profile_pic: profileImgUrl || userProfileDetails?.profile_pic,
     };
@@ -140,7 +136,7 @@ const EditProfile = ({ childToParent }) => {
         address: userProfileDetails?.address,
         country: userProfileDetails?.country || "Canada",
         postalCode: userProfileDetails?.postal_code,
-        city: userProfileDetails?.city,
+        city: userProfileDetails?.city || "Torento",
         companyName: userProfileDetails?.company_name,
         lastName: userProfileDetails?.last_name,
         firstName: userProfileDetails?.first_name,
@@ -366,7 +362,7 @@ const EditProfile = ({ childToParent }) => {
                 onChange={onChangeHandler}
                 defaultValue={phoneCode}
               >
-                <option value={`+${phoneCode}`}>+{phoneCode}</option>
+                <option value={`${phoneCode}`}>{phoneCode}</option>
                 {/* {countryList?.length > 0 &&
                   countryList?.map((country) => {
                     return (
