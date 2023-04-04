@@ -203,7 +203,7 @@ const SubscriptionContent = () => {
                             )
                           : "-"}
                       </td>
-                      <td>{invoice?.paidAmount}$ CAD</td>
+                      <td>€{invoice?.paidAmount}</td>
                       <td>Success</td>
                       <td>
                         <div>
