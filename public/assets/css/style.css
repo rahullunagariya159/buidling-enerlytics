@@ -3794,8 +3794,41 @@ a.Try-now-btn {
 
 .disable-plan-card {
   background: silver 0% 0% no-repeat padding-box;
+  color: #fff !important;
 }
-
+.disable-plan-card .top-titel {
+  color: #fff !important;
+}
+.disable-plan-card .top-pra {
+  color: #fff !important;
+}
+.disable-plan-card .sec-spece {
+  color: #fff !important;
+}
+.disable-plan-card .plan-title {
+  color: #fff !important;
+}
+.disable-plan-card .plan-pra {
+  color: #fff !important;
+}
+.disable-plan-card a.Try-now-btn {
+  color: #000;
+  background: #fff;
+}
+.disable-plan-card a.Try-now-btn.orn {
+  color: #000 !important;
+  background: #fff !important;
+}
+.disable-plan-card p.plan-pra.colre::after {
+  color: #fff;
+}
+.disable-plan-card .first-space.brdt {
+  color: #fff;
+  border-bottom: 1px solid #fff;
+}
+.disable-plan-card .selling {
+  color: #000;
+}
 .first-space {
   padding: 24px;
   display: grid;

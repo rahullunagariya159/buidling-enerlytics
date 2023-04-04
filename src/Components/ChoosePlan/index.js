@@ -479,7 +479,11 @@ const ChoosePlan = () => {
                   <div className="plan-grid">
                     <p className="plan-pra">
                       <img
-                        src="assets/img/Choose-plane/checked-verified-1.svg"
+                        src={
+                          userID && userProfileDetails?.plan
+                            ? "assets/img/Choose-plane/checked-verified.svg"
+                            : "assets/img/Choose-plane/checked-verified-1.svg"
+                        }
                         className="plan-img"
                         alt=""
                       />
@@ -487,7 +491,11 @@ const ChoosePlan = () => {
                     </p>
                     <p className="plan-pra">
                       <img
-                        src="assets/img/Choose-plane/checked-verified-1.svg"
+                        src={
+                          userID && userProfileDetails?.plan
+                            ? "assets/img/Choose-plane/checked-verified.svg"
+                            : "assets/img/Choose-plane/checked-verified-1.svg"
+                        }
                         className="plan-img"
                         alt=""
                       />
@@ -495,7 +503,11 @@ const ChoosePlan = () => {
                     </p>
                     <p className="plan-pra">
                       <img
-                        src="assets/img/Choose-plane/checked-verified-1.svg"
+                        src={
+                          userID && userProfileDetails?.plan
+                            ? "assets/img/Choose-plane/checked-verified.svg"
+                            : "assets/img/Choose-plane/checked-verified-1.svg"
+                        }
                         className="plan-img"
                         alt=""
                       />
@@ -503,7 +515,11 @@ const ChoosePlan = () => {
                     </p>
                     <p className="plan-pra">
                       <img
-                        src="assets/img/Choose-plane/checked-verified-1.svg"
+                        src={
+                          userID && userProfileDetails?.plan
+                            ? "assets/img/Choose-plane/checked-verified.svg"
+                            : "assets/img/Choose-plane/checked-verified-1.svg"
+                        }
                         className="plan-img"
                         alt=""
                       />
@@ -525,7 +541,15 @@ const ChoosePlan = () => {
                   </div>
                 </div>
               </div>
-              <div className="second-box">
+              <div
+                className={`second-box ${
+                  userID &&
+                  (userProfileDetails?.plan === "Home" ||
+                    userProfileDetails?.plan === "Premium")
+                    ? "disable-plan-card"
+                    : ""
+                }`}
+              >
                 <div className="bast-ss">
                   <p className="selling">Best selling</p>
                 </div>
@@ -674,7 +698,11 @@ const ChoosePlan = () => {
                   <div className="plan-grid">
                     <p className="plan-pra">
                       <img
-                        src="assets/img/Choose-plane/checked-verified-1.svg"
+                        src={
+                          userID && userProfileDetails?.plan === "Premium"
+                            ? "assets/img/Choose-plane/checked-verified.svg"
+                            : "assets/img/Choose-plane/checked-verified-1.svg"
+                        }
                         className="plan-img"
                         alt=""
                       />
@@ -682,7 +710,11 @@ const ChoosePlan = () => {
                     </p>
                     <p className="plan-pra">
                       <img
-                        src="assets/img/Choose-plane/checked-verified-1.svg"
+                        src={
+                          userID && userProfileDetails?.plan === "Premium"
+                            ? "assets/img/Choose-plane/checked-verified.svg"
+                            : "assets/img/Choose-plane/checked-verified-1.svg"
+                        }
                         className="plan-img"
                         alt=""
                       />
@@ -690,7 +722,11 @@ const ChoosePlan = () => {
                     </p>
                     <p className="plan-pra">
                       <img
-                        src="assets/img/Choose-plane/checked-verified-1.svg"
+                        src={
+                          userID && userProfileDetails?.plan === "Premium"
+                            ? "assets/img/Choose-plane/checked-verified.svg"
+                            : "assets/img/Choose-plane/checked-verified-1.svg"
+                        }
                         className="plan-img"
                         alt=""
                       />
@@ -698,7 +734,11 @@ const ChoosePlan = () => {
                     </p>
                     <p className="plan-pra">
                       <img
-                        src="assets/img/Choose-plane/checked-verified-1.svg"
+                        src={
+                          userID && userProfileDetails?.plan === "Premium"
+                            ? "assets/img/Choose-plane/checked-verified.svg"
+                            : "assets/img/Choose-plane/checked-verified-1.svg"
+                        }
                         className="plan-img"
                         alt=""
                       />
