@@ -30,10 +30,12 @@ import {
   removeCard,
 } from "../../../Services/UserProfileService";
 import { somethingWentWrongError } from "../../../../Constants";
+import LoadingCover from "../../../LoadingCover";
 
 const SavedCards = () => {
   const [emptyCard, setEmptyCard] = useState(false);
   const [defaultCardId, setDefaultCardId] = useState("");
+  const [showLoader, setShowLoader] = useState(false);
   const { creditCardList, setIsAddingCard, userId, getCreditCards } = useAuth();
 
   useEffect(() => {
@@ -52,6 +54,7 @@ const SavedCards = () => {
 
   const handleMakeDefaultCard = async (id) => {
     setDefaultCardId(id);
+    setShowLoader(true);
     let defaultCardPayload = {
       id: id,
       userId,
@@ -67,11 +70,14 @@ const SavedCards = () => {
         console.log({ error });
         toast.error(error?.message || somethingWentWrongError);
       })
-      .finally(() => {});
+      .finally(() => {
+        setShowLoader(false);
+      });
   };
 
   const handleRemoveCard = async (id) => {
     setDefaultCardId(id);
+    setShowLoader(true);
     let defaultCardPayload = {
       id: id,
       userId,
@@ -86,7 +92,9 @@ const SavedCards = () => {
       .catch((error) => {
         toast.error(error?.message || somethingWentWrongError);
       })
-      .finally(() => {});
+      .finally(() => {
+        setShowLoader(false);
+      });
   };
 
   return (
@@ -194,6 +202,8 @@ const SavedCards = () => {
             </>
           );
         })}
+
+      <LoadingCover show={showLoader} />
     </Wrapper>
   );
 };

@@ -7,6 +7,7 @@ import { useAuth } from "../Context/AuthProvider";
 import { buyCredits } from "./Services/UserProfileService";
 import { somethingWentWrongError } from "../Constants";
 import Text from "./Text";
+import LoadingCover from "../Components/LoadingCover";
 
 function BuyCredits() {
   const [inputVal, setInputVal] = useState("");
@@ -117,11 +118,11 @@ function BuyCredits() {
             onClick={() => handlePayForCredits()}
             className={`signin-btn `}
             title="Pay"
-            isLoading={loading}
             isDisable={loading}
           />
           <CancelButton title="Cancel" onClick={() => onCloseHandler()} />
         </Modal.Footer>
+        <LoadingCover show={loading} />
       </Modal>
     </>
   );

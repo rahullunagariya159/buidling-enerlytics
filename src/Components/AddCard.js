@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 import { ReactSession } from "react-client-session";
-
-import { validateInput } from "../config";
-import { useAuth } from "../Context/AuthProvider";
-
 import {
   useStripe,
   useElements,
@@ -11,6 +7,10 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
+import { validateInput } from "../config";
+import { useAuth } from "../Context/AuthProvider";
+import LoadingCover from "./LoadingCover";
+import Button from "./Button";
 
 function AddCard(props) {
   const [selectedCard, setSelectedCard] = useState("credit");
@@ -99,7 +99,7 @@ function AddCard(props) {
         card: cardCvv,
       });
 
-      getPaymentData({
+      await getPaymentData({
         selectedCard: selectedCard,
         cardType: cardType,
         name: cardName,
@@ -231,15 +231,13 @@ function AddCard(props) {
             <span id="card-errors"></span>
           </div>
           <div className="pay-back-flex p-0">
-            {props.addCardClicked ? (
-              <button className="Pay-btn loading-button" type="submit">
-                <i className="fa fa-spinner fa-spin"></i>
-              </button>
-            ) : (
-              <button className="Pay-btn" type="submit">
-                Add
-              </button>
-            )}
+            <button
+              className="Pay-btn"
+              type="submit"
+              disabled={props.addCardClicked}
+            >
+              Add
+            </button>
 
             <a
               id="closeAddCardModal"
@@ -254,6 +252,7 @@ function AddCard(props) {
           </div>
         </div>
       </form>
+      <LoadingCover show={props.addCardClicked} />
     </div>
   );
 }

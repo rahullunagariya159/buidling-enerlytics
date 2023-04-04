@@ -12,6 +12,7 @@ import { getPlans, getPromoDetails, saveCard } from "../Services/UserService";
 import { validateInput } from "../../config";
 import { Routes } from "../../navigation/Routes";
 import Text from "../Text";
+import LoadingCover from "../LoadingCover";
 import { CardListContainer } from "./style";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -535,7 +536,6 @@ const ChoosePlan = () => {
                           userID && userProfileDetails?.plan ? "none" : "auto",
                       }}
                       isDisable={btnTrialLoader}
-                      isLoading={btnTrialLoader}
                       title="Try now"
                     />
                   </div>
@@ -921,7 +921,6 @@ const ChoosePlan = () => {
                         }`}
                         onClick={applyPromo}
                         title="Apply"
-                        isLoading={applyPromoLoading}
                         isDisable={applyPromoLoading}
                       />
                       <LinkButton
@@ -1085,6 +1084,7 @@ const ChoosePlan = () => {
           </div>
         </div>
       </div>
+      <LoadingCover show={btnTrialLoader || payClicked} />
     </>
   );
 };

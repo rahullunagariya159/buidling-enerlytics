@@ -45,7 +45,7 @@ import { somethingWentWrongError } from "../../../Constants";
 import LoadingCover from "../../LoadingCover";
 
 const PromoCode = () => {
-  const { userProfileDetails, userId } = useAuth();
+  const { userProfileDetails, userId, getUserInfo } = useAuth();
   const [availablePromoCodes, setAvailablePromoCodes] = useState([]);
   const [usedPromoCodes, setUsedPromoCodes] = useState([]);
   const [selected, setSelected] = useState(0);
@@ -77,9 +77,11 @@ const PromoCode = () => {
       credits: promoCodeDetail?.credits,
     };
     setActiveNowLoading(promoCodeDetail?.id);
+
     activatePromocode(payload)
-      .then((response) => {
+      .then(async (response) => {
         if (response?.status === 200 && response?.data?.msg) {
+          await getUserInfo(userId);
           toast.success("Promo code activated successfully");
         }
       })

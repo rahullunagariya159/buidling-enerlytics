@@ -426,15 +426,14 @@ const EditProfile = ({ childToParent }) => {
       </div>
       <FooterButton>
         <LinkButton
-          className={`signin-btn `}
+          className="signin-btn"
           title="Save"
-          isLoading={loading}
           isDisable={loading}
           onClick={handleEditProfileDetails}
         />
         <CancelButton title="Cancel" onClick={() => childToParent()} />
       </FooterButton>
-      <LoadingCover show={showLoading} />
+      <LoadingCover show={showLoading || loading} />
     </MainWrapper>
   );
 };

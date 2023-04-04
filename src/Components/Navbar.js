@@ -23,6 +23,7 @@ import { useAuth } from "../Context/AuthProvider";
 import ChoosePlan from "./ChoosePlan";
 import Text from "../Components/Text";
 import OtpInput from "react-otp-input";
+import LoadingCover from "../Components/LoadingCover";
 import "../assets/styles/login.css";
 
 function Navbar(props) {
@@ -859,7 +860,6 @@ function Navbar(props) {
               <LinkButton
                 className={`signin-btn ${isLoading ? "loading-button" : ""}`}
                 title="Login"
-                isLoading={isLoading}
                 isDisable={isLoading}
                 onClick={onSubmit}
               />
@@ -1087,7 +1087,6 @@ function Navbar(props) {
                           regClicked ? "loading-button" : ""
                         }`}
                         onClick={onSubmitSignup}
-                        isLoading={regClicked}
                         isDisable={regClicked}
                         title="Register"
                       />
@@ -1190,7 +1189,6 @@ function Navbar(props) {
               <LinkButton
                 className={`signin-btn ${regClicked ? "loading-button" : ""}`}
                 onClick={verifyAccount}
-                isLoading={verifyAccountClicked}
                 isDisable={verifyAccountClicked}
                 title="Next"
                 id="btnSubmitOtp"
@@ -1270,7 +1268,6 @@ function Navbar(props) {
                 title="Submit"
                 className="signin-btn"
                 onClick={onForgotPassword}
-                isLoading={isLoading}
                 isDisable={isLoading}
               />
             </div>
@@ -1374,7 +1371,6 @@ function Navbar(props) {
                   resetNewPasswordLoading ? "loading-button" : ""
                 }`}
                 title="Submit"
-                isLoading={resetNewPasswordLoading}
                 isDisable={resetNewPasswordLoading}
                 onClick={onSubmitPassword}
               />
@@ -1419,6 +1415,14 @@ function Navbar(props) {
       </div>
 
       <ChoosePlan />
+      <LoadingCover
+        show={
+          isLoading ||
+          regClicked ||
+          verifyAccountClicked ||
+          resetNewPasswordLoading
+        }
+      />
     </div>
   );
 }

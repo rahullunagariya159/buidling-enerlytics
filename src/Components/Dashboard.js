@@ -14,6 +14,7 @@ import { useAuth } from "../Context/AuthProvider";
 import Text from "./Text";
 import { somethingWentWrongError } from "../Constants";
 import LinkButton from "./LinkButton";
+import LoadingCover from "./LoadingCover";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -22,13 +23,14 @@ function Dashboard() {
   const [createProjectClicked, setCreateProjectClicked] = useState(false);
   const [createProjectError, setCreateProjectError] = useState("");
   const [checkProjectListLoading, setCheckProjectListLoading] = useState(true);
-
+  const [showLoader, setShowLoader] = useState(false);
   const isGuestUser = searchParams.get("skip") || false;
 
   const { userId: userID } = useAuth();
 
   const handleCreateProjectForGuest = () => {
     setCreateProjectError("");
+    setShowLoader(true);
     let guestUserId = `${Math.floor(Date.now() / 1000)}`;
     ReactSession.set("guest_user_id", guestUserId);
     setCreateProjectClicked(true);
@@ -66,11 +68,15 @@ function Dashboard() {
       .catch((err) => {
         setCreateProjectClicked(false);
         setCreateProjectError(somethingWentWrongError);
+      })
+      .finally(() => {
+        setShowLoader(false);
       });
   };
 
   const handleCreateProject = () => {
     setCreateProjectError("");
+    setShowLoader(true);
     let projectNameElm = document.getElementById("projectName");
     let checkPName = validateInput(projectNameElm);
 
@@ -107,9 +113,13 @@ function Dashboard() {
         })
         .catch((error) => {
           setCreateProjectError(error || somethingWentWrongError);
+        })
+        .finally(() => {
+          setShowLoader(false);
         });
     } else {
       setCreateProjectError("Please enter a project name.");
+      setShowLoader(false);
     }
   };
 
@@ -332,6 +342,7 @@ function Dashboard() {
           </div>
         </div>
       </div>
+      <LoadingCover show={showLoader} />
     </div>
   );
 }
