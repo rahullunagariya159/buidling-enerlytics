@@ -91,7 +91,7 @@ const EditProfile = ({ childToParent }) => {
       return false;
     }
 
-    if (!validatePhoneNumber(inputVal?.phoneNumber)) {
+    if (inputVal?.phoneNumber && !validatePhoneNumber(inputVal?.phoneNumber)) {
       setError("Please enter a valid phone number");
       return false;
     }

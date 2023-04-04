@@ -285,7 +285,7 @@ const PromoCode = () => {
                     <img src="assets/img/profile/promoItems.png" alt="" />
                   </PromoCard>
                   <PromoCardCredit>
-                    <span>20 Credits</span>
+                    <span>{items?.credits} Credits</span>
                     <span>{items?.promo_code}</span>
                   </PromoCardCredit>
                 </ItemsCard>
@@ -323,7 +323,7 @@ const PromoCode = () => {
                   </PromoCardCredit>
                 </ItemsCard>
                 <BottomWrpTab>
-                  <span>Activate on</span>
+                  <span>Activated on</span>
                   <p>
                     {items?.appliedOn
                       ? format(
@@ -335,9 +335,9 @@ const PromoCode = () => {
                 </BottomWrpTab>
               </CardInfo>
             ))}
-          <PlusCard>
+          {/* <PlusCard>
             <img src="assets/img/profile/plus.png" alt="" />
-          </PlusCard>
+          </PlusCard> */}
         </ContentCard>
       )}
       <LoadingCover show={showLoading} />
