@@ -132,8 +132,8 @@ const ChoosePlan = () => {
 
     getPlans(payload)
       .then((response) => {
-        if (response.error) {
-          toast.error(response.error);
+        if (response?.error) {
+          toast.error(response?.error);
         } else {
           // data comes here..
           toast.success(
@@ -214,7 +214,7 @@ const ChoosePlan = () => {
 
     getPlans(payload)
       .then((response) => {
-        if (response.error) {
+        if (response?.error) {
           setBuyPlanError(
             response.error ||
               "We are sorry, but something went wrong. Please try again later.",
@@ -323,8 +323,8 @@ const ChoosePlan = () => {
       saveCard(payload)
         .then((response) => {
           setAddCardClicked(false);
-          if (response.error) {
-            setBuyPlanError(response.error);
+          if (response?.error) {
+            setBuyPlanError(response?.error);
           } else if (response) {
             if (response.data) {
               let cardData = {

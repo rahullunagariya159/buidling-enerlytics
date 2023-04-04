@@ -52,7 +52,7 @@ const EditProfile = ({ childToParent }) => {
   const [showLoading, setShowLoading] = useState(false);
   const [countryList, setCountryList] = useState([]);
   const [cityList, setCityList] = useState([]);
-  const [phoneCode, setPhoneCode] = useState("91");
+  const [phoneCode, setPhoneCode] = useState("+91");
 
   const { userId, userProfileDetails, getUserInfo } = useAuth();
 
@@ -79,7 +79,7 @@ const EditProfile = ({ childToParent }) => {
     const cityList = await getCitiesByCountryName(country);
     setCityList(cityList);
     const countryDetails = await getCountryCodeByCountryName(country);
-    console.log("-->countryDetails?.phonecode", countryDetails?.phonecode);
+
     setInputVal({
       ...inputVal,
       countryCode: countryDetails?.phonecode,
@@ -124,7 +124,7 @@ const EditProfile = ({ childToParent }) => {
         }
       })
       .catch((error) => {
-        setError(error || somethingWentWrongError);
+        setError(error?.message || somethingWentWrongError);
       })
       .finally(() => {
         setLoading(false);

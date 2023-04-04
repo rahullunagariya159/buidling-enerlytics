@@ -29,8 +29,8 @@ function Slider() {
       userId: guestUserId,
     };
     createProject(payload).then((response) => {
-      if (response.error) {
-        toast.error(response.error);
+      if (response?.error) {
+        toast.error(response?.error);
       } else {
         if (response?.msg) {
           ReactSession.set("project_id", response?.msg?.[0]?.id);

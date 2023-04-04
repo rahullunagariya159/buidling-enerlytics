@@ -65,7 +65,7 @@ const SavedCards = () => {
       })
       .catch((error) => {
         console.log({ error });
-        toast.error(error || somethingWentWrongError);
+        toast.error(error?.message || somethingWentWrongError);
       })
       .finally(() => {});
   };
@@ -84,7 +84,7 @@ const SavedCards = () => {
         }
       })
       .catch((error) => {
-        toast.error(error || somethingWentWrongError);
+        toast.error(error?.message || somethingWentWrongError);
       })
       .finally(() => {});
   };

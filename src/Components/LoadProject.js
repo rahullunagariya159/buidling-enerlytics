@@ -40,8 +40,8 @@ function LoadProject() {
       userId: ID,
     };
     listProjects(payload).then((response) => {
-      if (response.error) {
-        toast.error(response.error);
+      if (response?.error) {
+        toast.error(response?.error);
       } else {
         // data comes here..
         if (response?.data?.length > 0) {

@@ -254,8 +254,8 @@ function Navbar(props) {
 
     try {
       return updateGuestLogin(payload).then((response) => {
-        if (response.error) {
-          toast.error(response.error);
+        if (response?.error) {
+          toast.error(response?.error);
           return false;
         } else {
           ReactSession.set("guest_user_id", null);
@@ -266,7 +266,7 @@ function Navbar(props) {
         }
       });
     } catch (error) {
-      toast.error(error);
+      toast.error(error?.message || "Something went wrong");
       return false;
     }
   };
