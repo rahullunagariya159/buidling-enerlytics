@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ReactSession } from "react-client-session";
 
 import { toast } from "react-toastify";
@@ -72,7 +72,18 @@ function Navbar(props) {
   const isPricingUrl = matchPath(location.pathname, Routes.pricing);
   const isContactUsUrl = matchPath(location.pathname, Routes.contactUs);
   const isAboutUsUrl = matchPath(location.pathname, Routes.aboutUs);
-
+  const ref = useRef();
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (toggle && ref.current && !ref.current.contains(e.target)) {
+        setToggle(false);
+      }
+    };
+    document.addEventListener("click", checkIfClickedOutside, true);
+    return () => {
+      document.removeEventListener("click", checkIfClickedOutside, true);
+    };
+  }, [toggle]);
   const navigateToModule = (module) => {
     if (isGuestUser) {
       navigate({ pathname: "/" + module, search: "?skip=true" });
@@ -659,7 +670,7 @@ function Navbar(props) {
                   onClick={() => setToggle(!toggle)}
                   className="profile-dropdown-wrapper"
                 >
-                  <div className="profile-dropdown">
+                  <div ref={ref} className="profile-dropdown">
                     <a className="profile-title">
                       <img
                         src={
