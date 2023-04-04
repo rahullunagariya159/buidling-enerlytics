@@ -41,6 +41,7 @@ import {
   getCountries,
   getCitiesByCountryName,
   getCountryCodeByCountryName,
+  validatePhoneNumber,
 } from "../../../../utils/";
 import LoadingCover from "../../../LoadingCover";
 
@@ -53,7 +54,7 @@ const EditProfile = ({ childToParent }) => {
   const [countryList, setCountryList] = useState([]);
   const [cityList, setCityList] = useState([]);
   const [phoneCode, setPhoneCode] = useState("+91");
-
+  const [countryFlag, setCountryFlag] = useState("");
   const { userId, userProfileDetails, getUserInfo } = useAuth();
 
   const onChangeHandler = (evt) => {
@@ -79,7 +80,7 @@ const EditProfile = ({ childToParent }) => {
     const cityList = await getCitiesByCountryName(country);
     setCityList(cityList);
     const countryDetails = await getCountryCodeByCountryName(country);
-
+    setCountryFlag(countryDetails?.flag);
     setPhoneCode(`+${countryDetails?.phonecode}`);
     setShowLoading(false);
   };
@@ -87,6 +88,11 @@ const EditProfile = ({ childToParent }) => {
   const handleEditProfileDetails = async () => {
     setError("");
     if (!userId) {
+      return false;
+    }
+
+    if (!validatePhoneNumber(inputVal?.phoneNumber)) {
+      setError("Please enter a valid phone number");
       return false;
     }
 
@@ -362,7 +368,7 @@ const EditProfile = ({ childToParent }) => {
                 onChange={onChangeHandler}
                 defaultValue={phoneCode}
               >
-                <option value={`${phoneCode}`}>{phoneCode}</option>
+                <option value={`${phoneCode}`}>{countryFlag}</option>
                 {/* {countryList?.length > 0 &&
                   countryList?.map((country) => {
                     return (

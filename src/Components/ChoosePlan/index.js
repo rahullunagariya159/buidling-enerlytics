@@ -645,7 +645,13 @@ const ChoosePlan = () => {
                   </div>
                 </div>
               </div>
-              <div className="first-box">
+              <div
+                className={`first-box ${
+                  userID && userProfileDetails?.plan === "Premium"
+                    ? "disable-plan-card"
+                    : ""
+                }`}
+              >
                 <div className="first-space">
                   <h6 className="top-titel">PROFESSIONAL</h6>
                   <p className="top-pra">
@@ -709,6 +715,12 @@ const ChoosePlan = () => {
                           cost: 70,
                         })
                       }
+                      style={{
+                        pointerEvents:
+                          userID && userProfileDetails?.plan === "Premium"
+                            ? "none"
+                            : "auto",
+                      }}
                     >
                       Start now
                     </a>
