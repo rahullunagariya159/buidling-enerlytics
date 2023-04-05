@@ -95,18 +95,16 @@ const ChoosePlan = () => {
         2000,
       );
     } else if (isProfileUrl) {
-      // let promoCodeModal = document.getElementById("PROMOCODE");
-      // let promoCodeModalBackdrop =
-      //   promoCodeModal.getElementsByClassName("modal-backdrop");
-      // promoCodeModal.style.display = "none";
-      // promoCodeModalBackdrop.style.display = "none";
-
       document.getElementById("btnCloseOrderSummery").click();
-
-      window.location.reload();
+      hideModal("PROMOCODE");
     } else {
       setTimeout((window.location.href = "/dashboard"), 2000);
     }
+  };
+
+  const hideModal = (id) => {
+    var modal = new window.bootstrap.Modal(document.getElementById(id));
+    modal.hide();
   };
 
   const skipToBuy = (planName) => {
@@ -168,14 +166,15 @@ const ChoosePlan = () => {
     if (planInfo.plan === "Trial") {
       setTimeout(skipToBuy(), 1000);
     } else {
-      document.getElementById("CHOOSEPLAN").classList.remove("show");
-      // document.getElementById('PROMOCODE').classList.add('show');
+      document.getElementById("btnChoosePlanClose").click();
       document.getElementById("enablePromo").click();
     }
   };
 
-  const showChoosePlanDialog = () => {
-    document.getElementById("CHOOSEPLAN").classList.add("show");
+  const showChoosePlanDialog = (flag) => {
+    if (flag === "close" || flag === "back") {
+      document.getElementById("enablePlans").click();
+    }
     setIsAddingCard(false);
   };
 
@@ -310,7 +309,6 @@ const ChoosePlan = () => {
   );
 
   const getPaymentData = (data) => {
-    console.log("PAYMENT_____", data);
     setBuyPlanError("");
     if (data && data.paymentMethod) {
       const payload = {
@@ -792,9 +790,10 @@ const ChoosePlan = () => {
         <div className="modal-dialog signup">
           <div className="modal-content signup PROMOCODE">
             <button
+              id="hidepromomodal"
               type="button"
               className="x-btn close_iconw"
-              onClick={showChoosePlanDialog}
+              onClick={() => showChoosePlanDialog("close")}
               data-bs-dismiss="modal"
             >
               x
@@ -1030,7 +1029,7 @@ const ChoosePlan = () => {
                       type="button clickable"
                       className="Back-btn"
                       data-bs-dismiss="modal"
-                      onClick={showChoosePlanDialog}
+                      onClick={() => showChoosePlanDialog("back")}
                     >
                       Back
                     </button>
@@ -1057,7 +1056,7 @@ const ChoosePlan = () => {
               className="x-btn close_iconw"
               data-bs-dismiss="modal"
               aria-label="Close"
-              onClick={showChoosePlanDialog}
+              onClick={() => setIsAddingCard(false)}
             >
               x
             </button>
