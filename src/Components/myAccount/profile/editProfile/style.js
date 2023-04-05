@@ -55,8 +55,9 @@ export const Items = styled.div`
     font: normal normal 300 12px/18px Poppins;
     letter-spacing: 0px;
     color: #1c1c1c;
-    padding: 5px 20px;
+    padding: 5px 40px 5px 20px;
     min-width: 274px;
+    max-width: 274px;
     height: 40px;
     background: #ffffff 0% 0% no-repeat padding-box;
     border: 1px solid #dcdcdc;
@@ -108,21 +109,20 @@ export const SelectWrp = styled.div`
     border: none;
     letter-spacing: 0px;
     color: #1c1c1c;
-    padding: 5px 5px 5px 5px;
-    background: #ffffff 0% 0% no-repeat padding-box;
+    padding: 5px;
+    /* background: #ffffff 0% 0% no-repeat padding-box; */
     -webkit-appearance: none;
     -moz-appearance: none;
-    display: inline-block;
-    background-image: url("assets/img/profile/dropDownArrow.svg");
-    background-position: calc(100% - 10px) calc(1em + 2px),
-      calc(100% - 5px) calc(1em + 2px), 100% 0;
-    background-size: 9px 12px;
-    max-width: 50px;
-    min-width: 50px;
-    white-space: nowrap;
-    overflow: hidden !important;
+    /* display: inline-block; */
+    /* background-image: url("assets/img/profile/dropDownArrow.svg"); */
+    /* background-position: calc(100% - 10px) calc(1em + 2px),
+      calc(100% - 5px) calc(1em + 2px), 100% 0; */
+    /* background-size: 9px 12px; */
+    width: 50px;
+    /* white-space: nowrap; */
+    /* overflow: hidden !important; */
     text-overflow: ellipsis;
-    display: inline-block;
+    /* display: inline-block; */
   }
   input {
     font: normal normal 300 12px/18px Poppins;
