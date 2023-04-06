@@ -24,9 +24,11 @@ export const getBuildingMaterialTypeList = (countryName) => {
   });
 };
 
-export const getBuildingMaterialConstructionYear = (countryName) => {
+export const getBuildingMaterialConstructionYear = (payload) => {
   return new Promise((resolve, reject) => {
-    ApiGet(`/building-material/building-type?country=${countryName}`)
+    ApiGet(
+      `/building-material/construction-year?country=${payload?.country}&buildingType=${payload?.buildingType}`,
+    )
       .then(function (response) {
         resolve(response);
       })

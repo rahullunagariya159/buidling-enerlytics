@@ -1461,10 +1461,43 @@ img.okik {
 }
 .left-wrp {
   min-width: 457px;
-  position: fixed;
-  border: 1px solid #f1f1f1;
   border-radius: 4px;
 }
+
+.bui-materail-img-container{
+  margin-top: 23px;
+}
+
+.materail-data-icon-container {
+  margin: 9px;
+}
+
+.bui-materail-img-container .materail-data-icon-container {
+  background: #b8cb00 0% 0% no-repeat padding-box;
+  border-radius: 22px;
+  padding: 4px;
+  max-width: 147px;
+  max-height: 44px;
+  position: absolute;
+  padding: 8px;
+}
+.bui-materail-img-container .materail-data-icon-container span {
+  padding: 8px 12px;
+  border-radius: 50px;
+  box-shadow: 0px 5px 6px #00000012;
+  background-color: #ffffff;
+}
+
+.bui-materail-img-container .materail-data-icon-container .mid-icon {
+  margin: auto 15px;
+}
+
+.bui-materail-bg-img {
+  height: 228px;
+  width: 458px;
+  border-radius: 4px;
+}
+
 .right-wrp {
   position: relative;
   margin-left: auto;

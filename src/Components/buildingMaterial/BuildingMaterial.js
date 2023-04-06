@@ -5,21 +5,35 @@ import LeftSidebar from "../LeftSidebar";
 import {
   getBuildingMaterialCountries,
   getBuildingMaterialTypeList,
+  getBuildingMaterialConstructionYear,
+  getBuildingMaterialAppearance,
 } from "../Services/BuildingMaterialService";
 import LoadingCover from "../LoadingCover";
+import Text from "../Text";
+import { somethingWentWrongError } from "../../Constants";
+import "./index.css";
 
 const BuildingMaterial = () => {
   const [toggle, setToggle] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
   const [countries, setCountries] = useState([]);
   const [materialType, setMaterialType] = useState([]);
+  const [constructionYears, setConstructionYears] = useState([]);
+  const [buildingAppearance, setBuildingAppearance] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedBuildingType, setSelectedBuildingType] = useState("");
+  const [selectedConstructionYear, setSelectedConstructionYear] = useState("");
+  const [selectedBuAppearance, setSelectedBuAppearance] = useState("");
+  const [selectedBuAppearanceObj, setSelectedBuAppearanceObj] = useState({});
+  const [selEnergeOption, setSelEnergeOption] = useState({});
+  const [isEnableSteps, setIsEnableSteps] = useState(false);
   const [error, setError] = useState("");
-
-  console.log({ materialType });
 
   const handleNoBuildingMaterial = async () => {
     setToggle(false);
     setShowLoader(true);
+    setIsEnableSteps(true);
+    setError("");
     await getBuildingMaterialCountries()
       .then((response) => {
         if (response?.status === 200 && response?.data?.data?.length > 0) {
@@ -27,8 +41,7 @@ const BuildingMaterial = () => {
         }
       })
       .catch((error) => {
-        console.log({ error });
-        setError(error?.message);
+        setError(error?.message || somethingWentWrongError);
       })
       .finally(() => {
         setShowLoader(false);
@@ -36,8 +49,10 @@ const BuildingMaterial = () => {
   };
 
   const onCountryChange = async (e) => {
-    const countryName = e?.target?.value;
+    setError("");
     setShowLoader(true);
+    const countryName = e?.target?.value;
+    setSelectedCountry(e?.target?.value);
     await getBuildingMaterialTypeList(countryName)
       .then((response) => {
         if (response?.status === 200 && response?.data?.data?.length > 0) {
@@ -45,12 +60,70 @@ const BuildingMaterial = () => {
         }
       })
       .catch((error) => {
-        console.log({ error });
-        setError(error?.message);
+        setError(error?.message || somethingWentWrongError);
       })
       .finally(() => {
         setShowLoader(false);
       });
+  };
+
+  const onSelectBuildingType = async (e) => {
+    setError("");
+    setShowLoader(true);
+    const value = e?.target?.value;
+    setSelectedBuildingType(value);
+
+    const payload = {
+      country: selectedCountry,
+      buildingType: value,
+    };
+    await getBuildingMaterialConstructionYear(payload)
+      .then((response) => {
+        if (response?.status === 200 && response?.data?.data?.length > 0) {
+          setConstructionYears(response?.data?.data);
+        }
+      })
+      .catch((error) => {
+        setError(error?.message || somethingWentWrongError);
+      })
+      .finally(() => {
+        setShowLoader(false);
+      });
+  };
+
+  const onChangeConstructionYear = async (e) => {
+    setShowLoader(true);
+    setError("");
+    const value = e?.target?.value;
+    setSelectedConstructionYear(value);
+
+    const payload = {
+      country: selectedCountry,
+      buildingType: selectedBuildingType,
+      constructionYear: value,
+    };
+    await getBuildingMaterialAppearance(payload)
+      .then((response) => {
+        if (response?.status === 200 && response?.data?.data?.length > 0) {
+          setBuildingAppearance(response?.data?.data);
+        }
+      })
+      .catch((error) => {
+        setError(error?.message || somethingWentWrongError);
+      })
+      .finally(() => {
+        setShowLoader(false);
+      });
+  };
+
+  const onChangeBuildingAppearance = async (e) => {
+    const value = e?.target?.value;
+    setError("");
+    setSelectedBuAppearance(value);
+    const buildMerApprnc = buildingAppearance.find(
+      (buiApprnce) => buiApprnce?.name === value,
+    );
+    setSelectedBuAppearanceObj(buildMerApprnc);
   };
 
   return (
@@ -74,28 +147,36 @@ const BuildingMaterial = () => {
                           Materials?
                         </h1>
                         <div className="forn-flex">
-                          <div className="form-one">
+                          <div
+                            className="form-one"
+                            onClick={() => setIsEnableSteps(false)}
+                          >
                             <input
                               type="radio"
                               className="inst"
-                              id="female"
-                              name="gender"
-                            />
-                            <label className="insted no-1 tow" htmlFor="female">
-                              Yes, I do
-                            </label>
-                          </div>
-                          <div className="form-one">
-                            <input
-                              type="radio"
-                              className="inst"
-                              id="female1"
-                              name="gender"
+                              id="buildingKnowledge0"
+                              name="buildingKnowledge"
                             />
                             <label
                               className="insted no-1 tow"
-                              htmlFor="female1"
-                              onClick={() => handleNoBuildingMaterial()}
+                              htmlFor="buildingKnowledge0"
+                            >
+                              Yes, I do
+                            </label>
+                          </div>
+                          <div
+                            className="form-one"
+                            onClick={() => handleNoBuildingMaterial()}
+                          >
+                            <input
+                              type="radio"
+                              className="inst"
+                              id="buildingKnowledge1"
+                              name="buildingKnowledge"
+                            />
+                            <label
+                              className="insted no-1 tow"
+                              htmlFor="buildingKnowledge1"
                             >
                               No, I don't have details available
                             </label>
@@ -103,14 +184,25 @@ const BuildingMaterial = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="one-boex top-brdr">
-                      <div className="stepce">Step 2</div>
-                      <div className="mt">
+                    <div className="one-boex top-brdr ">
+                      <div
+                        className={`stepce ${
+                          !isEnableSteps ? "btn-disable-step" : ""
+                        }`}
+                      >
+                        Step 2
+                      </div>
+                      <div
+                        className={`mt ${
+                          !isEnableSteps ? "disable-step-container" : ""
+                        }`}
+                      >
                         <div className="Country-flexre">
                           <div className="nav12">
                             <select
                               name="country"
                               onChange={(e) => onCountryChange(e)}
+                              value={selectedCountry}
                             >
                               <option value="">Custom</option>
                               {countries?.length > 0 &&
@@ -125,7 +217,11 @@ const BuildingMaterial = () => {
                           </div>
                           <div className="vertical-line"></div>
                           <div className="nav12">
-                            <select name="materialType">
+                            <select
+                              value={selectedBuildingType}
+                              name="materialType"
+                              onChange={(e) => onSelectBuildingType(e)}
+                            >
                               <option value="">Custom</option>
                               {materialType?.map((material) => {
                                 return (
@@ -134,78 +230,124 @@ const BuildingMaterial = () => {
                                   </option>
                                 );
                               })}
-                              {/* <option value="india">India</option>
-                              <option value="japan">Japan</option>
-                              <option value="australia">Australia</option> */}
                             </select>
                           </div>
                         </div>
                         <div className="Country-flexre">
                           <div className="nav12">
-                            <select name="heatTramission">
+                            <select
+                              value={selectedConstructionYear}
+                              name="constructionYear"
+                              onChange={(e) => onChangeConstructionYear(e)}
+                            >
                               <option value="">Custom</option>
-                              <option value="india">India</option>
-                              <option value="japan">Japan</option>
-                              <option value="australia">Australia</option>
+                              {constructionYears?.length > 0 &&
+                                constructionYears?.map((cYear) => {
+                                  return (
+                                    <option value={cYear?.name}>
+                                      {cYear?.name}
+                                    </option>
+                                  );
+                                })}
                             </select>
                           </div>
                           <div className="vertical-line"></div>
                           <div className="nav12">
-                            <select name="heatTramission">
+                            <select
+                              name="buildingAppearance"
+                              value={selectedBuAppearance}
+                              onChange={(e) => onChangeBuildingAppearance(e)}
+                            >
                               <option value="">Custom</option>
-                              <option value="india">India</option>
-                              <option value="japan">Japan</option>
-                              <option value="australia">Australia</option>
+                              {buildingAppearance?.length > 0 &&
+                                buildingAppearance?.map((bAppearance) => {
+                                  return (
+                                    <option value={bAppearance?.name}>
+                                      {bAppearance?.name}
+                                    </option>
+                                  );
+                                })}
                             </select>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="one-boex top-brdr">
-                      <div className="stepce">Step 3</div>
-                      <div className="table-pading">
+                      <div
+                        className={`stepce ${
+                          !isEnableSteps || !selectedBuAppearance
+                            ? "btn-disable-step"
+                            : ""
+                        }`}
+                      >
+                        Step 3
+                      </div>
+                      <div
+                        className={`table-pading ${
+                          !isEnableSteps || !selectedBuAppearance
+                            ? "disable-step-container"
+                            : ""
+                        }`}
+                      >
                         <h1>
                           Did your Building ever undergo Energy Efficient
                           Refurbishment?
                         </h1>
                         <div className="forn-flex">
-                          <div className="form-one">
-                            <input
-                              type="radio"
-                              className="inst"
-                              id="female2"
-                              name="gender"
-                            />
-                            <label className="insted no-1" htmlFor="female2">
-                              No
-                            </label>
-                          </div>
-                          <div className="form-one">
-                            <input
-                              type="radio"
-                              className="inst"
-                              id="female3"
-                              name="gender"
-                            />
-                            <label className="insted no-1" htmlFor="female3">
-                              Yes, (After 1990)
-                            </label>
-                          </div>
-                          <div className="form-one">
-                            <input
-                              type="radio"
-                              className="inst"
-                              id="female4"
-                              name="gender"
-                            />
-                            <label className="insted no-1" htmlFor="female4">
-                              Yes, (After 2010)
-                            </label>
-                          </div>
+                          {selectedBuAppearanceObj?.data?.length > 0 &&
+                            selectedBuAppearanceObj?.data?.map(
+                              (buAppData, index) => {
+                                return (
+                                  <div
+                                    className="form-one"
+                                    key={index}
+                                    onClick={() =>
+                                      setSelEnergeOption(buAppData)
+                                    }
+                                  >
+                                    <input
+                                      type="radio"
+                                      className="inst"
+                                      id={buAppData?.name}
+                                      name="gender"
+                                    />
+                                    <label
+                                      className="insted no-1 build-eng-efficient"
+                                      htmlFor={buAppData?.name}
+                                    >
+                                      {buAppData?.name}
+                                    </label>
+                                  </div>
+                                );
+                              },
+                            )}
                         </div>
                       </div>
                     </div>
                   </div>
+                  {selEnergeOption?.url &&
+                    isEnableSteps &&
+                    selectedBuAppearance && (
+                      <div
+                        className="bui-materail-img-container"
+                        // style={{ backgroundImage: `url(${selEnergeOption?.url})` }}
+                      >
+                        <div className="materail-data-icon-container">
+                          <span>1</span>
+                          <span className="mid-icon">2</span>
+                          <span>3</span>
+                        </div>
+                        <div>
+                          <img
+                            src={selEnergeOption?.url}
+                            alt=""
+                            className="bui-materail-bg-img"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                  <Text text={error} type="error" />
                 </div>
                 <div className="right-wrp">
                   <p

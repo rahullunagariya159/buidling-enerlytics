@@ -1,0 +1,13 @@
+.build-eng-efficient {
+  text-transform: capitalize;
+}
+
+.btn-disable-step {
+  background: #c2c2c2 0% 0% no-repeat padding-box;
+  color: #013a67;
+}
+
+.disable-step-container {
+  opacity: 0.2;
+  pointer-events: none;
+}
