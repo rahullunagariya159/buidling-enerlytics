@@ -7,6 +7,9 @@ import { toast } from "react-toastify";
 import { format } from "date-fns";
 import Navbar from "./Navbar";
 import { useAuth } from "../Context/AuthProvider";
+import { Modal } from "react-bootstrap";
+import LinkButton from "./LinkButton";
+import CancelButton from "./CancelButton";
 
 function LoadProject() {
   const navigate = useNavigate();
@@ -15,6 +18,8 @@ function LoadProject() {
   const [configSelected, setConfigSelected] = useState(0);
   const [selectedProjects, setSelectedProjects] = useState([]);
   const { userId: userID } = useAuth();
+  const [isShow, invokeModal] = useState(false);
+  const [isDelete, setDeleteModal] = useState(false);
 
   const handleCardClick = (selectedItem, index) => {
     setSelectedProjects(selectedItem);
@@ -160,11 +165,67 @@ function LoadProject() {
                             <div className="lest-flex1">
                               <p className="STELLA-titr">{item.name}</p>
                               <img
+                                onClick={() => setDeleteModal(!isDelete)}
                                 src="assets/img/LoadExisting/Group 431.svg"
                                 className="dots-11px"
                                 alt=""
                               />
                             </div>
+                            <Modal
+                              show={isDelete}
+                              onHide={() => setDeleteModal(!isDelete)}
+                              centered
+                              className="permanent-delete"
+                            >
+                              <Modal.Body>
+                                <div className="close-btn">
+                                  <button
+                                    type="button"
+                                    onClick={() => setDeleteModal(!isDelete)}
+                                  >
+                                    x
+                                  </button>
+                                </div>
+                                <div className="main-content">
+                                  <div className="left-content">
+                                    <div className="cards">
+                                      <img
+                                        src={
+                                          "assets/img/LoadExisting/3d Project page.png"
+                                        }
+                                        alt=""
+                                      />
+                                      <div className="title-txt">
+                                        Wall imperial perment perment perment
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="v-border"></div>
+                                  <div className="right-content">
+                                    <div className="heading">
+                                      YOU ARE ABOUT TO DELETE A PROJECT!
+                                    </div>
+                                    <p>
+                                      This will delete your project permanently
+                                    </p>
+                                    <p>Are you sure?</p>
+                                    <div className="footer">
+                                      <LinkButton
+                                        className={`signin-btn delete`}
+                                        title="DELETE"
+                                      />
+                                      <CancelButton
+                                        className="cancel"
+                                        title="CANCEL"
+                                        onClick={() =>
+                                          setDeleteModal(!isDelete)
+                                        }
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </Modal.Body>
+                            </Modal>
                             <div className="lest-grid">
                               <div className="lestgrid-1">
                                 <p className="lest-pra-9px">Location</p>
@@ -227,13 +288,16 @@ function LoadProject() {
                             <p className="Select-12px-var selected-config">
                               {configSelected} configuration selected
                             </p>
-                            <a className="Permanent-btn">
-                              Permanent delete{" "}
+                            <div
+                              onClick={() => invokeModal(!isShow)}
+                              className="Permanent-btn"
+                            >
+                              Permanent delete
                               <img
                                 src="assets/img/LoadExisting/delete.svg"
                                 alt=""
                               />
-                            </a>
+                            </div>
                           </div>
                           {btnClass === "clickable" ? (
                             <>
@@ -389,6 +453,50 @@ function LoadProject() {
                       </div>
                     </div>
                   </div>
+                  <Modal
+                    show={isShow}
+                    onHide={() => invokeModal(!isShow)}
+                    centered
+                    className="permanent-delete"
+                  >
+                    <Modal.Body>
+                      <div className="close-btn">
+                        <button
+                          type="button"
+                          onClick={() => invokeModal(!isShow)}
+                        >
+                          x
+                        </button>
+                      </div>
+                      <div className="main-content">
+                        <div className="left-content">
+                          <div className="heading">Configuration</div>
+                          <p>Wall Improved</p>
+                          <p>Solar Heater</p>
+                          <p>Optimized</p>
+                        </div>
+                        <div className="v-border"></div>
+                        <div className="right-content">
+                          <div className="heading">
+                            YOU ARE ABOUT TO DELETE 3 CONFIGURATIONS!
+                          </div>
+                          <p>This will delete your project permanently</p>
+                          <p>Are you sure?</p>
+                          <div className="footer">
+                            <LinkButton
+                              className={`signin-btn delete`}
+                              title="DELETE"
+                            />
+                            <CancelButton
+                              className="cancel"
+                              title="CANCEL"
+                              onClick={() => invokeModal(!isShow)}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </Modal.Body>
+                  </Modal>
                 </div>
               </div>
             </div>

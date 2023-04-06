@@ -4,7 +4,7 @@ const CancelButton = ({ isDisable, title, className, onClick, id }) => {
   const randomId = (Math.random() + 1).toString(36).substring(7);
   return (
     <button
-      className="cancel-btn"
+      className={className ? className : "cancel-btn"}
       onClick={onClick}
       disabled={isDisable}
       id={id || randomId}
