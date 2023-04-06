@@ -2,9 +2,57 @@ import React, { useState } from "react";
 
 import Navbar from "../Navbar";
 import LeftSidebar from "../LeftSidebar";
+import {
+  getBuildingMaterialCountries,
+  getBuildingMaterialTypeList,
+} from "../Services/BuildingMaterialService";
+import LoadingCover from "../LoadingCover";
 
 const BuildingMaterial = () => {
   const [toggle, setToggle] = useState(true);
+  const [showLoader, setShowLoader] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [materialType, setMaterialType] = useState([]);
+  const [error, setError] = useState("");
+
+  console.log({ materialType });
+
+  const handleNoBuildingMaterial = async () => {
+    setToggle(false);
+    setShowLoader(true);
+    await getBuildingMaterialCountries()
+      .then((response) => {
+        if (response?.status === 200 && response?.data?.data?.length > 0) {
+          setCountries(response?.data?.data);
+        }
+      })
+      .catch((error) => {
+        console.log({ error });
+        setError(error?.message);
+      })
+      .finally(() => {
+        setShowLoader(false);
+      });
+  };
+
+  const onCountryChange = async (e) => {
+    const countryName = e?.target?.value;
+    setShowLoader(true);
+    await getBuildingMaterialTypeList(countryName)
+      .then((response) => {
+        if (response?.status === 200 && response?.data?.data?.length > 0) {
+          setMaterialType(response?.data?.data);
+        }
+      })
+      .catch((error) => {
+        console.log({ error });
+        setError(error?.message);
+      })
+      .finally(() => {
+        setShowLoader(false);
+      });
+  };
+
   return (
     <div>
       <Navbar />
@@ -47,6 +95,7 @@ const BuildingMaterial = () => {
                             <label
                               className="insted no-1 tow"
                               htmlFor="female1"
+                              onClick={() => handleNoBuildingMaterial()}
                             >
                               No, I don't have details available
                             </label>
@@ -59,20 +108,35 @@ const BuildingMaterial = () => {
                       <div className="mt">
                         <div className="Country-flexre">
                           <div className="nav12">
-                            <select name="heatTramission">
+                            <select
+                              name="country"
+                              onChange={(e) => onCountryChange(e)}
+                            >
                               <option value="">Custom</option>
-                              <option value="india">India</option>
-                              <option value="japan">Japan</option>
-                              <option value="australia">Australia</option>
+                              {countries?.length > 0 &&
+                                countries?.map((country) => {
+                                  return (
+                                    <option value={country?.name}>
+                                      {country?.name}
+                                    </option>
+                                  );
+                                })}
                             </select>
                           </div>
                           <div className="vertical-line"></div>
                           <div className="nav12">
-                            <select name="heatTramission">
+                            <select name="materialType">
                               <option value="">Custom</option>
-                              <option value="india">India</option>
+                              {materialType?.map((material) => {
+                                return (
+                                  <option value={material?.name}>
+                                    {material?.name}
+                                  </option>
+                                );
+                              })}
+                              {/* <option value="india">India</option>
                               <option value="japan">Japan</option>
-                              <option value="australia">Australia</option>
+                              <option value="australia">Australia</option> */}
                             </select>
                           </div>
                         </div>
@@ -354,6 +418,7 @@ const BuildingMaterial = () => {
           </div>
         </section>
       </div>
+      <LoadingCover show={showLoader} />
     </div>
   );
 };

@@ -18,6 +18,7 @@ import ContactUs from "./Components/ContactUs";
 import Pricing from "./Components/Pricing";
 import AboutUs from "./Components/AboutUs";
 import { AuthProvider } from "./Context/AuthProvider";
+import { BuildingMaterialProvider } from "./Context/BuildingMaterialProvider";
 import MyAccount from "./Components/myAccount/MyAccount";
 import PrivateRoute from "./Layout/PrivateRoute";
 import { Routes as appRoutes } from "./navigation/Routes";
@@ -64,23 +65,25 @@ function App() {
       <ToastContainer />
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route path={appRoutes.home} element={<Login />} />
-            <Route path={appRoutes.dashboard} element={<Dashboard />} />
-            <Route path={appRoutes.loadProject} element={<LoadProject />} />
-            <Route path={appRoutes.createProject} element={<BEModal />} />
-            <Route path={appRoutes.beModel} element={<BEModalFull />} />
-            <Route
-              path={appRoutes.buildingMaterial}
-              element={<BuildingMaterial />}
-            />
-            <Route path={appRoutes.contactUs} element={<ContactUs />} />
-            <Route path={appRoutes.pricing} element={<Pricing />} />
-            <Route path={appRoutes.aboutUs} element={<AboutUs />} />
-            <Route exact path={appRoutes.home} element={<PrivateRoute />}>
-              <Route path={appRoutes.profile} element={<MyAccount />} />
-            </Route>
-          </Routes>
+          <BuildingMaterialProvider>
+            <Routes>
+              <Route path={appRoutes.home} element={<Login />} />
+              <Route path={appRoutes.dashboard} element={<Dashboard />} />
+              <Route path={appRoutes.loadProject} element={<LoadProject />} />
+              <Route path={appRoutes.createProject} element={<BEModal />} />
+              <Route path={appRoutes.beModel} element={<BEModalFull />} />
+              <Route
+                path={appRoutes.buildingMaterial}
+                element={<BuildingMaterial />}
+              />
+              <Route path={appRoutes.contactUs} element={<ContactUs />} />
+              <Route path={appRoutes.pricing} element={<Pricing />} />
+              <Route path={appRoutes.aboutUs} element={<AboutUs />} />
+              <Route exact path={appRoutes.home} element={<PrivateRoute />}>
+                <Route path={appRoutes.profile} element={<MyAccount />} />
+              </Route>
+            </Routes>
+          </BuildingMaterialProvider>
         </AuthProvider>
       </BrowserRouter>
     </Account>
