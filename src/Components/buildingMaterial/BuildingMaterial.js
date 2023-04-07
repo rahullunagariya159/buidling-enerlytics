@@ -336,13 +336,36 @@ const BuildingMaterial = () => {
                         // style={{ backgroundImage: `url(${selEnergeOption?.url})` }}
                       >
                         <div className="materail-data-icon-container">
-                          <span>1</span>
-                          <span className="mid-icon">2</span>
-                          <span>3</span>
+                          <span>
+                            <img
+                              src={"assets/img/Existing-Projects/greentech.png"}
+                              alt=""
+                            />
+                          </span>
+                          <span className="mid-icon">
+                            <img
+                              src={
+                                "assets/img/Existing-Projects/greentech-2.png"
+                              }
+                              alt=""
+                            />
+                          </span>
+                          <span>
+                            <img
+                              src={
+                                "assets/img/Existing-Projects/greentech-3.png"
+                              }
+                              alt=""
+                            />
+                          </span>
                         </div>
                         <div>
                           <img
-                            src={selEnergeOption?.url}
+                            src={
+                              selEnergeOption?.url
+                                ? selEnergeOption?.url
+                                : "assets/img/Existing-Projects/home.png"
+                            }
                             alt=""
                             className="bui-materail-bg-img"
                           />
