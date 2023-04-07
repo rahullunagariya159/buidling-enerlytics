@@ -1733,17 +1733,20 @@ label.no-1.qw {
   border-left: 1px solid #f1f1f1;
 }
 .nav12 {
-  width: 100%;
+  max-width: 284px;
   justify-content: space-between;
   padding-right: 17px;
   display: flex;
   align-items: center;
 }
 .nav12 select {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   font: normal normal normal 12px/18px Poppins;
   letter-spacing: 0.37px;
   color: #013a67;
-  padding: 5px 0 5px 14px;
+  padding: 5px 40px 5px 14px;
   min-width: 267px;
   height: 40px;
   background: #ffffff 0% 0% no-repeat padding-box;
