@@ -149,7 +149,10 @@ const BuildingMaterial = () => {
                         <div className="forn-flex">
                           <div
                             className="form-one"
-                            onClick={() => setIsEnableSteps(false)}
+                            onClick={() => {
+                              setIsEnableSteps(false);
+                              setToggle(true);
+                            }}
                           >
                             <input
                               type="radio"

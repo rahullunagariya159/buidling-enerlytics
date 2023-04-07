@@ -34,10 +34,9 @@ function BEModal() {
 
     if (b3Data || (projectData && projectData !== "null")) {
       const payload = {
-        projectId: ReactSession.get("project_id"),
+        configurationId: ReactSession.get("project_id"),
         userId: userID,
         data: projectData,
-        name: "Basic",
         image: image,
       };
       set3dJSONData(payload)
@@ -78,7 +77,7 @@ function BEModal() {
 
   const handleGet3dJSONData = (ID) => {
     const payload = {
-      projectId: ReactSession.get("project_id"),
+      configurationId: ReactSession.get("project_id"),
       userId: ID,
     };
 

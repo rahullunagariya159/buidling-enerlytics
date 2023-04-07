@@ -1,86 +1,104 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { ReactSession } from 'react-client-session';
+import React, { useEffect, useState, useRef } from "react";
+import { ReactSession } from "react-client-session";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { set3dJSONData, get3dJSONData } from './Services/UserService';
-import { toast } from 'react-toastify';
-import Navbar from './Navbar';
-import { Auth } from 'aws-amplify';
-import BuildingApp from '../BuildingApp';
+import { set3dJSONData, get3dJSONData } from "./Services/UserService";
+import { toast } from "react-toastify";
+import Navbar from "./Navbar";
+import { Auth } from "aws-amplify";
+import BuildingApp from "../BuildingApp";
 
 function BEModalFull() {
   const threeDRef = useRef();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [b3Data, setB3Data] = useState(null);
-  const [userID, setUserId] = useState('');
+  const [userID, setUserId] = useState("");
   const [projectStatus, setProjectStatus] = useState(null);
-  const projectName = searchParams.get('name') ? searchParams.get('name') : '';
-  const isGuestUser = searchParams.get('skip') || false;
+  const projectName = searchParams.get("name") ? searchParams.get("name") : "";
+  const isGuestUser = searchParams.get("skip") || false;
   const projectData = ReactSession.get("bp3dJson");
 
   const handleNextClick = () => {
-
     threeDRef.current.handleSaveJson();
 
-    if (!b3Data && projectData && projectData !== 'null') {
+    if (!b3Data && projectData && projectData !== "null") {
       setB3Data(projectData);
     }
 
     if (isGuestUser) {
-      setTimeout(navigate({ pathname: '/create-project', search: '?name=' + projectName + '&&skip=true', state: b3Data }), 2000);
+      setTimeout(
+        navigate({
+          pathname: "/create-project",
+          search: "?name=" + projectName + "&&skip=true",
+          state: b3Data,
+        }),
+        2000,
+      );
     } else {
-      setTimeout(navigate({ pathname: '/create-project', search: '?name=' + projectName, state: b3Data }), 2000);
+      setTimeout(
+        navigate({
+          pathname: "/create-project",
+          search: "?name=" + projectName,
+          state: b3Data,
+        }),
+        2000,
+      );
     }
-  }
+  };
 
   const handleGet3dJSONData = (ID) => {
     const payload = {
-      "projectId": ReactSession.get('project_id'),
-      "userId": ID
+      configurationId: ReactSession.get("project_id"),
+      userId: ID,
     };
 
-    get3dJSONData(payload)
-      .then(response => {
-        if (response.error) {
-          toast.error(response.error);
-        } else {
-          // data comes here..
-          console.log(response);
-          if (response.data && response.data.length) {
-            setB3Data(response.data[0].data);
-            ReactSession.set("bp3dJson", response.data[0].data);
-            setTimeout(setProjectStatus(true), 1000);
-          }
+    get3dJSONData(payload).then((response) => {
+      if (response.error) {
+        toast.error(response.error);
+      } else {
+        // data comes here..
+        console.log(response);
+        if (response.data && response.data.length) {
+          setB3Data(response.data[0].data);
+          ReactSession.set("bp3dJson", response.data[0].data);
+          setTimeout(setProjectStatus(true), 1000);
         }
-      });
-  }
+      }
+    });
+  };
 
   const handleCallback = (childData) => {
     if (childData) {
       setB3Data(childData);
       setProjectStatus(true);
     }
-  }
+  };
 
   useEffect(() => {
     let IDVal;
     if (isGuestUser) {
-      IDVal = ReactSession.get('guest_user_id');
+      IDVal = ReactSession.get("guest_user_id");
       setUserId(IDVal);
     } else {
-      IDVal = (ReactSession.get('building_user') && ReactSession.get('building_user') !== 'null') ? ReactSession.get('building_user') : ReactSession.get('building_social_user');
+      IDVal =
+        ReactSession.get("building_user") &&
+        ReactSession.get("building_user") !== "null"
+          ? ReactSession.get("building_user")
+          : ReactSession.get("building_social_user");
       setUserId(IDVal);
     }
 
-    setProjectStatus((projectData && projectData !== 'null' && projectData.length) || false);
+    setProjectStatus(
+      (projectData && projectData !== "null" && projectData.length) || false,
+    );
     handleGet3dJSONData(IDVal);
 
     Auth.currentSession()
-      .then(data => {
-        ReactSession.set("is_logged_in", 'true');
+      .then((data) => {
+        ReactSession.set("is_logged_in", "true");
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -92,11 +110,20 @@ function BEModalFull() {
             <div className="row">
               <div className="col-lg-12 be-full-container">
                 {/* //BE-Modal here */}
-                <div className='be-model-main'>
-                  <BuildingApp parentCallback={handleCallback} loadCalled={projectStatus} ref={threeDRef} />
+                <div className="be-model-main">
+                  <BuildingApp
+                    parentCallback={handleCallback}
+                    loadCalled={projectStatus}
+                    ref={threeDRef}
+                  />
                 </div>
                 <div className="modal-next-container-full">
-                  <img src="assets/img/BeModel/layout_22@2x.png" alt="Submit and Exit Drawing Mode" className='clickable' onClick={handleNextClick} />
+                  <img
+                    src="assets/img/BeModel/layout_22@2x.png"
+                    alt="Submit and Exit Drawing Mode"
+                    className="clickable"
+                    onClick={handleNextClick}
+                  />
                   {/* <a className="btn next-btnes drawing-mode" onClick={handleNextClick}>SUBMIT & EXIT DRAWING MODE</a> */}
                   {/* disabled={!projectStatus} */}
                 </div>
