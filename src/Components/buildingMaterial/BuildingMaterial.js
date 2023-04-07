@@ -382,7 +382,11 @@ const BuildingMaterial = () => {
                   >
                     SHOW DETAILS
                     <img
-                      src="assets/img/Home-Page/homeFinal/Path 66.svg"
+                      src={
+                        toggle
+                          ? "assets/img/Home-Page/homeFinal/Path 66.svg"
+                          : "assets/img/Home-Page/homeFinal/Path 67.svg"
+                      }
                       className="porte"
                       alt=""
                     />
