@@ -1485,12 +1485,18 @@ img.okik {
 .bui-materail-img-container .materail-data-icon-container span {
   border-radius: 50px;
   box-shadow: 0px 5px 6px #00000012;
-  background-color: #ffffff;
   width: 36px;
   height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #c6d541;
+  opacity: 0.5;
+}
+
+.active-materail-data-icon {
+  background-color: #ffffff !important;
+  opacity: 1 !important;
 }
 
 .bui-materail-img-container .materail-data-icon-container .mid-icon {

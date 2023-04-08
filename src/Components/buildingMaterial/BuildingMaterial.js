@@ -27,6 +27,7 @@ const BuildingMaterial = () => {
   const [selectedBuAppearanceObj, setSelectedBuAppearanceObj] = useState({});
   const [selEnergeOption, setSelEnergeOption] = useState({});
   const [isEnableSteps, setIsEnableSteps] = useState(false);
+  const [buildingEnrgOptIndex, setBuildingEnrgOptIndex] = useState(0);
   const [error, setError] = useState("");
 
   const handleNoBuildingMaterial = async () => {
@@ -304,9 +305,10 @@ const BuildingMaterial = () => {
                                   <div
                                     className="form-one"
                                     key={index}
-                                    onClick={() =>
-                                      setSelEnergeOption(buAppData)
-                                    }
+                                    onClick={() => {
+                                      setSelEnergeOption(buAppData);
+                                      setBuildingEnrgOptIndex(index);
+                                    }}
                                   >
                                     <input
                                       type="radio"
@@ -336,13 +338,25 @@ const BuildingMaterial = () => {
                         // style={{ backgroundImage: `url(${selEnergeOption?.url})` }}
                       >
                         <div className="materail-data-icon-container">
-                          <span>
+                          <span
+                            className={`${
+                              buildingEnrgOptIndex === 0
+                                ? "active-materail-data-icon"
+                                : ""
+                            }`}
+                          >
                             <img
                               src={"assets/img/Existing-Projects/greentech.png"}
                               alt=""
                             />
                           </span>
-                          <span className="mid-icon">
+                          <span
+                            className={`mid-icon  ${
+                              buildingEnrgOptIndex === 1
+                                ? "active-materail-data-icon"
+                                : ""
+                            }`}
+                          >
                             <img
                               src={
                                 "assets/img/Existing-Projects/greentech-2.png"
@@ -350,7 +364,13 @@ const BuildingMaterial = () => {
                               alt=""
                             />
                           </span>
-                          <span>
+                          <span
+                            className={`${
+                              buildingEnrgOptIndex === 2
+                                ? "active-materail-data-icon"
+                                : ""
+                            }`}
+                          >
                             <img
                               src={
                                 "assets/img/Existing-Projects/greentech-3.png"
