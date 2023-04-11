@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ReactSession } from "react-client-session";
-
 import Navbar from "../Navbar";
 import LeftSidebar from "../LeftSidebar";
 import {
@@ -15,6 +14,7 @@ import { somethingWentWrongError } from "../../Constants";
 import ShowDetails from "./ShowDetails";
 import { useAuth } from "../../Context/AuthProvider";
 import "./index.css";
+import { Dropdown } from "react-bootstrap";
 
 const BuildingMaterial = () => {
   const [toggle, setToggle] = useState(true);
@@ -23,16 +23,22 @@ const BuildingMaterial = () => {
   const [materialType, setMaterialType] = useState([]);
   const [constructionYears, setConstructionYears] = useState([]);
   const [buildingAppearance, setBuildingAppearance] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedBuildingType, setSelectedBuildingType] = useState("");
-  const [selectedConstructionYear, setSelectedConstructionYear] = useState("");
-  const [selectedBuAppearance, setSelectedBuAppearance] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedBuildingType, setSelectedBuildingType] = useState(null);
+  const [selectedConstructionYear, setSelectedConstructionYear] =
+    useState(null);
+  const [selectedBuAppearance, setSelectedBuAppearance] = useState(null);
   const [selectedBuAppearanceObj, setSelectedBuAppearanceObj] = useState({});
   const [selEnergeOption, setSelEnergeOption] = useState({});
   const [isEnableSteps, setIsEnableSteps] = useState(false);
   const [buildingEnrgOptIndex, setBuildingEnrgOptIndex] = useState(0);
   const [error, setError] = useState("");
 
+  const [toggleCountry, setToggleCountry] = useState(false);
+  const [toggleBuildingType, setToggleBuildingType] = useState(false);
+  const [toggleConstructionYear, setToggleConstructionYear] = useState(false);
+  const [toggleBuildingAppearance, setToggleBuildingAppearance] =
+    useState(false);
   const { userId } = useAuth();
 
   const handleNoBuildingMaterial = async () => {
@@ -53,12 +59,11 @@ const BuildingMaterial = () => {
         setShowLoader(false);
       });
   };
-
-  const onCountryChange = async (e) => {
+  const onCountryChange = async () => {
     setError("");
     setShowLoader(true);
-    const countryName = e?.target?.value;
-    setSelectedCountry(e?.target?.value);
+    const countryName = selectedCountry?.name;
+    // setSelectedCountry(e?.target?.value);
     await getBuildingMaterialTypeList(countryName)
       .then((response) => {
         if (response?.status === 200 && response?.data?.data?.length > 0) {
@@ -72,16 +77,21 @@ const BuildingMaterial = () => {
         setShowLoader(false);
       });
   };
+  useEffect(() => {
+    if (selectedCountry) {
+      onCountryChange();
+    }
+  }, [selectedCountry]);
 
-  const onSelectBuildingType = async (e) => {
+  const onSelectBuildingType = async () => {
     setError("");
     setShowLoader(true);
-    const value = e?.target?.value;
-    setSelectedBuildingType(value);
+    // const value = selectedBuildingType?.name;
+    // setSelectedBuildingType(value);
 
     const payload = {
-      country: selectedCountry,
-      buildingType: value,
+      country: selectedCountry.name,
+      buildingType: selectedBuildingType.name,
     };
     await getBuildingMaterialConstructionYear(payload)
       .then((response) => {
@@ -96,17 +106,22 @@ const BuildingMaterial = () => {
         setShowLoader(false);
       });
   };
+  useEffect(() => {
+    if (selectedBuildingType) {
+      onSelectBuildingType();
+    }
+  }, selectedBuildingType);
 
-  const onChangeConstructionYear = async (e) => {
+  const onChangeConstructionYear = async () => {
     setShowLoader(true);
     setError("");
-    const value = e?.target?.value;
-    setSelectedConstructionYear(value);
+    // const value = selectedConstructionYear?.name;
+    // setSelectedConstructionYear(value);
 
     const payload = {
-      country: selectedCountry,
-      buildingType: selectedBuildingType,
-      constructionYear: value,
+      country: selectedCountry?.name,
+      buildingType: selectedBuildingType?.name,
+      constructionYear: selectedConstructionYear?.name,
     };
     await getBuildingMaterialAppearance(payload)
       .then((response) => {
@@ -121,17 +136,24 @@ const BuildingMaterial = () => {
         setShowLoader(false);
       });
   };
+  useEffect(() => {
+    if (selectedConstructionYear) {
+      onChangeConstructionYear();
+    }
+  }, selectedConstructionYear);
 
-  const onChangeBuildingAppearance = async (e) => {
-    const value = e?.target?.value;
+  const onChangeBuildingAppearance = async () => {
     setError("");
-    setSelectedBuAppearance(value);
     const buildMerApprnc = buildingAppearance.find(
-      (buiApprnce) => buiApprnce?.name === value,
+      (buiApprnce) => buiApprnce?.name === selectedBuAppearance?.name,
     );
     setSelectedBuAppearanceObj(buildMerApprnc);
   };
-
+  useEffect(() => {
+    if (selectedBuAppearance) {
+      onChangeBuildingAppearance();
+    }
+  }, selectedBuAppearance);
   const handleSaveBuildingMaterialData = (values) => {
     setShowLoader(true);
     console.log({ values });
@@ -263,78 +285,195 @@ const BuildingMaterial = () => {
                           !isEnableSteps ? "disable-step-container" : ""
                         }`}
                       >
-                        <div className="Country-flexre">
-                          <div className="nav12">
-                            <select
-                              name="country"
-                              onChange={(e) => onCountryChange(e)}
-                              value={selectedCountry}
+                        <div className="secondStep">
+                          <Dropdown
+                            className={` ${
+                              toggleCountry ? "dropdownBox brd" : ""
+                            }`}
+                            onToggle={() => setToggleCountry(!toggleCountry)}
+                          >
+                            <Dropdown.Toggle
+                              variant=""
+                              id="dropdown-icon"
+                              className={`${
+                                !!toggleCountry ? "dropdown-open" : ""
+                              }`}
                             >
-                              <option value="">Custom</option>
+                              {selectedCountry ? (
+                                <div className="country-items">
+                                  <img
+                                    src={selectedCountry?.url}
+                                    alt={selectedCountry?.name}
+                                  />
+                                  <span>{selectedCountry?.name}</span>
+                                </div>
+                              ) : (
+                                "Country"
+                              )}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu onChange={onCountryChange}>
                               {countries?.length > 0 &&
-                                countries?.map((country) => {
-                                  return (
-                                    <option value={country?.name}>
-                                      {country?.name}
-                                    </option>
-                                  );
-                                })}
-                            </select>
-                          </div>
+                                countries.map((item, index) => (
+                                  <Dropdown.Item
+                                    key={index}
+                                    onClick={() => setSelectedCountry(item)}
+                                  >
+                                    <div className="items">
+                                      <img src={item?.url} alt="url" />
+                                      <span>{item?.name}</span>
+                                    </div>
+                                  </Dropdown.Item>
+                                ))}
+                            </Dropdown.Menu>
+                          </Dropdown>
                           <div className="vertical-line"></div>
-                          <div className="nav12">
-                            <select
-                              value={selectedBuildingType}
+                          <Dropdown
+                            className={` ${
+                              !selectedCountry ? "disable-step-container" : ""
+                            } ${toggleBuildingType ? "dropdownBox brd" : ""}`}
+                            onToggle={() =>
+                              setToggleBuildingType(!toggleBuildingType)
+                            }
+                          >
+                            <Dropdown.Toggle
+                              variant=""
+                              id="materialType"
                               name="materialType"
-                              onChange={(e) => onSelectBuildingType(e)}
+                              className={`${
+                                !!toggleBuildingType ? "dropdown-open" : ""
+                              }`}
                             >
-                              <option value="">Custom</option>
-                              {materialType?.map((material) => {
-                                return (
-                                  <option value={material?.name}>
-                                    {material?.name}
-                                  </option>
-                                );
-                              })}
-                            </select>
-                          </div>
+                              {selectedBuildingType ? (
+                                <div className="country-items">
+                                  <img
+                                    src={selectedBuildingType?.url}
+                                    alt={selectedBuildingType?.name}
+                                  />
+                                  <span>{selectedBuildingType?.name}</span>
+                                </div>
+                              ) : (
+                                "Building Type"
+                              )}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu onChange={onSelectBuildingType}>
+                              {materialType?.length > 0 &&
+                                materialType.map((item, index) => (
+                                  <Dropdown.Item
+                                    key={index}
+                                    onClick={() =>
+                                      setSelectedBuildingType(item)
+                                    }
+                                  >
+                                    <div className="items">
+                                      <img src={item?.url} alt="url" />
+                                      <span>{item?.name}</span>
+                                    </div>
+                                  </Dropdown.Item>
+                                ))}
+                            </Dropdown.Menu>
+                          </Dropdown>
                         </div>
-                        <div className="Country-flexre">
-                          <div className="nav12">
-                            <select
-                              value={selectedConstructionYear}
+                        <div className="secondStep">
+                          <Dropdown
+                            className={` ${
+                              !selectedBuildingType
+                                ? "disable-step-container"
+                                : ""
+                            } ${
+                              toggleConstructionYear ? "dropdownBox brd" : ""
+                            }`}
+                            onToggle={() =>
+                              setToggleConstructionYear(!toggleConstructionYear)
+                            }
+                          >
+                            <Dropdown.Toggle
+                              variant=""
+                              id="constructionYear"
                               name="constructionYear"
-                              onChange={(e) => onChangeConstructionYear(e)}
+                              className={`${
+                                !!toggleConstructionYear ? "dropdown-open" : ""
+                              }`}
                             >
-                              <option value="">Custom</option>
+                              {selectedConstructionYear ? (
+                                <div className="country-items">
+                                  <span>{selectedConstructionYear?.name}</span>
+                                </div>
+                              ) : (
+                                "Construction Year"
+                              )}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu onChange={onChangeConstructionYear}>
                               {constructionYears?.length > 0 &&
-                                constructionYears?.map((cYear) => {
-                                  return (
-                                    <option value={cYear?.name}>
-                                      {cYear?.name}
-                                    </option>
-                                  );
-                                })}
-                            </select>
-                          </div>
+                                constructionYears.map((item, index) => (
+                                  <Dropdown.Item
+                                    key={index}
+                                    onClick={() =>
+                                      setSelectedConstructionYear(item)
+                                    }
+                                  >
+                                    <div className="items">
+                                      <span>{item?.name}</span>
+                                    </div>
+                                  </Dropdown.Item>
+                                ))}
+                            </Dropdown.Menu>
+                          </Dropdown>
                           <div className="vertical-line"></div>
-                          <div className="nav12">
-                            <select
+                          <Dropdown
+                            className={` ${
+                              !selectedConstructionYear
+                                ? "disable-step-container"
+                                : ""
+                            } ${
+                              toggleBuildingAppearance ? "dropdownBox brd" : ""
+                            }`}
+                            onToggle={() =>
+                              setToggleBuildingAppearance(
+                                !toggleBuildingAppearance,
+                              )
+                            }
+                          >
+                            <Dropdown.Toggle
+                              variant=""
+                              id="buildingAppearance"
                               name="buildingAppearance"
-                              value={selectedBuAppearance}
-                              onChange={(e) => onChangeBuildingAppearance(e)}
+                              className={`${
+                                !!toggleBuildingAppearance
+                                  ? "dropdown-open"
+                                  : ""
+                              }`}
                             >
-                              <option value="">Custom</option>
+                              {selectedBuAppearance ? (
+                                <div className="country-items">
+                                  <img
+                                    src={selectedBuAppearance?.url}
+                                    alt={selectedBuAppearance?.name}
+                                  />
+                                  <span> {selectedBuAppearance?.name}</span>
+                                </div>
+                              ) : (
+                                "Building Appearance"
+                              )}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu
+                              onChange={onChangeBuildingAppearance}
+                            >
                               {buildingAppearance?.length > 0 &&
-                                buildingAppearance?.map((bAppearance) => {
-                                  return (
-                                    <option value={bAppearance?.name}>
-                                      {bAppearance?.name}
-                                    </option>
-                                  );
-                                })}
-                            </select>
-                          </div>
+                                buildingAppearance.map((item, index) => (
+                                  <Dropdown.Item
+                                    key={index}
+                                    onClick={() =>
+                                      setSelectedBuAppearance(item)
+                                    }
+                                  >
+                                    <div className="items">
+                                      <img src={item?.url} alt="url" />
+                                      <span>{item?.name}</span>
+                                    </div>
+                                  </Dropdown.Item>
+                                ))}
+                            </Dropdown.Menu>
+                          </Dropdown>
                         </div>
                       </div>
                     </div>
@@ -360,6 +499,7 @@ const BuildingMaterial = () => {
                           Refurbishment?
                         </h1>
                         <div className="forn-flex">
+                          {console.log(selectedBuAppearanceObj)}
                           {selectedBuAppearanceObj?.data?.length > 0 &&
                             selectedBuAppearanceObj?.data?.map(
                               (buAppData, index) => {
