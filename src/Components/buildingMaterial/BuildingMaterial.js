@@ -466,7 +466,7 @@ const BuildingMaterial = () => {
                                       setSelectedBuAppearance(item)
                                     }
                                   >
-                                    <div className="items">
+                                    <div className="items buildApp">
                                       <img src={item?.url} alt="url" />
                                       <span>{item?.name}</span>
                                     </div>
