@@ -1462,6 +1462,7 @@ img.okik {
 .left-wrp {
   min-width: 457px;
   border-radius: 4px;
+  position: fixed;
 }
 
 .bui-materail-img-container {
