@@ -4858,7 +4858,7 @@ img.hgyu {
 .secondStep .dropdown-item {
   margin-bottom: 10px;
   border-radius: 4px;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
 }
 .secondStep .dropdown-item:hover {
   border-radius: 4px;
@@ -4876,10 +4876,35 @@ img.hgyu {
 }
 .secondStep .dropdown-menu .items {
   display: flex;
-  justify-content: flex-start;
-  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px 0px;
 }
+.secondStep .dropdown-menu .items .selected-items {
+  width: 12px;
+  height: 10px;
+}
+.secondStep .dropdown-menu .buildApp .selected-items {
+  width: 12px !important;
+  height: 10px !important;
+}
+.secondStep .dropdown-menu .buildApp .sub-items {
+  align-items: center;
+}
+.secondStep .dropdown-menu .buildApp .sub-items {
+  display: flex;
+  gap: 10px;
+}
+.secondStep .dropdown-menu .items .sub-items {
+  display: flex;
+  gap: 10px;
+}
+/* .secondStep .dropdown-menu .items .selected-items {
+  width: 12px;
+  height: 10px;
+  background: transparent url("./../img/Home-Page/tick_green.png") 0% 0%
+    no-repeat padding-box;
+} */
 .secondStep .dropdown-menu .buildApp {
   align-items: center;
 }

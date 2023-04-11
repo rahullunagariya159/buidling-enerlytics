@@ -319,8 +319,17 @@ const BuildingMaterial = () => {
                                     onClick={() => setSelectedCountry(item)}
                                   >
                                     <div className="items">
-                                      <img src={item?.url} alt="url" />
-                                      <span>{item?.name}</span>
+                                      <div className="sub-items">
+                                        <img src={item?.url} alt="url" />
+                                        <span>{item?.name}</span>
+                                      </div>
+                                      {selectedCountry?.name === item?.name && (
+                                        <img
+                                          src="assets/img/Home-Page/tick_green.png"
+                                          alt=""
+                                          className="selected-items"
+                                        />
+                                      )}
                                     </div>
                                   </Dropdown.Item>
                                 ))}
@@ -365,8 +374,18 @@ const BuildingMaterial = () => {
                                     }
                                   >
                                     <div className="items">
-                                      <img src={item?.url} alt="url" />
-                                      <span>{item?.name}</span>
+                                      <div className="sub-items">
+                                        <img src={item?.url} alt="url" />
+                                        <span>{item?.name}</span>
+                                      </div>
+                                      {selectedBuildingType?.name ===
+                                        item?.name && (
+                                        <img
+                                          src="assets/img/Home-Page/tick_green.png"
+                                          alt=""
+                                          className="selected-items"
+                                        />
+                                      )}
                                     </div>
                                   </Dropdown.Item>
                                 ))}
@@ -411,8 +430,18 @@ const BuildingMaterial = () => {
                                       setSelectedConstructionYear(item)
                                     }
                                   >
-                                    <div className="items">
-                                      <span>{item?.name}</span>
+                                    <div className="items ">
+                                      <div className="sub-items">
+                                        <span>{item?.name}</span>
+                                      </div>
+                                      {selectedConstructionYear?.name ===
+                                        item?.name && (
+                                        <img
+                                          src="assets/img/Home-Page/tick_green.png"
+                                          alt=""
+                                          className="selected-items"
+                                        />
+                                      )}
                                     </div>
                                   </Dropdown.Item>
                                 ))}
@@ -467,8 +496,18 @@ const BuildingMaterial = () => {
                                     }
                                   >
                                     <div className="items buildApp">
-                                      <img src={item?.url} alt="url" />
-                                      <span>{item?.name}</span>
+                                      <div className="sub-items">
+                                        <img src={item?.url} alt="url" />
+                                        <span>{item?.name}</span>
+                                      </div>
+                                      {selectedBuAppearance?.name ===
+                                        item?.name && (
+                                        <img
+                                          src="assets/img/Home-Page/tick_green.png"
+                                          alt=""
+                                          className="selected-items"
+                                        />
+                                      )}
                                     </div>
                                   </Dropdown.Item>
                                 ))}
