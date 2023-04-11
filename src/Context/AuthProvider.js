@@ -41,7 +41,6 @@ export function AuthProvider({ children }) {
   const [isOpenChoosePlanPopup, setIsOpenChoosePlanPopup] = useState(false);
   const [creditCardList, setCreditCardList] = useState([]);
   const [isAddingCard, setIsAddingCard] = useState(false);
-  // const [authIdentity, setAuthIdentity] = useState();
   const [searchParams] = useSearchParams();
   const isGuestUser = searchParams.get("skip") || false;
   const [isLoggedIn, setLoggedInStatus] = useState(

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ReactSession } from "react-client-session";
 
 import Navbar from "../Navbar";
 import LeftSidebar from "../LeftSidebar";
@@ -12,6 +13,7 @@ import LoadingCover from "../LoadingCover";
 import Text from "../Text";
 import { somethingWentWrongError } from "../../Constants";
 import ShowDetails from "./ShowDetails";
+import { useAuth } from "../../Context/AuthProvider";
 import "./index.css";
 
 const BuildingMaterial = () => {
@@ -30,6 +32,8 @@ const BuildingMaterial = () => {
   const [isEnableSteps, setIsEnableSteps] = useState(false);
   const [buildingEnrgOptIndex, setBuildingEnrgOptIndex] = useState(0);
   const [error, setError] = useState("");
+
+  const { userId } = useAuth();
 
   const handleNoBuildingMaterial = async () => {
     setToggle(false);
@@ -126,6 +130,63 @@ const BuildingMaterial = () => {
       (buiApprnce) => buiApprnce?.name === value,
     );
     setSelectedBuAppearanceObj(buildMerApprnc);
+  };
+
+  const handleSaveBuildingMaterialData = (values) => {
+    setShowLoader(true);
+    console.log({ values });
+
+    const materialPayload = {
+      userId: userId,
+      projectId: ReactSession.get("project_id"),
+      configurationId: "9498f286-b2d6-4980-ab8a-aa9e6a455338",
+      data: {
+        knowledge: true,
+        country: "Denmark",
+        countryUrl:
+          "https://building-enerlytics-config.s3.eu-central-1.amazonaws.com/images/original/DE.png",
+        buildingType: "Single Family House",
+        buildingTypeUrl:
+          "https://building-enerlytics-config.s3.eu-central-1.amazonaws.com/images/original/SFH.png",
+        constructionYear: "1850",
+        buildingAppearance: "Plastered Walls",
+        buildingAppearanceUrl:
+          "https://building-enerlytics-config.s3.eu-central-1.amazonaws.com/images/original/PW.png",
+        energyConsumption: "no",
+        energyConsumptionUrl:
+          "https://building-enerlytics-config.s3.eu-central-1.amazonaws.com/images/original/PW.png",
+        air_tightness_infilteration_rate_dropdown: "Custom",
+        air_tightness_infilteration_rate: "0.1",
+        building_density_absorptivity_dropdown: values.buildingDensity,
+        building_density_absorptivity: "200",
+        energy_bridges_u_value_dropdown: "Custom",
+        energy_bridges_u_value: "5",
+        walls_color_absorption_coefficient_dropdown: "Custom",
+        walls_color_absorption_coefficient: "0.6",
+        walls_thermal_conductivity_u_value_dropdown: "Custom",
+        walls_thermal_conductivity_u_value: "5",
+        floor_thermal_conductivity_u_value_dropdown: "Custom",
+        floor_thermal_conductivity_u_value: "5",
+        roof_color_absorption_coefficient_dropdown: "Custom",
+        roof_color_absorption_coefficient: "0.1",
+        roof_thermal_conductivity_u_value_dropdown: "Custom",
+        roof_thermal_conductivity_u_value: "0.3",
+        windows_glazing_thermal_conductivity_u_value_dropdown: "Custom",
+        windows_glazing_thermal_conductivity_u_value: "0.4",
+        windows_energy_transmissivity_coefficient_dropdown: "Custom",
+        windows_energy_transmissivity_coefficient: "0.4",
+        windows_light_transmissivity_coefficient_dropdown: "Custom",
+        windows_light_transmissivity_coefficient: "0.4",
+        windows_frames_share_value_dropdown: "Custom",
+        windows_frames_share_value: "0.5",
+        windows_frames_thermal_conductivity_u_value_dropdown: "Custom",
+        windows_frames_thermal_conductivity_u_value: "0.4",
+        windows_frames_joint_frame_value_dropdown: "Custom",
+        windows_frames_joint_frame_value: "0.4",
+      },
+    };
+
+    setShowLoader(false);
   };
 
   return (
@@ -396,7 +457,13 @@ const BuildingMaterial = () => {
 
                   <Text text={error} type="error" />
                 </div>
-                <ShowDetails setToggle={setToggle} toggle={toggle} />
+                <ShowDetails
+                  setToggle={setToggle}
+                  toggle={toggle}
+                  handleSaveBuildingMaterialData={
+                    handleSaveBuildingMaterialData
+                  }
+                />
               </div>
             </div>
           </div>

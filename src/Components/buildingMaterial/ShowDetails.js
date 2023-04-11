@@ -3,8 +3,9 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import "./index.css";
 
-const ShowDetails = ({ setToggle, toggle }) => {
-  const [inputValue, setInputValue] = useState({});
+const ShowDetails = ({ setToggle, toggle, handleSaveBuildingMaterialData }) => {
+  //   const [inputVal, setInputVal] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const initialValues = {
     gInfilRates: "",
@@ -82,6 +83,15 @@ const ShowDetails = ({ setToggle, toggle }) => {
       .required("F-value is required"),
   });
 
+  const onSelectOption = (event, inputFieldName, setFieldValue) => {
+    const name = event?.target?.name;
+    const value = event?.target?.value;
+    const selectedOption = event?.target?.options[event?.target?.selectedIndex];
+    const extraData = selectedOption?.dataset?.extra;
+    setFieldValue(inputFieldName, extraData);
+    setFieldValue(name, value);
+  };
+
   return (
     <div className="right-wrp">
       <p className="rotet cursor-pointer" onClick={() => setToggle(!toggle)}>
@@ -101,11 +111,9 @@ const ShowDetails = ({ setToggle, toggle }) => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           validateOnSubmit={true}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          onSubmit={(values) => handleSaveBuildingMaterialData(values)}
         >
-          {({ errors, touched }) => (
+          {({ setFieldValue, errors, touched }) => (
             <Form>
               <div className="rightContent">
                 <div className="main-table">
@@ -114,12 +122,30 @@ const ShowDetails = ({ setToggle, toggle }) => {
                     <div className="items">
                       {/* <p>Heat tramission</p> */}
                       <p>Air tightness</p>
-                      <select name="gAirTightness">
-                        <option value="">Custom</option>
-                        <option value="2.0">High</option>
-                        <option value="1.0">Medium</option>
-                        <option value="0.0">Low</option>
-                      </select>
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="gAirTightness"
+                            onChange={(e) =>
+                              onSelectOption(e, "gInfilRates", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="2.0" value="High" data-extra="2.0">
+                              High
+                            </option>
+                            <option key="1.0" value="Medium" data-extra="1.0">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>Infiltration rates [1/h]</p>
@@ -139,12 +165,34 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Building density</p>
-                      <select name="buildingDesnsity">
-                        <option value="">Custom</option>
-                        <option value="500.0">Heigh</option>
-                        <option value="250.0">Medium</option>
-                        <option value="0.0">Low</option>
-                      </select>
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="buildingDensity"
+                            onChange={(e) =>
+                              onSelectOption(e, "gAbsorptivity", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="500.0" value="High" data-extra="500.0">
+                              High
+                            </option>
+                            <option
+                              key="250.0"
+                              value="Medium"
+                              data-extra="250.0"
+                            >
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>
@@ -166,12 +214,31 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Energy bridges</p>
-                      <select name="energyBridges">
-                        <option value="">Custom</option>
-                        <option value="0.0">Heigh</option>
-                        <option value="5.0">Medium</option>
-                        <option value="10.0">Low</option>
-                      </select>
+
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="energyBridges"
+                            onChange={(e) =>
+                              onSelectOption(e, "gUValue", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="10.0" value="High" data-extra="10.0">
+                              High
+                            </option>
+                            <option key="5.0" value="Medium" data-extra="5.0">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>
@@ -198,12 +265,30 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Color</p>
-                      <select name="wColor">
-                        <option value="">Custom</option>
-                        <option value="1.0">Heigh</option>
-                        <option value="0.5">Medium</option>
-                        <option value="0.0">Low</option>
-                      </select>
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="wColor"
+                            onChange={(e) =>
+                              onSelectOption(e, "oAbsorption", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="1.0" value="High" data-extra="1.0">
+                              High
+                            </option>
+                            <option key="0.5" value="Medium" data-extra="0.5">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>Absorption coefficient</p>
@@ -223,12 +308,30 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Thermal conductivity</p>
-                      <select name="wThermal">
-                        <option value="">Custom</option>
-                        <option value="10.0">Heigh</option>
-                        <option value="5.0">Medium</option>
-                        <option value="0">Low</option>
-                      </select>
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="wThermal"
+                            onChange={(e) =>
+                              onSelectOption(e, "oUValue", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="10.0" value="High" data-extra="10.0">
+                              High
+                            </option>
+                            <option key="5.0" value="Medium" data-extra="5.0">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>
@@ -252,12 +355,31 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Thermal conductivity</p>
-                      <select name="fThermal">
-                        <option value="">Custom</option>
-                        <option value="10.0">Heigh</option>
-                        <option value="0.5">Medium</option>
-                        <option value="0.0">Low</option>
-                      </select>
+
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="fThermal"
+                            onChange={(e) =>
+                              onSelectOption(e, "fUValue", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="10.0" value="High" data-extra="10.0">
+                              High
+                            </option>
+                            <option key="5.0" value="Medium" data-extra="5.0">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>
@@ -281,12 +403,30 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Color</p>
-                      <select name="roofColor">
-                        <option value="">Custom</option>
-                        <option value="1.0">Heigh</option>
-                        <option value="0.5">Medium</option>
-                        <option value="0.0">Low</option>
-                      </select>
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="roofColor"
+                            onChange={(e) =>
+                              onSelectOption(e, "rAbsorption", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="1.0" value="High" data-extra="1.0">
+                              High
+                            </option>
+                            <option key="0.5" value="Medium" data-extra="0.5">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>Absorption coefficient</p>
@@ -306,12 +446,30 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Thermal conductivity</p>
-                      <select name="thermalConductivity">
-                        <option value="">Custom</option>
-                        <option value="10.0">Heigh</option>
-                        <option value="5.0">Medium</option>
-                        <option value="0.0">Low</option>
-                      </select>
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="thermalConductivity"
+                            onChange={(e) =>
+                              onSelectOption(e, "rUValue", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="10.0" value="High" data-extra="10.0">
+                              High
+                            </option>
+                            <option key="5.0" value="Medium" data-extra="5.0">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>
@@ -338,12 +496,30 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Thermal conductivity</p>
-                      <select name="wThermal">
-                        <option value="">Custom</option>
-                        <option value="10.0">Heigh</option>
-                        <option value="5.0">Medium</option>
-                        <option value="0.0">Low</option>
-                      </select>
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="wThermal"
+                            onChange={(e) =>
+                              onSelectOption(e, "wGUValue", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="10.0" value="High" data-extra="10.0">
+                              High
+                            </option>
+                            <option key="5.0" value="Medium" data-extra="5.0">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>
@@ -365,12 +541,30 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Energy transmissivity</p>
-                      <select name="wEnergy">
-                        <option value="">Custom</option>
-                        <option value="1.0">Heigh</option>
-                        <option value="0.5">Medium</option>
-                        <option value="0.0">Low</option>
-                      </select>
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="wEnergy"
+                            onChange={(e) =>
+                              onSelectOption(e, "wGCoefficient", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="1.0" value="High" data-extra="1.0">
+                              High
+                            </option>
+                            <option key="0.5" value="Medium" data-extra="0.5">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>Coefficient</p>
@@ -390,12 +584,34 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Light transmissivity</p>
-                      <select name="wLight">
-                        <option value="">Custom</option>
-                        <option value="1.0">Heigh</option>
-                        <option value="0.5">Medium</option>
-                        <option value="0.0">Low</option>
-                      </select>
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="wLight"
+                            onChange={(e) =>
+                              onSelectOption(
+                                e,
+                                "wGLightCoefficient",
+                                setFieldValue,
+                              )
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="1.0" value="High" data-extra="1.0">
+                              High
+                            </option>
+                            <option key="0.5" value="Medium" data-extra="0.5">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>Coefficient</p>
@@ -418,12 +634,30 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Frame share</p>
-                      <select name="wFrame">
-                        <option value="">Custom</option>
-                        <option value="1.0">Heigh</option>
-                        <option value="0.5">Medium</option>
-                        <option value="0.0">Low</option>
-                      </select>
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="wFrame"
+                            onChange={(e) =>
+                              onSelectOption(e, "fShareValue", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="1.0" value="High" data-extra="1.0">
+                              High
+                            </option>
+                            <option key="0.5" value="Medium" data-extra="0.5">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>Share value</p>
@@ -443,12 +677,30 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Thermal conductivity</p>
-                      <select name="fThermal">
-                        <option value="">Custom</option>
-                        <option value="10.0">Heigh</option>
-                        <option value="5.0">Medium</option>
-                        <option value="0.0">Low</option>
-                      </select>
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="fThermal"
+                            onChange={(e) =>
+                              onSelectOption(e, "fUValue", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="10.0" value="High" data-extra="10.0">
+                              High
+                            </option>
+                            <option key="5.0" value="Medium" data-extra="5.0">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>
@@ -470,12 +722,30 @@ const ShowDetails = ({ setToggle, toggle }) => {
                   <div className="items-row">
                     <div className="items">
                       <p>Joint frame value</p>
-                      <select name="fJointFrame">
-                        <option value="">Custom</option>
-                        <option value="5.0">Heigh</option>
-                        <option value="2.5">Medium</option>
-                        <option value="0.0">Low</option>
-                      </select>
+                      <Field name="dropdown">
+                        {({ field, form }) => (
+                          <select
+                            {...field}
+                            name="fJointFrame"
+                            onChange={(e) =>
+                              onSelectOption(e, "fJointValue", setFieldValue)
+                            }
+                          >
+                            <option key="" value="" data-extra="">
+                              Custom
+                            </option>
+                            <option key="5.0" value="High" data-extra="5.0">
+                              High
+                            </option>
+                            <option key="2.5" value="Medium" data-extra="2.5">
+                              Medium
+                            </option>
+                            <option key="0.0" value="Low" data-extra="0.0">
+                              Low
+                            </option>
+                          </select>
+                        )}
+                      </Field>
                     </div>
                     <div className="items">
                       <p>F-value [W/(mK)]</p>

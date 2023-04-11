@@ -24,22 +24,28 @@ function LeftSidebar(props) {
     if (isGuestUser) {
       navigate({ pathname: "/", search: "?skip=true" });
     } else {
-      navigate("/dashboard");
+      navigate(`${Routes.dashboard}`);
     }
   };
 
   const navigateToProject = () => {
     if (isGuestUser) {
       navigate({
-        pathname: "/create-project",
+        pathname: `${Routes.createProject}`,
         search: "?name=" + projectName + "&&skip=true",
       });
     } else {
-      navigate({ pathname: "/create-project", search: "?name=" + projectName });
+      navigate({
+        pathname: `${Routes.createProject}`,
+        search: "?name=" + projectName,
+      });
     }
   };
   const navigateToBuilding = () => {
-    navigate(`${Routes.buildingMaterial}`);
+    navigate({
+      pathname: `${Routes.buildingMaterial}`,
+      search: "?name=" + projectName,
+    });
   };
 
   const handleUpdateProjectName = () => {
