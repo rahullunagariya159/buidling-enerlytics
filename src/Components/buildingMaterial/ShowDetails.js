@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import "./index.css";
 
-const ShowDetails = ({ setToggle, toggle, handleSaveBuildingMaterialData }) => {
+const ShowDetails = ({
+  setToggle,
+  toggle,
+  handleSaveBuildingMaterialData,
+  selEnergeOptionData,
+}) => {
   //   const [inputVal, setInputVal] = useState({});
   const [loading, setLoading] = useState(false);
+  const formikRef = useRef();
 
   const initialValues = {
     gInfilRates: "",
@@ -92,6 +98,72 @@ const ShowDetails = ({ setToggle, toggle, handleSaveBuildingMaterialData }) => {
     setFieldValue(name, value);
   };
 
+  useEffect(() => {
+    if (selEnergeOptionData && formikRef?.current) {
+      formikRef.current.setFieldValue(
+        "gInfilRates",
+        selEnergeOptionData?.air_tightness_infilteration_rate,
+      );
+      formikRef.current.setFieldValue(
+        "gAbsorptivity",
+        selEnergeOptionData?.building_density_absorptivity,
+      );
+      formikRef.current.setFieldValue(
+        "gUValue",
+        selEnergeOptionData?.energy_bridges_u_value,
+      );
+
+      formikRef.current.setFieldValue(
+        "oAbsorption",
+        selEnergeOptionData?.walls_color_absorption_coefficient,
+      );
+      formikRef.current.setFieldValue(
+        "oUValue",
+        selEnergeOptionData?.walls_thermal_conductivity_u_value,
+      );
+
+      formikRef.current.setFieldValue(
+        "fUValue",
+        selEnergeOptionData?.floor_thermal_conductivity_u_value,
+      );
+
+      formikRef.current.setFieldValue(
+        "rAbsorption",
+        selEnergeOptionData?.roof_color_absorption_coefficient,
+      );
+      formikRef.current.setFieldValue(
+        "rUValue",
+        selEnergeOptionData?.roof_thermal_conductivity_u_value,
+      );
+
+      formikRef.current.setFieldValue(
+        "wGUValue",
+        selEnergeOptionData?.windows_glazing_thermal_conductivity_u_value,
+      );
+      formikRef.current.setFieldValue(
+        "wGCoefficient",
+        selEnergeOptionData?.windows_energy_transmissivity_coefficient,
+      );
+      formikRef.current.setFieldValue(
+        "wGLightCoefficient",
+        selEnergeOptionData?.windows_light_transmissivity_coefficient,
+      );
+
+      formikRef.current.setFieldValue(
+        "fShareValue",
+        selEnergeOptionData?.windows_frames_share_value,
+      );
+      formikRef.current.setFieldValue(
+        "fUValue",
+        selEnergeOptionData?.windows_frames_thermal_conductivity_u_value,
+      );
+      formikRef.current.setFieldValue(
+        "fJointValue",
+        selEnergeOptionData?.windows_frames_joint_frame_value,
+      );
+    }
+  }, [selEnergeOptionData, formikRef?.current]);
+
   return (
     <div className="right-wrp">
       <p className="rotet cursor-pointer" onClick={() => setToggle(!toggle)}>
@@ -108,6 +180,7 @@ const ShowDetails = ({ setToggle, toggle, handleSaveBuildingMaterialData }) => {
       </p>
       {toggle && (
         <Formik
+          innerRef={formikRef}
           initialValues={initialValues}
           validationSchema={validationSchema}
           validateOnSubmit={true}
