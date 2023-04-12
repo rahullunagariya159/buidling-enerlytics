@@ -657,6 +657,13 @@ const BuildingMaterial = () => {
                 />
               </div>
             </div>
+            <div
+              className={`${toggle ? "position-relative end-0" : ""} end-flex`}
+            >
+              <button type="submit" className="Pay-btn">
+                NEXT
+              </button>
+            </div>
           </div>
         </section>
       </div>

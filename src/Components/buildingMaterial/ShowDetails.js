@@ -836,11 +836,6 @@ const ShowDetails = ({
                     </div>
                   </div>
                 </div>
-                <div className="end-flex">
-                  <button type="submit" className="Pay-btn">
-                    NEXT
-                  </button>
-                </div>
               </div>
             </Form>
           )}
