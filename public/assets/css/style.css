@@ -1664,6 +1664,9 @@ a.next-btnes {
   border-radius: 4px;
   padding-bottom: 10px;
 }
+.left-wrp .main-table {
+  padding-bottom: 0px;
+}
 
 .stepce {
   font: normal normal 600 12px/18px Poppins;
@@ -1714,7 +1717,7 @@ label.no-1.tow {
 .table-pading {
   display: grid;
   gap: 20px;
-  padding: 32px 48px 25px 16px;
+  padding: 32px 48px 20px 16px;
 }
 
 .second-gride {
@@ -4828,6 +4831,7 @@ img.hgyu {
 
 .dropdownBox {
   box-shadow: 0px 4px 10px #1c1c1c21;
+  color: #f1f1f1;
 }
 .secondStep .dropdown .dropdown-toggle {
   display: flex;
@@ -4841,6 +4845,14 @@ img.hgyu {
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
   background-image: url("../img//Home-Page/homeFinal/Path\ 311.svg");
+  background-position: calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px), 100% 0 !important;
+  background-size: 11px 8px !important;
+  background-repeat: no-repeat !important;
+}
+.disable-step-container button {
+  color: #dcdcdc !important;
+  background-image: url("../img//Home-Page/homeFinal/downArrowGray.svg") !important;
   background-position: calc(100% - 20px) calc(1em + 2px),
     calc(100% - 15px) calc(1em + 2px), 100% 0 !important;
   background-size: 11px 8px !important;
@@ -4902,12 +4914,6 @@ img.hgyu {
   display: flex;
   gap: 10px;
 }
-/* .secondStep .dropdown-menu .items .selected-items {
-  width: 12px;
-  height: 10px;
-  background: transparent url("./../img/Home-Page/tick_green.png") 0% 0%
-    no-repeat padding-box;
-} */
 .secondStep .dropdown-menu .buildApp {
   align-items: center;
 }
@@ -4947,6 +4953,9 @@ img.hgyu {
   margin: 0;
 }
 
+.disable-step-container .secondStep .dropdown .dropdown-toggle .country-items {
+  opacity: 0.3 !important;
+}
 .country-items {
   display: flex;
   align-items: center;
