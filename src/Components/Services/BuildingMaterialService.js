@@ -63,3 +63,17 @@ export const saveBuildingMaterialData = (payload) => {
       });
   });
 };
+
+export const getBuildingMaterialData = (payload) => {
+  return new Promise((resolve, reject) => {
+    ApiGet(
+      `/building-material?userId=${payload?.userId}&configurationId=${payload?.configurationId}`,
+    )
+      .then(function (response) {
+        resolve(response);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  });
+};

@@ -9,6 +9,7 @@ import {
   getBuildingMaterialConstructionYear,
   getBuildingMaterialAppearance,
   saveBuildingMaterialData,
+  getBuildingMaterialData,
 } from "../Services/BuildingMaterialService";
 import LoadingCover from "../LoadingCover";
 import Text from "../Text";
@@ -222,6 +223,38 @@ const BuildingMaterial = () => {
       });
   };
 
+  const onYesBuildingMaterial = () => {
+    setIsEnableSteps(false);
+    setToggle(true);
+    setSelEnergeOption({});
+  };
+
+  const onGetBuildingMaterialData = async () => {
+    setShowLoader(true);
+
+    const payloadDetail = {
+      userId: userId,
+      configurationId: "9498f286-b2d6-4980-ab8a-aa9e6a455338",
+    };
+
+    await getBuildingMaterialData(payloadDetail)
+      .then((response) => {
+        console.log({ response });
+      })
+      .catch((error) => {
+        console.log({ error });
+      })
+      .finally(() => {
+        setShowLoader(false);
+      });
+  };
+
+  useEffect(() => {
+    if (userId) {
+      onGetBuildingMaterialData();
+    }
+  }, [userId]);
+
   return (
     <div>
       <Navbar />
@@ -245,10 +278,7 @@ const BuildingMaterial = () => {
                         <div className="forn-flex">
                           <div
                             className="form-one"
-                            onClick={() => {
-                              setIsEnableSteps(false);
-                              setToggle(true);
-                            }}
+                            onClick={() => onYesBuildingMaterial()}
                           >
                             <input
                               type="radio"
