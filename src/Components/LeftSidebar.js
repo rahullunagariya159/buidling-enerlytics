@@ -282,9 +282,9 @@ function LeftSidebar(props) {
             </div>
           </div>
         </div>
-        <div className="side-link-flex">
+        {/* <div className="side-link-flex">
           <a className="need-btn">Need Help?</a>
-        </div>
+        </div> */}
       </div>
     </div>
   );

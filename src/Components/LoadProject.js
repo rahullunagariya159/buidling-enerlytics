@@ -300,7 +300,7 @@ function LoadProject() {
                             </div>
                           </div>
                           {btnClass === "clickable" ? (
-                            <>
+                            <div className="selected-project">
                               <div className="small-img-box">
                                 <img
                                   src={
@@ -315,7 +315,21 @@ function LoadProject() {
                                 <a className="WALIMP">Basic</a>
                                 <button className="cancelIcon">X</button>
                               </div>
-                            </>
+                              <div className="small-img-box">
+                                <img
+                                  src={
+                                    selectedProjects?.configurations?.length > 0
+                                      ? selectedProjects?.configurations?.[0]
+                                          ?.image
+                                      : "assets/img/LoadExisting/3d Project page.png"
+                                  }
+                                  className="w3d-small"
+                                  alt=""
+                                />
+                                <a className="WALIMP">Basic</a>
+                                <button className="cancelIcon">X</button>
+                              </div>
+                            </div>
                           ) : (
                             ""
                           )}
@@ -398,17 +412,19 @@ function LoadProject() {
                                       <tr className="main-tr-row">
                                         <td className="main-td-title bold">
                                           <div className="Basic-flex">
-                                            <input
-                                              type="checkbox"
-                                              name=""
-                                              id="checkConfig"
-                                              defaultChecked="true"
-                                              onChange={(e) =>
-                                                handleConfigSelect(
-                                                  e.target.checked,
-                                                )
-                                              }
-                                            />
+                                            <div className="checkBoxOutline-table ">
+                                              <input
+                                                name="items"
+                                                type="checkbox"
+                                                id="checkConfig"
+                                                defaultChecked="true"
+                                                onChange={(e) =>
+                                                  handleConfigSelect(
+                                                    e.target.checked,
+                                                  )
+                                                }
+                                              />
+                                            </div>
                                             <span>{item && item.name}</span>
                                           </div>
                                         </td>
