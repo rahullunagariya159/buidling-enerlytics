@@ -47,6 +47,12 @@ function LeftSidebar(props) {
       search: "?name=" + projectName,
     });
   };
+  const navigateToHVAC = () => {
+    navigate({
+      pathname: `${Routes.hvac}`,
+      search: "?name=" + projectName,
+    });
+  };
 
   const handleUpdateProjectName = () => {
     const elm = document.getElementById("newProjectName");
@@ -95,21 +101,18 @@ function LeftSidebar(props) {
   return (
     <div className="side-left">
       <div>
-        {selectedModule === "BE" ? (
-          <p className="top-home text-left nav-left">
-            <a className="clickable" onClick={navigateToDashboard}>
-              Home
-            </a>
-            {" > Building Model"}
-          </p>
-        ) : (
-          <p className="top-home text-left nav-left">
-            <a className="clickable" onClick={navigateToDashboard}>
-              Home
-            </a>
-            {" > Building Material"}
-          </p>
-        )}
+        <p className="top-home text-left nav-left">
+          <a className="clickable" onClick={navigateToDashboard}>
+            Home
+          </a>
+          {selectedModule === "BE"
+            ? " > Building Model"
+            : selectedModule === "BM"
+            ? " > Building Material"
+            : selectedModule === "HV"
+            ? " > HVAC(HEATING, A/C, VENTILATION) SYSTEM"
+            : ""}
+        </p>
       </div>
       <div className="Project-Name-box">
         <p className="Name-titlew">Project Name</p>
@@ -186,7 +189,7 @@ function LeftSidebar(props) {
             </a>
           </div>
         </div>
-        <div id="HV" className="side-link-flex">
+        <div id="HV" className="side-link-flex" onClick={navigateToHVAC}>
           <div className="flex-side">
             <img
               className="side-icon"

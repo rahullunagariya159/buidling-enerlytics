@@ -167,10 +167,10 @@ const ShowDetails = ({
   return (
     <div className="right-wrp">
       <p className="rotet cursor-pointer" onClick={() => setToggle(!toggle)}>
-        SHOW DETAILS
+        {!toggle ? "SHOW" : "HIDE"} DETAILS
         <img
           src={
-            toggle
+            !toggle
               ? "assets/img/Home-Page/homeFinal/Path 66.svg"
               : "assets/img/Home-Page/homeFinal/Path 67.svg"
           }

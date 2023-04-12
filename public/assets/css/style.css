@@ -1581,7 +1581,7 @@ img.okik {
   -webkit-appearance: none;
   -moz-appearance: none;
   display: inline-block;
-  background-image: url("../img//Home-Page/homeFinal/Path\ 311.svg");
+  background-image: url("../img/Home-Page/homeFinal/downArrow.svg");
   background-position: calc(100% - 20px) calc(1em + 2px),
     calc(100% - 15px) calc(1em + 2px), 100% 0;
   background-size: 11px 8px;
@@ -1614,9 +1614,9 @@ p.rotet {
   position: absolute;
   border: 1px solid #f1f1f1;
   padding: 2px 26px 2px 16px;
-  top: 62px;
+  top: 56px;
   margin: 0;
-  left: -95px;
+  left: -89px;
   width: max-content;
 }
 
@@ -4855,7 +4855,7 @@ img.hgyu {
   font: normal normal 500 13px/18px Poppins;
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
-  background-image: url("../img//Home-Page/homeFinal/Path\ 311.svg");
+  background-image: url("../img/Home-Page/homeFinal/downArrow.svg");
   background-position: calc(100% - 20px) calc(1em + 2px),
     calc(100% - 15px) calc(1em + 2px), 100% 0 !important;
   background-size: 11px 8px !important;
@@ -4863,7 +4863,7 @@ img.hgyu {
 }
 .disable-step-container button {
   color: #dcdcdc !important;
-  background-image: url("../img//Home-Page/homeFinal/downArrowGray.svg") !important;
+  background-image: url("../img/Home-Page/homeFinal/downArrowGray.svg") !important;
   background-position: calc(100% - 20px) calc(1em + 2px),
     calc(100% - 15px) calc(1em + 2px), 100% 0 !important;
   background-size: 11px 8px !important;
@@ -4953,7 +4953,7 @@ img.hgyu {
   border-radius: 4px 4px 0px 0px !important;
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
-  background-image: url("../img//Home-Page/homeFinal/UpArrow.svg") !important;
+  background-image: url("../img/Home-Page/homeFinal/UpArrow.svg") !important;
   background-position: calc(100% - 20px) calc(1em + 2px),
     calc(100% - 15px) calc(1em + 2px), 100% 0 !important;
   background-size: 11px 8px !important;
