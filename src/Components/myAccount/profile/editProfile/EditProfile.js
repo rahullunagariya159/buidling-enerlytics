@@ -368,15 +368,7 @@ const EditProfile = ({ childToParent }) => {
                 onChange={onChangeHandler}
                 defaultValue={phoneCode}
               >
-                <option value={`${phoneCode}`}>{phoneCode}</option>
-                {/* {countryList?.length > 0 &&
-                  countryList?.map((country) => {
-                    return (
-                      <option value={`+${country?.phonecode}`}>
-                        +{country?.phonecode}
-                      </option>
-                    );
-                  })} */}
+                <option value={`${phoneCode}`}>{countryFlag}</option>
               </select>
               <input
                 type="number"

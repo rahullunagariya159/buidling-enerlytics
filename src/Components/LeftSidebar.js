@@ -56,7 +56,9 @@ function LeftSidebar(props) {
 
   const handleUpdateProjectName = () => {
     const elm = document.getElementById("newProjectName");
-
+    if (!elm.value) {
+      return false;
+    }
     const payload = {
       id: ReactSession.get("project_id"),
       name: elm.value,

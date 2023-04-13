@@ -224,7 +224,7 @@ const ShowDetails = ({
                       <p>Infiltration rates [1/h]</p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         id="gInfilRates"
                         name="gInfilRates"
                       />
@@ -273,7 +273,7 @@ const ShowDetails = ({
                       </p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="gAbsorptivity"
                         id="gAbsorptivity"
                       />
@@ -319,7 +319,7 @@ const ShowDetails = ({
                       </p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="gUValue"
                         id="gUValue"
                       />
@@ -367,7 +367,7 @@ const ShowDetails = ({
                       <p>Absorption coefficient</p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="oAbsorption"
                         id="oAbsorption"
                       />
@@ -412,7 +412,7 @@ const ShowDetails = ({
                       </p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="oUValue"
                         id="oUValue"
                       />
@@ -460,7 +460,7 @@ const ShowDetails = ({
                       </p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="fUValue"
                         id="fUValue"
                       />
@@ -505,7 +505,7 @@ const ShowDetails = ({
                       <p>Absorption coefficient</p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="rAbsorption"
                         id="rAbsorption"
                       />
@@ -550,7 +550,7 @@ const ShowDetails = ({
                       </p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="rUValue"
                         id="rUValue"
                       />
@@ -600,7 +600,7 @@ const ShowDetails = ({
                       </p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="wGUValue"
                         id="wGUValue"
                       />
@@ -643,7 +643,7 @@ const ShowDetails = ({
                       <p>Coefficient</p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="wGCoefficient"
                         id="wGCoefficient"
                       />
@@ -690,7 +690,7 @@ const ShowDetails = ({
                       <p>Coefficient</p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="wGLightCoefficient"
                         id="wGLightCoefficient"
                       />
@@ -736,7 +736,7 @@ const ShowDetails = ({
                       <p>Share value</p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="fShareValue"
                         id="fShareValue"
                       />
@@ -781,7 +781,7 @@ const ShowDetails = ({
                       </p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="fUValue"
                         id="fUValue"
                       />
@@ -824,7 +824,7 @@ const ShowDetails = ({
                       <p>F-value [W/(mK)]</p>
                       <Field
                         type="number"
-                        placeholder="Custom"
+                        placeholder=""
                         name="fJointValue"
                         id="fJointValue"
                       />

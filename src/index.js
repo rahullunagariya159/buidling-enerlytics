@@ -1,25 +1,27 @@
-import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React, { Suspense } from "react";
+import ReactDOM from "react-dom";
+import LoadingCover from "./Components/LoadingCover";
+import "./index.css";
 // import App from './App';
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from "./reportWebVitals";
 
-const App = React.lazy(() => import('./App'));
+const App = React.lazy(() => import("./App"));
 
 const loadingMarkup = (
-  <div className='loader-container'>
-    <div className="loader-wrapper">
-      <div className="loader">
-        <span className="pip-0"></span>
-        <span className="pip-1"></span>
-        <span className="pip-2"></span>
-        <span className="pip-3"></span>
-        <span className="pip-4"></span>
-        <span className="pip-5"></span>
-      </div>
-      <h1>Loading...</h1>
-    </div>
-  </div>
+  <LoadingCover show={true} />
+  // <div className="loader-container">
+  //   <div className="loader-wrapper">
+  //     <div className="loader">
+  //       <span className="pip-0"></span>
+  //       <span className="pip-1"></span>
+  //       <span className="pip-2"></span>
+  //       <span className="pip-3"></span>
+  //       <span className="pip-4"></span>
+  //       <span className="pip-5"></span>
+  //     </div>
+  //     <h1>Loading...</h1>
+  //   </div>
+  // </div>
 );
 
 ReactDOM.render(
@@ -28,7 +30,7 @@ ReactDOM.render(
       <App />
     </React.StrictMode>
   </Suspense>,
-  document.getElementById('root')
+  document.getElementById("root"),
 );
 
 // If you want to start measuring performance in your app, pass a function
