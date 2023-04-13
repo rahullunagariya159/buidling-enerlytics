@@ -188,7 +188,11 @@ const ShowDetails = ({
         >
           {({ setFieldValue, errors, touched }) => (
             <Form>
-              <div className="rightContent">
+              <div
+                className={`rightContent ${
+                  selEnergeOptionData?.name ? "scroll-inline" : ""
+                } `}
+              >
                 <div className="main-table">
                   <div className="main-title">General</div>
                   <div className="items-row">
@@ -835,6 +839,15 @@ const ShowDetails = ({
                       ) : null}
                     </div>
                   </div>
+                </div>
+                <div
+                  className={`${
+                    toggle ? "position-relative end-0" : ""
+                  } end-flex`}
+                >
+                  <button type="submit" className="Pay-btn">
+                    NEXT
+                  </button>
                 </div>
               </div>
             </Form>

@@ -353,6 +353,11 @@ const BuildingMaterial = () => {
                               )}
                             </Dropdown.Toggle>
                             <Dropdown.Menu onChange={onCountryChange}>
+                              <div
+                                className={`${
+                                  !!toggleCountry ? "border-t" : ""
+                                }`}
+                              ></div>
                               {countries?.length > 0 &&
                                 countries.map((item, index) => (
                                   <Dropdown.Item
@@ -389,7 +394,7 @@ const BuildingMaterial = () => {
                               variant=""
                               id="materialType"
                               name="materialType"
-                              className={`${
+                              className={`secondBox ${
                                 !!toggleBuildingType ? "dropdown-open" : ""
                               }`}
                             >
@@ -405,7 +410,15 @@ const BuildingMaterial = () => {
                                 "Building Type"
                               )}
                             </Dropdown.Toggle>
-                            <Dropdown.Menu onChange={onSelectBuildingType}>
+                            <Dropdown.Menu
+                              className="secondBoxItems"
+                              onChange={onSelectBuildingType}
+                            >
+                              <div
+                                className={`${
+                                  !!toggleBuildingType ? "border-t" : ""
+                                }`}
+                              ></div>
                               {materialType?.length > 0 &&
                                 materialType.map((item, index) => (
                                   <Dropdown.Item
@@ -463,6 +476,11 @@ const BuildingMaterial = () => {
                               )}
                             </Dropdown.Toggle>
                             <Dropdown.Menu onChange={onChangeConstructionYear}>
+                              <div
+                                className={`${
+                                  !!toggleConstructionYear ? "border-t" : ""
+                                }`}
+                              ></div>
                               {constructionYears?.length > 0 &&
                                 constructionYears.map((item, index) => (
                                   <Dropdown.Item
@@ -507,7 +525,7 @@ const BuildingMaterial = () => {
                               variant=""
                               id="buildingAppearance"
                               name="buildingAppearance"
-                              className={`${
+                              className={`secondBox ${
                                 !!toggleBuildingAppearance
                                   ? "dropdown-open"
                                   : ""
@@ -526,8 +544,14 @@ const BuildingMaterial = () => {
                               )}
                             </Dropdown.Toggle>
                             <Dropdown.Menu
+                              className="secondBoxItems"
                               onChange={onChangeBuildingAppearance}
                             >
+                              <div
+                                className={`${
+                                  !!toggleBuildingAppearance ? "border-t" : ""
+                                }`}
+                              ></div>
                               {buildingAppearance?.length > 0 &&
                                 buildingAppearance.map((item, index) => (
                                   <Dropdown.Item
@@ -686,13 +710,6 @@ const BuildingMaterial = () => {
                   selEnergeOptionData={selEnergeOption}
                 />
               </div>
-            </div>
-            <div
-              className={`${toggle ? "position-relative end-0" : ""} end-flex`}
-            >
-              <button type="submit" className="Pay-btn">
-                NEXT
-              </button>
             </div>
           </div>
         </section>

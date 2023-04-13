@@ -1436,19 +1436,20 @@ img.okik {
 }
 @media only screen and (max-width: 1504px) and (min-width: 1024px) {
   .left-wrp {
-    max-width: 485px !important;
+    /* max-width: 457px !important;
+    min-width: 457px !important; */
   }
   .rightContent {
-    max-width: 500px !important;
+    max-width: 560px !important;
   }
 }
 .be-modal {
   padding: 28px 0 0 295px !important;
 }
 .left-wrp {
-  min-width: 457px;
+  width: 456px;
   border-radius: 4px;
-  position: fixed;
+  /* position: fixed; */
 }
 
 .bui-materail-img-container {
@@ -1501,9 +1502,24 @@ img.okik {
   margin-left: auto;
 }
 .rightContent {
-  max-width: 560px;
+  /* width: 560px; */
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+  height: 521px;
+}
+.scroll-inline {
+  height: 630px;
+}
+.rightContent::-webkit-scrollbar {
+  width: 9px;
+  height: 402px !important;
+}
+.rightContent::-webkit-scrollbar-thumb {
+  border: 1px solid #dcdcdc;
+  background: #f1f1f1;
+  border-radius: 16px;
+  height: 402px !important;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -1537,7 +1553,7 @@ img.okik {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 28px;
+  padding: 10px 27px;
   gap: 20px;
 }
 .items-row .items {
@@ -1638,7 +1654,7 @@ a.next-btnes {
 .end-flex {
   display: flex;
   align-items: flex-end;
-  margin: 30px 0;
+  margin: 0 20px 5px 0;
   justify-content: end;
   position: absolute;
   bottom: 0;
@@ -1702,7 +1718,7 @@ label.no-1.tow {
 
 .table-pading {
   display: grid;
-  gap: 20px;
+  gap: 15px;
   padding: 32px 48px 20px 16px;
 }
 
@@ -1762,10 +1778,11 @@ label.no-1.qw {
 }
 .secondStep {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
-  gap: 15px;
-  margin-right: 10px;
+  /* gap: 15px; */
+  /* margin-right: 10px; */
+  width: 100%;
 }
 
 /* .side-left::after {
@@ -4841,25 +4858,34 @@ img.hgyu {
 }
 
 .dropdownBox {
-  box-shadow: 0px 4px 10px #1c1c1c21;
+  /* box-shadow: 0px 4px 10px #1c1c1c21; */
   color: #f1f1f1;
+}
+.secondStep .dropdown {
+  padding: 0 !important;
 }
 .secondStep .dropdown .dropdown-toggle {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 242px;
+  width: 216px;
   color: #013a67;
   height: 38px;
-  padding: 0 25px;
+  padding: 9px 0 0 21px;
   font: normal normal 500 13px/18px Poppins;
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
   background-image: url("../img/Home-Page/homeFinal/downArrow.svg");
-  background-position: calc(100% - 20px) calc(1em + 2px),
+  background-position: calc(100% - 22px) calc(1em + 6px),
     calc(100% - 15px) calc(1em + 2px), 100% 0 !important;
   background-size: 11px 8px !important;
   background-repeat: no-repeat !important;
+}
+.secondStep .dropdown .secondBox {
+  width: 238px !important;
+}
+.secondStep .dropdown .secondBoxItems {
+  width: 238px !important;
 }
 .disable-step-container button {
   color: #dcdcdc !important;
@@ -4881,30 +4907,36 @@ img.hgyu {
   background: #f1f1f1 0% 0% no-repeat padding-box !important;
   border-radius: 4px !important;
 }
+.secondStep .border-t {
+  height: 0px;
+  margin: 0 12px;
+  border: 1px solid #f1f1f1;
+}
 .secondStep .dropdown-item {
-  margin-bottom: 10px;
+  margin-bottom: 4px;
   border-radius: 4px;
-  padding: 0 0.5rem;
+  padding: 4px 10px 0;
+  margin-top: 5px;
 }
 .secondStep .dropdown-item:hover {
   border-radius: 4px;
 }
 .secondStep .dropdown-menu {
-  padding: 10px !important;
-  width: 242px !important;
+  margin: -2px 0 0px 0 !important;
+  padding: 10px 10px 0 !important;
+  width: 217px !important;
   background: #ffffff 0% 0% no-repeat padding-box !important;
-  box-shadow: 0px 4px 10px #1c1c1c21 !important;
-  border: 1px solid #dcdcdc !important;
+  /* box-shadow: 0px 4px 10px #1c1c1c21 !important; */
+  border: 2px solid #1c1c1c21 !important;
   border-top: none !important;
   border-radius: 0px 0px 4px 4px !important;
-  opacity: 1 !important;
   transform: translate3d(0px, 38px, 0px) !important;
 }
 .secondStep .dropdown-menu .items {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0px;
+  padding: 9px 0px;
 }
 .secondStep .dropdown-menu .items .selected-items {
   width: 12px;
@@ -4943,14 +4975,15 @@ img.hgyu {
   display: contents;
 }
 .secondStep .brd {
-  border: 1px solid #dcdcdc !important;
+  /* border-top: 1px solid #dcdcdc !important; */
   border-bottom: none !important;
 }
 .secondStep .dropdown-open {
   background: #ffffff 0% 0% no-repeat padding-box !important;
-  box-shadow: 0px 4px 10px #1c1c1c21 !important;
-  min-width: 242px !important;
-  border-radius: 4px 4px 0px 0px !important;
+  /* box-shadow: 1px -1px 0px 0px #1c1c1c21 !important; */
+  border: 2px solid #1c1c1c21;
+  width: 217px !important;
+  border-radius: 0 !important;
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
   background-image: url("../img/Home-Page/homeFinal/UpArrow.svg") !important;
@@ -4970,7 +5003,7 @@ img.hgyu {
 .country-items {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 17px;
 }
 .country-items img {
   width: 16px;
