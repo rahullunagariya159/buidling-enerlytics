@@ -149,13 +149,12 @@ function LoadProject() {
                         >
                           <div>
                             {/* <img src="assets/img/LoadExisting/3d Project page.png" className="w3d-Project" alt="" /> */}
+                            {console.log(item)}
                             <img
                               src={
-                                item &&
-                                item.configurations &&
-                                item.configurations.length
-                                  ? item.configurations[0].image
-                                  : "assets/img/LoadExisting/3d Project page.png"
+                                item.configurations[0]?.image
+                                  ? item.configurations[0]?.image
+                                  : "assets/img/Existing-Projects/existing-project-default.png"
                               }
                               className="w3d-Project"
                               alt=""
