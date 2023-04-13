@@ -196,649 +196,688 @@ const ShowDetails = ({
                 <div className="main-table">
                   <div className="main-title">General</div>
                   <div className="items-row">
-                    <div className="items">
-                      {/* <p>Heat tramission</p> */}
-                      <p>Air tightness</p>
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="gAirTightness"
-                            onChange={(e) =>
-                              onSelectOption(e, "gInfilRates", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="2.0" value="High" data-extra="2.0">
-                              High
-                            </option>
-                            <option key="1.0" value="Medium" data-extra="1.0">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
-                    </div>
-                    <div className="items">
-                      <p>Infiltration rates [1/h]</p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        id="gInfilRates"
-                        name="gInfilRates"
-                      />
-                      {errors.gInfilRates && touched.gInfilRates ? (
-                        <div className="building-material-form-err">
-                          {errors.gInfilRates}
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-                  <div className="items-row">
-                    <div className="items">
-                      <p>Building density</p>
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="buildingDensity"
-                            onChange={(e) =>
-                              onSelectOption(e, "gAbsorptivity", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="500.0" value="High" data-extra="500.0">
-                              High
-                            </option>
-                            <option
-                              key="250.0"
-                              value="Medium"
-                              data-extra="250.0"
+                    <div className="sub-items">
+                      <div className="items">
+                        {/* <p>Heat tramission</p> */}
+                        <p>Air tightness</p>
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="gAirTightness"
+                              onChange={(e) =>
+                                onSelectOption(e, "gInfilRates", setFieldValue)
+                              }
                             >
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="2.0" value="High" data-extra="2.0">
+                                High
+                              </option>
+                              <option key="1.0" value="Medium" data-extra="1.0">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>Infiltration rates [1/h]</p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          id="gInfilRates"
+                          name="gInfilRates"
+                        />
+                      </div>
                     </div>
-                    <div className="items">
-                      <p>
-                        Absorptivity [Wh/m<sup>2</sup>k]
-                      </p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="gAbsorptivity"
-                        id="gAbsorptivity"
-                      />
-                      {errors.gAbsorptivity && touched.gAbsorptivity ? (
-                        <div className="building-material-form-err">
-                          {errors.gAbsorptivity}
-                        </div>
-                      ) : null}
-                    </div>
+                    {errors.gInfilRates && touched.gInfilRates ? (
+                      <div className="building-material-form-err">
+                        {errors.gInfilRates}
+                      </div>
+                    ) : null}
                   </div>
                   <div className="items-row">
-                    <div className="items">
-                      <p>Energy bridges</p>
-
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="energyBridges"
-                            onChange={(e) =>
-                              onSelectOption(e, "gUValue", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="10.0" value="High" data-extra="10.0">
-                              High
-                            </option>
-                            <option key="5.0" value="Medium" data-extra="5.0">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Building density</p>
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="buildingDensity"
+                              onChange={(e) =>
+                                onSelectOption(
+                                  e,
+                                  "gAbsorptivity",
+                                  setFieldValue,
+                                )
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option
+                                key="500.0"
+                                value="High"
+                                data-extra="500.0"
+                              >
+                                High
+                              </option>
+                              <option
+                                key="250.0"
+                                value="Medium"
+                                data-extra="250.0"
+                              >
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>
+                          Absorptivity [Wh/m<sup>2</sup>k]
+                        </p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="gAbsorptivity"
+                          id="gAbsorptivity"
+                        />
+                      </div>
                     </div>
-                    <div className="items">
-                      <p>
-                        U-value [W/(m<sup>2</sup>K)]
-                      </p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="gUValue"
-                        id="gUValue"
-                      />
-                      {errors.gUValue && touched.gUValue ? (
-                        <div className="building-material-form-err">
-                          {errors.gUValue}
-                        </div>
-                      ) : null}
+                    {errors.gAbsorptivity && touched.gAbsorptivity ? (
+                      <div className="building-material-form-err">
+                        {errors.gAbsorptivity}
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="items-row">
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Energy bridges</p>
+
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="energyBridges"
+                              onChange={(e) =>
+                                onSelectOption(e, "gUValue", setFieldValue)
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="10.0" value="High" data-extra="10.0">
+                                High
+                              </option>
+                              <option key="5.0" value="Medium" data-extra="5.0">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>
+                          U-value [W/(m<sup>2</sup>K)]
+                        </p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="gUValue"
+                          id="gUValue"
+                        />
+                      </div>
                     </div>
                   </div>
+                  {errors.gUValue && touched.gUValue ? (
+                    <div className="building-material-form-err">
+                      {errors.gUValue}
+                    </div>
+                  ) : null}
                 </div>
                 <div className="main-table">
                   <div className="main-title">Opaque surfaces</div>
                   <div className="sub-title">Walls</div>
                   <div className="border-btm"></div>
                   <div className="items-row">
-                    <div className="items">
-                      <p>Color</p>
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="wColor"
-                            onChange={(e) =>
-                              onSelectOption(e, "oAbsorption", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="1.0" value="High" data-extra="1.0">
-                              High
-                            </option>
-                            <option key="0.5" value="Medium" data-extra="0.5">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
-                    </div>
-                    <div className="items">
-                      <p>Absorption coefficient</p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="oAbsorption"
-                        id="oAbsorption"
-                      />
-                      {errors.oAbsorption && touched.oAbsorption ? (
-                        <div className="building-material-form-err">
-                          {errors.oAbsorption}
-                        </div>
-                      ) : null}
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Color</p>
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="wColor"
+                              onChange={(e) =>
+                                onSelectOption(e, "oAbsorption", setFieldValue)
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="1.0" value="High" data-extra="1.0">
+                                High
+                              </option>
+                              <option key="0.5" value="Medium" data-extra="0.5">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>Absorption coefficient</p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="oAbsorption"
+                          id="oAbsorption"
+                        />
+                      </div>
                     </div>
                   </div>
+                  {errors.oAbsorption && touched.oAbsorption ? (
+                    <div className="building-material-form-err">
+                      {errors.oAbsorption}
+                    </div>
+                  ) : null}
                   <div className="items-row">
-                    <div className="items">
-                      <p>Thermal conductivity</p>
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="wThermal"
-                            onChange={(e) =>
-                              onSelectOption(e, "oUValue", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="10.0" value="High" data-extra="10.0">
-                              High
-                            </option>
-                            <option key="5.0" value="Medium" data-extra="5.0">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
-                    </div>
-                    <div className="items">
-                      <p>
-                        U-value [W/(m<sup>2</sup>K)]
-                      </p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="oUValue"
-                        id="oUValue"
-                      />
-                      {errors.oUValue && touched.oUValue ? (
-                        <div className="building-material-form-err">
-                          {errors.oUValue}
-                        </div>
-                      ) : null}
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Thermal conductivity</p>
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="wThermal"
+                              onChange={(e) =>
+                                onSelectOption(e, "oUValue", setFieldValue)
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="10.0" value="High" data-extra="10.0">
+                                High
+                              </option>
+                              <option key="5.0" value="Medium" data-extra="5.0">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>
+                          U-value [W/(m<sup>2</sup>K)]
+                        </p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="oUValue"
+                          id="oUValue"
+                        />
+                      </div>
                     </div>
                   </div>
+                  {errors.oUValue && touched.oUValue ? (
+                    <div className="building-material-form-err">
+                      {errors.oUValue}
+                    </div>
+                  ) : null}
                   <div className="sub-title">Floor</div>
                   <div className="border-btm"></div>
                   <div className="items-row">
-                    <div className="items">
-                      <p>Thermal conductivity</p>
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Thermal conductivity</p>
 
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="fThermal"
-                            onChange={(e) =>
-                              onSelectOption(e, "fUValue", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="10.0" value="High" data-extra="10.0">
-                              High
-                            </option>
-                            <option key="5.0" value="Medium" data-extra="5.0">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
-                    </div>
-                    <div className="items">
-                      <p>
-                        U-value [W/(m<sup>2</sup>K)]
-                      </p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="fUValue"
-                        id="fUValue"
-                      />
-                      {errors.fUValue && touched.fUValue ? (
-                        <div className="building-material-form-err">
-                          {errors.fUValue}
-                        </div>
-                      ) : null}
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="fThermal"
+                              onChange={(e) =>
+                                onSelectOption(e, "fUValue", setFieldValue)
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="10.0" value="High" data-extra="10.0">
+                                High
+                              </option>
+                              <option key="5.0" value="Medium" data-extra="5.0">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>
+                          U-value [W/(m<sup>2</sup>K)]
+                        </p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="fUValue"
+                          id="fUValue"
+                        />
+                      </div>
                     </div>
                   </div>
+                  {errors.fUValue && touched.fUValue ? (
+                    <div className="building-material-form-err">
+                      {errors.fUValue}
+                    </div>
+                  ) : null}
                   <div className="sub-title">Roof</div>
                   <div className="border-btm"></div>
                   <div className="items-row">
-                    <div className="items">
-                      <p>Color</p>
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="roofColor"
-                            onChange={(e) =>
-                              onSelectOption(e, "rAbsorption", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="1.0" value="High" data-extra="1.0">
-                              High
-                            </option>
-                            <option key="0.5" value="Medium" data-extra="0.5">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
-                    </div>
-                    <div className="items">
-                      <p>Absorption coefficient</p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="rAbsorption"
-                        id="rAbsorption"
-                      />
-                      {errors.rAbsorption && touched.rAbsorption ? (
-                        <div className="building-material-form-err">
-                          {errors.rAbsorption}
-                        </div>
-                      ) : null}
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Color</p>
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="roofColor"
+                              onChange={(e) =>
+                                onSelectOption(e, "rAbsorption", setFieldValue)
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="1.0" value="High" data-extra="1.0">
+                                High
+                              </option>
+                              <option key="0.5" value="Medium" data-extra="0.5">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>Absorption coefficient</p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="rAbsorption"
+                          id="rAbsorption"
+                        />
+                      </div>
                     </div>
                   </div>
+                  {errors.rAbsorption && touched.rAbsorption ? (
+                    <div className="building-material-form-err">
+                      {errors.rAbsorption}
+                    </div>
+                  ) : null}
                   <div className="items-row">
-                    <div className="items">
-                      <p>Thermal conductivity</p>
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="thermalConductivity"
-                            onChange={(e) =>
-                              onSelectOption(e, "rUValue", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="10.0" value="High" data-extra="10.0">
-                              High
-                            </option>
-                            <option key="5.0" value="Medium" data-extra="5.0">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
-                    </div>
-                    <div className="items">
-                      <p>
-                        U-value [W/(m<sup>2</sup>K)]
-                      </p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="rUValue"
-                        id="rUValue"
-                      />
-                      {errors.rUValue && touched.rUValue ? (
-                        <div className="building-material-form-err">
-                          {errors.rUValue}
-                        </div>
-                      ) : null}
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Thermal conductivity</p>
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="thermalConductivity"
+                              onChange={(e) =>
+                                onSelectOption(e, "rUValue", setFieldValue)
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="10.0" value="High" data-extra="10.0">
+                                High
+                              </option>
+                              <option key="5.0" value="Medium" data-extra="5.0">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>
+                          U-value [W/(m<sup>2</sup>K)]
+                        </p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="rUValue"
+                          id="rUValue"
+                        />
+                      </div>
                     </div>
                   </div>
+                  {errors.rUValue && touched.rUValue ? (
+                    <div className="building-material-form-err">
+                      {errors.rUValue}
+                    </div>
+                  ) : null}
                 </div>
                 <div className="main-table">
                   <div className="main-title">Windows</div>
                   <div className="sub-title">Glazing</div>
                   <div className="border-btm"></div>
                   <div className="items-row">
-                    <div className="items">
-                      <p>Thermal conductivity</p>
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="wThermal"
-                            onChange={(e) =>
-                              onSelectOption(e, "wGUValue", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="10.0" value="High" data-extra="10.0">
-                              High
-                            </option>
-                            <option key="5.0" value="Medium" data-extra="5.0">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
-                    </div>
-                    <div className="items">
-                      <p>
-                        U-value [W/(m<sup>2</sup>K)]
-                      </p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="wGUValue"
-                        id="wGUValue"
-                      />
-                      {errors.wGUValue && touched.wGUValue ? (
-                        <div className="building-material-form-err">
-                          {errors.wGUValue}
-                        </div>
-                      ) : null}
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Thermal conductivity</p>
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="wThermal"
+                              onChange={(e) =>
+                                onSelectOption(e, "wGUValue", setFieldValue)
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="10.0" value="High" data-extra="10.0">
+                                High
+                              </option>
+                              <option key="5.0" value="Medium" data-extra="5.0">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>
+                          U-value [W/(m<sup>2</sup>K)]
+                        </p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="wGUValue"
+                          id="wGUValue"
+                        />
+                      </div>
                     </div>
                   </div>
+                  {errors.wGUValue && touched.wGUValue ? (
+                    <div className="building-material-form-err">
+                      {errors.wGUValue}
+                    </div>
+                  ) : null}
                   <div className="items-row">
-                    <div className="items">
-                      <p>Energy transmissivity</p>
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="wEnergy"
-                            onChange={(e) =>
-                              onSelectOption(e, "wGCoefficient", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="1.0" value="High" data-extra="1.0">
-                              High
-                            </option>
-                            <option key="0.5" value="Medium" data-extra="0.5">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
-                    </div>
-                    <div className="items">
-                      <p>Coefficient</p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="wGCoefficient"
-                        id="wGCoefficient"
-                      />
-                      {errors.wGCoefficient && touched.wGCoefficient ? (
-                        <div className="building-material-form-err">
-                          {errors.wGCoefficient}
-                        </div>
-                      ) : null}
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Energy transmissivity</p>
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="wEnergy"
+                              onChange={(e) =>
+                                onSelectOption(
+                                  e,
+                                  "wGCoefficient",
+                                  setFieldValue,
+                                )
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="1.0" value="High" data-extra="1.0">
+                                High
+                              </option>
+                              <option key="0.5" value="Medium" data-extra="0.5">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>Coefficient</p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="wGCoefficient"
+                          id="wGCoefficient"
+                        />
+                      </div>
                     </div>
                   </div>
+                  {errors.wGCoefficient && touched.wGCoefficient ? (
+                    <div className="building-material-form-err">
+                      {errors.wGCoefficient}
+                    </div>
+                  ) : null}
                   <div className="items-row">
-                    <div className="items">
-                      <p>Light transmissivity</p>
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="wLight"
-                            onChange={(e) =>
-                              onSelectOption(
-                                e,
-                                "wGLightCoefficient",
-                                setFieldValue,
-                              )
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="1.0" value="High" data-extra="1.0">
-                              High
-                            </option>
-                            <option key="0.5" value="Medium" data-extra="0.5">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
-                    </div>
-                    <div className="items">
-                      <p>Coefficient</p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="wGLightCoefficient"
-                        id="wGLightCoefficient"
-                      />
-                      {errors.wGLightCoefficient &&
-                      touched.wGLightCoefficient ? (
-                        <div className="building-material-form-err">
-                          {errors.wGLightCoefficient}
-                        </div>
-                      ) : null}
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Light transmissivity</p>
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="wLight"
+                              onChange={(e) =>
+                                onSelectOption(
+                                  e,
+                                  "wGLightCoefficient",
+                                  setFieldValue,
+                                )
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="1.0" value="High" data-extra="1.0">
+                                High
+                              </option>
+                              <option key="0.5" value="Medium" data-extra="0.5">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>Coefficient</p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="wGLightCoefficient"
+                          id="wGLightCoefficient"
+                        />
+                      </div>
                     </div>
                   </div>
+                  {errors.wGLightCoefficient && touched.wGLightCoefficient ? (
+                    <div className="building-material-form-err">
+                      {errors.wGLightCoefficient}
+                    </div>
+                  ) : null}
                   <div className="sub-title">Frames</div>
                   <div className="border-btm"></div>
                   <div className="items-row">
-                    <div className="items">
-                      <p>Frame share</p>
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="wFrame"
-                            onChange={(e) =>
-                              onSelectOption(e, "fShareValue", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="1.0" value="High" data-extra="1.0">
-                              High
-                            </option>
-                            <option key="0.5" value="Medium" data-extra="0.5">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
-                    </div>
-                    <div className="items">
-                      <p>Share value</p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="fShareValue"
-                        id="fShareValue"
-                      />
-                      {errors.fShareValue && touched.fShareValue ? (
-                        <div className="building-material-form-err">
-                          {errors.fShareValue}
-                        </div>
-                      ) : null}
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Frame share</p>
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="wFrame"
+                              onChange={(e) =>
+                                onSelectOption(e, "fShareValue", setFieldValue)
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="1.0" value="High" data-extra="1.0">
+                                High
+                              </option>
+                              <option key="0.5" value="Medium" data-extra="0.5">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>Share value</p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="fShareValue"
+                          id="fShareValue"
+                        />
+                      </div>
                     </div>
                   </div>
+                  {errors.fShareValue && touched.fShareValue ? (
+                    <div className="building-material-form-err">
+                      {errors.fShareValue}
+                    </div>
+                  ) : null}
                   <div className="items-row">
-                    <div className="items">
-                      <p>Thermal conductivity</p>
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="fThermal"
-                            onChange={(e) =>
-                              onSelectOption(e, "fUValue", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="10.0" value="High" data-extra="10.0">
-                              High
-                            </option>
-                            <option key="5.0" value="Medium" data-extra="5.0">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
-                    </div>
-                    <div className="items">
-                      <p>
-                        U-value [W/(m<sup>2</sup>K)]
-                      </p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="fUValue"
-                        id="fUValue"
-                      />
-                      {errors.fUValue && touched.fUValue ? (
-                        <div className="building-material-form-err">
-                          {errors.fUValue}
-                        </div>
-                      ) : null}
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Thermal conductivity</p>
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="fThermal"
+                              onChange={(e) =>
+                                onSelectOption(e, "fUValue", setFieldValue)
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="10.0" value="High" data-extra="10.0">
+                                High
+                              </option>
+                              <option key="5.0" value="Medium" data-extra="5.0">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>
+                          U-value [W/(m<sup>2</sup>K)]
+                        </p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="fUValue"
+                          id="fUValue"
+                        />
+                      </div>
                     </div>
                   </div>
+                  {errors.fUValue && touched.fUValue ? (
+                    <div className="building-material-form-err">
+                      {errors.fUValue}
+                    </div>
+                  ) : null}
                   <div className="items-row">
-                    <div className="items">
-                      <p>Joint frame value</p>
-                      <Field name="dropdown">
-                        {({ field, form }) => (
-                          <select
-                            {...field}
-                            name="fJointFrame"
-                            onChange={(e) =>
-                              onSelectOption(e, "fJointValue", setFieldValue)
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="5.0" value="High" data-extra="5.0">
-                              High
-                            </option>
-                            <option key="2.5" value="Medium" data-extra="2.5">
-                              Medium
-                            </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
-                              Low
-                            </option>
-                          </select>
-                        )}
-                      </Field>
-                    </div>
-                    <div className="items">
-                      <p>F-value [W/(mK)]</p>
-                      <Field
-                        type="number"
-                        placeholder=""
-                        name="fJointValue"
-                        id="fJointValue"
-                      />
-                      {errors.fJointValue && touched.fJointValue ? (
-                        <div className="building-material-form-err">
-                          {errors.fJointValue}
-                        </div>
-                      ) : null}
+                    <div className="sub-items">
+                      <div className="items">
+                        <p>Joint frame value</p>
+                        <Field name="dropdown">
+                          {({ field, form }) => (
+                            <select
+                              {...field}
+                              name="fJointFrame"
+                              onChange={(e) =>
+                                onSelectOption(e, "fJointValue", setFieldValue)
+                              }
+                            >
+                              <option key="" value="" data-extra="">
+                                Custom
+                              </option>
+                              <option key="5.0" value="High" data-extra="5.0">
+                                High
+                              </option>
+                              <option key="2.5" value="Medium" data-extra="2.5">
+                                Medium
+                              </option>
+                              <option key="0.0" value="Low" data-extra="0.0">
+                                Low
+                              </option>
+                            </select>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="items">
+                        <p>F-value [W/(mK)]</p>
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="fJointValue"
+                          id="fJointValue"
+                        />
+                      </div>
                     </div>
                   </div>
+                  {errors.fJointValue && touched.fJointValue ? (
+                    <div className="building-material-form-err">
+                      {errors.fJointValue}
+                    </div>
+                  ) : null}
                 </div>
                 <div
                   className={`${

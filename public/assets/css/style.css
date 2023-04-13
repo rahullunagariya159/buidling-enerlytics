@@ -1550,26 +1550,27 @@ img.okik {
   margin: 0px 18px;
 }
 .items-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 27px;
-  gap: 20px;
-}
-.items-row .items {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: end;
+  gap: 0px;
+}
+.items-row .sub-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 27px 5px 27px;
+  gap: 20px;
 }
 
-.items-row .items p {
+.items-row .sub-items .items p {
   font: normal normal 600 12px/22px Poppins;
   letter-spacing: 0.31px;
   color: #8d8d8d;
   margin-bottom: 0;
 }
-.items-row .items input {
+.items-row .sub-items .items input {
   font: normal normal 600 12px/18px Poppins;
   letter-spacing: 0.37px;
   color: #013a67;
@@ -1580,11 +1581,11 @@ img.okik {
   border: 1px solid #dcdcdc;
   border-radius: 4px;
 }
-.items-row .items input::placeholder {
+.items-row .sub-items .items input::placeholder {
   color: #013a67;
   opacity: 1; /* Firefox */
 }
-.items-row .items select {
+.items-row .sub-items .items select {
   font: normal normal 600 12px/18px Poppins;
   letter-spacing: 0.37px;
   color: #013a67;
@@ -1654,7 +1655,7 @@ a.next-btnes {
 .end-flex {
   display: flex;
   align-items: flex-end;
-  margin: 0 20px 5px 0;
+  margin: 10px 20px 5px 0;
   justify-content: end;
   position: absolute;
   bottom: 0;
