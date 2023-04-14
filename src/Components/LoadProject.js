@@ -303,7 +303,7 @@ function LoadProject() {
                               <div className="small-img-box">
                                 <img
                                   src={
-                                    selectedProjects?.configurations?.length > 0
+                                    selectedProjects?.configurations?.[0]?.image
                                       ? selectedProjects?.configurations?.[0]
                                           ?.image
                                       : "assets/img/LoadExisting/3d Project page.png"
@@ -317,7 +317,7 @@ function LoadProject() {
                               <div className="small-img-box">
                                 <img
                                   src={
-                                    selectedProjects?.configurations?.length > 0
+                                    selectedProjects?.configurations?.[0]?.image
                                       ? selectedProjects?.configurations?.[0]
                                           ?.image
                                       : "assets/img/LoadExisting/3d Project page.png"
@@ -424,7 +424,11 @@ function LoadProject() {
                                                 }
                                               />
                                             </div>
-                                            <span>{item && item.name}</span>
+                                            <span className="configuration-name">
+                                              {item?.name
+                                                ? item.name
+                                                : "Wall Improved Wall Improved"}
+                                            </span>
                                           </div>
                                         </td>
                                         <td className="main-td-title">

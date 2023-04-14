@@ -3015,8 +3015,8 @@ h6.EXISTING-title {
 
 .EXISTING-grid {
   display: grid;
-  gap: 34px;
-  padding: 0 32px 24px;
+  /* gap: 34px; */
+  padding: 0 32px 19px;
 }
 
 input.Search-project {
@@ -3064,16 +3064,17 @@ img.search-ic {
 }
 
 .EXISTING-left-box {
-  padding: 0 32px 8px;
+  padding: 0 32px 0px;
 }
 
 .first-card1 {
+  box-shadow: 0px 0px 70px #00000024;
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid #f1f1f1;
   border-radius: 12px;
   display: flex;
   align-items: center;
-  padding: 12px 16px;
+  padding: 0 14px;
   gap: 24px;
   margin-bottom: 40px;
 }
@@ -3128,7 +3129,9 @@ p.lest-pra-8px {
 
 img.w3d-Project {
   width: 174px;
-  height: 178px;
+  height: 156px;
+  border-radius: 8px 0px 0px 8px;
+  border: none;
 }
 
 img.dots-11px {
@@ -3144,9 +3147,10 @@ img.dots-11px {
 
 .EXISTING-card-all {
   overflow-y: auto;
-  margin-right: 8px;
-  height: 67vh;
-  padding: 32px 32px 0;
+  height: 59vh;
+  margin: 32px 5px 0 32px;
+  padding: 0px 32px 0 0;
+  box-shadow: -44px 13px 70px #00000024;
 }
 .EXISTING-card-all::-webkit-scrollbar {
   width: 9px;
@@ -5056,4 +5060,10 @@ img.hgyu {
 
 .checkBoxOutline-table input[type="checkbox"]:checked::before {
   transform: scale(1);
+}
+.configuration-name {
+  width: 143px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
