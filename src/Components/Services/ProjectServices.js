@@ -2,7 +2,7 @@ import { ApiDelete, ApiGet, ApiPost, ApiPut } from "../../utils/Networking";
 
 export const listProjects = async (userId) => {
   return new Promise((resolve, reject) => {
-    ApiPost(`/projects`, userId)
+    ApiPost(`/projects`, { userId })
       .then(function (response) {
         resolve(response);
       })
@@ -14,7 +14,7 @@ export const listProjects = async (userId) => {
 
 export const listProjectConfigurations = async (projectId) => {
   return new Promise((resolve, reject) => {
-    ApiPost(`/project-configurations`, projectId)
+    ApiPost(`/project-configurations`, { projectId })
       .then(function (response) {
         resolve(response);
       })

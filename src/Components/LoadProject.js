@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { ReactSession } from "react-client-session";
 
 import { useNavigate } from "react-router-dom";
-import { listProjects } from "./Services/UserService";
+import {
+  listProjects,
+  listProjectConfigurations,
+} from "./Services/ProjectServices";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
 import Navbar from "./Navbar";
@@ -10,6 +13,8 @@ import { useAuth } from "../Context/AuthProvider";
 import { Modal } from "react-bootstrap";
 import LinkButton from "./LinkButton";
 import CancelButton from "./CancelButton";
+import LoadingCover from "./LoadingCover";
+import { Routes } from "../navigation/Routes";
 
 function LoadProject() {
   const navigate = useNavigate();
@@ -17,67 +22,94 @@ function LoadProject() {
   const [btnClass, setBtnClass] = useState("btn-disabled");
   const [configSelected, setConfigSelected] = useState(0);
   const [selectedProjects, setSelectedProjects] = useState([]);
+  const [projectConfiguration, setProjectConfiguration] = useState([]);
   const { userId: userID } = useAuth();
   const [isShow, invokeModal] = useState(false);
   const [isDelete, setDeleteModal] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
+  const [selectedConfiguration, setSelectedConfiguration] = useState([]);
 
-  const handleCardClick = (selectedItem, index) => {
+  const handleCardClick = async (selectedItem, index) => {
+    setShowLoader(true);
     setSelectedProjects(selectedItem);
+    setProjectConfiguration([]);
     const elm = document.querySelectorAll(".card-container-selected");
     elm.forEach((element) => {
       element.classList.remove("active");
     });
 
-    console.log(selectedItem);
-
-    if (!selectedItem.configurations.length) {
-      setBtnClass("btn-disabled");
-      setConfigSelected(0);
-    } else {
-      setBtnClass("clickable");
-      setConfigSelected(1);
-    }
-    document.querySelector(`.selected-item-${index}`).classList.add("active");
+    await listProjectConfigurations(selectedItem?.id)
+      .then((response) => {
+        if (response?.status === 200 && response?.data?.data?.length > 0) {
+          setBtnClass("clickable");
+          // setConfigSelected(1);
+          setProjectConfiguration(response?.data?.data);
+          setSelectedConfiguration([]);
+        } else {
+          setBtnClass("btn-disabled");
+          // setConfigSelected(0);
+        }
+        document
+          .querySelector(`.selected-item-${index}`)
+          .classList.add("active");
+      })
+      .catch((error) => {
+        console.log({ error });
+      })
+      .finally(() => {
+        setShowLoader(false);
+      });
   };
 
-  const handleListProjects = (ID) => {
-    const payload = {
-      userId: ID,
-    };
-    listProjects(payload).then((response) => {
-      if (response?.error) {
-        toast.error(response?.error);
-      } else {
-        // data comes here..
-        if (response?.data?.length > 0) {
-          console.log(response);
-          setProjectList(response?.data);
-          setSelectedProjects(response?.data?.[0]);
+  const handleLoadProject = (selProjectConfig) => {
+    if (selProjectConfig?.id) {
+      ReactSession.set("project_id", selProjectConfig?.projectId);
+      ReactSession.set("configuration_id", selProjectConfig?.id);
+
+      navigate(`${Routes.createProject}?name=` + selectedProjects?.name, {
+        state: {
+          projectId: selProjectConfig?.projectId,
+          configurationId: selProjectConfig?.id,
+        },
+      });
+    }
+  };
+
+  const handleConfigSelect = (value, projectConfig) => {
+    if (value) {
+      setSelectedConfiguration((prevState) => [...prevState, projectConfig]);
+      // setConfigSelected(1);
+      setBtnClass("clickable");
+    } else {
+      const unCheckedProjectConfig = selectedConfiguration.filter(
+        (item) => item?.id !== projectConfig.id,
+      );
+      setSelectedConfiguration(unCheckedProjectConfig);
+      // setConfigSelected(0);
+      if (unCheckedProjectConfig?.length === 0) {
+        setBtnClass("btn-disabled");
+      }
+    }
+  };
+
+  const onGetProjectLists = async () => {
+    setShowLoader(true);
+
+    await listProjects(userID)
+      .then((response) => {
+        if (response?.status === 200 && response?.data?.data?.length > 0) {
+          setProjectList(response?.data?.data);
+          // setSelectedProjects(response?.data?.data?.[0]);
+          handleCardClick(response?.data?.data[0], 0);
           document.querySelector(`.selected-item-0`).classList.add("active");
         }
-      }
-    });
-  };
-
-  const handleLoadProject = () => {
-    if (selectedProjects?.id) {
-      ReactSession.set("project_id", selectedProjects.id);
-      setTimeout(
-        (window.location.href = "/be-model?name=" + selectedProjects?.name),
-        2000,
-      );
-    }
-  };
-
-  const handleConfigSelect = (value) => {
-    console.log(value);
-    if (value) {
-      setConfigSelected(1);
-      setBtnClass("clickable");
-    } else {
-      setConfigSelected(0);
-      setBtnClass("btn-disabled");
-    }
+      })
+      .catch((error) => {
+        console.log({ error });
+      })
+      .finally(() => {
+        setShowLoader(false);
+      });
   };
 
   useEffect(() => {
@@ -88,11 +120,24 @@ function LoadProject() {
         : ReactSession.get("building_social_user");
 
     if (ReactSession.get("is_logged_in") && userID) {
-      handleListProjects(userID);
+      onGetProjectLists(userID);
     } else {
       navigate("/");
     }
-  }, []);
+  }, [userID]);
+
+  const removeSelConfig = (configId) => {
+    console.log({ configId });
+    setShowLoader(true);
+    const unCheckedProjectConfig = selectedConfiguration.filter(
+      (item) => item?.id !== configId,
+    );
+    if (unCheckedProjectConfig?.length === 0) {
+      setBtnClass("btn-disabled");
+    }
+    setSelectedConfiguration(unCheckedProjectConfig);
+    setShowLoader(false);
+  };
 
   return (
     <div>
@@ -149,12 +194,10 @@ function LoadProject() {
                         >
                           <div>
                             {/* <img src="assets/img/LoadExisting/3d Project page.png" className="w3d-Project" alt="" /> */}
-                            {console.log(item)}
+
                             <img
                               src={
-                                item.configurations[0]?.image
-                                  ? item.configurations[0]?.image
-                                  : "assets/img/Existing-Projects/existing-project-default.png"
+                                "assets/img/LoadExisting/3d Project page.png"
                               }
                               className="w3d-Project"
                               alt=""
@@ -237,9 +280,9 @@ function LoadProject() {
                                 <p className="lest-pra-8px">-</p>
                                 <p className="lest-pra-8px">
                                   {item &&
-                                    item.updated_at &&
+                                    item?.updated_at &&
                                     format(
-                                      new Date(parseInt(item.updated_at)),
+                                      new Date(parseInt(item?.updated_at)),
                                       "d MMM, yy",
                                     )}{" "}
                                   -{" "}
@@ -260,14 +303,14 @@ function LoadProject() {
                                 </p>
                                 <p className="lest-pra-8px">
                                   {item &&
-                                    item.updated_at &&
+                                    item?.updated_at &&
                                     format(
-                                      new Date(parseInt(item.updated_at)),
+                                      new Date(parseInt(item?.updated_at)),
                                       "d MMM, yy",
                                     )}
                                 </p>
                                 <p className="lest-pra-8px">
-                                  {item.configurations.length}
+                                  {item?.configurations?.length}
                                 </p>
                               </div>
                             </div>
@@ -285,7 +328,8 @@ function LoadProject() {
                         <div className="padind-24px">
                           <div className="Permanent-delete-flex">
                             <p className="Select-12px-var selected-config">
-                              {configSelected} configuration selected
+                              {selectedConfiguration?.length ?? 0} configuration
+                              selected
                             </p>
                             <div
                               onClick={() => invokeModal(!isShow)}
@@ -298,51 +342,59 @@ function LoadProject() {
                               />
                             </div>
                           </div>
-                          {btnClass === "clickable" ? (
-                            <div className="selected-project">
-                              <div className="small-img-box">
-                                <img
-                                  src={
-                                    selectedProjects?.configurations?.[0]?.image
-                                      ? selectedProjects?.configurations?.[0]
-                                          ?.image
-                                      : "assets/img/LoadExisting/3d Project page.png"
-                                  }
-                                  className="w3d-small"
-                                  alt=""
-                                />
-                                <a className="WALIMP">Basic</a>
-                                <button className="cancelIcon">X</button>
-                              </div>
-                              <div className="small-img-box">
-                                <img
-                                  src={
-                                    selectedProjects?.configurations?.[0]?.image
-                                      ? selectedProjects?.configurations?.[0]
-                                          ?.image
-                                      : "assets/img/LoadExisting/3d Project page.png"
-                                  }
-                                  className="w3d-small"
-                                  alt=""
-                                />
-                                <a className="WALIMP">Basic</a>
-                                <button className="cancelIcon">X</button>
-                              </div>
-                            </div>
-                          ) : (
-                            ""
-                          )}
+
+                          <div className="selected-project">
+                            {selectedConfiguration?.length > 0 &&
+                              selectedConfiguration?.map((item) => {
+                                return (
+                                  <div className="small-img-box">
+                                    <img
+                                      src={
+                                        "assets/img/LoadExisting/3d Project page.png"
+                                      }
+                                      className="w3d-small"
+                                      alt=""
+                                    />
+                                    <a className="WALIMP">{item?.name}</a>
+                                    <button
+                                      onClick={() => removeSelConfig(item?.id)}
+                                      className="cancelIcon"
+                                    >
+                                      X
+                                    </button>
+                                  </div>
+                                );
+                              })}
+                          </div>
+
                           <div className="five-flex-smae-btn">
-                            <a
-                              className={`five-btn-s-width ${btnClass}`}
-                              onClick={handleLoadProject}
-                            >
-                              <img
-                                src="assets/img/LoadExisting/view.svg"
-                                alt=""
-                              />
-                              View
-                            </a>
+                            {selectedConfiguration?.length < 2 && (
+                              <a
+                                className={`five-btn-s-width ${btnClass}`}
+                                onClick={() =>
+                                  handleLoadProject(selectedConfiguration[0])
+                                }
+                              >
+                                <img
+                                  src="assets/img/LoadExisting/view.svg"
+                                  alt=""
+                                />
+                                View
+                              </a>
+                            )}
+
+                            {selectedConfiguration?.length === 2 && (
+                              <a
+                                className={`five-btn-s-width ${btnClass}`}
+                                onClick={handleLoadProject}
+                              >
+                                <img
+                                  src="assets/img/LoadExisting/view.svg"
+                                  alt=""
+                                />
+                                Compare
+                              </a>
+                            )}
                             <a
                               className={`five-btn-s-width borders ${btnClass}`}
                               onClick={handleLoadProject}
@@ -404,68 +456,83 @@ function LoadProject() {
                                   <td className="main-td-head">ENERGY COST</td>
                                 </tr>
                               </thead>
-                              {selectedProjects?.configurations?.length > 0 &&
-                                selectedProjects?.configurations?.map(
-                                  (item, index) => (
-                                    <tbody>
-                                      <tr className="main-tr-row">
-                                        <td className="main-td-title bold">
-                                          <div className="Basic-flex">
-                                            <div className="checkBoxOutline-table ">
-                                              <input
-                                                name="items"
-                                                type="checkbox"
-                                                id="checkConfig"
-                                                defaultChecked="true"
-                                                onChange={(e) =>
-                                                  handleConfigSelect(
-                                                    e.target.checked,
-                                                  )
-                                                }
-                                              />
-                                            </div>
-                                            <span className="configuration-name">
-                                              {item?.name
-                                                ? item.name
-                                                : "Wall Improved Wall Improved"}
-                                            </span>
+                              {projectConfiguration?.length > 0 &&
+                                projectConfiguration?.map((item, index) => (
+                                  <tbody>
+                                    <tr className="main-tr-row">
+                                      <td className="main-td-title bold">
+                                        <div className="Basic-flex">
+                                          <div className="checkBoxOutline-table ">
+                                            <input
+                                              name="items"
+                                              type="checkbox"
+                                              checked={selectedConfiguration?.some(
+                                                (selItem) =>
+                                                  selItem?.id === item?.id,
+                                              )}
+                                              id="checkConfig"
+                                              onChange={(e) =>
+                                                handleConfigSelect(
+                                                  e.target.checked,
+                                                  item,
+                                                )
+                                              }
+                                            />
                                           </div>
-                                        </td>
-                                        <td className="main-td-title">
-                                          {item &&
-                                            item.created_at &&
-                                            format(
+                                          <span>{item?.name ?? "-"}</span>
+                                        </div>
+                                      </td>
+                                      <td className="main-td-title">
+                                        {item?.created_at
+                                          ? format(
                                               new Date(
                                                 parseInt(item.created_at),
                                               ),
                                               "d MMM, yy",
-                                            )}
-                                        </td>
-                                        <td className="main-td-title">
-                                          {item &&
-                                            item.updated_at &&
-                                            format(
+                                            )
+                                          : "-"}
+                                      </td>
+                                      <td className="main-td-title">
+                                        {item?.updated_at
+                                          ? format(
                                               new Date(
-                                                parseInt(item.updated_at),
+                                                parseInt(item?.updated_at),
                                               ),
                                               "d MMM, yy",
-                                            )}
-                                        </td>
-                                        <td className="main-td-title check-disable">
+                                            )
+                                          : "-"}
+                                      </td>
+                                      <td className="main-td-title check-disable">
+                                        {item?.status ? (
                                           <img
-                                            src="assets/img/LoadExisting/checked, verified.svg"
+                                            src="assets/img/LoadExisting/checked-verified.svg"
                                             className="padind-rig"
                                             alt=""
                                           />
-                                        </td>
-                                        <td className="main-td-title">-</td>
-                                        <td className="main-td-title black">
-                                          -
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  ),
-                                )}
+                                        ) : (
+                                          "-"
+                                        )}
+
+                                        {/* {item?.status ? "true" : "false"} */}
+                                      </td>
+                                      <td className="main-td-title">
+                                        {item?.results_available ? (
+                                          <img
+                                            src="assets/img/LoadExisting/checked-verified.svg"
+                                            className="padind-rig"
+                                            alt=""
+                                          />
+                                        ) : (
+                                          "-"
+                                        )}
+                                        {/* {item?.results_available ?? "-"} */}
+                                      </td>
+                                      <td className="main-td-title black">
+                                        {item?.energy_cost ?? "-"}
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                ))}
                             </table>
                           </div>
                         </div>
@@ -522,6 +589,7 @@ function LoadProject() {
           </div>
         </section>
       </div>
+      <LoadingCover show={showLoader} />
     </div>
   );
 }

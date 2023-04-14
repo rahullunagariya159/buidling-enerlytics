@@ -8,6 +8,7 @@ import Navbar from "./Navbar";
 import { Auth } from "aws-amplify";
 import LeftSidebar from "./LeftSidebar";
 import BuildingApp from "../BuildingApp";
+import { useAuth } from "../Context/AuthProvider";
 
 function BEModal() {
   const threeDRef = useRef();
@@ -20,8 +21,9 @@ function BEModal() {
   const isGuestUser = searchParams.get("skip") || false;
   const projectData = ReactSession.get("bp3dJson");
   const [userID, setUserId] = useState("");
+  const { userId } = useAuth();
 
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     setBtnClicked(true);
     let canvasElm = document.querySelector("#canvas3D canvas");
     let image = canvasElm.toDataURL("image/jpeg");
@@ -32,9 +34,11 @@ function BEModal() {
       setB3Data(projectData);
     }
 
+    const configurationID = await ReactSession.get("configuration_id");
+
     if (b3Data || (projectData && projectData !== "null")) {
       const payload = {
-        configurationId: ReactSession.get("project_id"),
+        configurationId: configurationID,
         userId: userID,
         data: projectData,
         image: image,
@@ -44,7 +48,6 @@ function BEModal() {
           if (response.error) {
             toast.error(response.error);
           } else {
-            console.log(response);
             if (isGuestUser) {
               setTimeout(
                 navigate({
@@ -75,9 +78,14 @@ function BEModal() {
     }
   };
 
-  const handleGet3dJSONData = (ID) => {
+  const handleGet3dJSONData = async (ID) => {
+    const configurationID = await ReactSession.get("configuration_id");
+
+    if (!configurationID) {
+      return false;
+    }
     const payload = {
-      configurationId: ReactSession.get("project_id"),
+      configurationId: configurationID,
       userId: ID,
     };
 
@@ -87,9 +95,9 @@ function BEModal() {
       } else {
         // data comes here..
         // console.log(response);
-        if (response.data && response.data.length) {
-          setB3Data(response.data[0].data);
-          ReactSession.set("bp3dJson", response.data[0].data);
+        if (response?.data?.data?.S) {
+          setB3Data(response?.data?.data?.S);
+          ReactSession.set("bp3dJson", response?.data?.data?.S);
           setTimeout(setProjectStatus(true), 1000);
         }
       }
@@ -155,7 +163,7 @@ function BEModal() {
         ReactSession.set("is_logged_in", "true");
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [userId]);
 
   return (
     <div>
