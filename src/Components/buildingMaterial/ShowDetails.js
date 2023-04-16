@@ -165,8 +165,65 @@ const ShowDetails = ({
         selEnergeOptionData?.windows_frames_joint_frame_value ?? "",
       );
       formikRef.current.setFieldValue(
+        "gAirTightness",
+        selEnergeOptionData?.air_tightness_infilteration_rate_dropdown ?? "",
+      );
+      formikRef.current.setFieldValue(
         "buildingDensity",
         selEnergeOptionData?.building_density_absorptivity_dropdown ?? "",
+      );
+      formikRef.current.setFieldValue(
+        "energyBridges",
+        selEnergeOptionData?.energy_bridges_u_value_dropdown ?? "",
+      );
+      formikRef.current.setFieldValue(
+        "wColor",
+        selEnergeOptionData?.walls_color_absorption_coefficient_dropdown ?? "",
+      );
+      formikRef.current.setFieldValue(
+        "wThermal",
+        selEnergeOptionData?.walls_thermal_conductivity_u_value_dropdown ?? "",
+      );
+      formikRef.current.setFieldValue(
+        "fThermal",
+        selEnergeOptionData?.floor_thermal_conductivity_u_value_dropdown ?? "",
+      );
+
+      formikRef.current.setFieldValue(
+        "wThermal",
+        selEnergeOptionData?.windows_glazing_thermal_conductivity_u_value_dropdown ??
+          "",
+      );
+      formikRef.current.setFieldValue(
+        "fThermal",
+        selEnergeOptionData?.windows_frames_thermal_conductivity_u_value_dropdown ??
+          "",
+      );
+      formikRef.current.setFieldValue(
+        "wLight",
+        selEnergeOptionData?.windows_light_transmissivity_coefficient_dropdown ??
+          "",
+      );
+      formikRef.current.setFieldValue(
+        "roofColor",
+        selEnergeOptionData?.roof_color_absorption_coefficient_dropdown ?? "",
+      );
+      formikRef.current.setFieldValue(
+        "thermalConductivity",
+        selEnergeOptionData?.roof_thermal_conductivity_u_value_dropdown ?? "",
+      );
+      formikRef.current.setFieldValue(
+        "wEnergy",
+        selEnergeOptionData?.windows_energy_transmissivity_coefficient_dropdown ??
+          "",
+      );
+      formikRef.current.setFieldValue(
+        "wFrame",
+        selEnergeOptionData?.windows_frames_share_value_dropdown ?? "",
+      );
+      formikRef.current.setFieldValue(
+        "fJointFrame",
+        selEnergeOptionData?.windows_frames_joint_frame_value_dropdown ?? "",
       );
     }
   }, [selEnergeOptionData, formikRef?.current, isEnableSteps]);
@@ -217,29 +274,25 @@ const ShowDetails = ({
                       <div className="items">
                         {/* <p>Heat tramission</p> */}
                         <p>Air tightness</p>
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="gAirTightness"
-                              onChange={(e) =>
-                                onSelectOption(e, "gInfilRates", setFieldValue)
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="2.0" value="High" data-extra="2.0">
-                                High
-                              </option>
-                              <option key="1.0" value="Medium" data-extra="1.0">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="gAirTightness"
+                          onChange={(e) =>
+                            onSelectOption(e, "gInfilRates", setFieldValue)
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="2.0" value="High" data-extra="2.0">
+                            High
+                          </option>
+                          <option key="1.0" value="Medium" data-extra="1.0">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -262,41 +315,25 @@ const ShowDetails = ({
                     <div className="sub-items">
                       <div className="items">
                         <p>Building density</p>
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="buildingDensity"
-                              onChange={(e) =>
-                                onSelectOption(
-                                  e,
-                                  "gAbsorptivity",
-                                  setFieldValue,
-                                )
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option
-                                key="500.0"
-                                value="High"
-                                data-extra="500.0"
-                              >
-                                High
-                              </option>
-                              <option
-                                key="250.0"
-                                value="Medium"
-                                data-extra="250.0"
-                              >
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          name="buildingDensity"
+                          onChange={(e) =>
+                            onSelectOption(e, "gAbsorptivity", setFieldValue)
+                          }
+                          as="select"
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="500.0" value="High" data-extra="500.0">
+                            High
+                          </option>
+                          <option key="250.0" value="Medium" data-extra="250.0">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -321,30 +358,25 @@ const ShowDetails = ({
                     <div className="sub-items">
                       <div className="items">
                         <p>Energy bridges</p>
-
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="energyBridges"
-                              onChange={(e) =>
-                                onSelectOption(e, "gUValue", setFieldValue)
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="10.0" value="High" data-extra="10.0">
-                                High
-                              </option>
-                              <option key="5.0" value="Medium" data-extra="5.0">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="energyBridges"
+                          onChange={(e) =>
+                            onSelectOption(e, "gUValue", setFieldValue)
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="10.0" value="High" data-extra="10.0">
+                            High
+                          </option>
+                          <option key="5.0" value="Medium" data-extra="5.0">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -374,29 +406,25 @@ const ShowDetails = ({
                     <div className="sub-items">
                       <div className="items">
                         <p>Color</p>
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="wColor"
-                              onChange={(e) =>
-                                onSelectOption(e, "oAbsorption", setFieldValue)
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="1.0" value="High" data-extra="1.0">
-                                High
-                              </option>
-                              <option key="0.5" value="Medium" data-extra="0.5">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="wColor"
+                          onChange={(e) =>
+                            onSelectOption(e, "oAbsorption", setFieldValue)
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="1.0" value="High" data-extra="1.0">
+                            High
+                          </option>
+                          <option key="0.5" value="Medium" data-extra="0.5">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -419,29 +447,25 @@ const ShowDetails = ({
                     <div className="sub-items">
                       <div className="items">
                         <p>Thermal conductivity</p>
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="wThermal"
-                              onChange={(e) =>
-                                onSelectOption(e, "oUValue", setFieldValue)
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="10.0" value="High" data-extra="10.0">
-                                High
-                              </option>
-                              <option key="5.0" value="Medium" data-extra="5.0">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="wThermal"
+                          onChange={(e) =>
+                            onSelectOption(e, "oUValue", setFieldValue)
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="10.0" value="High" data-extra="10.0">
+                            High
+                          </option>
+                          <option key="5.0" value="Medium" data-extra="5.0">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -469,29 +493,25 @@ const ShowDetails = ({
                       <div className="items">
                         <p>Thermal conductivity</p>
 
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="fThermal"
-                              onChange={(e) =>
-                                onSelectOption(e, "fUValue", setFieldValue)
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="10.0" value="High" data-extra="10.0">
-                                High
-                              </option>
-                              <option key="5.0" value="Medium" data-extra="5.0">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="fThermal"
+                          onChange={(e) =>
+                            onSelectOption(e, "fUValue", setFieldValue)
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="10.0" value="High" data-extra="10.0">
+                            High
+                          </option>
+                          <option key="5.0" value="Medium" data-extra="5.0">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -518,29 +538,25 @@ const ShowDetails = ({
                     <div className="sub-items">
                       <div className="items">
                         <p>Color</p>
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="roofColor"
-                              onChange={(e) =>
-                                onSelectOption(e, "rAbsorption", setFieldValue)
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="1.0" value="High" data-extra="1.0">
-                                High
-                              </option>
-                              <option key="0.5" value="Medium" data-extra="0.5">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="roofColor"
+                          onChange={(e) =>
+                            onSelectOption(e, "rAbsorption", setFieldValue)
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="1.0" value="High" data-extra="1.0">
+                            High
+                          </option>
+                          <option key="0.5" value="Medium" data-extra="0.5">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -563,29 +579,25 @@ const ShowDetails = ({
                     <div className="sub-items">
                       <div className="items">
                         <p>Thermal conductivity</p>
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="thermalConductivity"
-                              onChange={(e) =>
-                                onSelectOption(e, "rUValue", setFieldValue)
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="10.0" value="High" data-extra="10.0">
-                                High
-                              </option>
-                              <option key="5.0" value="Medium" data-extra="5.0">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="thermalConductivity"
+                          onChange={(e) =>
+                            onSelectOption(e, "rUValue", setFieldValue)
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="10.0" value="High" data-extra="10.0">
+                            High
+                          </option>
+                          <option key="5.0" value="Medium" data-extra="5.0">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -615,29 +627,25 @@ const ShowDetails = ({
                     <div className="sub-items">
                       <div className="items">
                         <p>Thermal conductivity</p>
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="wThermal"
-                              onChange={(e) =>
-                                onSelectOption(e, "wGUValue", setFieldValue)
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="10.0" value="High" data-extra="10.0">
-                                High
-                              </option>
-                              <option key="5.0" value="Medium" data-extra="5.0">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="wThermal"
+                          onChange={(e) =>
+                            onSelectOption(e, "wGUValue", setFieldValue)
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="10.0" value="High" data-extra="10.0">
+                            High
+                          </option>
+                          <option key="5.0" value="Medium" data-extra="5.0">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -662,33 +670,25 @@ const ShowDetails = ({
                     <div className="sub-items">
                       <div className="items">
                         <p>Energy transmissivity</p>
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="wEnergy"
-                              onChange={(e) =>
-                                onSelectOption(
-                                  e,
-                                  "wGCoefficient",
-                                  setFieldValue,
-                                )
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="1.0" value="High" data-extra="1.0">
-                                High
-                              </option>
-                              <option key="0.5" value="Medium" data-extra="0.5">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="wEnergy"
+                          onChange={(e) =>
+                            onSelectOption(e, "wGCoefficient", setFieldValue)
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="1.0" value="High" data-extra="1.0">
+                            High
+                          </option>
+                          <option key="0.5" value="Medium" data-extra="0.5">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -711,33 +711,29 @@ const ShowDetails = ({
                     <div className="sub-items">
                       <div className="items">
                         <p>Light transmissivity</p>
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="wLight"
-                              onChange={(e) =>
-                                onSelectOption(
-                                  e,
-                                  "wGLightCoefficient",
-                                  setFieldValue,
-                                )
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="1.0" value="High" data-extra="1.0">
-                                High
-                              </option>
-                              <option key="0.5" value="Medium" data-extra="0.5">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="wLight"
+                          onChange={(e) =>
+                            onSelectOption(
+                              e,
+                              "wGLightCoefficient",
+                              setFieldValue,
+                            )
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="1.0" value="High" data-extra="1.0">
+                            High
+                          </option>
+                          <option key="0.5" value="Medium" data-extra="0.5">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -762,29 +758,25 @@ const ShowDetails = ({
                     <div className="sub-items">
                       <div className="items">
                         <p>Frame share</p>
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="wFrame"
-                              onChange={(e) =>
-                                onSelectOption(e, "fShareValue", setFieldValue)
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="1.0" value="High" data-extra="1.0">
-                                High
-                              </option>
-                              <option key="0.5" value="Medium" data-extra="0.5">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="wFrame"
+                          onChange={(e) =>
+                            onSelectOption(e, "fShareValue", setFieldValue)
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="1.0" value="High" data-extra="1.0">
+                            High
+                          </option>
+                          <option key="0.5" value="Medium" data-extra="0.5">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -807,29 +799,25 @@ const ShowDetails = ({
                     <div className="sub-items">
                       <div className="items">
                         <p>Thermal conductivity</p>
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="fThermal"
-                              onChange={(e) =>
-                                onSelectOption(e, "fUValue", setFieldValue)
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="10.0" value="High" data-extra="10.0">
-                                High
-                              </option>
-                              <option key="5.0" value="Medium" data-extra="5.0">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="fThermal"
+                          onChange={(e) =>
+                            onSelectOption(e, "fUValue", setFieldValue)
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="10.0" value="High" data-extra="10.0">
+                            High
+                          </option>
+                          <option key="5.0" value="Medium" data-extra="5.0">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">
@@ -854,29 +842,25 @@ const ShowDetails = ({
                     <div className="sub-items">
                       <div className="items">
                         <p>Joint frame value</p>
-                        <Field name="dropdown">
-                          {({ field, form }) => (
-                            <select
-                              {...field}
-                              name="fJointFrame"
-                              onChange={(e) =>
-                                onSelectOption(e, "fJointValue", setFieldValue)
-                              }
-                            >
-                              <option key="" value="" data-extra="">
-                                Custom
-                              </option>
-                              <option key="5.0" value="High" data-extra="5.0">
-                                High
-                              </option>
-                              <option key="2.5" value="Medium" data-extra="2.5">
-                                Medium
-                              </option>
-                              <option key="0.0" value="Low" data-extra="0.0">
-                                Low
-                              </option>
-                            </select>
-                          )}
+                        <Field
+                          as="select"
+                          name="fJointFrame"
+                          onChange={(e) =>
+                            onSelectOption(e, "fJointValue", setFieldValue)
+                          }
+                        >
+                          <option key="" value="" data-extra="">
+                            Custom
+                          </option>
+                          <option key="5.0" value="High" data-extra="5.0">
+                            High
+                          </option>
+                          <option key="2.5" value="Medium" data-extra="2.5">
+                            Medium
+                          </option>
+                          <option key="0.0" value="Low" data-extra="0.0">
+                            Low
+                          </option>
                         </Field>
                       </div>
                       <div className="items">

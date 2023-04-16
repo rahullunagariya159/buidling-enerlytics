@@ -1398,6 +1398,17 @@ img.okik {
   gap: 20px;
   flex-direction: column;
 }
+
+.confrim-popup-container {
+  display: flex;
+  gap: 8px;
+  flex-direction: row;
+}
+
+.confrim-popup-container .signin-btn {
+  padding: 8px 8px;
+}
+
 .items-title {
   display: flex;
   align-items: center;

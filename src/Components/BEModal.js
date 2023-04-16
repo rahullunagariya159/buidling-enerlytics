@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { ReactSession } from "react-client-session";
 import { isEqual, isEqualWith } from "lodash";
 
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { set3dJSONData, get3dJSONData } from "./Services/UserService";
 import { addProjectConfiguration } from "./Services/ProjectServices";
 import { toast } from "react-toastify";
@@ -28,11 +28,12 @@ function BEModal() {
   const projectData = ReactSession.get("bp3dJson");
   const [userID, setUserId] = useState("");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-
+  const location = useLocation();
   const isEdit = ReactSession.get("isedit_project_config");
   const isView = ReactSession.get("isview_project_config");
-
   const { userId } = useAuth();
+
+  console.log({ location });
 
   const handleNextClick = async () => {
     setShowConfirmModal(false);
@@ -120,6 +121,9 @@ function BEModal() {
   };
 
   const handleProccedBEModal = () => {
+    // const stringifyData = JSON.stringify(`${b3APIData}`);
+    // const newStringfyData = JSON.stringify(`${b3Data}`);
+
     if (isEdit) {
       setShowConfirmModal(true);
     } else {
@@ -206,7 +210,10 @@ function BEModal() {
     setProjectStatus(
       (projectData && projectData !== "null" && projectData.length) || false,
     );
-    handleGet3dJSONData(IDVal);
+
+    if (!location?.state?.isFromBeFullScreen) {
+      handleGet3dJSONData(IDVal);
+    }
 
     Auth.currentSession()
       .then((data) => {

@@ -34,7 +34,7 @@ const SaveProjectConfirmationPopup = ({
           <Modal.Title>Please confirm are you sure?</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="main-credits">
+          <div className="confrim-popup-container">
             {/* <Text type="error" text={error} /> */}
             <LinkButton
               onClick={() => handleSaveConfig()}

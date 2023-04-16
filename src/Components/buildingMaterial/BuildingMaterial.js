@@ -279,13 +279,14 @@ const BuildingMaterial = () => {
     const fValues = { ...values };
 
     setBMFormValues({ ...fValues });
-
     if (isEdit) {
       setShowConfirmModal(true);
     } else {
       await handleSaveBuildingMaterialData(values);
     }
-    // const values = bMformValues;
+    // selEnergeOption
+    // console.log({ selEnergeOption });
+    // console.log({ stringifyData });
 
     // stringifyData = {
     //   name: selEnergeOption?.name,
@@ -320,14 +321,13 @@ const BuildingMaterial = () => {
     //   windows_frames_joint_frame_value: values?.fJointValue,
     // };
 
-    // selEnergeOption
-    console.log({ selEnergeOption });
-    console.log({ stringifyData });
     // if (isEqual(selEnergeOption, stringifyData)) {
     //   console.log("is equal");
     // } else {
     //   console.log("is different");
     // }
+
+    // const values = bMformValues;
   };
 
   const onYesBuildingMaterial = () => {
@@ -404,6 +404,33 @@ const BuildingMaterial = () => {
               buMaterialData?.building_density_absorptivity_dropdown,
             name: buMaterialData?.energyConsumption,
             url: buMaterialData?.energyConsumptionUrl,
+            air_tightness_infilteration_rate_dropdown:
+              buMaterialData?.air_tightness_infilteration_rate_dropdown,
+            energy_bridges_u_value_dropdown:
+              buMaterialData?.energy_bridges_u_value_dropdown,
+            walls_color_absorption_coefficient_dropdown:
+              buMaterialData?.walls_color_absorption_coefficient_dropdown,
+            walls_thermal_conductivity_u_value_dropdown:
+              buMaterialData?.walls_thermal_conductivity_u_value_dropdown,
+            floor_thermal_conductivity_u_value_dropdown:
+              buMaterialData?.floor_thermal_conductivity_u_value_dropdown,
+            windows_glazing_thermal_conductivity_u_value_dropdown:
+              buMaterialData?.windows_glazing_thermal_conductivity_u_value_dropdown,
+            windows_frames_thermal_conductivity_u_value_dropdown:
+              buMaterialData?.windows_frames_thermal_conductivity_u_value_dropdown,
+            windows_light_transmissivity_coefficient_dropdown:
+              buMaterialData?.buMaterialData
+                ?.windows_light_transmissivity_coefficient_dropdown,
+            roof_color_absorption_coefficient_dropdown:
+              buMaterialData?.roof_color_absorption_coefficient_dropdown,
+            roof_thermal_conductivity_u_value_dropdown:
+              buMaterialData?.roof_thermal_conductivity_u_value_dropdown,
+            windows_energy_transmissivity_coefficient_dropdown:
+              buMaterialData?.windows_energy_transmissivity_coefficient_dropdown,
+            windows_frames_share_value_dropdown:
+              buMaterialData?.windows_frames_share_value_dropdown,
+            windows_frames_joint_frame_value_dropdown:
+              buMaterialData?.windows_frames_joint_frame_value_dropdown,
           };
 
           setSelEnergeOption(formDetailConfiguration);

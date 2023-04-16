@@ -37,19 +37,23 @@ function BEModalFull() {
       );
     } else {
       setTimeout(
-        navigate({
-          pathname: "/create-project",
-          search: "?name=" + projectName,
-          state: b3Data,
+        navigate(`/create-project?name=${projectName}`, {
+          state: { b3Data, isFromBeFullScreen: true },
         }),
+        // navigate({
+        //   pathname: "/create-project",
+        //   search: "?name=" + projectName,
+        //   state: { b3Data, isFromBeFullScreen: true },
+        // }),
         2000,
       );
     }
   };
 
-  const handleGet3dJSONData = (ID) => {
+  const handleGet3dJSONData = async (ID) => {
+    const configurationID = await ReactSession.get("configuration_id");
     const payload = {
-      configurationId: ReactSession.get("project_id"),
+      configurationId: configurationID,
       userId: ID,
     };
 
@@ -59,9 +63,9 @@ function BEModalFull() {
       } else {
         // data comes here..
         console.log(response);
-        if (response.data && response.data.length) {
-          setB3Data(response.data[0].data);
-          ReactSession.set("bp3dJson", response.data[0].data);
+        if (response?.data?.data?.S) {
+          setB3Data(response?.data?.data?.S);
+          ReactSession.set("bp3dJson", response?.data?.data?.S);
           setTimeout(setProjectStatus(true), 1000);
         }
       }
@@ -92,7 +96,7 @@ function BEModalFull() {
     setProjectStatus(
       (projectData && projectData !== "null" && projectData.length) || false,
     );
-    handleGet3dJSONData(IDVal);
+    // handleGet3dJSONData(IDVal);
 
     Auth.currentSession()
       .then((data) => {
