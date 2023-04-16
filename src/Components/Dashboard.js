@@ -47,8 +47,13 @@ function Dashboard() {
         if (response.error) {
           setCreateProjectError(response.error);
         } else {
-          if (response && response.msg) {
-            ReactSession.set("project_id", response.msg[0].id);
+          if (response && response?.msg) {
+            ReactSession.set("project_id", response?.msg[0]?.id);
+            ReactSession.set("configuration_id", response?.configurationId);
+            ReactSession.set("isedit_project_config", false);
+            ReactSession.set("isview_project_config", false);
+            ReactSession.set("isview_project_config", false);
+
             if (isGuestUser) {
               setTimeout(
                 (window.location.href =
@@ -91,8 +96,12 @@ function Dashboard() {
           if (response.error) {
             setCreateProjectError(response.error);
           } else {
-            if (response && response.msg) {
-              ReactSession.set("project_id", response.msg[0].id);
+            if (response && response?.msg) {
+              ReactSession.set("project_id", response?.msg[0]?.id);
+              ReactSession.set("configuration_id", response?.configurationId);
+              ReactSession.set("isedit_project_config", false);
+              ReactSession.set("isview_project_config", false);
+
               if (isGuestUser) {
                 setTimeout(
                   (window.location.href =

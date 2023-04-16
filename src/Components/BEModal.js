@@ -1,30 +1,41 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ReactSession } from "react-client-session";
+import { isEqual, isEqualWith } from "lodash";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { set3dJSONData, get3dJSONData } from "./Services/UserService";
+import { addProjectConfiguration } from "./Services/ProjectServices";
 import { toast } from "react-toastify";
 import Navbar from "./Navbar";
 import { Auth } from "aws-amplify";
 import LeftSidebar from "./LeftSidebar";
 import BuildingApp from "../BuildingApp";
 import { useAuth } from "../Context/AuthProvider";
+import SaveProjectConfirmationPopup from "./SaveProjectConfirmationPopup";
+import LoadingCover from "./LoadingCover";
 
 function BEModal() {
   const threeDRef = useRef();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [b3Data, setB3Data] = useState(null);
+  const [b3APIData, setb3APIB3Data] = useState(null);
   const [btnClicked, setBtnClicked] = useState(false);
   const [projectStatus, setProjectStatus] = useState(true);
+  const [showLoader, setShowLoader] = useState(false);
   const projectName = searchParams.get("name") ? searchParams.get("name") : "";
   const isGuestUser = searchParams.get("skip") || false;
   const projectData = ReactSession.get("bp3dJson");
   const [userID, setUserId] = useState("");
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const isEdit = ReactSession.get("isedit_project_config");
+  const isView = ReactSession.get("isview_project_config");
+
   const { userId } = useAuth();
 
   const handleNextClick = async () => {
-    setBtnClicked(true);
+    setShowConfirmModal(false);
     let canvasElm = document.querySelector("#canvas3D canvas");
     let image = canvasElm.toDataURL("image/jpeg");
 
@@ -43,6 +54,8 @@ function BEModal() {
         data: projectData,
         image: image,
       };
+      setShowLoader(true);
+
       set3dJSONData(payload)
         .then((response) => {
           if (response.error) {
@@ -73,8 +86,44 @@ function BEModal() {
           console.log({ error });
         })
         .finally(() => {
-          setBtnClicked(false);
+          // setBtnClicked(false);
+          setShowLoader(false);
         });
+    }
+  };
+
+  const handleAddNewConfig = async () => {
+    setShowLoader(true);
+    setShowConfirmModal(false);
+    const projectID = await ReactSession.get("project_id");
+
+    const newConfigPayload = {
+      userId: userId,
+      projectId: projectID,
+      configurationName: projectName,
+    };
+
+    await addProjectConfiguration(newConfigPayload)
+      .then(async (response) => {
+        if (response?.status === 200 && response?.data?.msg) {
+          await ReactSession.set(
+            "configuration_id",
+            response?.data?.configurationId,
+          );
+          await handleNextClick();
+        }
+      })
+      .catch((error) => {
+        console.log({ error });
+        setShowLoader(false);
+      });
+  };
+
+  const handleProccedBEModal = () => {
+    if (isEdit) {
+      setShowConfirmModal(true);
+    } else {
+      handleNextClick();
     }
   };
 
@@ -98,6 +147,7 @@ function BEModal() {
         if (response?.data?.data?.S) {
           setB3Data(response?.data?.data?.S);
           ReactSession.set("bp3dJson", response?.data?.data?.S);
+          setb3APIB3Data(response?.data?.data?.S);
           setTimeout(setProjectStatus(true), 1000);
         }
       }
@@ -200,22 +250,35 @@ function BEModal() {
                   <img src={canvasImage}></img>
                 </div> */}
                 <div className="modal-next-container container-min">
-                  {!btnClicked && (
-                    <a className="btn next-btnes" onClick={handleNextClick}>
+                  {!isView && (
+                    <a
+                      className="btn next-btnes"
+                      onClick={handleProccedBEModal}
+                    >
                       Proceed
                     </a>
                   )}
-                  {btnClicked && (
+
+                  {/* {btnClicked && (
                     <a className="btn next-btnes btn-disabled">
                       <i className="fa fa-spinner fa-spin"></i> Please Wait ...
                     </a>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
           </div>
         </section>
       </div>
+      {showConfirmModal && (
+        <SaveProjectConfirmationPopup
+          isShow={showConfirmModal}
+          onCloseModalHandler={() => setShowConfirmModal(false)}
+          handleSaveConfig={handleNextClick}
+          handleAddNewConfig={handleAddNewConfig}
+        />
+      )}
+      <LoadingCover show={showLoader} />
     </div>
   );
 }

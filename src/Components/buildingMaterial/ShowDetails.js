@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { ReactSession } from "react-client-session";
 import "./index.css";
 
 const ShowDetails = ({
@@ -9,8 +10,9 @@ const ShowDetails = ({
   handleSaveBuildingMaterialData,
   selEnergeOptionData,
   isEnableSteps,
+  handleSubmitForm,
 }) => {
-  //   const [inputVal, setInputVal] = useState({});
+  const isView = ReactSession.get("isview_project_config");
   const [loading, setLoading] = useState(false);
   const formikRef = useRef();
 
@@ -162,6 +164,10 @@ const ShowDetails = ({
         "fJointValue",
         selEnergeOptionData?.windows_frames_joint_frame_value ?? "",
       );
+      formikRef.current.setFieldValue(
+        "buildingDensity",
+        selEnergeOptionData?.building_density_absorptivity_dropdown ?? "",
+      );
     }
   }, [selEnergeOptionData, formikRef?.current, isEnableSteps]);
 
@@ -170,6 +176,10 @@ const ShowDetails = ({
       formikRef.current.resetForm({ values: initialValues });
     }
   }, [isEnableSteps, formikRef?.current]);
+
+  const onHandleSubmitForm = (values) => {
+    handleSubmitForm(values);
+  };
 
   return (
     <div className="right-wrp">
@@ -191,7 +201,7 @@ const ShowDetails = ({
           initialValues={initialValues}
           validationSchema={validationSchema}
           validateOnSubmit={true}
-          onSubmit={(values) => handleSaveBuildingMaterialData(values)}
+          onSubmit={(values) => onHandleSubmitForm(values)}
         >
           {({ setFieldValue, errors, touched }) => (
             <Form>
@@ -886,21 +896,18 @@ const ShowDetails = ({
                     </div>
                   ) : null}
                 </div>
-                <div
-                  className={`${
-                    toggle ? "position-relative end-0" : ""
-                  } end-flex`}
-                >
-                  <button type="submit" className="Pay-btn">
-                    NEXT
-                  </button>
-                </div>
+                {!isView && (
+                  <div
+                    className={`${
+                      toggle ? "position-relative end-0" : ""
+                    } end-flex`}
+                  >
+                    <button type="submit" className="Pay-btn">
+                      NEXT
+                    </button>
+                  </div>
+                )}
               </div>
-              {/* <div>
-                <button type="submit" className="Pay-btn">
-                  NEXT
-                </button>
-              </div> */}
             </Form>
           )}
         </Formik>

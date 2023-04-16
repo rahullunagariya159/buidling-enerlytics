@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ReactSession } from "react-client-session";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { isEqual } from "lodash";
 import Navbar from "../Navbar";
 import LeftSidebar from "../LeftSidebar";
 import {
@@ -11,6 +13,7 @@ import {
   saveBuildingMaterialData,
   getBuildingMaterialData,
 } from "../Services/BuildingMaterialService";
+import { addProjectConfiguration } from "../Services/ProjectServices";
 import LoadingCover from "../LoadingCover";
 import Text from "../Text";
 import { somethingWentWrongError } from "../../Constants";
@@ -18,8 +21,12 @@ import ShowDetails from "./ShowDetails";
 import { useAuth } from "../../Context/AuthProvider";
 import "./index.css";
 import { Dropdown } from "react-bootstrap";
+import SaveProjectConfirmationPopup from "../SaveProjectConfirmationPopup";
+import { Routes } from "../../navigation/Routes";
 
 const BuildingMaterial = () => {
+  const navigate = useNavigate();
+
   const [toggle, setToggle] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
   const [countries, setCountries] = useState([]);
@@ -42,8 +49,16 @@ const BuildingMaterial = () => {
   const [toggleConstructionYear, setToggleConstructionYear] = useState(false);
   const [toggleBuildingAppearance, setToggleBuildingAppearance] =
     useState(false);
-  const { userId } = useAuth();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [bMformValues, setBMFormValues] = useState({});
 
+  const { userId } = useAuth();
+  const [searchParams] = useSearchParams();
+
+  const projectName = searchParams.get("name") ? searchParams.get("name") : "";
+  const isEdit = ReactSession.get("isedit_project_config");
+
+  let stringifyData = {};
   const handleNoBuildingMaterial = async () => {
     setToggle(false);
     setShowLoader(true);
@@ -143,10 +158,11 @@ const BuildingMaterial = () => {
     if (selectedConstructionYear) {
       onChangeConstructionYear();
     }
-  }, [selectedConstructionYear]);
+  }, [selectedConstructionYear, selectedBuAppearance]);
 
   const onChangeBuildingAppearance = async () => {
     setError("");
+
     const buildMerApprnc = buildingAppearance.find(
       (buiApprnce) => buiApprnce?.name === selectedBuAppearance?.name,
     );
@@ -154,16 +170,19 @@ const BuildingMaterial = () => {
   };
 
   useEffect(() => {
-    if (selectedBuAppearance) {
+    if (selectedBuAppearance?.name && buildingAppearance?.length > 0) {
       onChangeBuildingAppearance();
     }
-  }, [selectedBuAppearance]);
+  }, [selectedBuAppearance, buildingAppearance]);
 
-  const handleSaveBuildingMaterialData = async (values) => {
+  const handleSaveBuildingMaterialData = async (fValues) => {
+    setShowConfirmModal(false);
     setShowLoader(true);
+    const values = fValues ?? bMformValues;
     const configurationID = await ReactSession.get("configuration_id");
     const projectID = await ReactSession.get("project_id");
-    const stringifyData = JSON.stringify({
+
+    stringifyData = JSON.stringify({
       knowledge: isEnableSteps,
       country: selectedCountry?.name,
       countryUrl: selectedCountry?.url,
@@ -215,6 +234,10 @@ const BuildingMaterial = () => {
       .then((response) => {
         if (response?.status === 200 && response.data.msg) {
           toast.success("Building Material Data Updated successfully");
+          navigate({
+            pathname: `${Routes.hvac}`,
+            search: "?name=" + projectName,
+          });
         }
       })
       .catch((error) => {
@@ -224,6 +247,87 @@ const BuildingMaterial = () => {
       .finally(() => {
         setShowLoader(false);
       });
+  };
+
+  const handleAddNewConfig = async () => {
+    setShowLoader(true);
+    const projectID = await ReactSession.get("project_id");
+
+    const newConfigPayload = {
+      userId: userId,
+      projectId: projectID,
+      configurationName: projectName,
+    };
+
+    await addProjectConfiguration(newConfigPayload)
+      .then(async (response) => {
+        if (response?.status === 200 && response?.data?.msg) {
+          await ReactSession.set(
+            "configuration_id",
+            response?.data?.configurationId,
+          );
+          await handleSaveBuildingMaterialData();
+        }
+      })
+      .catch((error) => {
+        console.log({ error });
+        setShowLoader(false);
+      });
+  };
+
+  const handleSubmitForm = async (values) => {
+    const fValues = { ...values };
+
+    setBMFormValues({ ...fValues });
+
+    if (isEdit) {
+      setShowConfirmModal(true);
+    } else {
+      await handleSaveBuildingMaterialData(values);
+    }
+    // const values = bMformValues;
+
+    // stringifyData = {
+    //   name: selEnergeOption?.name,
+    //   url: selEnergeOption?.url,
+    //   air_tightness_infilteration_rate_dropdown: values?.gAirTightness,
+    //   air_tightness_infilteration_rate: values?.gInfilRates,
+    //   building_density_absorptivity_dropdown: values?.buildingDensity,
+    //   building_density_absorptivity: values?.gAbsorptivity,
+    //   energy_bridges_u_value_dropdown: values?.energyBridges,
+    //   energy_bridges_u_value: values?.gUValue,
+    //   walls_color_absorption_coefficient_dropdown: values?.wColor,
+    //   walls_color_absorption_coefficient: values?.oAbsorption,
+    //   walls_thermal_conductivity_u_value_dropdown: values?.wThermal,
+    //   walls_thermal_conductivity_u_value: values?.oUValue,
+    //   floor_thermal_conductivity_u_value_dropdown: values?.fThermal,
+    //   floor_thermal_conductivity_u_value: values?.fUValue,
+    //   roof_color_absorption_coefficient_dropdown: values?.roofColor,
+    //   roof_color_absorption_coefficient: values?.rAbsorption,
+    //   roof_thermal_conductivity_u_value_dropdown: values?.thermalConductivity,
+    //   roof_thermal_conductivity_u_value: values?.rUValue,
+    //   windows_glazing_thermal_conductivity_u_value_dropdown: values?.wThermal,
+    //   windows_glazing_thermal_conductivity_u_value: values?.wGUValue,
+    //   windows_energy_transmissivity_coefficient_dropdown: values?.wEnergy,
+    //   windows_energy_transmissivity_coefficient: values?.wGCoefficient,
+    //   windows_light_transmissivity_coefficient_dropdown: values?.wLight,
+    //   windows_light_transmissivity_coefficient: values?.wGLightCoefficient,
+    //   windows_frames_share_value_dropdown: values?.wFrame,
+    //   windows_frames_share_value: values?.fShareValue,
+    //   windows_frames_thermal_conductivity_u_value_dropdown: values?.fThermal,
+    //   windows_frames_thermal_conductivity_u_value: values?.fUValue,
+    //   windows_frames_joint_frame_value_dropdown: values?.fJointFrame,
+    //   windows_frames_joint_frame_value: values?.fJointValue,
+    // };
+
+    // selEnergeOption
+    console.log({ selEnergeOption });
+    console.log({ stringifyData });
+    // if (isEqual(selEnergeOption, stringifyData)) {
+    //   console.log("is equal");
+    // } else {
+    //   console.log("is different");
+    // }
   };
 
   const onYesBuildingMaterial = () => {
@@ -245,6 +349,10 @@ const BuildingMaterial = () => {
       .then((response) => {
         if (response?.status === 200 && response?.data?.data?.data?.S) {
           const buMaterialData = JSON.parse(response.data.data.data.S);
+
+          if (Object.keys(buMaterialData)?.length === 0) {
+            return false;
+          }
           setIsEnableSteps(buMaterialData?.knowledge);
           setSelectedCountry({
             url: buMaterialData?.countryUrl,
@@ -254,16 +362,51 @@ const BuildingMaterial = () => {
             name: buMaterialData?.buildingType,
             url: buMaterialData?.buildingTypeUrl,
           });
+
           setSelectedConstructionYear({
             name: buMaterialData?.constructionYear,
           });
+
           setSelectedBuAppearance({
             name: buMaterialData?.buildingAppearance,
             url: buMaterialData?.buildingAppearanceUrl,
           });
-          // setSelEnergeOption({
-          //   name: buMaterialData?.energyConsumption,
-          // });
+
+          const formDetailConfiguration = {
+            roof_color_absorption_coefficient:
+              buMaterialData?.roof_color_absorption_coefficient,
+            roof_thermal_conductivity_u_value:
+              buMaterialData?.roof_thermal_conductivity_u_value,
+            walls_color_absorption_coefficient:
+              buMaterialData?.walls_color_absorption_coefficient,
+            walls_thermal_conductivity_u_value:
+              buMaterialData?.walls_thermal_conductivity_u_value,
+            windows_energy_transmissivity_coefficient:
+              buMaterialData?.windows_energy_transmissivity_coefficient,
+            windows_frames_joint_frame_value:
+              buMaterialData?.windows_frames_joint_frame_value,
+            windows_frames_share_value:
+              buMaterialData?.windows_frames_share_value,
+            windows_frames_thermal_conductivity_u_value:
+              buMaterialData?.windows_frames_thermal_conductivity_u_value,
+            windows_glazing_thermal_conductivity_u_value:
+              buMaterialData?.windows_glazing_thermal_conductivity_u_value,
+            windows_light_transmissivity_coefficient:
+              buMaterialData?.windows_light_transmissivity_coefficient,
+            floor_thermal_conductivity_u_value:
+              buMaterialData?.floor_thermal_conductivity_u_value,
+            building_density_absorptivity:
+              buMaterialData?.building_density_absorptivity,
+            air_tightness_infilteration_rate:
+              buMaterialData?.air_tightness_infilteration_rate,
+            energy_bridges_u_value: buMaterialData?.energy_bridges_u_value,
+            building_density_absorptivity_dropdown:
+              buMaterialData?.building_density_absorptivity_dropdown,
+            name: buMaterialData?.energyConsumption,
+            url: buMaterialData?.energyConsumptionUrl,
+          };
+
+          setSelEnergeOption(formDetailConfiguration);
         }
       })
       .catch((error) => {
@@ -310,6 +453,8 @@ const BuildingMaterial = () => {
                               className="inst"
                               id="buildingKnowledge0"
                               name="buildingKnowledge"
+                              defaultChecked={!isEnableSteps}
+                              checked={!isEnableSteps}
                             />
                             <label
                               className="insted no-1 tow"
@@ -327,6 +472,8 @@ const BuildingMaterial = () => {
                               className="inst"
                               id="buildingKnowledge1"
                               name="buildingKnowledge"
+                              defaultChecked={isEnableSteps}
+                              checked={isEnableSteps}
                             />
                             <label
                               className="insted no-1 tow"
@@ -646,6 +793,9 @@ const BuildingMaterial = () => {
                                       className="inst"
                                       id={buAppData?.name}
                                       name="gender"
+                                      checked={
+                                        buAppData.name === selEnergeOption?.name
+                                      }
                                     />
                                     <label
                                       className="insted no-1 build-eng-efficient"
@@ -734,12 +884,21 @@ const BuildingMaterial = () => {
                   }
                   selEnergeOptionData={selEnergeOption}
                   isEnableSteps={isEnableSteps}
+                  handleSubmitForm={handleSubmitForm}
                 />
               </div>
             </div>
           </div>
         </section>
       </div>
+      {showConfirmModal && (
+        <SaveProjectConfirmationPopup
+          isShow={showConfirmModal}
+          onCloseModalHandler={() => setShowConfirmModal(false)}
+          handleSaveConfig={handleSaveBuildingMaterialData}
+          handleAddNewConfig={handleAddNewConfig}
+        />
+      )}
       <LoadingCover show={showLoader} />
     </div>
   );

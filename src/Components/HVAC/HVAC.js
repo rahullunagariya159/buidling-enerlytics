@@ -17,6 +17,7 @@ const HVAC = () => {
               </div>
               <div className="building-content ">HVAC</div>
             </div>
+            <h3 className="building-content ">Under construction</h3>
           </div>
         </section>
       </div>

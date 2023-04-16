@@ -61,11 +61,26 @@ function LoadProject() {
       });
   };
 
-  const handleLoadProject = (selProjectConfig) => {
+  const handleLoadProject = (
+    selProjectConfig,
+    isEdit = false,
+    isView = false,
+  ) => {
     if (selProjectConfig?.id) {
       ReactSession.set("project_id", selProjectConfig?.projectId);
       ReactSession.set("configuration_id", selProjectConfig?.id);
 
+      if (isEdit) {
+        ReactSession.set("isedit_project_config", true);
+        ReactSession.set("isview_project_config", false);
+      } else {
+        ReactSession.set("isedit_project_config", false);
+      }
+      if (isView) {
+        ReactSession.set("isview_project_config", true);
+      }
+
+      ReactSession.set("bp3dJson", null);
       navigate(`${Routes.createProject}?name=` + selectedProjects?.name, {
         state: {
           projectId: selProjectConfig?.projectId,
@@ -372,7 +387,11 @@ function LoadProject() {
                               <a
                                 className={`five-btn-s-width ${btnClass}`}
                                 onClick={() =>
-                                  handleLoadProject(selectedConfiguration[0])
+                                  handleLoadProject(
+                                    selectedConfiguration[0],
+                                    false,
+                                    true,
+                                  )
                                 }
                               >
                                 <img
@@ -397,7 +416,13 @@ function LoadProject() {
                             )}
                             <a
                               className={`five-btn-s-width borders ${btnClass}`}
-                              onClick={handleLoadProject}
+                              onClick={() =>
+                                handleLoadProject(
+                                  selectedConfiguration[0],
+                                  true,
+                                  false,
+                                )
+                              }
                             >
                               <img
                                 src="assets/img/LoadExisting/edit.svg"
