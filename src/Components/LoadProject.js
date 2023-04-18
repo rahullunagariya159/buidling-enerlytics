@@ -81,6 +81,8 @@ function LoadProject() {
       }
 
       ReactSession.set("bp3dJson", null);
+      ReactSession.set("APIbp3dJson", null);
+
       navigate(`${Routes.createProject}?name=` + selectedProjects?.name, {
         state: {
           projectId: selProjectConfig?.projectId,

@@ -33,8 +33,6 @@ function BEModal() {
   const isView = ReactSession.get("isview_project_config");
   const { userId } = useAuth();
 
-  console.log({ location });
-
   const handleNextClick = async () => {
     setShowConfirmModal(false);
     let canvasElm = document.querySelector("#canvas3D canvas");
@@ -120,12 +118,37 @@ function BEModal() {
       });
   };
 
-  const handleProccedBEModal = () => {
-    // const stringifyData = JSON.stringify(`${b3APIData}`);
-    // const newStringfyData = JSON.stringify(`${b3Data}`);
-
+  const handleProccedBEModal = async () => {
     if (isEdit) {
-      setShowConfirmModal(true);
+      const localAPIStringifyData = await ReactSession.get("APIbp3dJson");
+      const newLocalStringifyData = await ReactSession.get("bp3dJson");
+      const newStringfyData = newLocalStringifyData.toString();
+      const apiStringifyData = localAPIStringifyData.toString();
+      const isDifferent = newStringfyData.localeCompare(apiStringifyData);
+
+      if (isEdit && isDifferent === -1) {
+        setShowConfirmModal(true);
+      } else if (isEdit && isDifferent === 0) {
+        if (isGuestUser) {
+          setTimeout(
+            navigate({
+              pathname: "/building-material",
+              search: "?name=" + projectName + "&&skip=true",
+              state: b3Data,
+            }),
+            2000,
+          );
+        } else {
+          setTimeout(
+            navigate({
+              pathname: "/building-material",
+              search: "?name=" + projectName,
+              state: b3Data,
+            }),
+            2000,
+          );
+        }
+      }
     } else {
       handleNextClick();
     }
@@ -151,6 +174,7 @@ function BEModal() {
         if (response?.data?.data?.S) {
           setB3Data(response?.data?.data?.S);
           ReactSession.set("bp3dJson", response?.data?.data?.S);
+          ReactSession.set("APIbp3dJson", response?.data?.data?.S);
           setb3APIB3Data(response?.data?.data?.S);
           setTimeout(setProjectStatus(true), 1000);
         }

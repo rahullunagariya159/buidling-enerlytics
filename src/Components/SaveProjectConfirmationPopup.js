@@ -20,7 +20,6 @@ const SaveProjectConfirmationPopup = ({
     setError("");
     onCloseModalHandler(!isShow);
   };
-  console.log({ isShow });
 
   return (
     <>
@@ -37,17 +36,18 @@ const SaveProjectConfirmationPopup = ({
           <div className="confrim-popup-container">
             {/* <Text type="error" text={error} /> */}
             <LinkButton
-              onClick={() => handleSaveConfig()}
+              onClick={() => handleAddNewConfig()}
               className={`signin-btn`}
-              title="Save in existing configuration "
+              title="Save as new configuration"
               isDisable={loading}
             />
             <LinkButton
-              onClick={() => handleAddNewConfig()}
+              onClick={() => handleSaveConfig()}
               className={`signin-btn`}
-              title="Create a new configuration"
+              title="Update existing configuration "
               isDisable={loading}
             />
+
             <CancelButton title="Cancel" onClick={() => onCloseHandler()} />
           </div>
         </Modal.Body>

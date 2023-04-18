@@ -50,6 +50,7 @@ function Dashboard() {
           if (response && response?.msg) {
             ReactSession.set("project_id", response?.msg[0]?.id);
             ReactSession.set("configuration_id", response?.configurationId);
+            ReactSession.set("APIbp3dJson", null);
             ReactSession.set("isedit_project_config", false);
             ReactSession.set("isview_project_config", false);
             ReactSession.set("isview_project_config", false);
@@ -99,6 +100,7 @@ function Dashboard() {
             if (response && response?.msg) {
               ReactSession.set("project_id", response?.msg[0]?.id);
               ReactSession.set("configuration_id", response?.configurationId);
+              ReactSession.set("APIbp3dJson", null);
               ReactSession.set("isedit_project_config", false);
               ReactSession.set("isview_project_config", false);
 

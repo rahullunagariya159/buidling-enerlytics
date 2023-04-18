@@ -75,6 +75,7 @@ function BEModalFull() {
   const handleCallback = (childData) => {
     if (childData) {
       setB3Data(childData);
+      ReactSession.set("bp3dJson", childData);
       setProjectStatus(true);
     }
   };

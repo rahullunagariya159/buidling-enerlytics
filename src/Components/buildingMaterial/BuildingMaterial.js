@@ -51,6 +51,8 @@ const BuildingMaterial = () => {
     useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [bMformValues, setBMFormValues] = useState({});
+  const [isEditValue, setIsEditValue] = useState(false);
+  const [apiCopyData, setAPICopyData] = useState({});
 
   const { userId } = useAuth();
   const [searchParams] = useSearchParams();
@@ -276,50 +278,77 @@ const BuildingMaterial = () => {
   };
 
   const handleSubmitForm = async (values) => {
+    const convertNewData = {
+      knowledge: isEnableSteps,
+      country: selectedCountry?.name,
+      countryUrl: selectedCountry?.url,
+      buildingType: selectedBuildingType?.name,
+      buildingTypeUrl: selectedBuildingType?.url,
+      constructionYear: selectedConstructionYear?.name,
+      buildingAppearance: selectedBuAppearance?.name,
+      buildingAppearanceUrl: selectedBuAppearance?.url,
+      energyConsumption: selEnergeOption?.name,
+      energyConsumptionUrl: selEnergeOption?.url,
+      air_tightness_infilteration_rate_dropdown: values?.gAirTightness,
+      air_tightness_infilteration_rate: values?.gInfilRates,
+      building_density_absorptivity_dropdown: values?.buildingDensity,
+      building_density_absorptivity: values?.gAbsorptivity,
+      energy_bridges_u_value_dropdown: values?.energyBridges,
+      energy_bridges_u_value: values?.gUValue,
+      walls_color_absorption_coefficient_dropdown: values?.wColor,
+      walls_color_absorption_coefficient: values?.oAbsorption,
+      walls_thermal_conductivity_u_value_dropdown: values?.wThermal,
+      walls_thermal_conductivity_u_value: values?.oUValue,
+      floor_thermal_conductivity_u_value_dropdown: values?.fThermal,
+      floor_thermal_conductivity_u_value: values?.fUValue,
+      roof_color_absorption_coefficient_dropdown: values?.roofColor,
+      roof_color_absorption_coefficient: values?.rAbsorption,
+      roof_thermal_conductivity_u_value_dropdown: values?.thermalConductivity,
+      roof_thermal_conductivity_u_value: values?.rUValue,
+      windows_glazing_thermal_conductivity_u_value_dropdown: values?.wThermal,
+      windows_glazing_thermal_conductivity_u_value: values?.wGUValue,
+      windows_energy_transmissivity_coefficient_dropdown: values?.wEnergy,
+      windows_energy_transmissivity_coefficient: values?.wGCoefficient,
+      windows_light_transmissivity_coefficient_dropdown: values?.wLight,
+      windows_light_transmissivity_coefficient: values?.wGLightCoefficient,
+      windows_frames_share_value_dropdown: values?.wFrame,
+      windows_frames_share_value: values?.fShareValue,
+      windows_frames_thermal_conductivity_u_value_dropdown: values?.fThermal,
+      windows_frames_thermal_conductivity_u_value: values?.fUValue,
+      windows_frames_joint_frame_value_dropdown: values?.fJointFrame,
+      windows_frames_joint_frame_value: values?.fJointValue,
+    };
+
     const fValues = { ...values };
 
     setBMFormValues({ ...fValues });
+
+    // console.log({ convertNewData });
+    // console.log({ apiCopyData });
+    // const newStringifyData = convertNewData.toString();
+    // const oldStringifyAPiData = apiCopyData.toString();
+
+    // console.log("newStringifyData", newStringifyData);
+    // console.log("oldStringifyAPiData", oldStringifyAPiData);
+
+    // console.log({ isEditValue });
+    // console.log({ isValueEqual });
+    // console.log("is equal -- >> ", isEqual(convertNewData, apiCopyData));
     if (isEdit) {
-      setShowConfirmModal(true);
+      const isValueEqual = isEqual(convertNewData, apiCopyData);
+
+      if ((isEdit && !isValueEqual) || (isEdit && isEditValue)) {
+        setShowConfirmModal(true);
+      } else if (isEdit && isValueEqual && !isEditValue) {
+        navigate({
+          pathname: `${Routes.hvac}`,
+          search: "?name=" + projectName,
+        });
+      }
     } else {
       await handleSaveBuildingMaterialData(values);
     }
     // selEnergeOption
-    // console.log({ selEnergeOption });
-    // console.log({ stringifyData });
-
-    // stringifyData = {
-    //   name: selEnergeOption?.name,
-    //   url: selEnergeOption?.url,
-    //   air_tightness_infilteration_rate_dropdown: values?.gAirTightness,
-    //   air_tightness_infilteration_rate: values?.gInfilRates,
-    //   building_density_absorptivity_dropdown: values?.buildingDensity,
-    //   building_density_absorptivity: values?.gAbsorptivity,
-    //   energy_bridges_u_value_dropdown: values?.energyBridges,
-    //   energy_bridges_u_value: values?.gUValue,
-    //   walls_color_absorption_coefficient_dropdown: values?.wColor,
-    //   walls_color_absorption_coefficient: values?.oAbsorption,
-    //   walls_thermal_conductivity_u_value_dropdown: values?.wThermal,
-    //   walls_thermal_conductivity_u_value: values?.oUValue,
-    //   floor_thermal_conductivity_u_value_dropdown: values?.fThermal,
-    //   floor_thermal_conductivity_u_value: values?.fUValue,
-    //   roof_color_absorption_coefficient_dropdown: values?.roofColor,
-    //   roof_color_absorption_coefficient: values?.rAbsorption,
-    //   roof_thermal_conductivity_u_value_dropdown: values?.thermalConductivity,
-    //   roof_thermal_conductivity_u_value: values?.rUValue,
-    //   windows_glazing_thermal_conductivity_u_value_dropdown: values?.wThermal,
-    //   windows_glazing_thermal_conductivity_u_value: values?.wGUValue,
-    //   windows_energy_transmissivity_coefficient_dropdown: values?.wEnergy,
-    //   windows_energy_transmissivity_coefficient: values?.wGCoefficient,
-    //   windows_light_transmissivity_coefficient_dropdown: values?.wLight,
-    //   windows_light_transmissivity_coefficient: values?.wGLightCoefficient,
-    //   windows_frames_share_value_dropdown: values?.wFrame,
-    //   windows_frames_share_value: values?.fShareValue,
-    //   windows_frames_thermal_conductivity_u_value_dropdown: values?.fThermal,
-    //   windows_frames_thermal_conductivity_u_value: values?.fUValue,
-    //   windows_frames_joint_frame_value_dropdown: values?.fJointFrame,
-    //   windows_frames_joint_frame_value: values?.fJointValue,
-    // };
 
     // if (isEqual(selEnergeOption, stringifyData)) {
     //   console.log("is equal");
@@ -349,7 +378,7 @@ const BuildingMaterial = () => {
       .then((response) => {
         if (response?.status === 200 && response?.data?.data?.data?.S) {
           const buMaterialData = JSON.parse(response.data.data.data.S);
-
+          setAPICopyData(buMaterialData);
           if (Object.keys(buMaterialData)?.length === 0) {
             return false;
           }
@@ -419,8 +448,7 @@ const BuildingMaterial = () => {
             windows_frames_thermal_conductivity_u_value_dropdown:
               buMaterialData?.windows_frames_thermal_conductivity_u_value_dropdown,
             windows_light_transmissivity_coefficient_dropdown:
-              buMaterialData?.buMaterialData
-                ?.windows_light_transmissivity_coefficient_dropdown,
+              buMaterialData?.windows_light_transmissivity_coefficient_dropdown,
             roof_color_absorption_coefficient_dropdown:
               buMaterialData?.roof_color_absorption_coefficient_dropdown,
             roof_thermal_conductivity_u_value_dropdown:
@@ -912,6 +940,7 @@ const BuildingMaterial = () => {
                   selEnergeOptionData={selEnergeOption}
                   isEnableSteps={isEnableSteps}
                   handleSubmitForm={handleSubmitForm}
+                  setIsEditValue={setIsEditValue}
                 />
               </div>
             </div>

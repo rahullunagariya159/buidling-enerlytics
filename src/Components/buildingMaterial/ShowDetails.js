@@ -11,6 +11,7 @@ const ShowDetails = ({
   selEnergeOptionData,
   isEnableSteps,
   handleSubmitForm,
+  setIsEditValue,
 }) => {
   const isView = ReactSession.get("isview_project_config");
   const [loading, setLoading] = useState(false);
@@ -99,6 +100,7 @@ const ShowDetails = ({
     const extraData = selectedOption?.dataset?.extra;
     setFieldValue(inputFieldName, extraData);
     setFieldValue(name, value);
+    setIsEditValue(true);
   };
 
   useEffect(() => {
@@ -238,6 +240,11 @@ const ShowDetails = ({
     handleSubmitForm(values);
   };
 
+  // useEffect(() => {
+  //   //do your stuff
+  //   setIsEditValue(true);
+  // }, [formikRef?.current?.values]);
+
   return (
     <div className="right-wrp">
       <p className="rotet cursor-pointer" onClick={() => setToggle(!toggle)}>
@@ -261,7 +268,7 @@ const ShowDetails = ({
           onSubmit={(values) => onHandleSubmitForm(values)}
         >
           {({ setFieldValue, errors, touched }) => (
-            <Form>
+            <Form onChange={() => setIsEditValue(true)}>
               <div
                 className={`rightContent ${
                   selEnergeOptionData?.name ? "scroll-inline" : ""
