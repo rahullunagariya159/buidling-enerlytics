@@ -3,7 +3,6 @@ import { Modal } from "react-bootstrap";
 import CancelButton from "./CancelButton";
 import LinkButton from "./LinkButton";
 import { useAuth } from "../Context/AuthProvider";
-
 import Text from "./Text";
 import LoadingCover from "../Components/LoadingCover";
 

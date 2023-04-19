@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ReactSession } from "react-client-session";
-import { isEqual, isEqualWith } from "lodash";
 
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { set3dJSONData, get3dJSONData } from "./Services/UserService";
@@ -13,6 +12,7 @@ import BuildingApp from "../BuildingApp";
 import { useAuth } from "../Context/AuthProvider";
 import SaveProjectConfirmationPopup from "./SaveProjectConfirmationPopup";
 import LoadingCover from "./LoadingCover";
+import CreateConfigurationPopup from "./CreateConfigurationPopup";
 
 function BEModal() {
   const threeDRef = useRef();
@@ -28,6 +28,7 @@ function BEModal() {
   const projectData = ReactSession.get("bp3dJson");
   const [userID, setUserId] = useState("");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [isShowCreateConfig, setIsCreateShowConfig] = useState(false);
   const location = useLocation();
   const isEdit = ReactSession.get("isedit_project_config");
   const isView = ReactSession.get("isview_project_config");
@@ -91,31 +92,17 @@ function BEModal() {
     }
   };
 
+  const onCloseConfigModalHandler = () => {
+    setIsCreateShowConfig(false);
+  };
+
+  const onCreateNewConfigModalHandler = async () => {
+    await handleNextClick();
+  };
+
   const handleAddNewConfig = async () => {
-    setShowLoader(true);
     setShowConfirmModal(false);
-    const projectID = await ReactSession.get("project_id");
-
-    const newConfigPayload = {
-      userId: userId,
-      projectId: projectID,
-      configurationName: projectName,
-    };
-
-    await addProjectConfiguration(newConfigPayload)
-      .then(async (response) => {
-        if (response?.status === 200 && response?.data?.msg) {
-          await ReactSession.set(
-            "configuration_id",
-            response?.data?.configurationId,
-          );
-          await handleNextClick();
-        }
-      })
-      .catch((error) => {
-        console.log({ error });
-        setShowLoader(false);
-      });
+    setIsCreateShowConfig(true);
   };
 
   const handleProccedBEModal = async () => {
@@ -307,6 +294,13 @@ function BEModal() {
           onCloseModalHandler={() => setShowConfirmModal(false)}
           handleSaveConfig={handleNextClick}
           handleAddNewConfig={handleAddNewConfig}
+        />
+      )}
+      {isShowCreateConfig && (
+        <CreateConfigurationPopup
+          isShow={isShowCreateConfig}
+          onCloseModalHandler={onCloseConfigModalHandler}
+          onCreateNewConfigModalHandler={onCreateNewConfigModalHandler}
         />
       )}
       <LoadingCover show={showLoader} />

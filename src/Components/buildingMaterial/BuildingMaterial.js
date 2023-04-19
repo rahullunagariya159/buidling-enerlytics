@@ -23,11 +23,12 @@ import "./index.css";
 import { Dropdown } from "react-bootstrap";
 import SaveProjectConfirmationPopup from "../SaveProjectConfirmationPopup";
 import { Routes } from "../../navigation/Routes";
+import CreateConfigurationPopup from "../CreateConfigurationPopup";
 
 const BuildingMaterial = () => {
   const navigate = useNavigate();
 
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const [countries, setCountries] = useState([]);
   const [materialType, setMaterialType] = useState([]);
@@ -40,8 +41,9 @@ const BuildingMaterial = () => {
   const [selectedBuAppearance, setSelectedBuAppearance] = useState(null);
   const [selectedBuAppearanceObj, setSelectedBuAppearanceObj] = useState({});
   const [selEnergeOption, setSelEnergeOption] = useState({});
-  const [isEnableSteps, setIsEnableSteps] = useState(false);
+  const [isEnableSteps, setIsEnableSteps] = useState(null);
   const [buildingEnrgOptIndex, setBuildingEnrgOptIndex] = useState(0);
+  const [isShowCreateConfig, setIsCreateShowConfig] = useState(false);
   const [error, setError] = useState("");
 
   const [toggleCountry, setToggleCountry] = useState(false);
@@ -251,30 +253,18 @@ const BuildingMaterial = () => {
       });
   };
 
+  const onCloseConfigModalHandler = () => {
+    setIsCreateShowConfig(false);
+  };
+
+  const onCreateNewConfigModalHandler = async () => {
+    await handleSaveBuildingMaterialData();
+  };
+
   const handleAddNewConfig = async () => {
-    setShowLoader(true);
-    const projectID = await ReactSession.get("project_id");
-
-    const newConfigPayload = {
-      userId: userId,
-      projectId: projectID,
-      configurationName: projectName,
-    };
-
-    await addProjectConfiguration(newConfigPayload)
-      .then(async (response) => {
-        if (response?.status === 200 && response?.data?.msg) {
-          await ReactSession.set(
-            "configuration_id",
-            response?.data?.configurationId,
-          );
-          await handleSaveBuildingMaterialData();
-        }
-      })
-      .catch((error) => {
-        console.log({ error });
-        setShowLoader(false);
-      });
+    // setShowLoader(true);
+    setShowConfirmModal(false);
+    setIsCreateShowConfig(true);
   };
 
   const handleSubmitForm = async (values) => {
@@ -363,6 +353,7 @@ const BuildingMaterial = () => {
     setIsEnableSteps(false);
     setToggle(true);
     setSelEnergeOption({});
+    setSelectedCountry("");
   };
 
   const onGetBuildingMaterialData = async () => {
@@ -508,8 +499,11 @@ const BuildingMaterial = () => {
                               className="inst"
                               id="buildingKnowledge0"
                               name="buildingKnowledge"
-                              defaultChecked={!isEnableSteps}
-                              checked={!isEnableSteps}
+                              checked={
+                                isEnableSteps !== null && !isEnableSteps
+                                  ? true
+                                  : false
+                              }
                             />
                             <label
                               className="insted no-1 tow"
@@ -953,6 +947,13 @@ const BuildingMaterial = () => {
           onCloseModalHandler={() => setShowConfirmModal(false)}
           handleSaveConfig={handleSaveBuildingMaterialData}
           handleAddNewConfig={handleAddNewConfig}
+        />
+      )}
+      {isShowCreateConfig && (
+        <CreateConfigurationPopup
+          isShow={isShowCreateConfig}
+          onCloseModalHandler={onCloseConfigModalHandler}
+          onCreateNewConfigModalHandler={onCreateNewConfigModalHandler}
         />
       )}
       <LoadingCover show={showLoader} />

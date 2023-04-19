@@ -19,6 +19,7 @@ import { Routes } from "../navigation/Routes";
 function LoadProject() {
   const navigate = useNavigate();
   const [projectList, setProjectList] = useState([]);
+  const [copyProjectList, setCopyProjectList] = useState([]);
   const [btnClass, setBtnClass] = useState("btn-disabled");
   const [configSelected, setConfigSelected] = useState(0);
   const [selectedProjects, setSelectedProjects] = useState([]);
@@ -116,6 +117,7 @@ function LoadProject() {
       .then((response) => {
         if (response?.status === 200 && response?.data?.data?.length > 0) {
           setProjectList(response?.data?.data);
+          setCopyProjectList(response?.data?.data);
           // setSelectedProjects(response?.data?.data?.[0]);
           handleCardClick(response?.data?.data[0], 0);
           document.querySelector(`.selected-item-0`).classList.add("active");
@@ -144,7 +146,6 @@ function LoadProject() {
   }, [userID]);
 
   const removeSelConfig = (configId) => {
-    console.log({ configId });
     setShowLoader(true);
     const unCheckedProjectConfig = selectedConfiguration.filter(
       (item) => item?.id !== configId,
@@ -154,6 +155,18 @@ function LoadProject() {
     }
     setSelectedConfiguration(unCheckedProjectConfig);
     setShowLoader(false);
+  };
+
+  const handleSearch = (e) => {
+    const searchVal = e.target.value;
+    if (searchVal) {
+      const filterProjects = copyProjectList.filter((item) =>
+        item?.name?.toLowerCase()?.includes(searchVal?.toLowerCase()),
+      );
+      setProjectList(filterProjects);
+    } else {
+      setProjectList(copyProjectList);
+    }
   };
 
   return (
@@ -186,6 +199,8 @@ function LoadProject() {
                             type="text"
                             placeholder="Search project"
                             className="Search-project"
+                            name="searchProject"
+                            onChange={(e) => handleSearch(e)}
                           />
                           <img
                             src="assets/img/LoadExisting/search.png"
