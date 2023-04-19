@@ -102,7 +102,7 @@ function Register() {
         } else {
           console.log(data);
           // setVerifyProcess(true);
-          toast.success("Signup successful.");
+          // toast.success("Signup successful.");
           setTimeout((window.location.href = "/dashboard"), 2000);
         }
       });
@@ -127,7 +127,7 @@ function Register() {
         toast.error("Couldn't verify account.", { toastId: "toast11" });
       } else {
         console.log(data);
-        toast.success("Account verified successfully.");
+        // toast.success("Account verified successfully.");
         window.location.href = "/dashboard";
       }
     });

@@ -119,7 +119,6 @@ const EditProfile = ({ childToParent }) => {
       .then(async (response) => {
         if (response?.status === 200 && response?.data?.msg) {
           await getUserInfo(userId);
-          toast.success("Your profile updated successfully");
           childToParent();
         } else {
           setError(response?.error || somethingWentWrongError);
@@ -267,10 +266,10 @@ const EditProfile = ({ childToParent }) => {
               <input type="password" placeholder="Password" />
             </Items> */}
             <Items>
-              <Label>User id</Label>
+              <Label>User name</Label>
               <input
                 type="text"
-                placeholder="User id"
+                placeholder="User name"
                 name="userName"
                 value={inputVal?.userName}
                 onChange={onChangeHandler}

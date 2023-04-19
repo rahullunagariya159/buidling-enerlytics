@@ -82,7 +82,7 @@ const PromoCode = () => {
       .then(async (response) => {
         if (response?.status === 200 && response?.data?.msg) {
           await getUserInfo(userId);
-          toast.success("Promo code activated successfully");
+          // toast.success("Promo code activated successfully");
         }
       })
       .catch((error) => {

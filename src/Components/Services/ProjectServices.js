@@ -36,9 +36,9 @@ export const addProjectConfiguration = async (payload) => {
   });
 };
 
-export const deleteProject = async (projectId) => {
+export const deleteProject = async (payload) => {
   return new Promise((resolve, reject) => {
-    ApiPost(`/delete-project`, projectId)
+    ApiPost(`/delete-project`, payload)
       .then(function (response) {
         resolve(response);
       })

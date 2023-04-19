@@ -26,9 +26,7 @@ const DeleteProjectModal = ({
           <div className="left-content">
             <div className="cards">
               <img src={"assets/img/LoadExisting/3d Project page.png"} alt="" />
-              <div className="title-txt">
-                Wall imperial perment perment perment
-              </div>
+              <div className="title-txt">{projectDetail?.name}</div>
             </div>
           </div>
           <div className="v-border"></div>

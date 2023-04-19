@@ -329,7 +329,7 @@ function Navbar(props) {
         } else {
           ReactSession.set("is_logged_in", "true");
           ReactSession.set("building_user", emailReg || username);
-          toast.success("Account verified successfully.");
+          // toast.success("Account verified successfully.");
 
           handleRedirection(emailReg || username);
         }

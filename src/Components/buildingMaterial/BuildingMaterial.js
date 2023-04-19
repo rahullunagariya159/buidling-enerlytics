@@ -237,7 +237,7 @@ const BuildingMaterial = () => {
     await saveBuildingMaterialData(materialPayload)
       .then((response) => {
         if (response?.status === 200 && response.data.msg) {
-          toast.success("Building Material Data Updated successfully");
+          // toast.success("Building Material Data Updated successfully");
           navigate({
             pathname: `${Routes.hvac}`,
             search: "?name=" + projectName,
@@ -312,17 +312,6 @@ const BuildingMaterial = () => {
 
     setBMFormValues({ ...fValues });
 
-    // console.log({ convertNewData });
-    // console.log({ apiCopyData });
-    // const newStringifyData = convertNewData.toString();
-    // const oldStringifyAPiData = apiCopyData.toString();
-
-    // console.log("newStringifyData", newStringifyData);
-    // console.log("oldStringifyAPiData", oldStringifyAPiData);
-
-    // console.log({ isEditValue });
-    // console.log({ isValueEqual });
-    // console.log("is equal -- >> ", isEqual(convertNewData, apiCopyData));
     if (isEdit) {
       const isValueEqual = isEqual(convertNewData, apiCopyData);
 
@@ -337,15 +326,6 @@ const BuildingMaterial = () => {
     } else {
       await handleSaveBuildingMaterialData(values);
     }
-    // selEnergeOption
-
-    // if (isEqual(selEnergeOption, stringifyData)) {
-    //   console.log("is equal");
-    // } else {
-    //   console.log("is different");
-    // }
-
-    // const values = bMformValues;
   };
 
   const onYesBuildingMaterial = () => {
@@ -353,6 +333,9 @@ const BuildingMaterial = () => {
     setToggle(true);
     setSelEnergeOption({});
     setSelectedCountry("");
+    setSelectedBuAppearance("");
+    setSelectedBuildingType("");
+    setSelectedConstructionYear("");
   };
 
   const onGetBuildingMaterialData = async () => {
@@ -452,6 +435,9 @@ const BuildingMaterial = () => {
           };
 
           setSelEnergeOption(formDetailConfiguration);
+          if (buMaterialData?.knowledge) {
+            setToggle(true);
+          }
         }
       })
       .catch((error) => {
@@ -462,11 +448,36 @@ const BuildingMaterial = () => {
       });
   };
 
+  const onHandleSelectCountry = () => {
+    setSelectedBuildingType("");
+    setSelectedConstructionYear("");
+    setSelectedBuAppearance("");
+    setSelectedBuAppearanceObj({});
+    setSelEnergeOption({});
+  };
+
+  const onHandleSelectBuildingType = () => {
+    setSelectedConstructionYear("");
+    setSelectedBuAppearance("");
+    setSelectedBuAppearanceObj({});
+    setSelEnergeOption({});
+  };
+
+  const onHandleSelectConsrtYear = () => {
+    setSelectedBuAppearance("");
+    setSelectedBuAppearanceObj({});
+    setSelEnergeOption({});
+  };
+
   useEffect(() => {
     if (userId) {
       onGetBuildingMaterialData();
     }
   }, [userId]);
+
+  useEffect(() => {
+    handleNoBuildingMaterial();
+  }, []);
 
   return (
     <div>
@@ -582,7 +593,10 @@ const BuildingMaterial = () => {
                                 countries.map((item, index) => (
                                   <Dropdown.Item
                                     key={index}
-                                    onClick={() => setSelectedCountry(item)}
+                                    onClick={() => {
+                                      setSelectedCountry(item);
+                                      onHandleSelectCountry();
+                                    }}
                                   >
                                     <div className="items">
                                       <div className="sub-items">
@@ -632,7 +646,7 @@ const BuildingMaterial = () => {
                             </Dropdown.Toggle>
                             <Dropdown.Menu
                               className="secondBoxItems"
-                              onChange={onSelectBuildingType}
+                              onChange={() => onSelectBuildingType()}
                             >
                               <div
                                 className={`${
@@ -643,9 +657,10 @@ const BuildingMaterial = () => {
                                 materialType.map((item, index) => (
                                   <Dropdown.Item
                                     key={index}
-                                    onClick={() =>
-                                      setSelectedBuildingType(item)
-                                    }
+                                    onClick={() => {
+                                      setSelectedBuildingType(item);
+                                      onHandleSelectBuildingType();
+                                    }}
                                   >
                                     <div className="items">
                                       <div className="sub-items">
@@ -705,9 +720,10 @@ const BuildingMaterial = () => {
                                 constructionYears.map((item, index) => (
                                   <Dropdown.Item
                                     key={index}
-                                    onClick={() =>
-                                      setSelectedConstructionYear(item)
-                                    }
+                                    onClick={() => {
+                                      setSelectedConstructionYear(item);
+                                      onHandleSelectConsrtYear();
+                                    }}
                                   >
                                     <div className="items ">
                                       <div className="sub-items">
@@ -776,9 +792,10 @@ const BuildingMaterial = () => {
                                 buildingAppearance.map((item, index) => (
                                   <Dropdown.Item
                                     key={index}
-                                    onClick={() =>
-                                      setSelectedBuAppearance(item)
-                                    }
+                                    onClick={() => {
+                                      setSelectedBuAppearance(item);
+                                      setSelEnergeOption({});
+                                    }}
                                   >
                                     <div className="items buildApp">
                                       <div className="sub-items">

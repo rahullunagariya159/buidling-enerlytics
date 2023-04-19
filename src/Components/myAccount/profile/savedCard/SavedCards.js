@@ -63,7 +63,7 @@ const SavedCards = () => {
       .then((response) => {
         if (response?.status === 200 && response?.data?.msg) {
           getCreditCards(userId);
-          toast.success("Card made default successfully");
+          // toast.success("Card made default successfully");
         }
       })
       .catch((error) => {

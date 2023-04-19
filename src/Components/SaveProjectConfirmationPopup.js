@@ -27,7 +27,7 @@ const SaveProjectConfirmationPopup = ({
         className={`signin-btn sub-plan`}
         title="Save Project Confirmation"
       /> */}
-      <Modal show={isShow}>
+      <Modal show={isShow} centered>
         <Modal.Header closeButton onClick={() => onCloseHandler()}>
           <Modal.Title>Please confirm are you sure?</Modal.Title>
         </Modal.Header>

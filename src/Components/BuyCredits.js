@@ -53,7 +53,7 @@ function BuyCredits() {
       .then(async (response) => {
         if (response?.status === 200 && response?.data?.msg) {
           await getUserInfo(userId);
-          toast.success("Credits purchased successfully");
+          // toast.success("Credits purchased successfully");
           invokeModal(!isShow);
         }
       })

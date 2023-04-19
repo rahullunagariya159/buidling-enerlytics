@@ -61,7 +61,7 @@ const CreateConfigurationPopup = ({
           );
           onCreateNewConfigModalHandler();
           onCloseHandler();
-          toast.success("New configuration created successfully");
+          // toast.success("New configuration created successfully");
         }
       })
       .catch((error) => {

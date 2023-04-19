@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   listProjects,
   listProjectConfigurations,
+  deleteProject,
 } from "./Services/ProjectServices";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
@@ -24,7 +25,7 @@ function LoadProject() {
   const [copyProjectList, setCopyProjectList] = useState([]);
   const [btnClass, setBtnClass] = useState("btn-disabled");
   const [configSelected, setConfigSelected] = useState(0);
-  const [selectedProjects, setSelectedProjects] = useState([]);
+  const [selectedProjects, setSelectedProjects] = useState({});
   const [projectConfiguration, setProjectConfiguration] = useState([]);
   const { userId: userID } = useAuth();
   const [isShow, invokeModal] = useState(false);
@@ -178,12 +179,32 @@ function LoadProject() {
   };
 
   const handleDeleteProject = () => {
-    console.log("->>selted project", selectedProjects);
-    console.log("->>selted project", selectedConfiguration);
+    setShowLoader(true);
+    const payload = {
+      projectId: selectedProjects.id,
+    };
+    deleteProject(payload)
+      .then((response) => {
+        if (response?.status === 200) {
+          toast.success("Project removed successfully");
+          const remainingProject =
+            projectList?.length > 0 &&
+            projectList?.filter((proj) => proj.id !== selectedProjects?.id);
+          setProjectList(remainingProject || []);
+          setSelectedProjects(remainingProject[0]);
+          handleCloseDeleteProjectModal();
+        }
+      })
+      .catch((error) => {
+        console.log({ error });
+      })
+      .finally(() => {
+        setShowLoader(false);
+      });
   };
 
   const handleDeleteConfig = () => {
-    setIsDeleteConfig();
+    setIsDeleteConfig(false);
   };
 
   return (
@@ -373,6 +394,7 @@ function LoadProject() {
                                     true,
                                   )
                                 }
+                                style={{ pointerEvents: "none", opacity: 0.5 }}
                               >
                                 <img
                                   src="assets/img/LoadExisting/view.svg"
@@ -386,6 +408,7 @@ function LoadProject() {
                               <a
                                 className={`five-btn-s-width ${btnClass}`}
                                 onClick={handleLoadProject}
+                                style={{ pointerEvents: "none", opacity: 0.5 }}
                               >
                                 <img
                                   src="assets/img/LoadExisting/view.svg"
@@ -544,18 +567,6 @@ function LoadProject() {
                       </div>
                     </div>
                   </div>
-
-                  <DeleteProjectModal
-                    isDelete={isDeleteProject}
-                    handleCloseModal={handleCloseDeleteProjectModal}
-                    handleDelete={handleDeleteProject}
-                  />
-
-                  <DeleteConfigurationModal
-                    isDelete={isDeleteConfig}
-                    handleCloseModal={handleCloseDeleteProjectModal}
-                    handleDelete={handleDeleteConfig}
-                  />
                 </div>
               </div>
             </div>
@@ -563,6 +574,18 @@ function LoadProject() {
         </section>
       </div>
       <LoadingCover show={showLoader} />
+      <DeleteProjectModal
+        isDelete={isDeleteProject}
+        handleCloseModal={handleCloseDeleteProjectModal}
+        handleDelete={handleDeleteProject}
+        projectDetail={selectedProjects}
+      />
+
+      <DeleteConfigurationModal
+        isDelete={isDeleteConfig}
+        handleCloseModal={handleCloseDeleteProjectModal}
+        handleDelete={handleDeleteConfig}
+      />
     </div>
   );
 }

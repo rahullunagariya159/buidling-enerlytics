@@ -364,9 +364,9 @@ function Login() {
           ReactSession.set("user_email_registered", "true");
 
           setNextButtonClicked(false);
-          toast.success("Account verified successfully.", {
-            toastId: "toast12",
-          });
+          // toast.success("Account verified successfully.", {
+          //   toastId: "toast12",
+          // });
 
           handleRedirection(emailReg || username);
         }
@@ -404,7 +404,7 @@ function Login() {
           ReactSession.set("building_user", username);
           ReactSession.set("is_logged_in", "true");
 
-          toast.success("login success.", { toastId: "toast12" });
+          // toast.success("login success.", { toastId: "toast12" });
 
           if (data?.idToken?.payload?.email) {
             handleRedirection(data?.idToken?.payload?.email);
