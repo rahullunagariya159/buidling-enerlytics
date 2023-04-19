@@ -6,6 +6,7 @@ import { set3dJSONData, get3dJSONData } from "./Services/UserService";
 import { addProjectConfiguration } from "./Services/ProjectServices";
 import { toast } from "react-toastify";
 import Navbar from "./Navbar";
+import ReactTooltip from "react-tooltip";
 import { Auth } from "aws-amplify";
 import LeftSidebar from "./LeftSidebar";
 import BuildingApp from "../BuildingApp";
@@ -245,8 +246,13 @@ function BEModal() {
               </div>
               <div className="be-modal">
                 {/* //BE-Modal here */}
-                <a
-                  className="edit-model-btn clickable"
+                <ReactTooltip id="registerTip" place="top" effect="solid">
+                  Enter drawing mode
+                </ReactTooltip>
+                <div
+                  data-tip
+                  data-for="registerTip"
+                  className="edit-model-btn clickable cursor-pointer"
                   onClick={returnToModelFullScreen}
                 >
                   {/* <img src="assets/img/Home-Page/homeFinal/edit.svg" alt="" />ENTER DRAWING MODE */}
@@ -255,7 +261,7 @@ function BEModal() {
                     alt="Submit and Exit Drawing Mode"
                     className="clickable"
                   />
-                </a>
+                </div>
                 <div className="be-model-containter be-min">
                   <BuildingApp
                     parentCallback={handleCallback}

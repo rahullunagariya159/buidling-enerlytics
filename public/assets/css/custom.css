@@ -368,7 +368,7 @@ a.link-itme.flex.signin-btn.btn-nav {
 
 .edit-model-btn {
   position: absolute;
-  right: 0;
+  right: 20px;
   z-index: 9;
   font: normal normal normal 12px/21px Poppins;
   display: flex;

@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import Navbar from "./Navbar";
 import { Auth } from "aws-amplify";
 import BuildingApp from "../BuildingApp";
+import ReactTooltip from "react-tooltip";
 
 function BEModalFull() {
   const threeDRef = useRef();
@@ -122,12 +123,19 @@ function BEModalFull() {
                     ref={threeDRef}
                   />
                 </div>
-                <div className="modal-next-container-full">
+                <ReactTooltip id="registerTip" place="top" effect="solid">
+                  Exit drawing mode
+                </ReactTooltip>
+                <div
+                  className="modal-next-container-full"
+                  data-tip
+                  data-for="registerTip"
+                  onClick={handleNextClick}
+                >
                   <img
                     src="assets/img/BeModel/layout_22@2x.png"
                     alt="Submit and Exit Drawing Mode"
                     className="clickable"
-                    onClick={handleNextClick}
                   />
                   {/* <a className="btn next-btnes drawing-mode" onClick={handleNextClick}>SUBMIT & EXIT DRAWING MODE</a> */}
                   {/* disabled={!projectStatus} */}
