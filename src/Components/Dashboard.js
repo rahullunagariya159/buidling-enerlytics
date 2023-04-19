@@ -123,7 +123,10 @@ function Dashboard() {
           }
         })
         .catch((error) => {
-          setCreateProjectError(error || somethingWentWrongError);
+          console.log({ error });
+          setCreateProjectError(
+            error?.response?.data?.msg || somethingWentWrongError,
+          );
         })
         .finally(() => {
           setShowLoader(false);

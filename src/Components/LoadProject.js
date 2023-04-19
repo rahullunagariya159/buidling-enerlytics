@@ -15,6 +15,8 @@ import LinkButton from "./LinkButton";
 import CancelButton from "./CancelButton";
 import LoadingCover from "./LoadingCover";
 import { Routes } from "../navigation/Routes";
+import DeleteProjectModal from "./DeleteProjectModal";
+import DeleteConfigurationModal from "./DeleteConfigurationModal";
 
 function LoadProject() {
   const navigate = useNavigate();
@@ -28,7 +30,9 @@ function LoadProject() {
   const [isShow, invokeModal] = useState(false);
   const [isDelete, setDeleteModal] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+  const [isDeleteProject, setIsDeleteProject] = useState(false);
   const [selectedConfiguration, setSelectedConfiguration] = useState([]);
+  const [isDeleteConfig, setIsDeleteConfig] = useState(false);
 
   const handleCardClick = async (selectedItem, index) => {
     setShowLoader(true);
@@ -169,6 +173,19 @@ function LoadProject() {
     }
   };
 
+  const handleCloseDeleteProjectModal = () => {
+    setIsDeleteProject(false);
+  };
+
+  const handleDeleteProject = () => {
+    console.log("->>selted project", selectedProjects);
+    console.log("->>selted project", selectedConfiguration);
+  };
+
+  const handleDeleteConfig = () => {
+    setIsDeleteConfig();
+  };
+
   return (
     <div>
       <Navbar />
@@ -239,67 +256,13 @@ function LoadProject() {
                             <div className="lest-flex1">
                               <p className="STELLA-titr">{item.name}</p>
                               <img
-                                onClick={() => setDeleteModal(!isDelete)}
+                                onClick={() => setIsDeleteProject(true)}
                                 src="assets/img/LoadExisting/Group 431.svg"
                                 className="dots-11px"
                                 alt=""
                               />
                             </div>
-                            <Modal
-                              show={isDelete}
-                              onHide={() => setDeleteModal(!isDelete)}
-                              centered
-                              className="permanent-delete"
-                            >
-                              <Modal.Body>
-                                <div className="close-btn">
-                                  <button
-                                    type="button"
-                                    onClick={() => setDeleteModal(!isDelete)}
-                                  >
-                                    x
-                                  </button>
-                                </div>
-                                <div className="main-content">
-                                  <div className="left-content">
-                                    <div className="cards">
-                                      <img
-                                        src={
-                                          "assets/img/LoadExisting/3d Project page.png"
-                                        }
-                                        alt=""
-                                      />
-                                      <div className="title-txt">
-                                        Wall imperial perment perment perment
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="v-border"></div>
-                                  <div className="right-content">
-                                    <div className="heading">
-                                      YOU ARE ABOUT TO DELETE A PROJECT!
-                                    </div>
-                                    <p>
-                                      This will delete your project permanently
-                                    </p>
-                                    <p>Are you sure?</p>
-                                    <div className="footer">
-                                      <LinkButton
-                                        className={`signin-btn delete`}
-                                        title="DELETE"
-                                      />
-                                      <CancelButton
-                                        className="cancel"
-                                        title="CANCEL"
-                                        onClick={() =>
-                                          setDeleteModal(!isDelete)
-                                        }
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              </Modal.Body>
-                            </Modal>
+
                             <div className="lest-grid">
                               <div className="lestgrid-1">
                                 <p className="lest-pra-9px">Location</p>
@@ -342,7 +305,7 @@ function LoadProject() {
                                     )}
                                 </p>
                                 <p className="lest-pra-8px">
-                                  {item?.configurations?.length}
+                                  {item?.configurations}
                                 </p>
                               </div>
                             </div>
@@ -364,7 +327,7 @@ function LoadProject() {
                               selected
                             </p>
                             <div
-                              onClick={() => invokeModal(!isShow)}
+                              onClick={() => setIsDeleteConfig(true)}
                               className="Permanent-btn"
                             >
                               Permanent delete
@@ -581,50 +544,18 @@ function LoadProject() {
                       </div>
                     </div>
                   </div>
-                  <Modal
-                    show={isShow}
-                    onHide={() => invokeModal(!isShow)}
-                    centered
-                    className="permanent-delete"
-                  >
-                    <Modal.Body>
-                      <div className="close-btn">
-                        <button
-                          type="button"
-                          onClick={() => invokeModal(!isShow)}
-                        >
-                          x
-                        </button>
-                      </div>
-                      <div className="main-content">
-                        <div className="left-content">
-                          <div className="heading">Configuration</div>
-                          <p>Wall Improved</p>
-                          <p>Solar Heater</p>
-                          <p>Optimized</p>
-                        </div>
-                        <div className="v-border"></div>
-                        <div className="right-content">
-                          <div className="heading">
-                            YOU ARE ABOUT TO DELETE 3 CONFIGURATIONS!
-                          </div>
-                          <p>This will delete your project permanently</p>
-                          <p>Are you sure?</p>
-                          <div className="footer">
-                            <LinkButton
-                              className={`signin-btn delete`}
-                              title="DELETE"
-                            />
-                            <CancelButton
-                              className="cancel"
-                              title="CANCEL"
-                              onClick={() => invokeModal(!isShow)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </Modal.Body>
-                  </Modal>
+
+                  <DeleteProjectModal
+                    isDelete={isDeleteProject}
+                    handleCloseModal={handleCloseDeleteProjectModal}
+                    handleDelete={handleDeleteProject}
+                  />
+
+                  <DeleteConfigurationModal
+                    isDelete={isDeleteConfig}
+                    handleCloseModal={handleCloseDeleteProjectModal}
+                    handleDelete={handleDeleteConfig}
+                  />
                 </div>
               </div>
             </div>

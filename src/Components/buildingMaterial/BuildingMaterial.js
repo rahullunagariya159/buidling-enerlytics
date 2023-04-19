@@ -75,7 +75,7 @@ const BuildingMaterial = () => {
         }
       })
       .catch((error) => {
-        setError(error?.message || somethingWentWrongError);
+        setError(error?.response?.data?.msg || somethingWentWrongError);
       })
       .finally(() => {
         setShowLoader(false);
@@ -93,7 +93,7 @@ const BuildingMaterial = () => {
         }
       })
       .catch((error) => {
-        setError(error?.message || somethingWentWrongError);
+        setError(error?.response?.data?.msg || somethingWentWrongError);
       })
       .finally(() => {
         setShowLoader(false);
@@ -122,7 +122,7 @@ const BuildingMaterial = () => {
         }
       })
       .catch((error) => {
-        setError(error?.message || somethingWentWrongError);
+        setError(error?.response?.data?.msg || somethingWentWrongError);
       })
       .finally(() => {
         setShowLoader(false);
@@ -152,7 +152,7 @@ const BuildingMaterial = () => {
         }
       })
       .catch((error) => {
-        setError(error?.message || somethingWentWrongError);
+        setError(error?.response?.data?.msg || somethingWentWrongError);
       })
       .finally(() => {
         setShowLoader(false);
@@ -245,8 +245,7 @@ const BuildingMaterial = () => {
         }
       })
       .catch((error) => {
-        console.log({ error });
-        setError(error?.message || somethingWentWrongError);
+        setError(error?.response?.data?.msg || somethingWentWrongError);
       })
       .finally(() => {
         setShowLoader(false);

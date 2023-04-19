@@ -65,7 +65,7 @@ const CreateConfigurationPopup = ({
         }
       })
       .catch((error) => {
-        setError(error?.message || somethingWentWrongError);
+        setError(error?.response?.data?.msg || somethingWentWrongError);
       })
       .finally(() => {
         setLoading(false);
