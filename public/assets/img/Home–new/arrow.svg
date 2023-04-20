@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12">
-  <g id="arrow" transform="translate(-3 18) rotate(-90)">
-    <path id="Path_276" data-name="Path 276" d="M17,10a.908.908,0,0,1-.7-.3l-5-5a.99.99,0,0,1,1.4-1.4l5,5a.967.967,0,0,1,0,1.4.908.908,0,0,1-.7.3Z"/>
-    <path id="Path_277" data-name="Path 277" d="M7,10a.908.908,0,0,1-.7-.3.967.967,0,0,1,0-1.4l5-5a.99.99,0,0,1,1.4,1.4l-5,5A.908.908,0,0,1,7,10Z"/>
-    <path id="Path_278" data-name="Path 278" d="M12,21a.945.945,0,0,1-1-1V4a1,1,0,0,1,2,0V20A.945.945,0,0,1,12,21Z"/>
-  </g>
-</svg>

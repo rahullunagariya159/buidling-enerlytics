@@ -74,7 +74,7 @@ const CreateConfigurationPopup = ({
 
   return (
     <>
-      <Modal show={isShow}>
+      <Modal show={isShow} centered>
         <Modal.Header closeButton onClick={() => onCloseHandler()}>
           <Modal.Title>Create New Configuration</Modal.Title>
         </Modal.Header>

@@ -3,7 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 
 const HeatingWarm = () => {
   return (
-    <Container fluid>
+    <Container fluid className="heatingWrp">
       <Row>
         <Col>
           <div className="question-header">
