@@ -1,8 +1,67 @@
-.build-eng-efficient {
-  text-transform: capitalize;
+.left-wrp-main {
+  width: 740px;
+  height: 652px;
+  background: #fbfbfb 0% 0% no-repeat padding-box;
+  border: 1px solid #f1f1f1;
+  border-radius: 12px;
+  padding: 25px;
 }
-
-.btn-disable-step {
-  background: #c2c2c2 0% 0% no-repeat padding-box;
+.left-wrp-main h1 {
+  font: normal normal 800 20px/24px Inter;
+  letter-spacing: 0.5px;
+  color: #1c1c1c;
+}
+.left-wrp-main p {
+  font: normal normal normal 14px/21px Poppins;
+  letter-spacing: 0.43px;
+  color: #ffbb1c;
+}
+.left-wrp-main .nav {
+  gap: 2.9px !important;
+}
+.tab-wrapper {
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  margin-top: 25px;
+  overflow: hidden;
+  width: fit-content;
+}
+.tabTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.tabTitle img {
+  width: 32px;
+  height: 28px;
+}
+.left-wrp-main .nav-link {
+  font: normal normal 500 10px/14px Poppins;
+  letter-spacing: 0.85px;
+  color: #c2c2c2;
+}
+.left-wrp-main .nav-link:focus,
+.nav-link:active {
+  font: normal normal 600 10px/13px Poppins;
+  letter-spacing: 0.85px;
+  color: #1c1c1c !important;
+}
+.left-wrp-main .nav-fill .nav-item .nav-link,
+.nav-justified .nav-item .nav-link {
+  width: 135px !important;
+  height: 125px !important;
+}
+.left-wrp-main .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: inset 0px 0px 10px #00000029 !important;
+  border: 2px solid #ffbb1c !important;
+  border-radius: 0px !important;
+}
+.question-header {
+  font: normal normal 600 14px/21px Poppins;
+  letter-spacing: 0.43px;
   color: #013a67;
 }
