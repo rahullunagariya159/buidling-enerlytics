@@ -1479,6 +1479,7 @@ img.okik {
   min-height: 44px;
   position: absolute;
   align-items: center;
+  opacity: 1;
   display: flex;
 }
 .bui-materail-img-container .materail-data-icon-container span {
@@ -1489,7 +1490,7 @@ img.okik {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #c6d541;
+  background-color: #ffffffa8;
   opacity: 0.5;
 }
 
@@ -3114,7 +3115,7 @@ p.STELLA-titr {
 }
 
 p.lest-pra-9px {
-  font: normal normal normal 10px/13px Poppins;
+  font: normal normal 500 10px/13px Poppins;
   letter-spacing: 0.54px;
   color: #a2a2a2;
   margin: 0;

@@ -299,14 +299,14 @@ function LoadProject() {
                                     item?.updated_at &&
                                     format(
                                       new Date(parseInt(item?.updated_at)),
-                                      "d MMM, yy",
+                                      "d MMM yy",
                                     )}{" "}
                                   -{" "}
                                   {item &&
                                     item.created_at &&
                                     format(
                                       new Date(parseInt(item.created_at)),
-                                      "d MMM, yy",
+                                      "d MMM yy",
                                     )}
                                 </p>
                                 <p className="lest-pra-8px">
@@ -314,7 +314,7 @@ function LoadProject() {
                                     item.created_at &&
                                     format(
                                       new Date(parseInt(item.created_at)),
-                                      "d MMM, yy",
+                                      "d MMM yy",
                                     )}
                                 </p>
                                 <p className="lest-pra-8px">
@@ -322,7 +322,7 @@ function LoadProject() {
                                     item?.updated_at &&
                                     format(
                                       new Date(parseInt(item?.updated_at)),
-                                      "d MMM, yy",
+                                      "d MMM yy",
                                     )}
                                 </p>
                                 <p className="lest-pra-8px">
