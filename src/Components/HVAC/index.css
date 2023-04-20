@@ -1,6 +1,5 @@
 .left-wrp-main {
   width: 740px;
-  height: 652px;
   background: #fbfbfb 0% 0% no-repeat padding-box;
   border: 1px solid #f1f1f1;
   border-radius: 12px;
@@ -16,8 +15,13 @@
   letter-spacing: 0.43px;
   color: #ffbb1c;
 }
-.left-wrp-main .nav {
-  gap: 2.9px !important;
+
+.nav-fill .nav-item,
+.nav-fill > .nav-link {
+  flex: 1 1 auto;
+  background: #fff !important;
+  text-align: center !important;
+  border: 1px solid #dee2e6 !important;
 }
 .tab-wrapper {
   border: 1px solid #dcdcdc;
@@ -38,9 +42,9 @@
   height: 28px;
 }
 .left-wrp-main .nav-link {
-  font: normal normal 500 10px/14px Poppins;
+  font: normal normal 600 10px/14px Poppins;
   letter-spacing: 0.85px;
-  color: #c2c2c2;
+  color: #c2c2c2 !important;
 }
 .left-wrp-main .nav-link:focus,
 .nav-link:active {
@@ -65,6 +69,27 @@
   letter-spacing: 0.43px;
   color: #013a67;
 }
+.main-container {
+  background-color: #fff;
+}
 .heatingWrp {
-  padding: 47px 26px;
+  padding: 42px 26px 0 26px;
+}
+.questionWrp {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.radio-items {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+}
+.radio-items .form-one label {
+  font: normal normal 500 14px/21px Poppins;
+  letter-spacing: 0.43px;
+  color: #013a67;
+}
+.horizontalLine {
+  border: 1px solid #dcdcdc;
 }

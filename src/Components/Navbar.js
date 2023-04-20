@@ -634,12 +634,12 @@ function Navbar(props) {
               <div className="dropdown">
                 <button onClick={toggleDropdown} className="dropbtn">
                   <img
-                    src="assets/img/Home–new/NoPath@2x.png"
+                    src="assets/img/Home-new/NoPath@2x.png"
                     className="profil lang"
                     alt=""
                   />
                   English
-                  <img src="assets/img/Home–new/gry-arrow.svg" alt="" />
+                  <img src="assets/img/Home-new/gry-arrow.svg" alt="" />
                 </button>
                 <div
                   id="myDropdown"
@@ -649,7 +649,7 @@ function Navbar(props) {
                 >
                   <a className="active">
                     <img
-                      src="assets/img/Home–new/NoPath@2x.png"
+                      src="assets/img/Home-new/NoPath@2x.png"
                       className="profil lang"
                       alt=""
                     />{" "}
@@ -657,7 +657,7 @@ function Navbar(props) {
                   </a>
                   <a>
                     <img
-                      src="assets/img/Home–new/german.png"
+                      src="assets/img/Home-new/german.png"
                       className="profil lang"
                       alt=""
                     />{" "}
@@ -685,9 +685,9 @@ function Navbar(props) {
                         ? userProfileDetails?.credits + " Credits"
                         : "0 Credits"}
                       {toggle ? (
-                        <img src="assets/img/Home–new/upArrow.svg" alt="" />
+                        <img src="assets/img/Home-new/upArrow.svg" alt="" />
                       ) : (
-                        <img src="assets/img/Home–new/downArrow.svg" alt="" />
+                        <img src="assets/img/Home-new/downArrow.svg" alt="" />
                       )}
                     </a>
                     {toggle && (
@@ -1145,7 +1145,7 @@ function Navbar(props) {
           <div className="modal-content signin px-50px-canter">
             <div className="">
               <img
-                src="assets/img/Home–new/arrow.svg"
+                src="assets/img/Home-new/arrow.svg"
                 data-bs-dismiss="modal"
                 data-bs-toggle="modal"
                 data-bs-target="#SIGNup"

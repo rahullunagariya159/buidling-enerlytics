@@ -424,7 +424,7 @@ const ChoosePlan = () => {
               <div className="sdww col-lg-3">
                 <a className="Selected"> Select currency</a>
                 <a className="Euroed">
-                  Euro <img src="assets/img/Home–new/black-drop.svg" alt="" />
+                  Euro <img src="assets/img/Home-new/black-drop.svg" alt="" />
                 </a>
 
                 {/* <div className="dropdown">
@@ -772,7 +772,7 @@ const ChoosePlan = () => {
                 onClick={() => skipToBuy("Trial")}
               >
                 {" "}
-                Skip <img src="assets/img/Home–new/next-black.svg" alt="" />
+                Skip <img src="assets/img/Home-new/next-black.svg" alt="" />
               </a>
             </div>
           </div>
@@ -959,7 +959,7 @@ const ChoosePlan = () => {
                             <span className="pt-1">{selectedCard.last4}</span>
                           </p>
                           <img
-                            src="assets/img/Home–new/visa-credit-card.png"
+                            src="assets/img/Home-new/visa-credit-card.png"
                             className="visa-ixs"
                             alt=""
                           />
@@ -1001,7 +1001,7 @@ const ChoosePlan = () => {
                         <p className="Plan-cst-back flex">
                           {promo.toUpperCase()}
                           <img
-                            src="assets/img/Home–new/chk-blue.svg"
+                            src="assets/img/Home-new/chk-blue.svg"
                             className="chk-ic"
                             alt=""
                           />

@@ -1024,7 +1024,7 @@ function Login() {
                       id=""
                     />
                     <img
-                      src="assets/img/Home–new/next-arrow.svg"
+                      src="assets/img/Home-new/next-arrow.svg"
                       className="next-arrow"
                       alt=""
                     />
@@ -1526,7 +1526,7 @@ function Login() {
           <div className="modal-content signin px-50px-canter">
             <div className="">
               <img
-                src="assets/img/Home–new/arrow.svg"
+                src="assets/img/Home-new/arrow.svg"
                 data-bs-dismiss="modal"
                 data-bs-toggle="modal"
                 data-bs-target={isPendingConfirmCode ? "#SIGNIN" : "#SIGNup"}
