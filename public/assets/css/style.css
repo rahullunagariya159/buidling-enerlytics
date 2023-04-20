@@ -3080,7 +3080,8 @@ img.search-ic {
 }
 
 .first-card1 {
-  box-shadow: 0px 0px 70px #00000024;
+  margin-top: 32px;
+  /* box-shadow: 0px 0px 70px #00000024; */
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid #f1f1f1;
   border-radius: 12px;
@@ -3153,16 +3154,15 @@ img.dots-11px {
 
 .first-card1:hover,
 .first-card1.active {
-  box-shadow: 0px 0px 70px #00000024;
+  box-shadow: 1px -7px 20px 4px #00000024;
   border: 1px solid #1c1c1c;
 }
 
 .EXISTING-card-all {
   overflow-y: auto;
   height: 59vh;
-  margin: 32px 5px 0 32px;
-  padding: 0px 32px 0 0;
-  box-shadow: -44px 13px 70px #00000024;
+  margin: 0px 5px 0 0px;
+  padding: 0px 32px 0 32px;
 }
 .EXISTING-card-all::-webkit-scrollbar {
   width: 9px;
