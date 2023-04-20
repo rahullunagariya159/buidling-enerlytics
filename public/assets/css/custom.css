@@ -368,7 +368,7 @@ a.link-itme.flex.signin-btn.btn-nav {
 
 .edit-model-btn {
   position: absolute;
-  right: 20px;
+  right: 10px;
   z-index: 9;
   font: normal normal normal 12px/21px Poppins;
   display: flex;
@@ -423,7 +423,8 @@ a.link-itme.flex.signin-btn.btn-nav {
 }
 
 .be-model-containter {
-  height: 100vh;
+  height: 75vh;
+  overflow: hidden;
 }
 
 .be-model-containter.be-min canvas {
