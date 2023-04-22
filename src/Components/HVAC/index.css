@@ -1,9 +1,9 @@
 .left-wrp-main {
-  width: 740px;
+  width: 710px;
   background: #fbfbfb 0% 0% no-repeat padding-box;
   border: 1px solid #f1f1f1;
   border-radius: 12px;
-  padding: 25px;
+  padding: 20px;
 }
 .left-wrp-main h1 {
   font: normal normal 800 20px/24px Inter;
@@ -23,7 +23,15 @@
   text-align: center !important;
   border: 1px solid #dee2e6 !important;
 }
+.nav-fill .nav-item,
+.nav-fill > .nav-link {
+  flex: none !important;
+  background: #fff !important;
+  text-align: center !important;
+  border: 1px solid #dee2e6 !important;
+}
 .tab-wrapper {
+  width: 665px;
   border: 1px solid #dcdcdc;
   border-radius: 12px;
   margin-top: 25px;
@@ -54,8 +62,8 @@
 }
 .left-wrp-main .nav-fill .nav-item .nav-link,
 .nav-justified .nav-item .nav-link {
-  width: 135px !important;
-  height: 125px !important;
+  width: 131px;
+  height: 125px;
 }
 .left-wrp-main .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
@@ -69,7 +77,7 @@
   letter-spacing: 0.43px;
   color: #013a67;
 }
-.main-container {
+.main-container-hvac {
   background-color: #fff;
   padding-top: 45px;
   padding: 45px 20px;
@@ -138,4 +146,14 @@
 }
 .rc-steps-vertical .rc-steps-item-tail {
   left: 9px !important;
+}
+.hvac-rotet p.rotet {
+  top: 56px;
+}
+.showDetailsWrp {
+  width: 297px;
+  height: 337px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #f1f1f1;
+  border-radius: 0px 0px 0px 4px;
 }

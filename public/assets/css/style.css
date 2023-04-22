@@ -1338,7 +1338,7 @@ p.top-home.clr {
 }
 
 a.MODELw {
-  font: normal normal 600 12px/18px Inter;
+  font: normal normal 600 11px/18px Inter;
   letter-spacing: 0.37px;
   color: #1c1c1c;
   text-transform: uppercase;
@@ -1446,9 +1446,19 @@ img.okik {
   padding-left: 295px !important;
 }
 @media only screen and (max-width: 1504px) and (min-width: 1024px) {
-  .left-wrp {
-    /* max-width: 457px !important;
-    min-width: 457px !important; */
+  .tab-wrapper {
+    width: 664px;
+  }
+  .side-link-flex {
+    padding: 13px;
+  }
+  .brdrt {
+    padding: 10px 0;
+  }
+  .left-wrp-main .nav-fill .nav-item .nav-link,
+  .nav-justified .nav-item .nav-link {
+    width: 131.2px !important;
+    height: 125px !important;
   }
   .rightContent {
     max-width: 560px !important;

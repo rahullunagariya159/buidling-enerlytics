@@ -77,7 +77,7 @@ const Humidification = () => {
     },
   ];
   return (
-    <Container fluid className="main-container">
+    <Container fluid className="main-container-hvac">
       {data.map((item, index) => (
         <>
           <QuestionAns
