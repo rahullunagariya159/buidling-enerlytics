@@ -28,7 +28,7 @@
   border-radius: 12px;
   margin-top: 25px;
   overflow: hidden;
-  width: fit-content;
+  /* width: fit-content; */
 }
 .tabTitle {
   display: flex;
@@ -71,14 +71,19 @@
 }
 .main-container {
   background-color: #fff;
+  padding-top: 45px;
+  padding: 45px 20px;
 }
-.heatingWrp {
-  padding: 42px 26px 0 26px;
+
+.mainQuestionWrp {
+  display: flex;
+  gap: 12px;
 }
 .questionWrp {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  justify-content: flex-start;
 }
 .radio-items {
   display: flex;
@@ -92,12 +97,12 @@
 }
 .horizontalLine {
   border: 1px solid #dcdcdc;
+  margin: 36px 0 25px 0;
 }
 .hvac-Drop-down {
-  padding-bottom: 200px;
   display: flex;
   align-items: center;
-  gap: 83px;
+  gap: 50px;
 }
 .ventilation {
   padding-bottom: 0 !important;
@@ -124,4 +129,13 @@
   font: normal normal 600 16px/25px Poppins;
   letter-spacing: 0.5px;
   color: #ffbb1c;
+}
+.rc-steps-vertical {
+  margin-right: 16px !important;
+}
+.rc-steps-item-title {
+  padding-right: 15px !important;
+}
+.rc-steps-vertical .rc-steps-item-tail {
+  left: 9px !important;
 }
