@@ -1,7 +1,21 @@
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Col, Container, Dropdown, Row } from "react-bootstrap";
 
 const HeatingWarm = () => {
+  const [toggleWater, setToggleWater] = useState(false);
+  const [selectedHeatingWater, setSelectedHeatingWater] = useState(null);
+  const heatingWater = [
+    {
+      name: "Neglect consumption",
+    },
+    {
+      name: "High efficiency",
+    },
+    {
+      name: "Medium efficiency",
+    },
+  ];
+
   return (
     <Container fluid className="main-container">
       <Row className="heatingWrp">
@@ -15,12 +29,12 @@ const HeatingWarm = () => {
               <input
                 type="radio"
                 className="inst"
-                name="qq1"
+                name="heating1"
                 value={"yes"}
                 checked
-                id="q1"
+                id="h1"
               />
-              <label className="insted no-1 build-eng-efficient" htmlFor="q1">
+              <label className="insted no-1 build-eng-efficient" htmlFor="h1">
                 Yes
               </label>
             </div>
@@ -29,10 +43,10 @@ const HeatingWarm = () => {
                 type="radio"
                 className="inst"
                 value={"no"}
-                id="q2"
-                name="qq1"
+                id="h2"
+                name="heating1"
               />
-              <label className="insted no-1 build-eng-efficient" htmlFor="q2">
+              <label className="insted no-1 build-eng-efficient" htmlFor="h2">
                 No
               </label>
             </div>
@@ -50,12 +64,11 @@ const HeatingWarm = () => {
               <input
                 type="radio"
                 className="inst"
-                name="qq2"
+                name="heating2"
                 value={"yes"}
-                checked
-                id="q3"
+                id="h3"
               />
-              <label className="insted no-1 build-eng-efficient" htmlFor="q3">
+              <label className="insted no-1 build-eng-efficient" htmlFor="h3">
                 Yes, very well
               </label>
             </div>
@@ -64,10 +77,10 @@ const HeatingWarm = () => {
                 type="radio"
                 className="inst"
                 value={"no"}
-                id="q4"
-                name="qq2"
+                id="h4"
+                name="heating2"
               />
-              <label className="insted no-1 build-eng-efficient" htmlFor="q4">
+              <label className="insted no-1 build-eng-efficient" htmlFor="h4">
                 Quite okay
               </label>
             </div>
@@ -76,10 +89,10 @@ const HeatingWarm = () => {
                 type="radio"
                 className="inst"
                 value={"no"}
-                id="q5"
-                name="qq2"
+                id="h5"
+                name="heating2"
               />
-              <label className="insted no-1 build-eng-efficient" htmlFor="q5">
+              <label className="insted no-1 build-eng-efficient" htmlFor="h5">
                 Rather poorly
               </label>
             </div>
@@ -95,38 +108,46 @@ const HeatingWarm = () => {
           <div className="radio-items">
             <div className="form-one">
               <input
-                type="radio"
-                className="inst"
-                name="qq3"
+                type="checkbox"
+                className="checkboxWrp"
+                name="heating3"
                 value={"yes"}
-                checked
-                id="q3"
+                id="h6"
               />
-              <label className="insted no-1 build-eng-efficient" htmlFor="q3">
+              <label
+                className="instedCheckbox no-1 build-eng-efficient"
+                htmlFor="h6"
+              >
                 In-floor heating
               </label>
             </div>
             <div className="form-one">
               <input
-                type="radio"
-                className="inst"
+                type="checkbox"
+                className="checkboxWrp"
                 value={"no"}
-                id="q4"
-                name="qq3"
+                id="h7"
+                name="heating3"
               />
-              <label className="insted no-1 build-eng-efficient" htmlFor="q4">
+              <label
+                className="instedCheckbox no-1 build-eng-efficient"
+                htmlFor="h7"
+              >
                 Radiators
               </label>
             </div>
             <div className="form-one">
               <input
-                type="radio"
-                className="inst"
+                type="checkbox"
+                className="checkboxWrp"
                 value={"no"}
-                id="q5"
-                name="qq3"
+                id="h8"
+                name="heating3"
               />
-              <label className="insted no-1 build-eng-efficient" htmlFor="q5">
+              <label
+                className="instedCheckbox no-1 build-eng-efficient"
+                htmlFor="h8"
+              >
                 Ventilation system
               </label>
             </div>
@@ -138,6 +159,50 @@ const HeatingWarm = () => {
         <Col className="questionWrp">
           <div className="question-header">
             What is the supply temperature of the heating water?
+          </div>
+          <div className="secondStep hvac-Drop-down">
+            <Dropdown
+              className={` ${toggleWater ? "dropdownBox brd" : ""}`}
+              onToggle={() => setToggleWater(!toggleWater)}
+            >
+              <Dropdown.Toggle
+                variant=""
+                id="dropdown-icon"
+                className={`${!!toggleWater ? "dropdown-open" : ""}`}
+              >
+                {selectedHeatingWater ? (
+                  <div className="country-items">
+                    <span>{selectedHeatingWater?.name}</span>
+                  </div>
+                ) : (
+                  "User Selection"
+                )}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <div className={`${!!toggleWater ? "border-t" : ""}`}></div>
+                {heatingWater?.length > 0 &&
+                  heatingWater.map((item, index) => (
+                    <Dropdown.Item
+                      key={index}
+                      onClick={() => {
+                        setSelectedHeatingWater(item);
+                      }}
+                    >
+                      <div className="items">
+                        <div className="sub-items">
+                          <span>{item?.name}</span>
+                        </div>
+                      </div>
+                    </Dropdown.Item>
+                  ))}
+              </Dropdown.Menu>
+            </Dropdown>
+            <div className="hvac-input">
+              <div className="temp">
+                <input type="text" name="heatingWaterTem" placeholder="0.25" />
+                <div className="cel">°C</div>
+              </div>
+            </div>
           </div>
         </Col>
       </Row>

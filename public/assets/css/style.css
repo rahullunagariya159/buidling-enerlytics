@@ -2188,6 +2188,62 @@ header.header.aftr {
   border: 1px solid #ffbb1c;
 }
 
+.checkboxWrp[type="checkbox"] {
+  display: none;
+}
+label.instedCheckbox.no-1 {
+  padding-left: 32px;
+}
+.instedCheckbox {
+  cursor: pointer;
+  position: relative;
+  font-size: 4rem;
+}
+
+.instedCheckbox::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 1px;
+  transform: translateY(-50%);
+  transition: border-color 400ms ease;
+  outline: 1px solid #8d8d8d;
+  outline-offset: -4px;
+  width: 18px;
+  height: 18px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #8d8d8d;
+  border-radius: 4px;
+}
+
+.instedCheckbox::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background-color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  /* border-radius: 50%; */
+  top: 10px;
+  left: 1px;
+  transform: translateY(-50%) scale(0);
+  transition: transform 400ms ease;
+}
+
+.checkboxWrp[type="checkbox"]:checked + .instedCheckbox::before {
+  width: 18px;
+  height: 18px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #ffbb1c;
+  border-radius: 4px;
+}
+
+.checkboxWrp[type="checkbox"]:checked + .instedCheckbox::after {
+  transform: translateY(-50%) scale(0.7);
+  background: #ffbb1c;
+  border: 1px solid #ffbb1c;
+}
+
 label.insted.no-1 {
   padding-left: 32px;
 }
@@ -5078,4 +5134,85 @@ img.hgyu {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+.hvac-Drop-down .dropdown .dropdown-toggle {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  width: 243px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #8d8d8d;
+  padding: 0px 0 0 21px !important;
+  border: 1px solid #707070;
+  font: normal normal 500 14px/21px Poppins;
+  letter-spacing: 0.43px;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url(../img/Home-Page/homeFinal/downArrowGrayStrong.svg);
+  background-position: calc(100% - 22px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px), 100% 0 !important;
+  background-size: 11px 8px !important;
+  background-repeat: no-repeat !important;
+}
+.hvac-Drop-down .dropdown-menu {
+  border: 1px solid #013a67 !important;
+  margin: 2px 0 0px 0 !important;
+  padding: 10px 10px 0 !important;
+  width: 243px !important;
+  background: #ffffff 0% 0% no-repeat padding-box !important;
+  border-top: none !important;
+  border-radius: 0px 0px 4px 4px !important;
+  transform: translate3d(0px, 29px, 0px) !important;
+}
+.hvac-Drop-down .dropdown-open {
+  background: #ffffff 0% 0% no-repeat padding-box !important;
+  border: 1px solid #013a67 !important;
+  border-radius: 4px !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url(../img/Home-Page/homeFinal/UpArrowGray.svg) !important;
+  background-position: calc(100% - 22px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px), 100% 0 !important;
+  background-size: 11px 8px !important;
+  background-repeat: no-repeat !important;
+  width: 243px !important;
+}
+.hvac-Drop-down .dropdown-item .items span {
+  display: contents;
+  font: normal normal normal 14px/21px Poppins;
+  letter-spacing: 0.43px;
+  color: #8d8d8d;
+}
+.hvac-Drop-down .dropdown-item .items span:hover {
+  color: #013a67 !important;
+}
+.hvac-Drop-down .dropdown-item:hover {
+  border-radius: 4px;
+}
+.hvac-Drop-down .dropdown-item {
+  margin-bottom: 4px !important;
+  border-radius: 4px !important;
+  margin-top: 5px !important;
+  padding: 0px 10px 0 !important;
+}
+.hvac-Drop-down .dropdown-item:active,
+.dropdown-item:hover {
+  background-color: #e9ecef !important;
+  border: 1px solid #707070 !important;
+  border-radius: 4px !important;
+  padding: 0px 10px 0 !important;
+  color: #013a67 !important;
+}
+.hvac-Drop-down .dropdown-menu .items {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+.hvac-Drop-down .dropdown-menu .items:hover {
+  font: normal normal normal 14px/21px Poppins;
+  letter-spacing: 0.43px;
+  color: #013a67 !important;
+  padding: 10px 0px !important ;
 }
