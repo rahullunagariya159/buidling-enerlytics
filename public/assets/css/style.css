@@ -5238,3 +5238,10 @@ img.hgyu {
   color: #013a67 !important;
   padding: 10px 0px !important ;
 }
+.tab-wrapper .nav {
+  display: flex;
+  flex-wrap: nowrap !important;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
