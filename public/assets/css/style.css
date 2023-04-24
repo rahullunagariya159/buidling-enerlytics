@@ -3427,8 +3427,9 @@ img.w3d-small {
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid #dcdcdc;
   border-radius: 6px;
-  display: inline-block;
+  display: flex;
   position: relative;
+  align-items: center;
 }
 .cancelIcon {
   position: absolute;
@@ -3456,6 +3457,11 @@ a.WALIMP {
   color: #013a67;
   text-transform: uppercase;
   padding: 0 13px;
+  width: 91px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
 }
 
 a.five-btn-s-width {
