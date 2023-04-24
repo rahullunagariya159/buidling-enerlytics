@@ -1439,7 +1439,7 @@ img.okik {
   gap: 29px;
 }
 .building-content {
-  padding: 28px 0;
+  padding: 28px 0 0 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -1462,6 +1462,7 @@ img.okik {
   }
   .rightContent {
     max-width: 560px !important;
+    height: 490px !important;
   }
 }
 .be-modal {
@@ -1528,7 +1529,7 @@ img.okik {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  height: 521px;
+  height: 555px;
 }
 .scroll-inline {
   height: 630px;
