@@ -45,7 +45,6 @@ const BuildingMaterial = () => {
   const [buildingEnrgOptIndex, setBuildingEnrgOptIndex] = useState(0);
   const [isShowCreateConfig, setIsCreateShowConfig] = useState(false);
   const [error, setError] = useState("");
-
   const [toggleCountry, setToggleCountry] = useState(false);
   const [toggleBuildingType, setToggleBuildingType] = useState(false);
   const [toggleConstructionYear, setToggleConstructionYear] = useState(false);
@@ -83,6 +82,9 @@ const BuildingMaterial = () => {
   };
   const onCountryChange = async () => {
     setError("");
+    if (!selectedCountry?.name) {
+      return false;
+    }
     setShowLoader(true);
     const countryName = selectedCountry?.name;
     // setSelectedCountry(e?.target?.value);
@@ -107,13 +109,16 @@ const BuildingMaterial = () => {
 
   const onSelectBuildingType = async () => {
     setError("");
+    if (!selectedCountry?.name || !selectedBuildingType?.name) {
+      return false;
+    }
     setShowLoader(true);
     // const value = selectedBuildingType?.name;
     // setSelectedBuildingType(value);
 
     const payload = {
-      country: selectedCountry.name,
-      buildingType: selectedBuildingType.name,
+      country: selectedCountry?.name,
+      buildingType: selectedBuildingType?.name,
     };
     await getBuildingMaterialConstructionYear(payload)
       .then((response) => {
@@ -135,8 +140,17 @@ const BuildingMaterial = () => {
   }, [selectedBuildingType]);
 
   const onChangeConstructionYear = async () => {
-    setShowLoader(true);
     setError("");
+
+    if (
+      !selectedCountry?.name ||
+      !selectedBuildingType?.name ||
+      !selectedConstructionYear?.name
+    ) {
+      return false;
+    }
+
+    setShowLoader(true);
     // const value = selectedConstructionYear?.name;
     // setSelectedConstructionYear(value);
 
@@ -356,23 +370,32 @@ const BuildingMaterial = () => {
             return false;
           }
           setIsEnableSteps(buMaterialData?.knowledge);
-          setSelectedCountry({
-            url: buMaterialData?.countryUrl,
-            name: buMaterialData?.country,
-          });
-          setSelectedBuildingType({
-            name: buMaterialData?.buildingType,
-            url: buMaterialData?.buildingTypeUrl,
-          });
+          if (buMaterialData?.country) {
+            setSelectedCountry({
+              url: buMaterialData?.countryUrl,
+              name: buMaterialData?.country,
+            });
+          }
 
-          setSelectedConstructionYear({
-            name: buMaterialData?.constructionYear,
-          });
+          if (buMaterialData?.buildingType) {
+            setSelectedBuildingType({
+              name: buMaterialData?.buildingType,
+              url: buMaterialData?.buildingTypeUrl,
+            });
+          }
 
-          setSelectedBuAppearance({
-            name: buMaterialData?.buildingAppearance,
-            url: buMaterialData?.buildingAppearanceUrl,
-          });
+          if (buMaterialData?.constructionYear) {
+            setSelectedConstructionYear({
+              name: buMaterialData?.constructionYear,
+            });
+          }
+
+          if (buMaterialData?.buildingAppearance) {
+            setSelectedBuAppearance({
+              name: buMaterialData?.buildingAppearance,
+              url: buMaterialData?.buildingAppearanceUrl,
+            });
+          }
 
           const formDetailConfiguration = {
             roof_color_absorption_coefficient:
@@ -476,7 +499,9 @@ const BuildingMaterial = () => {
   }, [userId]);
 
   useEffect(() => {
-    handleNoBuildingMaterial();
+    if (isEnableSteps && isEnableSteps !== null) {
+      handleNoBuildingMaterial();
+    }
   }, []);
 
   return (

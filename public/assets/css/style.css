@@ -3214,8 +3214,8 @@ img.w3d-Project {
   border: none;
 }
 
-img.dots-11px {
-  padding: 0 0px 0 12px;
+.dots-11px {
+  padding: 0px 10px;
   cursor: pointer;
 }
 

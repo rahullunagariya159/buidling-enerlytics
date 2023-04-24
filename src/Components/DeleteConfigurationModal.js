@@ -17,17 +17,16 @@ const DeleteConfigurationModal = ({
       className="permanent-delete"
     >
       <Modal.Body>
-        <div className="close-btn">
-          <button type="button" onClick={() => handleCloseModal()}>
-            x
-          </button>
+        <div className="close-btn" onClick={() => handleCloseModal()}>
+          <button type="button">x</button>
         </div>
         <div className="main-content">
           <div className="left-content">
             <div className="heading">Configuration</div>
-            <p>Wall Improved</p>
-            <p>Solar Heater</p>
-            <p>Optimized</p>
+            {configurationDetails?.length > 0 &&
+              configurationDetails?.map((config) => {
+                return <p>{config?.name ?? "-"}</p>;
+              })}
           </div>
           <div className="v-border"></div>
           <div className="right-content">
@@ -37,11 +36,15 @@ const DeleteConfigurationModal = ({
             <p>This will delete your project permanently</p>
             <p>Are you sure?</p>
             <div className="footer">
-              <LinkButton className={`signin-btn delete`} title="DELETE" />
+              <LinkButton
+                className={`signin-btn delete`}
+                title="DELETE"
+                onClick={() => handleDelete()}
+              />
               <CancelButton
                 className="cancel"
                 title="CANCEL"
-                onClick={() => handleDelete()}
+                onClick={() => handleCloseModal()}
               />
             </div>
           </div>

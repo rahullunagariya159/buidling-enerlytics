@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { ReactSession } from "react-client-session";
+import { orderBy } from "lodash";
 
 import { useNavigate } from "react-router-dom";
 import {
   listProjects,
   listProjectConfigurations,
   deleteProject,
+  deleteProjectConfiguration,
 } from "./Services/ProjectServices";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
@@ -126,10 +128,15 @@ function LoadProject() {
     await listProjects(userID)
       .then((response) => {
         if (response?.status === 200 && response?.data?.data?.length > 0) {
-          setProjectList(response?.data?.data);
-          setCopyProjectList(response?.data?.data);
+          const orderedProjects = orderBy(
+            response?.data?.data,
+            ["updated_at"],
+            ["desc"],
+          );
+          setProjectList(orderedProjects);
+          setCopyProjectList(orderedProjects);
           // setSelectedProjects(response?.data?.data?.[0]);
-          handleCardClick(response?.data?.data[0], 0);
+          handleCardClick(orderedProjects[0], 0);
           document.querySelector(`.selected-item-0`).classList.add("active");
         }
       })
@@ -191,12 +198,14 @@ function LoadProject() {
     deleteProject(payload)
       .then((response) => {
         if (response?.status === 200) {
-          toast.success("Project removed successfully");
+          // toast.success("Project removed successfully");
           const remainingProject =
             projectList?.length > 0 &&
             projectList?.filter((proj) => proj.id !== selectedProjects?.id);
           setProjectList(remainingProject || []);
           setSelectedProjects(remainingProject[0]);
+          setSelectedConfiguration([]);
+          setProjectConfiguration([]);
           handleCloseDeleteProjectModal();
         }
       })
@@ -209,6 +218,32 @@ function LoadProject() {
   };
 
   const handleDeleteConfig = () => {
+    if (projectConfiguration?.length > 0) {
+      setShowLoader(true);
+      const configIds = projectConfiguration?.map((pConfig) => pConfig?.id);
+      const deletePayloads = {
+        projectId: selectedProjects?.id,
+        configurationIds: configIds,
+      };
+
+      deleteProjectConfiguration(deletePayloads)
+        .then((response) => {
+          if (response?.status === 200 && response?.data?.msg) {
+            setProjectConfiguration([]);
+            // toast.success("Project Configuration deleted successfully");
+            setIsDeleteConfig(false);
+          }
+        })
+        .catch((error) => {
+          console.log({ error });
+        })
+        .finally(() => {
+          setShowLoader(false);
+        });
+    }
+  };
+
+  const handleCloseDeleteConfig = () => {
     setIsDeleteConfig(false);
   };
 
@@ -252,114 +287,131 @@ function LoadProject() {
                           />
                         </div>
                         <div className="Select-flex">
-                          <a className="Select-12px">Select</a>
                           <img
                             onClick={() => setSelected(!selected)}
                             src="assets/img/LoadExisting/filter.svg"
                             alt=""
                             className="cursor-pointer"
                           />
-                          {selected === 1 && (
-                            <>
-                              <FilterDropdown>
-                                <button
-                                  onClick={() => console.log("first")}
-                                  className={"credits"}
-                                >
-                                  Credits
-                                </button>
-
-                                <HorizontalLineDropdown />
-                                <button
-                                  onClick={() => console.log("first")}
-                                  className="selected-promocode-sort"
-                                >
-                                  Activated on
-                                </button>
-                              </FilterDropdown>
-                            </>
-                          )}
                         </div>
+                        {selected && (
+                          <>
+                            <FilterDropdown>
+                              <button
+                                onClick={() => console.log("first")}
+                                className={"credits"}
+                              >
+                                Name
+                              </button>
+
+                              <HorizontalLineDropdown />
+                              <button
+                                onClick={() => console.log("first")}
+                                className="selected-promocode-sort"
+                              >
+                                Created date
+                              </button>
+                              <HorizontalLineDropdown />
+                              <button
+                                onClick={() => console.log("first")}
+                                className="selected-promocode-sort"
+                              >
+                                Last edited
+                              </button>
+                            </FilterDropdown>
+                          </>
+                        )}
                       </div>
                     </div>
-                    <div className="EXISTING-card-all">
-                      {projectList.map((item, index) => (
-                        <div
-                          className={`first-card1 card-container-selected selected-item-${index}`}
-                          key={index}
-                          onClick={() => handleCardClick(item, index)}
-                        >
-                          <div>
-                            {/* <img src="assets/img/LoadExisting/3d Project page.png" className="w3d-Project" alt="" /> */}
 
-                            <img
-                              src={
-                                "assets/img/LoadExisting/3d Project page.png"
-                              }
-                              className="w3d-Project"
-                              alt=""
-                            />
-                          </div>
-                          <div className="lest-flex">
-                            <div className="lest-flex1">
-                              <p className="STELLA-titr">{item.name}</p>
+                    <div className="EXISTING-card-all">
+                      {projectList?.length > 0 &&
+                        projectList.map((item, index) => (
+                          <div
+                            className={`first-card1 card-container-selected selected-item-${index}`}
+                            key={index}
+                            onClick={() => handleCardClick(item, index)}
+                          >
+                            <div>
+                              {/* <img src="assets/img/LoadExisting/3d Project page.png" className="w3d-Project" alt="" /> */}
+
                               <img
-                                onClick={() => setIsDeleteProject(true)}
-                                src="assets/img/LoadExisting/Group 431.svg"
-                                className="dots-11px"
+                                src={
+                                  "assets/img/LoadExisting/3d Project page.png"
+                                }
+                                className="w3d-Project"
                                 alt=""
                               />
                             </div>
-
-                            <div className="lest-grid">
-                              <div className="lestgrid-1">
-                                <p className="lest-pra-9px">Location</p>
-                                <p className="lest-pra-9px">Simulation time</p>
-                                <p className="lest-pra-9px">Created</p>
-                                <p className="lest-pra-9px">Last edited</p>
-                                <p className="lest-pra-9px">Configurations</p>
+                            <div className="lest-flex">
+                              <div className="lest-flex1">
+                                <p className="STELLA-titr">{item.name}</p>
+                                <div
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsDeleteProject(true);
+                                  }}
+                                  className="dots-11px"
+                                  role="button"
+                                >
+                                  <img
+                                    src="assets/img/LoadExisting/Group 431.svg"
+                                    alt=""
+                                  />
+                                </div>
                               </div>
-                              <div className="lestgrid-1">
-                                <p className="lest-pra-8px">-</p>
-                                <p className="lest-pra-8px">
-                                  {item &&
-                                    item?.updated_at &&
-                                    format(
-                                      new Date(parseInt(item?.updated_at)),
-                                      "d MMM yy",
-                                    )}{" "}
-                                  -{" "}
-                                  {item &&
-                                    item.created_at &&
-                                    format(
-                                      new Date(parseInt(item.created_at)),
-                                      "d MMM yy",
-                                    )}
-                                </p>
-                                <p className="lest-pra-8px">
-                                  {item &&
-                                    item.created_at &&
-                                    format(
-                                      new Date(parseInt(item.created_at)),
-                                      "d MMM yy",
-                                    )}
-                                </p>
-                                <p className="lest-pra-8px">
-                                  {item &&
-                                    item?.updated_at &&
-                                    format(
-                                      new Date(parseInt(item?.updated_at)),
-                                      "d MMM yy",
-                                    )}
-                                </p>
-                                <p className="lest-pra-8px">
-                                  {item?.configurations}
-                                </p>
+
+                              <div className="lest-grid">
+                                <div className="lestgrid-1">
+                                  <p className="lest-pra-9px">Location</p>
+                                  <p className="lest-pra-9px">
+                                    Simulation time
+                                  </p>
+                                  <p className="lest-pra-9px">Created</p>
+                                  <p className="lest-pra-9px">Last edited</p>
+                                  <p className="lest-pra-9px">Configurations</p>
+                                </div>
+                                <div className="lestgrid-1">
+                                  <p className="lest-pra-8px">-</p>
+                                  <p className="lest-pra-8px">
+                                    {item &&
+                                      item?.updated_at &&
+                                      format(
+                                        new Date(parseInt(item?.updated_at)),
+                                        "d MMM yy",
+                                      )}{" "}
+                                    -{" "}
+                                    {item &&
+                                      item.created_at &&
+                                      format(
+                                        new Date(parseInt(item.created_at)),
+                                        "d MMM yy",
+                                      )}
+                                  </p>
+                                  <p className="lest-pra-8px">
+                                    {item &&
+                                      item.created_at &&
+                                      format(
+                                        new Date(parseInt(item.created_at)),
+                                        "d MMM yy",
+                                      )}
+                                  </p>
+                                  <p className="lest-pra-8px">
+                                    {item &&
+                                      item?.updated_at &&
+                                      format(
+                                        new Date(parseInt(item?.updated_at)),
+                                        "d MMM yy",
+                                      )}
+                                  </p>
+                                  <p className="lest-pra-8px">
+                                    {item?.configurations}
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   </div>
                   <div className="col-lg-7 p-0">
@@ -371,8 +423,12 @@ function LoadProject() {
                         <div className="padind-24px">
                           <div className="Permanent-delete-flex">
                             <p className="Select-12px-var selected-config">
-                              {selectedConfiguration?.length ?? 0} configuration
-                              selected
+                              {selectedConfiguration?.length > 0
+                                ? `${
+                                    selectedConfiguration?.length ?? 0
+                                  } configuration
+                              selected`
+                                : ""}
                             </p>
                             <div
                               onClick={() => setIsDeleteConfig(true)}
@@ -610,8 +666,9 @@ function LoadProject() {
 
       <DeleteConfigurationModal
         isDelete={isDeleteConfig}
-        handleCloseModal={handleCloseDeleteProjectModal}
+        handleCloseModal={handleCloseDeleteConfig}
         handleDelete={handleDeleteConfig}
+        configurationDetails={projectConfiguration}
       />
     </div>
   );

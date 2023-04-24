@@ -15,7 +15,8 @@ const ShowDetails = ({
 }) => {
   const isView = ReactSession.get("isview_project_config");
   const [loading, setLoading] = useState(false);
-  const formikRef = useRef();
+  const [didMount, setDidMount] = useState(false);
+  const formikRef = useRef(null);
 
   const initialValues = {
     gInfilRates: "",
@@ -104,131 +105,139 @@ const ShowDetails = ({
   };
 
   useEffect(() => {
-    if (selEnergeOptionData && formikRef?.current && isEnableSteps) {
-      formikRef.current.setFieldValue(
+    if (selEnergeOptionData && formikRef?.current) {
+      formikRef?.current?.setFieldValue(
         "gInfilRates",
         selEnergeOptionData?.air_tightness_infilteration_rate ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "gAbsorptivity",
         selEnergeOptionData?.building_density_absorptivity ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "gUValue",
         selEnergeOptionData?.energy_bridges_u_value ?? "",
       );
 
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "oAbsorption",
         selEnergeOptionData?.walls_color_absorption_coefficient ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "oUValue",
         selEnergeOptionData?.walls_thermal_conductivity_u_value ?? "",
       );
 
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "fUValue",
         selEnergeOptionData?.floor_thermal_conductivity_u_value ?? "",
       );
 
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "rAbsorption",
         selEnergeOptionData?.roof_color_absorption_coefficient ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "rUValue",
         selEnergeOptionData?.roof_thermal_conductivity_u_value ?? "",
       );
 
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "wGUValue",
         selEnergeOptionData?.windows_glazing_thermal_conductivity_u_value ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "wGCoefficient",
         selEnergeOptionData?.windows_energy_transmissivity_coefficient ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "wGLightCoefficient",
         selEnergeOptionData?.windows_light_transmissivity_coefficient ?? "",
       );
 
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "fShareValue",
         selEnergeOptionData?.windows_frames_share_value ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "fUValue",
         selEnergeOptionData?.windows_frames_thermal_conductivity_u_value ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "fJointValue",
         selEnergeOptionData?.windows_frames_joint_frame_value ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "gAirTightness",
         selEnergeOptionData?.air_tightness_infilteration_rate_dropdown ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "buildingDensity",
         selEnergeOptionData?.building_density_absorptivity_dropdown ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "energyBridges",
         selEnergeOptionData?.energy_bridges_u_value_dropdown ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "wColor",
         selEnergeOptionData?.walls_color_absorption_coefficient_dropdown ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "wThermal",
         selEnergeOptionData?.walls_thermal_conductivity_u_value_dropdown ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "fThermal",
         selEnergeOptionData?.floor_thermal_conductivity_u_value_dropdown ?? "",
       );
 
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "wThermal",
         selEnergeOptionData?.windows_glazing_thermal_conductivity_u_value_dropdown ??
           "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "fThermal",
         selEnergeOptionData?.windows_frames_thermal_conductivity_u_value_dropdown ??
           "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "wLight",
         selEnergeOptionData?.windows_light_transmissivity_coefficient_dropdown ??
           "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "roofColor",
         selEnergeOptionData?.roof_color_absorption_coefficient_dropdown ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "thermalConductivity",
         selEnergeOptionData?.roof_thermal_conductivity_u_value_dropdown ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "wEnergy",
         selEnergeOptionData?.windows_energy_transmissivity_coefficient_dropdown ??
           "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "wFrame",
         selEnergeOptionData?.windows_frames_share_value_dropdown ?? "",
       );
-      formikRef.current.setFieldValue(
+      formikRef?.current?.setFieldValue(
         "fJointFrame",
         selEnergeOptionData?.windows_frames_joint_frame_value_dropdown ?? "",
       );
     }
-  }, [selEnergeOptionData, formikRef?.current, isEnableSteps]);
+  }, [selEnergeOptionData, formikRef?.current]);
+
+  useEffect(() => {
+    if (!didMount) {
+      setTimeout(() => {
+        setDidMount(true);
+      }, 2000);
+    }
+  }, []);
 
   useEffect(() => {
     if (!isEnableSteps && formikRef?.current) {
@@ -266,6 +275,7 @@ const ShowDetails = ({
           validationSchema={validationSchema}
           validateOnSubmit={true}
           onSubmit={(values) => onHandleSubmitForm(values)}
+          ref={formikRef}
         >
           {({ setFieldValue, errors, touched }) => (
             <Form onChange={() => setIsEditValue(true)}>
