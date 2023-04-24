@@ -1,5 +1,6 @@
 import { Form, Formik, Field } from "formik";
 import React from "react";
+import ReactTooltip from "react-tooltip";
 
 const ShowDetails = ({ setToggle, toggle }) => {
   return (
@@ -48,10 +49,15 @@ const ShowDetails = ({ setToggle, toggle }) => {
                             </option>
                           </Field>
                         </div>
+                        <ReactTooltip id="share" place="top" effect="solid">
+                          Share
+                        </ReactTooltip>
                         <div className="items">
                           <div className="info">
                             <p>Share</p>
-                            <span>!</span>
+                            <span data-tip data-for="share">
+                              !
+                            </span>
                           </div>
                           <Field type="number" placeholder="0.1" name="Share" />
                         </div>
@@ -83,7 +89,9 @@ const ShowDetails = ({ setToggle, toggle }) => {
                         <div className="items">
                           <div className="info">
                             <p>Share</p>
-                            <span>!</span>
+                            <span data-tip data-for="share">
+                              !
+                            </span>
                           </div>
                           <Field type="number" placeholder="0.1" name="Share" />
                         </div>
@@ -119,7 +127,9 @@ const ShowDetails = ({ setToggle, toggle }) => {
                         <div className="items">
                           <div className="info">
                             <p>Share</p>
-                            <span>!</span>
+                            <span data-tip data-for="share">
+                              !
+                            </span>
                           </div>
                           <Field type="number" placeholder="0.1" name="Share" />
                         </div>
@@ -151,7 +161,9 @@ const ShowDetails = ({ setToggle, toggle }) => {
                         <div className="items">
                           <div className="info">
                             <p>Share</p>
-                            <span>!</span>
+                            <span data-tip data-for="share">
+                              !
+                            </span>
                           </div>
                           <Field type="number" placeholder="0.1" name="Share" />
                         </div>
