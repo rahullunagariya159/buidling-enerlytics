@@ -18,6 +18,10 @@ import LoadingCover from "./LoadingCover";
 import { Routes } from "../navigation/Routes";
 import DeleteProjectModal from "./DeleteProjectModal";
 import DeleteConfigurationModal from "./DeleteConfigurationModal";
+import {
+  FilterDropdown,
+  HorizontalLineDropdown,
+} from "./myAccount/promoCode/style";
 
 function LoadProject() {
   const navigate = useNavigate();
@@ -34,6 +38,7 @@ function LoadProject() {
   const [isDeleteProject, setIsDeleteProject] = useState(false);
   const [selectedConfiguration, setSelectedConfiguration] = useState([]);
   const [isDeleteConfig, setIsDeleteConfig] = useState(false);
+  const [selected, setSelected] = useState(false);
 
   const handleCardClick = async (selectedItem, index) => {
     setShowLoader(true);
@@ -249,9 +254,31 @@ function LoadProject() {
                         <div className="Select-flex">
                           <a className="Select-12px">Select</a>
                           <img
+                            onClick={() => setSelected(!selected)}
                             src="assets/img/LoadExisting/filter.svg"
                             alt=""
+                            className="cursor-pointer"
                           />
+                          {selected === 1 && (
+                            <>
+                              <FilterDropdown>
+                                <button
+                                  onClick={() => console.log("first")}
+                                  className={"credits"}
+                                >
+                                  Credits
+                                </button>
+
+                                <HorizontalLineDropdown />
+                                <button
+                                  onClick={() => console.log("first")}
+                                  className="selected-promocode-sort"
+                                >
+                                  Activated on
+                                </button>
+                              </FilterDropdown>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
