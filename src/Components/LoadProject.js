@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ReactSession } from "react-client-session";
 import { orderBy } from "lodash";
 
@@ -77,7 +77,18 @@ function LoadProject() {
         setShowLoader(false);
       });
   };
-
+  const ref = useRef();
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (selected && ref.current && !ref.current.contains(e.target)) {
+        setSelected(false);
+      }
+    };
+    document.addEventListener("click", checkIfClickedOutside, true);
+    return () => {
+      document.removeEventListener("click", checkIfClickedOutside, true);
+    };
+  }, [selected]);
   const handleLoadProject = (
     selProjectConfig,
     isEdit = false,
@@ -288,7 +299,7 @@ function LoadProject() {
                 </div>
                 <div className="row m-0">
                   <div className="col-lg-5 p-0">
-                    <div className="EXISTING-left-box">
+                    <div className="EXISTING-left-box" ref={ref}>
                       <div className="Select-flexed">
                         <div className="Search-pos">
                           <input
@@ -312,60 +323,57 @@ function LoadProject() {
                             className="cursor-pointer"
                           />
                         </div>
-                        {selected && (
-                          <>
-                            <FilterDropdown>
-                              <button
-                                onClick={() => {
-                                  handleSorting(!isNameAsc, "name");
-                                  setIsNameAsc(!isNameAsc);
-                                }}
-                                className={
-                                  selectedSortOption === "name" && isNameAsc
-                                    ? "selected-promocode-sort"
-                                    : ""
-                                }
-                              >
-                                Name
-                              </button>
-
-                              <HorizontalLineDropdown />
-                              <button
-                                onClick={() => {
-                                  handleSorting(
-                                    !isCreatedDateAsc,
-                                    "created_at",
-                                  );
-                                  setIsCreatedDateAsc(!isCreatedDateAsc);
-                                }}
-                                className={
-                                  selectedSortOption === "created_at" &&
-                                  isCreatedDateAsc
-                                    ? "selected-promocode-sort"
-                                    : ""
-                                }
-                              >
-                                Created date
-                              </button>
-                              <HorizontalLineDropdown />
-                              <button
-                                onClick={() => {
-                                  handleSorting(!isLastEditedAsc, "updated_at");
-                                  setIsLastEditedAsc(!isLastEditedAsc);
-                                }}
-                                className={
-                                  selectedSortOption === "updated_at" &&
-                                  isLastEditedAsc
-                                    ? "selected-promocode-sort"
-                                    : ""
-                                }
-                              >
-                                Last edited
-                              </button>
-                            </FilterDropdown>
-                          </>
-                        )}
                       </div>
+                      {selected && (
+                        <div className="loadProject-filter">
+                          <FilterDropdown className="loadProject-filter-items">
+                            <button
+                              onClick={() => {
+                                console.log("first");
+                                handleSorting(!isNameAsc, "name");
+                                setIsNameAsc(!isNameAsc);
+                              }}
+                              className={
+                                selectedSortOption === "name" && isNameAsc
+                                  ? "selected-promocode-sort"
+                                  : ""
+                              }
+                            >
+                              Name
+                            </button>
+                            <HorizontalLineDropdown />
+                            <button
+                              onClick={() => {
+                                handleSorting(!isCreatedDateAsc, "created_at");
+                                setIsCreatedDateAsc(!isCreatedDateAsc);
+                              }}
+                              className={
+                                selectedSortOption === "created_at" &&
+                                isCreatedDateAsc
+                                  ? "selected-promocode-sort"
+                                  : ""
+                              }
+                            >
+                              Created date
+                            </button>
+                            <HorizontalLineDropdown />
+                            <button
+                              onClick={() => {
+                                handleSorting(!isLastEditedAsc, "updated_at");
+                                setIsLastEditedAsc(!isLastEditedAsc);
+                              }}
+                              className={
+                                selectedSortOption === "updated_at" &&
+                                isLastEditedAsc
+                                  ? "selected-promocode-sort"
+                                  : ""
+                              }
+                            >
+                              Last edited
+                            </button>
+                          </FilterDropdown>
+                        </div>
+                      )}
                     </div>
 
                     <div className="EXISTING-card-all">

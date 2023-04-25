@@ -5246,3 +5246,20 @@ img.hgyu {
   margin-bottom: 0;
   list-style: none;
 }
+.loadProject-filter {
+  position: absolute;
+  width: fit-content;
+  padding: 9px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  left: 33%;
+}
+.loadProject-filter-items {
+  cursor: pointer;
+}
+.loadProject-filter-items button {
+  cursor: pointer;
+  width: 100%;
+  align-items: flex-start;
+  display: flex;
+}
