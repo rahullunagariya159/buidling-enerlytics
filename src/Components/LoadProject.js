@@ -41,6 +41,10 @@ function LoadProject() {
   const [selectedConfiguration, setSelectedConfiguration] = useState([]);
   const [isDeleteConfig, setIsDeleteConfig] = useState(false);
   const [selected, setSelected] = useState(false);
+  const [selectedSortOption, setSelectedSortOption] = useState("");
+  const [isNameAsc, setIsNameAsc] = useState(false);
+  const [isCreatedDateAsc, setIsCreatedDateAsc] = useState(false);
+  const [isLastEditedAsc, setIsLastEditedAsc] = useState(false);
 
   const handleCardClick = async (selectedItem, index) => {
     setShowLoader(true);
@@ -157,9 +161,13 @@ function LoadProject() {
 
     if (ReactSession.get("is_logged_in") && userID) {
       onGetProjectLists(userID);
-    } else {
-      navigate("/");
     }
+
+    // setTimeout(() => {
+    //   if (!userID) {
+    //     navigate("/");
+    //   }
+    // }, 4000);
   }, [userID]);
 
   const removeSelConfig = (configId) => {
@@ -247,6 +255,16 @@ function LoadProject() {
     setIsDeleteConfig(false);
   };
 
+  const handleSorting = (isAscOrderType, orderFieldName) => {
+    setSelectedSortOption(orderFieldName);
+    const orderedProjectList = orderBy(
+      projectList,
+      [orderFieldName],
+      [isAscOrderType ? "asc" : "desc"],
+    );
+    setProjectList(orderedProjectList);
+  };
+
   return (
     <div>
       <Navbar />
@@ -298,23 +316,49 @@ function LoadProject() {
                           <>
                             <FilterDropdown>
                               <button
-                                onClick={() => console.log("first")}
-                                className={"credits"}
+                                onClick={() => {
+                                  handleSorting(!isNameAsc, "name");
+                                  setIsNameAsc(!isNameAsc);
+                                }}
+                                className={
+                                  selectedSortOption === "name" && isNameAsc
+                                    ? "selected-promocode-sort"
+                                    : ""
+                                }
                               >
                                 Name
                               </button>
 
                               <HorizontalLineDropdown />
                               <button
-                                onClick={() => console.log("first")}
-                                className="selected-promocode-sort"
+                                onClick={() => {
+                                  handleSorting(
+                                    !isCreatedDateAsc,
+                                    "created_at",
+                                  );
+                                  setIsCreatedDateAsc(!isCreatedDateAsc);
+                                }}
+                                className={
+                                  selectedSortOption === "created_at" &&
+                                  isCreatedDateAsc
+                                    ? "selected-promocode-sort"
+                                    : ""
+                                }
                               >
                                 Created date
                               </button>
                               <HorizontalLineDropdown />
                               <button
-                                onClick={() => console.log("first")}
-                                className="selected-promocode-sort"
+                                onClick={() => {
+                                  handleSorting(!isLastEditedAsc, "updated_at");
+                                  setIsLastEditedAsc(!isLastEditedAsc);
+                                }}
+                                className={
+                                  selectedSortOption === "updated_at" &&
+                                  isLastEditedAsc
+                                    ? "selected-promocode-sort"
+                                    : ""
+                                }
                               >
                                 Last edited
                               </button>
@@ -430,16 +474,18 @@ function LoadProject() {
                               selected`
                                 : ""}
                             </p>
-                            <div
-                              onClick={() => setIsDeleteConfig(true)}
-                              className="Permanent-btn"
-                            >
-                              Permanent delete
-                              <img
-                                src="assets/img/LoadExisting/delete.svg"
-                                alt=""
-                              />
-                            </div>
+                            {projectConfiguration?.length > 0 && (
+                              <div
+                                onClick={() => setIsDeleteConfig(true)}
+                                className="Permanent-btn"
+                              >
+                                Permanent delete
+                                <img
+                                  src="assets/img/LoadExisting/delete.svg"
+                                  alt=""
+                                />
+                              </div>
+                            )}
                           </div>
 
                           <div className="selected-project">

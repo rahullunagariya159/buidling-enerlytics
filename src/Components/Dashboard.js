@@ -171,7 +171,7 @@ function Dashboard() {
         ReactSession.set("guest_user_id", null);
 
         const path = ReactSession.get("guest_state");
-        navigate(path);
+        // navigate(path);
       }
     });
   };
@@ -258,7 +258,7 @@ function Dashboard() {
                       {isGuestUser !== false && !createProjectClicked && (
                         <a
                           className="PROJECT-one"
-                          onClick={handleCreateProjectForGuest}
+                          onClick={() => handleCreateProjectForGuest()}
                         >
                           START NEW PROJECT
                         </a>
