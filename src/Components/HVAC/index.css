@@ -103,7 +103,7 @@
   letter-spacing: 0.43px;
   color: #013a67;
 }
-.main-container-hvac.horizontalLine {
+.main-container-hvac .horizontalLine {
   border: 1px solid #dcdcdc;
   margin: 36px 0 25px 0;
 }
