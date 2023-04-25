@@ -685,9 +685,15 @@ function Navbar(props) {
                         ? userProfileDetails?.credits + " Credits"
                         : "0 Credits"}
                       {toggle ? (
-                        <img src="assets/img/Home-new/upArrow.svg" alt="" />
+                        <img
+                          src="assets/img/Home-Page/homeFinal/UpArrowWhite.svg"
+                          alt=""
+                        />
                       ) : (
-                        <img src="assets/img/Home-new/downArrow.svg" alt="" />
+                        <img
+                          src="assets/img/Home-Page/homeFinal/downArrowWhite.svg"
+                          alt=""
+                        />
                       )}
                     </a>
                     {toggle && (
