@@ -110,9 +110,21 @@ function BEModal() {
     if (isEdit) {
       const localAPIStringifyData = await ReactSession.get("APIbp3dJson");
       const newLocalStringifyData = await ReactSession.get("bp3dJson");
-      const newStringfyData = newLocalStringifyData.toString();
-      const apiStringifyData = localAPIStringifyData.toString();
-      const isDifferent = newStringfyData.localeCompare(apiStringifyData);
+      let newStringfyData = "";
+      if (newLocalStringifyData) {
+        newStringfyData = newLocalStringifyData?.toString();
+      }
+
+      let apiStringifyData = "";
+      if (localAPIStringifyData) {
+        apiStringifyData = localAPIStringifyData?.toString();
+      }
+
+      let isDifferent = 0;
+
+      if (newStringfyData && apiStringifyData) {
+        isDifferent = newStringfyData?.localeCompare(apiStringifyData);
+      }
 
       if (isEdit && isDifferent === -1) {
         setShowConfirmModal(true);

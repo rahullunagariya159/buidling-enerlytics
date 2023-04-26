@@ -104,7 +104,6 @@ export function AuthProvider({ children }) {
       const currentSession = await Auth.currentSession();
       let idToken = currentSession.getIdToken();
 
-      console.log({ currentSession });
       // setAuthIdentity(idToken?.payload?.identities?.[0]?.providerName);
       if (user) {
         setUser(user);
@@ -152,7 +151,7 @@ export function AuthProvider({ children }) {
     try {
       const unsubscribe = Hub.listen("auth", (data) => {
         const { payload } = data;
-        console.log("A new auth event has happened: ", data);
+
         // console.log("check auth provider",data?.payload?.da)
         if (payload.event === "signIn") {
           signintoapp();

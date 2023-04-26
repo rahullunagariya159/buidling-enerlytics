@@ -199,6 +199,7 @@ const BuildingMaterial = () => {
     const values = fValues ?? bMformValues;
     const configurationID = await ReactSession.get("configuration_id");
     const projectID = await ReactSession.get("project_id");
+    console.log({ values });
 
     stringifyData = JSON.stringify({
       knowledge: isEnableSteps,
@@ -396,6 +397,7 @@ const BuildingMaterial = () => {
               url: buMaterialData?.buildingAppearanceUrl,
             });
           }
+          console.log({ buMaterialData });
 
           const formDetailConfiguration = {
             roof_color_absorption_coefficient:

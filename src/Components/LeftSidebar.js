@@ -100,6 +100,8 @@ function LeftSidebar(props) {
     document.getElementById(selectedModule).classList.add("active");
   }, []);
 
+  console.log({ selectedModule });
+
   return (
     <div className="side-left">
       <div>
@@ -144,7 +146,7 @@ function LeftSidebar(props) {
           <a className="edit-btn clickable">
             {projectName}
             <img
-              src="assets/img/Home-Page/homeFinal/edit.svg"
+              src={`assets/img/Home-Page/homeFinal/edit.svg`}
               alt=""
               onClick={handleProjectNameEdit}
             />
@@ -159,7 +161,9 @@ function LeftSidebar(props) {
           <div className="flex-side">
             <img
               className="side-icon"
-              src="assets/img/Home-Page/homeFinal/home.svg"
+              src={`assets/img/Home-Page/homeFinal/${
+                selectedModule === "BE" ? "home-white.png" : "home.svg"
+              }`}
               alt=""
             />
             <a className="MODELw">BUILDING MODEL</a>
@@ -177,7 +181,9 @@ function LeftSidebar(props) {
           <div className="flex-side">
             <img
               className="side-icon"
-              src="assets/img/Home-Page/homeFinal/wall.svg"
+              src={`assets/img/Home-Page/homeFinal/${
+                selectedModule === "BM" ? "wall-white.svg" : "wall.svg"
+              }`}
               alt=""
             />
             <a className="MODELw">BUILDING MATERIAL</a>
@@ -195,7 +201,9 @@ function LeftSidebar(props) {
           <div className="flex-side">
             <img
               className="side-icon"
-              src="assets/img/Home-Page/homeFinal/wind.svg"
+              src={`assets/img/Home-Page/homeFinal/${
+                selectedModule === "HV" ? "wind-white.svg" : "wind.svg"
+              }`}
               alt=""
             />
             <a className="MODELw">HVAC(HEATING, A/C, VENTILATION) SYSTEM</a>
@@ -213,7 +221,9 @@ function LeftSidebar(props) {
           <div className="flex-side">
             <img
               className="side-icon"
-              src="assets/img/Home-Page/homeFinal/energy.svg"
+              src={`assets/img/Home-Page/homeFinal/${
+                selectedModule === "EG" ? "energy-white.png" : "energy.svg"
+              }`}
               alt=""
             />
             <a className="MODELw">ENERGY GENERATION & CONVERSION</a>
@@ -231,7 +241,9 @@ function LeftSidebar(props) {
           <div className="flex-side">
             <img
               className="side-icon"
-              src="assets/img/Home-Page/homeFinal/Layer 2.svg"
+              src={`assets/img/Home-Page/homeFinal/${
+                selectedModule === "BT" ? "building-white.png" : "Layer 2.svg"
+              }`}
               alt=""
             />
             <a className="MODELw">BUILDING TYPE</a>
@@ -249,7 +261,9 @@ function LeftSidebar(props) {
           <div className="flex-side">
             <img
               className="side-icon"
-              src="assets/img/Home-Page/homeFinal/bed.svg"
+              src={`assets/img/Home-Page/homeFinal/${
+                selectedModule === "RM" ? "bed-white.png" : "bed.svg"
+              }`}
               alt=""
             />
             <a className="MODELw">ROOMS</a>

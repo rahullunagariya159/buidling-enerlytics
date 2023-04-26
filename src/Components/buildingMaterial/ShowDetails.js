@@ -106,6 +106,7 @@ const ShowDetails = ({
 
   useEffect(() => {
     if (selEnergeOptionData && formikRef?.current) {
+      console.log({ selEnergeOptionData });
       formikRef?.current?.setFieldValue(
         "gInfilRates",
         selEnergeOptionData?.air_tightness_infilteration_rate ?? "",
@@ -229,7 +230,7 @@ const ShowDetails = ({
         selEnergeOptionData?.windows_frames_joint_frame_value_dropdown ?? "",
       );
     }
-  }, [selEnergeOptionData, formikRef?.current]);
+  }, [selEnergeOptionData, formikRef?.current, isEnableSteps]);
 
   useEffect(() => {
     if (!didMount) {

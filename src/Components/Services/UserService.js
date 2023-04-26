@@ -27,7 +27,7 @@ export async function createProject(payload) {
 
 export async function listProjects(payload) {
   try {
-    const response = await axios.post(`/list-projects`, payload);
+    const response = await axios.post(`/projects`, payload);
     if (response && response.status === 200) {
       return response.data;
     } else {

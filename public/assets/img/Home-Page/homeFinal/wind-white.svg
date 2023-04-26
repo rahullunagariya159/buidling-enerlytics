@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="46.366" height="41.315" viewBox="0 0 46.366 41.315">
+  <defs>
+    <filter id="wind" x="0" y="0" width="46.366" height="41.315" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.42"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#wind)">
+    <path id="wind-2" data-name="wind" d="M9.608.747a2.532,2.532,0,1,1,1.785,4.317H0M13.406,19.507a2.532,2.532,0,1,0,1.785-4.317H0M19.913,4.722a3.165,3.165,0,1,1,2.241,5.405H0" transform="translate(10.5 10.6)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" fill-rule="evenodd"/>
+  </g>
+</svg>
