@@ -4,10 +4,12 @@ import LeftSidebar from "../LeftSidebar";
 import "./index.css";
 import TabBar from "./TabBar";
 import ShowDetails from "./ShowDetails";
-import { useState } from "react";
+import LoadingCover from "../LoadingCover";
+import { useHvacSystem } from "../../Context/HvacSystemProvider";
 
 const HVAC = () => {
-  const [toggle, setToggle] = useState(false);
+  const { loading } = useHvacSystem();
+
   return (
     <div>
       <Navbar />
@@ -26,12 +28,13 @@ const HVAC = () => {
                     <TabBar />
                   </div>
                 </div>
-                <ShowDetails setToggle={setToggle} toggle={toggle} />
+                <ShowDetails />
               </div>
             </div>
           </div>
         </section>
       </div>
+      <LoadingCover show={loading} />
     </div>
   );
 };

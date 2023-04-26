@@ -28,20 +28,20 @@ const Ventilation = () => {
       name: "ventilation2",
       option: [
         {
-          name: "Neglect consumption",
-          value: "Neglect consumption",
+          name: "Custom",
+          value: "",
         },
         {
-          name: "High efficiency",
-          value: "High efficiency",
+          name: "High",
+          value: "10",
         },
         {
-          name: "Medium efficiency",
-          value: "Medium efficiency",
+          name: "Medium",
+          value: "5",
         },
         {
-          name: "Low efficiency",
-          value: "Low efficiency",
+          name: "Low",
+          value: "1",
         },
       ],
       inputBox: [{ name: "ventilation1 ", placeholder: "0.25" }],
@@ -98,20 +98,20 @@ const Ventilation = () => {
       name: "ventilation6",
       option: [
         {
-          name: "Neglect consumptions",
-          value: "Neglect consumptions",
+          name: "Custom",
+          value: "",
         },
         {
-          name: "High efficiencies",
-          value: "High efficiencies",
+          name: "High",
+          value: "10",
         },
         {
-          name: "Medium efficiencies",
-          value: "Medium efficiencies",
+          name: "Medium",
+          value: "5",
         },
         {
-          name: "Low efficiencies",
-          value: "Low efficiencies",
+          name: "Low",
+          value: "1",
         },
       ],
       inputBox: [{ name: "ventilation2 ", placeholder: "0.25" }],

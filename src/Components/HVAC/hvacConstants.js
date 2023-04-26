@@ -5,3 +5,6 @@ export const hvacTabs = {
   humidification: "humidification",
   auxiliary_equipment: "auxiliary_equipment",
 };
+
+export const yesValue = "Yes";
+export const noValue = "No";

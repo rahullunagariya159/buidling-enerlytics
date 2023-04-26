@@ -106,7 +106,7 @@ const ShowDetails = ({
 
   useEffect(() => {
     if (selEnergeOptionData && formikRef?.current) {
-      console.log({ selEnergeOptionData });
+      // console.log({ selEnergeOptionData });
       formikRef?.current?.setFieldValue(
         "gInfilRates",
         selEnergeOptionData?.air_tightness_infilteration_rate ?? "",
@@ -276,7 +276,6 @@ const ShowDetails = ({
           validationSchema={validationSchema}
           validateOnSubmit={true}
           onSubmit={(values) => onHandleSubmitForm(values)}
-          ref={formikRef}
         >
           {({ setFieldValue, errors, touched }) => (
             <Form onChange={() => setIsEditValue(true)}>

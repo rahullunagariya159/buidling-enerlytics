@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import QuestionAns from "./QuestionAns";
+import { useHvacSystem } from "../../Context/HvacSystemProvider";
+import { yesValue } from "./hvacConstants";
 
 const HeatingWarm = () => {
+  const { selectedQuestions, handleGetHVACHeatingWarmWater } = useHvacSystem();
+
   let question1 = {
     question:
       "Is space heating and/or warm water available in any of the rooms in the building?",
@@ -25,7 +29,8 @@ const HeatingWarm = () => {
     question:
       "Is your heating / warm water system in an unheated space (e.g. in an unheated basement)?",
     type: "radio",
-    name: "question2",
+    name: "unheated_space",
+    questionType: "heating",
     option: [
       {
         label: "Yes",
@@ -41,11 +46,12 @@ const HeatingWarm = () => {
   let question3 = {
     question: "Is the system (connections, pipes) well insulated?",
     type: "radio",
-    name: "question3",
+    name: "well_insulated",
+    questionType: "heating",
     option: [
       {
-        label: "Yes, very well",
-        value: "Yes, very well",
+        label: "Yes,very well",
+        value: "Yes,very well",
       },
       {
         label: "Quite okay",
@@ -60,8 +66,9 @@ const HeatingWarm = () => {
 
   let question4 = {
     question: "How is the heating energy transmitted into the rooms?",
-    type: "checkbox",
-    name: "question4",
+    type: "radio",
+    name: "heating_energy_transmitted",
+    questionType: "heating",
     option: [
       {
         label: "In-floor heating",
@@ -78,28 +85,45 @@ const HeatingWarm = () => {
     ],
   };
 
+  useEffect(() => {
+    if (
+      selectedQuestions?.heating?.heating_energy_transmitted &&
+      selectedQuestions?.heating?.heating_warm_water_available &&
+      selectedQuestions?.heating?.unheated_space
+    ) {
+      handleGetHVACHeatingWarmWater();
+    }
+  }, [
+    selectedQuestions?.heating?.heating_energy_transmitted,
+    selectedQuestions?.heating?.heating_warm_water_available,
+    selectedQuestions?.heating?.unheated_space,
+  ]);
+
   return (
     <Container fluid className="main-container-hvac">
       <>
         <QuestionAns item={question1} key={1} />
-        <div className="horizontalLine"></div>
       </>
 
-      <>
+      {selectedQuestions?.heating?.heating_warm_water_available ===
+        yesValue && (
         <>
-          <QuestionAns item={question2} key={2} />
-          <div className="horizontalLine"></div>
-        </>
+          <>
+            <div className="horizontalLine"></div>
+            <QuestionAns item={question2} key={2} />
+            <div className="horizontalLine"></div>
+          </>
 
-        <>
-          <QuestionAns item={question3} key={3} />
-          <div className="horizontalLine"></div>
-        </>
+          <>
+            <QuestionAns item={question3} key={3} />
+            <div className="horizontalLine"></div>
+          </>
 
-        <>
-          <QuestionAns item={question4} key={4} />
+          <>
+            <QuestionAns item={question4} key={4} />
+          </>
         </>
-      </>
+      )}
       {/* {data.map((item, index) => (
         <>
           <QuestionAns item={item} key={index} />

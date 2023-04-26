@@ -34,6 +34,7 @@ const QuestionAns = ({
                         item?.questionType,
                         item?.name,
                         val?.value,
+                        item?.type,
                       )
                     }
                   />

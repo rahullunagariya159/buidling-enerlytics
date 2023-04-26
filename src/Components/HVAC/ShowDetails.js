@@ -1,8 +1,40 @@
+import React, { useEffect, useRef } from "react";
 import { Form, Formik, Field } from "formik";
-import React from "react";
 import ReactTooltip from "react-tooltip";
+import { useHvacSystem } from "../../Context/HvacSystemProvider";
 
-const ShowDetails = ({ setToggle, toggle }) => {
+const ShowDetails = () => {
+  const { setToggle, toggle, heatingWarmWaterData } = useHvacSystem();
+  const hvacFormikRef = useRef(null);
+
+  const initialValues = {
+    heating_system_transmission_losses: "",
+    heating_system_distribution_losses: "",
+    warm_water_storage_losses: "",
+    warm_water_distribution_losses: "",
+  };
+
+  useEffect(() => {
+    if (heatingWarmWaterData && hvacFormikRef?.current) {
+      hvacFormikRef?.current?.setFieldValue(
+        "heating_system_transmission_losses",
+        heatingWarmWaterData?.heating_system_transmission_losses ?? "",
+      );
+      hvacFormikRef?.current?.setFieldValue(
+        "heating_system_distribution_losses",
+        heatingWarmWaterData?.heating_system_distribution_losses ?? "",
+      );
+      hvacFormikRef?.current?.setFieldValue(
+        "warm_water_storage_losses",
+        heatingWarmWaterData?.warm_water_storage_losses ?? "",
+      );
+      hvacFormikRef?.current?.setFieldValue(
+        "warm_water_distribution_losses",
+        heatingWarmWaterData?.warm_water_distribution_losses ?? "",
+      );
+    }
+  }, [heatingWarmWaterData, hvacFormikRef?.current]);
+
   return (
     <div className="right-wrp hvac-rotet">
       <p className="rotet cursor-pointer" onClick={() => setToggle(!toggle)}>
@@ -18,7 +50,11 @@ const ShowDetails = ({ setToggle, toggle }) => {
         />
       </p>
       {toggle && (
-        <Formik onSubmit={(e) => console.log(e)}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(e) => console.log(e)}
+          innerRef={hvacFormikRef}
+        >
           {({ setFieldValue, errors, touched }) => (
             <Form onChange={(e) => console.log(e)}>
               <div className="showDetailsWrp ">
@@ -59,17 +95,21 @@ const ShowDetails = ({ setToggle, toggle }) => {
                               !
                             </span>
                           </div>
-                          <Field type="number" placeholder="0.1" name="Share" />
+                          <Field
+                            type="number"
+                            placeholder="0.1"
+                            name="heating_system_transmission_losses"
+                          />
                         </div>
                       </div>
                     </div>
                     <div className="items-row">
                       <div className="sub-items">
                         <div className="items">
-                          <p>Heat transmission</p>
+                          <p>Heat distribution</p>
                           <Field
                             as="select"
-                            name="heatTransmission"
+                            name="heatDistribution"
                             onChange={(e) => console.log(e)}
                           >
                             <option key="" value="" data-extra="">
@@ -93,7 +133,11 @@ const ShowDetails = ({ setToggle, toggle }) => {
                               !
                             </span>
                           </div>
-                          <Field type="number" placeholder="0.1" name="Share" />
+                          <Field
+                            type="number"
+                            placeholder="0.1"
+                            name="heating_system_distribution_losses"
+                          />
                         </div>
                       </div>
                     </div>
@@ -131,7 +175,11 @@ const ShowDetails = ({ setToggle, toggle }) => {
                               !
                             </span>
                           </div>
-                          <Field type="number" placeholder="0.1" name="Share" />
+                          <Field
+                            type="number"
+                            placeholder="0.1"
+                            name="warm_water_storage_losses"
+                          />
                         </div>
                       </div>
                     </div>
@@ -165,7 +213,11 @@ const ShowDetails = ({ setToggle, toggle }) => {
                               !
                             </span>
                           </div>
-                          <Field type="number" placeholder="0.1" name="Share" />
+                          <Field
+                            type="number"
+                            placeholder="0.1"
+                            name="warm_water_distribution_losses"
+                          />
                         </div>
                       </div>
                     </div>

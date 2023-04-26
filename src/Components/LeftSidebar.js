@@ -76,7 +76,7 @@ function LeftSidebar(props) {
           } else {
             setSearchParams(`?${new URLSearchParams({ name: elm.value })}`);
           }
-          console.log(response);
+
           // toast.success('Project name successfully updated.');
           setEnableEdit(false);
         }
@@ -99,8 +99,6 @@ function LeftSidebar(props) {
     });
     document.getElementById(selectedModule).classList.add("active");
   }, []);
-
-  console.log({ selectedModule });
 
   return (
     <div className="side-left">
