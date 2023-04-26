@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import HeatingWarm from "./HeatingWarm";
 import Cooling from "./Cooling";
 import Ventilation from "./Ventilation";
 import Humidification from "./Humidification";
 import AuxiliaryEquipment from "./AuxiliaryEquipment";
-import { useState } from "react";
+import { hvacTabs } from "./hvacConstants";
 
 const TabBar = () => {
-  const [key, setKey] = useState("HeatingWarmWater");
+  const [key, setKey] = useState(hvacTabs.heating);
 
   const HeatingWarmWaterTabTitle = () => {
     return (
@@ -18,13 +18,13 @@ const TabBar = () => {
         </div>
         <img
           src={
-            key === "HeatingWarmWater"
+            key === hvacTabs.heating
               ? "assets/img/hvac/heating.svg"
               : "assets/img/hvac/heating-dark.svg"
           }
           alt="tab-icon"
         />
-        <span className={`${key === "HeatingWarmWater" ? "selectedTab" : ""}`}>
+        <span className={`${key === hvacTabs.heating ? "selectedTab" : ""}`}>
           HEATING & WARM WATER
         </span>
       </div>
@@ -38,13 +38,13 @@ const TabBar = () => {
         </div>
         <img
           src={
-            key === "Cooling"
+            key === hvacTabs.cooling
               ? "assets/img/hvac/cooling.svg"
               : "assets/img/hvac/cooling-dark.svg"
           }
           alt="tab-icon"
         />
-        <span className={`${key === "Cooling" ? "selectedTab" : ""}`}>
+        <span className={`${key === hvacTabs.cooling ? "selectedTab" : ""}`}>
           COOLING
         </span>
       </div>
@@ -58,13 +58,15 @@ const TabBar = () => {
         </div>
         <img
           src={
-            key === "Ventilation"
+            key === hvacTabs.ventilation
               ? "assets/img/hvac/ventilator.svg"
               : "assets/img/hvac/ventilator-dark.svg"
           }
           alt="tab-icon"
         />
-        <span className={`${key === "Ventilation" ? "selectedTab" : ""}`}>
+        <span
+          className={`${key === hvacTabs.ventilation ? "selectedTab" : ""}`}
+        >
           VENTILATION
         </span>
       </div>
@@ -78,13 +80,15 @@ const TabBar = () => {
         </div>
         <img
           src={
-            key === "Humidification"
+            key === hvacTabs.humidification
               ? "assets/img/hvac/humidification.svg"
               : "assets/img/hvac/humidification-dark.svg"
           }
           alt="tab-icon"
         />
-        <span className={`${key === "Humidification" ? "selectedTab" : ""}`}>
+        <span
+          className={`${key === hvacTabs.humidification ? "selectedTab" : ""}`}
+        >
           HUMIDIFICATION
         </span>
       </div>
@@ -98,14 +102,16 @@ const TabBar = () => {
         </div>
         <img
           src={
-            key === "AuxiliaryEquipment"
+            key === hvacTabs.auxiliary_equipment
               ? "assets/img/hvac/motor.svg"
               : "assets/img/hvac/motor-dark.svg"
           }
           alt="tab-icon"
         />
         <span
-          className={`${key === "AuxiliaryEquipment" ? "selectedTab" : ""}`}
+          className={`${
+            key === hvacTabs.auxiliary_equipment ? "selectedTab" : ""
+          }`}
         >
           AUXILIARY EQUIPMENT
         </span>
@@ -114,7 +120,7 @@ const TabBar = () => {
   };
   return (
     <Tabs
-      defaultActiveKey="HeatingWarmWater"
+      defaultActiveKey={hvacTabs.heating}
       transition={false}
       id="noanim-tab-example"
       fill
@@ -122,31 +128,35 @@ const TabBar = () => {
     >
       <Tab
         transition={false}
-        eventKey="HeatingWarmWater"
+        eventKey={hvacTabs.heating}
         title={<HeatingWarmWaterTabTitle />}
       >
         <HeatingWarm />
       </Tab>
-      <Tab transition={false} eventKey="Cooling" title={<CoolingTabTitle />}>
+      <Tab
+        transition={false}
+        eventKey={hvacTabs.cooling}
+        title={<CoolingTabTitle />}
+      >
         <Cooling />
       </Tab>
       <Tab
         transition={false}
-        eventKey="Ventilation"
+        eventKey={hvacTabs.ventilation}
         title={<VentilationTabTitle />}
       >
         <Ventilation />
       </Tab>
       <Tab
         transition={false}
-        eventKey="Humidification"
+        eventKey={hvacTabs.humidification}
         title={<HumidificationTabTitle />}
       >
         <Humidification />
       </Tab>
       <Tab
         transition={false}
-        eventKey="AuxiliaryEquipment"
+        eventKey={hvacTabs.auxiliary_equipment}
         title={<AuxiliaryEquipmentTabTitle />}
       >
         <AuxiliaryEquipment />

@@ -1,5 +1,6 @@
 import React from "react";
 import { Col, Dropdown, Row } from "react-bootstrap";
+import { useHvacSystem } from "../../Context/HvacSystemProvider";
 
 const QuestionAns = ({
   item,
@@ -8,6 +9,8 @@ const QuestionAns = ({
   selectedItems,
   setSelectedItems,
 }) => {
+  const { onSelectQuestion } = useHvacSystem();
+
   return (
     <Row>
       <Col className="mainQuestionWrp">
@@ -26,7 +29,13 @@ const QuestionAns = ({
                     name={item.name}
                     value={val.value}
                     id={val.label + item.name}
-                    onChange={(a) => console.log(a)}
+                    onChange={(a) =>
+                      onSelectQuestion(
+                        item?.questionType,
+                        item?.name,
+                        val?.value,
+                      )
+                    }
                   />
                   <label
                     className={`no-1 build-eng-efficient ${
