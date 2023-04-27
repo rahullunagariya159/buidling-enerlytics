@@ -88,7 +88,7 @@ function BuyCredits() {
         className={`signin-btn sub-plan`}
         title="Buy Credits"
       />
-      <Modal show={isShow}>
+      <Modal show={isShow} centered>
         <Modal.Header closeButton onClick={() => onCloseHandler()}>
           <Modal.Title>Buy Credits</Modal.Title>
         </Modal.Header>

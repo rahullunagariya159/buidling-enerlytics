@@ -53,6 +53,12 @@ function LeftSidebar(props) {
       search: "?name=" + projectName,
     });
   };
+  const navigateToRooms = () => {
+    navigate({
+      pathname: `${Routes.rooms}`,
+      search: "?name=" + projectName,
+    });
+  };
 
   const handleUpdateProjectName = () => {
     const elm = document.getElementById("newProjectName");
@@ -113,6 +119,8 @@ function LeftSidebar(props) {
             ? " > Building Material"
             : selectedModule === "HV"
             ? " > HVAC(HEATING, A/C, VENTILATION) SYSTEM"
+            : selectedModule === "RM"
+            ? " > Rooms"
             : ""}
         </p>
       </div>
@@ -255,7 +263,7 @@ function LeftSidebar(props) {
             </a>
           </div>
         </div>
-        <div id="RM" className="side-link-flex">
+        <div id="RM" className="side-link-flex" onClick={navigateToRooms}>
           <div className="flex-side">
             <img
               className="side-icon"

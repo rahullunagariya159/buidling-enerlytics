@@ -6,6 +6,7 @@ export const Routes = {
   beModel: "/be-model",
   buildingMaterial: "/building-material",
   hvac: "/heating-ac-ventilation-system",
+  rooms: "/rooms",
   contactUs: "/contact-us",
   pricing: "/pricing",
   aboutUs: "/about-us",

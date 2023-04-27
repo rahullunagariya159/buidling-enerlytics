@@ -1,0 +1,59 @@
+.rooms-content {
+  padding: 28px 0 0 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-left: 295px !important;
+}
+.roomsTab-wrapper {
+  width: fit-content;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+}
+.roomsTab-wrapper .nav {
+  display: flex;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+.roomTabContent {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+.roomTabContentInfo {
+  width: 710px;
+  background: #fbfbfb 0% 0% no-repeat padding-box;
+  border: 1px solid #f1f1f1;
+  border-radius: 12px;
+  padding: 20px;
+}
+.roomsTab-wrapper .nav-link {
+  font: normal normal 600 10px/14px Poppins;
+  letter-spacing: 0.85px;
+  color: #c2c2c2 !important;
+}
+.roomsTab-wrapper .nav-link:focus,
+.nav-link:active {
+  font: normal normal 600 10px/13px Poppins;
+  letter-spacing: 0.85px;
+  color: #1c1c1c !important;
+}
+.selectedTab {
+  font: normal normal 600 10px/13px Poppins;
+  letter-spacing: 0.85px;
+  color: #1c1c1c !important;
+}
+.roomsTab-wrapper .nav-fill .nav-item .nav-link,
+.nav-justified .nav-item .nav-link {
+  width: 144px;
+  height: 106px;
+}
+.roomsTab-wrapper .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: inset 0px 0px 10px #00000029 !important;
+  border: 2px solid #ffbb1c !important;
+  border-radius: 0px !important;
+}

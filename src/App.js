@@ -24,6 +24,7 @@ import MyAccount from "./Components/myAccount/MyAccount";
 import PrivateRoute from "./Layout/PrivateRoute";
 import { Routes as appRoutes } from "./navigation/Routes";
 import HVAC from "./Components/HVAC/HVAC";
+import Rooms from "./Components/rooms/Rooms";
 
 Amplify.configure({
   // Auth: {
@@ -80,6 +81,7 @@ function App() {
                   element={<BuildingMaterial />}
                 />
                 <Route path={appRoutes.hvac} element={<HVAC />} />
+                {/* <Route path={appRoutes.rooms} element={<Rooms />} /> */}
                 <Route path={appRoutes.contactUs} element={<ContactUs />} />
                 <Route path={appRoutes.pricing} element={<Pricing />} />
                 <Route path={appRoutes.aboutUs} element={<AboutUs />} />
