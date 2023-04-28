@@ -1,15 +1,10 @@
-import React from "react";
-import { Col, Dropdown, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Col, Dropdown, Row, Form } from "react-bootstrap";
 import { useHvacSystem } from "../../Context/HvacSystemProvider";
 
-const QuestionAns = ({
-  item,
-  toggleDropdown,
-  setToggleDropdown,
-  selectedItems,
-  setSelectedItems,
-}) => {
+const QuestionAns = ({ item, toggleDropdown, setToggleDropdown }) => {
   const { onSelectQuestion } = useHvacSystem();
+  const [selectedItems, setSelectedItems] = useState();
 
   return (
     <Row>
@@ -66,7 +61,7 @@ const QuestionAns = ({
                       <span>{selectedItems?.name}</span>
                     </div>
                   ) : (
-                    "User Selection"
+                    item.default ?? "Custom"
                   )}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -79,6 +74,14 @@ const QuestionAns = ({
                         key={index}
                         onClick={() => {
                           setSelectedItems(val);
+                          // onSelectQuestion();
+                          !item?.inputBox &&
+                            onSelectQuestion(
+                              item?.questionType,
+                              item?.name,
+                              val?.value,
+                              "radio",
+                            );
                         }}
                       >
                         <div className="items">
@@ -89,6 +92,7 @@ const QuestionAns = ({
                       </Dropdown.Item>
                     ))}
                 </Dropdown.Menu>
+                {/* <Form.Control defaultValue="High" style={{ display: "none" }} /> */}
               </Dropdown>
               {item?.inputBox?.length > 0 && (
                 <div className="hvac-input">
@@ -99,6 +103,8 @@ const QuestionAns = ({
                         type="text"
                         name={values.name}
                         placeholder={values.placeholder}
+                        defaultValue={values.value}
+                        value={values.value}
                       />
                     ))}
                   </div>

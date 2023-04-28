@@ -2,7 +2,10 @@ import React, { useContext, useEffect, useState, useMemo } from "react";
 import { Auth, Hub } from "aws-amplify";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { hvacTabs } from "../Components/HVAC/hvacConstants";
-import { getHVACHeatingWarmWater } from "../Components/Services/HvacSystemService";
+import {
+  getHVACHeatingWarmWater,
+  getHVACAuxiliaryEquipment,
+} from "../Components/Services/HvacSystemService";
 
 const HvacSystemContext = React.createContext();
 
@@ -41,6 +44,9 @@ export function HvacSystemProvider({ children }) {
             ? [...selQuestions[questionType][key], value]
             : [value],
       };
+    } else if (inputType === "dropdown") {
+      console.log({ inputType });
+    } else if (inputType === "inputBox") {
     } else {
       selQuestions[questionType] = {
         ...selQuestions[questionType],
@@ -78,12 +84,31 @@ export function HvacSystemProvider({ children }) {
       });
   };
 
+  const handleGetHVACAuxiliaryEquipment = async () => {
+    const requestPayload = {
+      assumed_efficiency:
+        selectedQuestions?.auxiliary_equipment?.assumed_efficiency,
+    };
+    setLoading(true);
+    await getHVACAuxiliaryEquipment(requestPayload)
+      .then((response) => {
+        console.log({ response });
+      })
+      .catch((error) => {
+        console.log({ error });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const value = {
     onSelectQuestion,
     selectedQuestions,
     loading,
     setLoading,
     handleGetHVACHeatingWarmWater,
+    handleGetHVACAuxiliaryEquipment,
     heatingWarmWaterData,
     setToggle,
     toggle,

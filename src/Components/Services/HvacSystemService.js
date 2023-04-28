@@ -39,3 +39,17 @@ export const getHVACHeatingWarmWater = (payload) => {
       });
   });
 };
+
+export const getHVACAuxiliaryEquipment = (payload) => {
+  return new Promise((resolve, reject) => {
+    ApiGet(
+      `/hvac/auxiliary-equipment?assumed_efficiency=${payload?.assumed_efficiency}`,
+    )
+      .then(function (response) {
+        resolve(response);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  });
+};
