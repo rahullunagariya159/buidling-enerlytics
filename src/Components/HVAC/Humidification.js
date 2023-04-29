@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import QuestionAns from "./QuestionAns";
 import { useState } from "react";
@@ -7,7 +7,6 @@ import { yesValue } from "./hvacConstants";
 
 const Humidification = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
-  const [selectedItems, setSelectedItems] = useState(null);
   const { selectedQuestions } = useHvacSystem();
 
   let humidificationAvailableQ = {
@@ -68,56 +67,63 @@ const Humidification = () => {
     questionType: "humidification",
     option: [
       {
-        name: "Neglect consumptions",
-        value: "Neglect consumptions",
+        name: "Custom",
+        value: "",
       },
       {
-        name: "High efficiencies",
-        value: "High efficiencies",
+        name: "High",
+        value: "10",
       },
       {
-        name: "Medium efficiencies",
-        value: "Medium efficiencies",
+        name: "Medium",
+        value: "5",
       },
       {
-        name: "Low efficiencies",
-        value: "Low efficiencies",
+        name: "Low",
+        value: "1",
       },
     ],
-    inputBox: [{ name: "moistureRecovery", placeholder: "" }],
+    inputBox: [{ name: "recovery_efficiency", placeholder: "", value: "" }],
   };
+
+  useEffect(() => {
+    if (selectedQuestions?.humidification?.recovery_efficiency?.selection) {
+      recoveryEfficiencyQ.inputBox[0].value =
+        selectedQuestions?.humidification?.recovery_efficiency?.value;
+    }
+  }, [selectedQuestions?.humidification?.recovery_efficiency?.selection]);
 
   return (
     <Container fluid className="main-container-hvac">
       <>
         <QuestionAns item={humidificationAvailableQ} key={1} />
+        <div className="horizontalLine"></div>
       </>
+
+      <>
+        <QuestionAns item={dehumidificationAvailableQ} key={2} />
+      </>
+
       {selectedQuestions?.humidification?.humidification_available ===
         yesValue && (
         <>
           <>
             <div className="horizontalLine"></div>
-
-            <QuestionAns item={dehumidificationAvailableQ} key={2} />
-            <div className="horizontalLine"></div>
-          </>
-
-          <>
             <QuestionAns item={recoverMoistureQ} key={3} />
-            <div className="horizontalLine"></div>
           </>
 
-          <>
-            <QuestionAns
-              item={recoveryEfficiencyQ}
-              key={4}
-              toggleDropdown={toggleDropdown}
-              setToggleDropdown={setToggleDropdown}
-              selectedItems={selectedItems}
-              setSelectedItems={setSelectedItems}
-            />
-            <div className="horizontalLine"></div>
-          </>
+          {selectedQuestions?.humidification?.recover_moisture === yesValue && (
+            <>
+              <div className="horizontalLine"></div>
+              <QuestionAns
+                item={recoveryEfficiencyQ}
+                key={4}
+                toggleDropdown={toggleDropdown}
+                setToggleDropdown={setToggleDropdown}
+              />
+              <div className="horizontalLine"></div>
+            </>
+          )}
         </>
       )}
     </Container>

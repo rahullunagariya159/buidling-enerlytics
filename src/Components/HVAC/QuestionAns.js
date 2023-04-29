@@ -1,10 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Dropdown, Row, Form } from "react-bootstrap";
 import { useHvacSystem } from "../../Context/HvacSystemProvider";
 
 const QuestionAns = ({ item, toggleDropdown, setToggleDropdown }) => {
   const { onSelectQuestion } = useHvacSystem();
   const [selectedItems, setSelectedItems] = useState();
+  const [inputVal, setInputVal] = useState({});
+
+  const onChangeHandler = (evt) => {
+    const value = evt.target.value;
+
+    setInputVal({
+      ...inputVal,
+      [evt.target.name]: value,
+    });
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (item?.inputBox?.[0]?.name) {
+        setInputVal({
+          ...inputVal,
+          [item.inputBox[0].name]: item.inputBox[0].value,
+        });
+      }
+    }, 500);
+  }, [selectedItems]);
 
   return (
     <Row>
@@ -74,14 +95,19 @@ const QuestionAns = ({ item, toggleDropdown, setToggleDropdown }) => {
                         key={index}
                         onClick={() => {
                           setSelectedItems(val);
-                          // onSelectQuestion();
-                          !item?.inputBox &&
-                            onSelectQuestion(
-                              item?.questionType,
-                              item?.name,
-                              val?.value,
-                              "radio",
-                            );
+                          !item?.inputBox
+                            ? onSelectQuestion(
+                                item?.questionType,
+                                item?.name,
+                                val?.value,
+                                "radio",
+                              )
+                            : onSelectQuestion(
+                                item?.questionType,
+                                item?.name,
+                                val,
+                                "dropdown",
+                              );
                         }}
                       >
                         <div className="items">
@@ -104,7 +130,19 @@ const QuestionAns = ({ item, toggleDropdown, setToggleDropdown }) => {
                         name={values.name}
                         placeholder={values.placeholder}
                         defaultValue={values.value}
-                        value={values.value}
+                        value={inputVal?.[values.name]}
+                        onChange={(e) => {
+                          onChangeHandler(e);
+                          onSelectQuestion(
+                            item?.questionType,
+                            item?.name,
+                            {
+                              name: selectedItems?.name,
+                              value: e.target.value,
+                            },
+                            "dropdown",
+                          );
+                        }}
                       />
                     ))}
                   </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import QuestionAns from "./QuestionAns";
 import { useState } from "react";
@@ -7,7 +7,6 @@ import { yesValue } from "./hvacConstants";
 
 const Ventilation = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
-  const [selectedItems, setSelectedItems] = useState(null);
   const { selectedQuestions } = useHvacSystem();
 
   let ventilationAvailableQ = {
@@ -32,7 +31,6 @@ const Ventilation = () => {
     type: "dropdown",
     name: "fan_efficiency",
     questionType: "ventilation",
-    default: "High",
     option: [
       {
         name: "Custom",
@@ -129,8 +127,24 @@ const Ventilation = () => {
         value: "1",
       },
     ],
-    inputBox: [{ name: "ventilation2 ", placeholder: "" }],
+    inputBox: [
+      { name: "heat_recovery_efficiency ", placeholder: "", value: "" },
+    ],
   };
+
+  useEffect(() => {
+    if (selectedQuestions?.ventilation?.fan_efficiency?.selection) {
+      fanEfficiencyQ.inputBox[0].value =
+        selectedQuestions?.ventilation?.fan_efficiency?.value;
+    }
+  }, [selectedQuestions?.ventilation?.fan_efficiency?.selection]);
+
+  useEffect(() => {
+    if (selectedQuestions?.ventilation?.heat_recovery_efficiency?.selection) {
+      heatRecoveryEfficiencyQ.inputBox[0].value =
+        selectedQuestions?.ventilation?.heat_recovery_efficiency?.value;
+    }
+  }, [selectedQuestions?.ventilation?.heat_recovery_efficiency?.selection]);
 
   return (
     <Container fluid className="main-container-hvac">
@@ -146,8 +160,6 @@ const Ventilation = () => {
               key={2}
               toggleDropdown={toggleDropdown}
               setToggleDropdown={setToggleDropdown}
-              selectedItems={selectedItems}
-              setSelectedItems={setSelectedItems}
             />
             <div className="horizontalLine"></div>
           </>
@@ -164,35 +176,22 @@ const Ventilation = () => {
 
           <>
             <QuestionAns item={heatRecoveryUnitQ} key={5} />
-            <div className="horizontalLine"></div>
           </>
 
-          <>
-            <QuestionAns
-              item={heatRecoveryEfficiencyQ}
-              key={6}
-              toggleDropdown={toggleDropdown}
-              setToggleDropdown={setToggleDropdown}
-              selectedItems={selectedItems}
-              setSelectedItems={setSelectedItems}
-            />
-            <div className="horizontalLine"></div>
-          </>
+          {selectedQuestions?.ventilation?.heat_recovery_unit === yesValue && (
+            <>
+              <div className="horizontalLine"></div>
+              <QuestionAns
+                item={heatRecoveryEfficiencyQ}
+                key={6}
+                toggleDropdown={toggleDropdown}
+                setToggleDropdown={setToggleDropdown}
+              />
+              <div className="horizontalLine"></div>
+            </>
+          )}
         </>
       )}
-      {/* {data.map((item, index) => (
-        <>
-          <QuestionAns
-            item={item}
-            key={index}
-            toggleDropdown={toggleDropdown}
-            setToggleDropdown={setToggleDropdown}
-            selectedItems={selectedItems}
-            setSelectedItems={setSelectedItems}
-          />
-          {index !== data?.length - 1 && <div className="horizontalLine"></div>}
-        </>
-      ))} */}
     </Container>
   );
 };

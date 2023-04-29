@@ -4,7 +4,8 @@ import ReactTooltip from "react-tooltip";
 import { useHvacSystem } from "../../Context/HvacSystemProvider";
 
 const ShowDetails = () => {
-  const { setToggle, toggle, heatingWarmWaterData } = useHvacSystem();
+  const { setToggle, toggle, heatingWarmWaterData, handleSubmitHvacData } =
+    useHvacSystem();
   const hvacFormikRef = useRef(null);
 
   const initialValues = {
@@ -12,6 +13,22 @@ const ShowDetails = () => {
     heating_system_distribution_losses: "",
     warm_water_storage_losses: "",
     warm_water_distribution_losses: "",
+    load_operating_hours: "",
+    load_non_operating_hours: "",
+  };
+
+  const onSelectOption = (event, inputFieldName, setFieldValue) => {
+    const name = event?.target?.name;
+    const value = event?.target?.value;
+    const selectedOption = event?.target?.options[event?.target?.selectedIndex];
+    const extraData = selectedOption?.dataset?.extra;
+    setFieldValue(inputFieldName, extraData);
+    setFieldValue(name, value);
+    // setIsEditValue(true);
+  };
+
+  const onHandleFormSubmit = async (values) => {
+    await handleSubmitHvacData(values);
   };
 
   useEffect(() => {
@@ -31,6 +48,14 @@ const ShowDetails = () => {
       hvacFormikRef?.current?.setFieldValue(
         "warm_water_distribution_losses",
         heatingWarmWaterData?.warm_water_distribution_losses ?? "",
+      );
+      hvacFormikRef?.current?.setFieldValue(
+        "load_operating_hours",
+        heatingWarmWaterData?.load_operating_hours ?? "",
+      );
+      hvacFormikRef?.current?.setFieldValue(
+        "load_non_operating_hours",
+        heatingWarmWaterData?.load_non_operating_hours ?? "",
       );
     }
   }, [heatingWarmWaterData, hvacFormikRef?.current]);
@@ -52,8 +77,8 @@ const ShowDetails = () => {
       {toggle && (
         <Formik
           initialValues={initialValues}
-          onSubmit={(e) => console.log(e)}
           innerRef={hvacFormikRef}
+          onSubmit={(values) => onHandleFormSubmit(values)}
         >
           {({ setFieldValue, errors, touched }) => (
             <Form onChange={(e) => console.log(e)}>
@@ -68,19 +93,25 @@ const ShowDetails = () => {
                           <p>Heat transmission</p>
                           <Field
                             as="select"
-                            name="heatTransmission"
-                            onChange={(e) => console.log(e)}
+                            name="heating_system_transmission_losses_dropdown"
+                            onChange={(e) =>
+                              onSelectOption(
+                                e,
+                                "heating_system_transmission_losses",
+                                setFieldValue,
+                              )
+                            }
                           >
                             <option key="" value="" data-extra="">
                               Custom
                             </option>
-                            <option key="2.0" value="High" data-extra="2.0">
+                            <option key="10" value="High" data-extra="10">
                               High
                             </option>
-                            <option key="1.0" value="Medium" data-extra="1.0">
+                            <option key="5" value="Medium" data-extra="5">
                               Medium
                             </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
+                            <option key="1" value="Low" data-extra="1">
                               Low
                             </option>
                           </Field>
@@ -97,7 +128,7 @@ const ShowDetails = () => {
                           </div>
                           <Field
                             type="number"
-                            placeholder="0.1"
+                            placeholder=""
                             name="heating_system_transmission_losses"
                           />
                         </div>
@@ -109,19 +140,25 @@ const ShowDetails = () => {
                           <p>Heat distribution</p>
                           <Field
                             as="select"
-                            name="heatDistribution"
-                            onChange={(e) => console.log(e)}
+                            name="heating_system_distribution_losses_dropdown"
+                            onChange={(e) =>
+                              onSelectOption(
+                                e,
+                                "heating_system_distribution_losses",
+                                setFieldValue,
+                              )
+                            }
                           >
                             <option key="" value="" data-extra="">
                               Custom
                             </option>
-                            <option key="2.0" value="High" data-extra="2.0">
+                            <option key="" value="High" data-extra="10">
                               High
                             </option>
-                            <option key="1.0" value="Medium" data-extra="1.0">
+                            <option key="" value="Medium" data-extra="5">
                               Medium
                             </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
+                            <option key="" value="Low" data-extra="1">
                               Low
                             </option>
                           </Field>
@@ -135,7 +172,7 @@ const ShowDetails = () => {
                           </div>
                           <Field
                             type="number"
-                            placeholder="0.1"
+                            placeholder=""
                             name="heating_system_distribution_losses"
                           />
                         </div>
@@ -151,19 +188,25 @@ const ShowDetails = () => {
                           <p>Heat distribution</p>
                           <Field
                             as="select"
-                            name="heatTransmission"
-                            onChange={(e) => console.log(e)}
+                            name="warm_water_storage_losses_dropdown"
+                            onChange={(e) =>
+                              onSelectOption(
+                                e,
+                                "warm_water_storage_losses",
+                                setFieldValue,
+                              )
+                            }
                           >
                             <option key="" value="" data-extra="">
                               Custom
                             </option>
-                            <option key="2.0" value="High" data-extra="2.0">
+                            <option key="10" value="High" data-extra="10">
                               High
                             </option>
-                            <option key="1.0" value="Medium" data-extra="1.0">
+                            <option key="5" value="Medium" data-extra="5">
                               Medium
                             </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
+                            <option key="1" value="Low" data-extra="1">
                               Low
                             </option>
                           </Field>
@@ -177,7 +220,7 @@ const ShowDetails = () => {
                           </div>
                           <Field
                             type="number"
-                            placeholder="0.1"
+                            placeholder=""
                             name="warm_water_storage_losses"
                           />
                         </div>
@@ -189,19 +232,25 @@ const ShowDetails = () => {
                           <p>Heat transmission</p>
                           <Field
                             as="select"
-                            name="heatTransmission"
-                            onChange={(e) => console.log(e)}
+                            name="warm_water_distribution_losses_dropdown"
+                            onChange={(e) =>
+                              onSelectOption(
+                                e,
+                                "warm_water_distribution_losses",
+                                setFieldValue,
+                              )
+                            }
                           >
                             <option key="" value="" data-extra="">
                               Custom
                             </option>
-                            <option key="2.0" value="High" data-extra="2.0">
+                            <option key="10" value="High" data-extra="10">
                               High
                             </option>
-                            <option key="1.0" value="Medium" data-extra="1.0">
+                            <option key="5" value="Medium" data-extra="5">
                               Medium
                             </option>
-                            <option key="0.0" value="Low" data-extra="0.0">
+                            <option key="1" value="Low" data-extra="1">
                               Low
                             </option>
                           </Field>
@@ -215,7 +264,7 @@ const ShowDetails = () => {
                           </div>
                           <Field
                             type="number"
-                            placeholder="0.1"
+                            placeholder=""
                             name="warm_water_distribution_losses"
                           />
                         </div>
@@ -228,7 +277,11 @@ const ShowDetails = () => {
                     <div className="items-row">
                       <div className="diff-items">
                         <div className="title">Load during operating hours</div>
-                        <Field type="number" placeholder="0.1" name="Shared" />
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="load_operating_hours"
+                        />
                         <span>W/m²</span>
                       </div>
                     </div>
@@ -237,25 +290,33 @@ const ShowDetails = () => {
                         <div className="title">
                           Load during non-operating hours
                         </div>
-                        <Field type="number" placeholder="0.1" name="Shared" />
+                        <Field
+                          type="number"
+                          placeholder=""
+                          name="load_non_operating_hours"
+                        />
                         <span>W/m²</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <div className="showDetails-image">
+                <img
+                  src="assets/img/LoadExisting/project-page.png"
+                  alt="showDetails"
+                />
+                <div className="relative nextBtn">
+                  <button type="submit" className="Pay-btn">
+                    NEXT
+                  </button>
+                </div>
+              </div>
             </Form>
           )}
         </Formik>
       )}
-      <div className="showDetails-image">
-        <img src="assets/img/LoadExisting/project-page.png" alt="showDetails" />
-        <div className="relative nextBtn">
-          <button type="submit" className="Pay-btn">
-            NEXT
-          </button>
-        </div>
-      </div>
     </div>
   );
 };

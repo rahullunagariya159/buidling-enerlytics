@@ -93,7 +93,6 @@ const AuxiliaryEquipment = () => {
             selectedItems={selectedItems}
             setSelectedItems={setSelectedItems}
           />
-          <div className="horizontalLine"></div>
         </>
       )}
     </Container>

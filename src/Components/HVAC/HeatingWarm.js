@@ -88,14 +88,14 @@ const HeatingWarm = () => {
   useEffect(() => {
     if (
       selectedQuestions?.heating?.heating_energy_transmitted &&
-      selectedQuestions?.heating?.heating_warm_water_available &&
+      selectedQuestions?.heating?.well_insulated &&
       selectedQuestions?.heating?.unheated_space
     ) {
       handleGetHVACHeatingWarmWater();
     }
   }, [
     selectedQuestions?.heating?.heating_energy_transmitted,
-    selectedQuestions?.heating?.heating_warm_water_available,
+    selectedQuestions?.heating?.well_insulated,
     selectedQuestions?.heating?.unheated_space,
   ]);
 
