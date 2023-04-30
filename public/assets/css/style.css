@@ -5268,3 +5268,39 @@ img.hgyu {
   align-items: flex-start;
   display: flex;
 }
+.inputBox-rooms input[type="number"] {
+  width: 126px;
+  height: 40px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 2px solid #013a67;
+  border-radius: 4px;
+  font: normal normal 500 13px/18px Poppins;
+  letter-spacing: 0.37px;
+  color: #013a67;
+  padding-left: 16px;
+}
+
+.inputBox-rooms:after,
+.inputBox-rooms:before {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  content: "";
+  background-position: center right;
+  background-size: contain;
+  background-repeat: no-repeat;
+  caret-color: transparent;
+  left: 116px;
+  display: flex;
+  top: 71px;
+  cursor: pointer;
+}
+
+.inputBox-rooms:after {
+  background-image: url(../img/Home-Page/homeFinal/upArrow.svg);
+}
+
+.inputBox-rooms:before {
+  background-image: url(../img/Home-Page/homeFinal/downArrow.svg);
+  margin-top: 15px;
+}

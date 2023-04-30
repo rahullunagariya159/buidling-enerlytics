@@ -3,7 +3,6 @@ import Navbar from "../Navbar";
 import LeftSidebar from "../LeftSidebar";
 import "./index.css";
 import TabBar from "./TabBar";
-import { useState } from "react";
 import RoomsConfirmation from "./RoomsConfirmation";
 import OperatingHours from "./OperatingHours";
 
@@ -19,13 +18,14 @@ const Rooms = () => {
                 <LeftSidebar module="RM" />
               </div>
               <div className="rooms-content">
-                <div className="roomsTab-wrapper">
-                  <TabBar />
+                <div className="rooms-header">
+                  <div className="roomTitle">Form Filled</div>
+                  <div className="roomsTab-wrapper">
+                    <TabBar />
+                  </div>
                 </div>
                 <div className="roomTabContent">
                   <div className="roomTabContentInfo">
-                    <h1>HVAC(HEATING, A/C, VENTILATION) SYSTEM</h1>
-                    <p>Fill all the details if you have them</p>
                     <OperatingHours />
                   </div>
                   <RoomsConfirmation />

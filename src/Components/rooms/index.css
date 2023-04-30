@@ -1,15 +1,29 @@
 .rooms-content {
-  padding: 28px 0 0 0;
+  padding: 20px 0 20px 0;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
   padding-left: 295px !important;
 }
+.roomTitle {
+  font: normal normal 600 12px/16px Inter;
+  letter-spacing: 0.37px;
+  color: #ffbb1c;
+}
+.rooms-header {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 .roomsTab-wrapper {
   width: fit-content;
   border: 1px solid #dcdcdc;
   border-radius: 12px;
+  overflow: hidden;
+}
+.roomsTab-wrapper .nav-tabs {
+  border: none;
 }
 .roomsTab-wrapper .nav {
   display: flex;
@@ -23,11 +37,11 @@
   gap: 19px;
 }
 .roomTabContentInfo {
-  width: 710px;
+  width: 735px;
   background: #fbfbfb 0% 0% no-repeat padding-box;
   border: 1px solid #f1f1f1;
   border-radius: 12px;
-  padding: 20px;
+  padding: 30px;
 }
 .roomsTab-wrapper .nav-link {
   font: normal normal 600 10px/14px Poppins;
@@ -56,4 +70,89 @@
   box-shadow: inset 0px 0px 10px #00000029 !important;
   border: 2px solid #ffbb1c !important;
   border-radius: 0px !important;
+}
+.OperatingHoursWrp {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+  padding: 0px;
+}
+.rooms {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  position: relative;
+}
+.rooms .form-control:focus {
+  box-shadow: none;
+}
+.rooms label {
+  font: normal normal 600 12px/18px Poppins;
+  letter-spacing: 0.37px;
+  color: #013a67;
+}
+.rooms .orangeText {
+  color: #ffbb1c;
+}
+.rooms .orangeTextSmall {
+  font: normal normal 600 9px/51px Poppins;
+  letter-spacing: 0.28px;
+  color: #ffbb1c;
+  border-bottom: 1px solid #f1f1f1;
+}
+.OperatingIntervalWrp {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: inset 0px 0px 6px #00000029;
+  border-radius: 12px;
+  padding: 0 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.OperatingIntervalWrp .form-select {
+  width: 226px;
+  height: 40px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 2px solid #013a67;
+  border-radius: 4px;
+  font: normal normal 500 12px/18px Poppins;
+  letter-spacing: 0.37px;
+  color: #013a67;
+}
+.OperatingIntervalWrp .form-select:focus {
+  box-shadow: none;
+}
+.OperatingIntervalWrp .smallTitle {
+  font: normal normal 600 9px/11px Poppins;
+  letter-spacing: 0.28px;
+  color: #013a67;
+}
+.OperatingIntervalWrp .dayBox {
+  justify-content: center;
+  width: 53px;
+  height: 48px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 2px solid #013a67;
+  border-radius: 4px;
+  font: normal normal 600 10px/11px Poppins;
+  letter-spacing: 0.31px;
+  color: #013a67;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.OperatingIntervalWrp .selectedDay {
+  background: #ffbb1c 0% 0% no-repeat padding-box;
+  border: 2px solid #ffbb1c;
+  color: #ffffff;
+}
+.OperatingIntervalWrp .checkboxLabel {
+  font: normal normal 600 11px/20px Poppins !important;
+  letter-spacing: 0.34px !important;
+  color: #013a67;
+}
+.OperatingHoursWrp .add {
+  width: 94px;
+  height: 35px;
+  padding: 0;
 }
