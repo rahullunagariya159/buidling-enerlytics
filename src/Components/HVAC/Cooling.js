@@ -6,7 +6,7 @@ import { yesValue } from "./hvacConstants";
 
 const Cooling = () => {
   const { selectedQuestions } = useHvacSystem();
-  console.log({ selectedQuestions });
+
   let coolingQuestion1 = {
     question:
       "Is active cooling available in any of the rooms in the building?",

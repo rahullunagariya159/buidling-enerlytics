@@ -17,6 +17,7 @@ import BuildingMaterial from "./Components/buildingMaterial/BuildingMaterial";
 import ContactUs from "./Components/ContactUs";
 import Pricing from "./Components/Pricing";
 import AboutUs from "./Components/AboutUs";
+import EnergyGeneration from "./Components/EnergyGeneration";
 import { AuthProvider } from "./Context/AuthProvider";
 import { BuildingMaterialProvider } from "./Context/BuildingMaterialProvider";
 import { HvacSystemProvider } from "./Context/HvacSystemProvider";
@@ -85,6 +86,10 @@ function App() {
                 <Route path={appRoutes.contactUs} element={<ContactUs />} />
                 <Route path={appRoutes.pricing} element={<Pricing />} />
                 <Route path={appRoutes.aboutUs} element={<AboutUs />} />
+                <Route
+                  path={appRoutes.energyGeneration}
+                  element={<EnergyGeneration />}
+                />
                 <Route exact path={appRoutes.home} element={<PrivateRoute />}>
                   <Route path={appRoutes.profile} element={<MyAccount />} />
                 </Route>

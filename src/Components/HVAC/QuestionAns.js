@@ -3,7 +3,7 @@ import { Col, Dropdown, Row, Form } from "react-bootstrap";
 import { useHvacSystem } from "../../Context/HvacSystemProvider";
 
 const QuestionAns = ({ item, toggleDropdown, setToggleDropdown }) => {
-  const { onSelectQuestion } = useHvacSystem();
+  const { onSelectQuestion, selectedQuestions } = useHvacSystem();
   const [selectedItems, setSelectedItems] = useState();
   const [inputVal, setInputVal] = useState({});
 
@@ -44,15 +44,23 @@ const QuestionAns = ({ item, toggleDropdown, setToggleDropdown }) => {
                     }`}
                     name={item.name}
                     value={val.value}
+                    checked={
+                      selectedQuestions?.[item.questionType]?.[item.name] ===
+                      val.value
+                    }
+                    defaultValue={
+                      selectedQuestions?.[item.questionType]?.[item.name] ===
+                        val.value || ""
+                    }
                     id={val.label + item.name}
-                    onChange={(a) =>
+                    onChange={(e) => {
                       onSelectQuestion(
                         item?.questionType,
                         item?.name,
                         val?.value,
                         item?.type,
-                      )
-                    }
+                      );
+                    }}
                   />
                   <label
                     className={`no-1 build-eng-efficient ${
@@ -82,7 +90,10 @@ const QuestionAns = ({ item, toggleDropdown, setToggleDropdown }) => {
                       <span>{selectedItems?.name}</span>
                     </div>
                   ) : (
-                    item.default ?? "Custom"
+                    selectedQuestions?.[item.questionType]?.[item.name]
+                      ?.selection ??
+                    selectedQuestions?.[item.questionType]?.[item.name] ??
+                    "Custom"
                   )}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>

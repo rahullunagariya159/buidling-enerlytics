@@ -11,4 +11,5 @@ export const Routes = {
   pricing: "/pricing",
   aboutUs: "/about-us",
   profile: "/my-account",
+  energyGeneration: "/energy-generation-conversion",
 };

@@ -1,14 +1,27 @@
 import React, { useEffect, useRef } from "react";
 import { Form, Formik, Field } from "formik";
+import { ReactSession } from "react-client-session";
 import ReactTooltip from "react-tooltip";
 import { useHvacSystem } from "../../Context/HvacSystemProvider";
+import { hvacTabs } from "./hvacConstants";
 
 const ShowDetails = () => {
-  const { setToggle, toggle, heatingWarmWaterData, handleSubmitHvacData } =
-    useHvacSystem();
+  const {
+    setToggle,
+    toggle,
+    heatingWarmWaterData,
+    handleSubmitHvacData,
+    selectedQuestions,
+    setHvacFormValues,
+    handleFormConfig,
+    setLoading,
+    key,
+  } = useHvacSystem();
   const hvacFormikRef = useRef(null);
+  const isEdit = ReactSession.get("isedit_project_config");
 
   const initialValues = {
+    radiator_surface_area: "",
     heating_system_transmission_losses: "",
     heating_system_distribution_losses: "",
     warm_water_storage_losses: "",
@@ -28,37 +41,63 @@ const ShowDetails = () => {
   };
 
   const onHandleFormSubmit = async (values) => {
-    await handleSubmitHvacData(values);
+    setLoading(true);
+    setHvacFormValues(values);
+    setTimeout(async () => {
+      if (isEdit) {
+        handleFormConfig(values);
+      } else {
+        await handleSubmitHvacData(values);
+      }
+    }, 500);
   };
 
   useEffect(() => {
-    if (heatingWarmWaterData && hvacFormikRef?.current) {
+    if ((heatingWarmWaterData || selectedQuestions) && hvacFormikRef?.current) {
+      hvacFormikRef?.current?.setFieldValue(
+        "radiator_surface_area",
+        heatingWarmWaterData?.radiator_surface_area ??
+          selectedQuestions?.heating?.radiator_surface_area ??
+          "",
+      );
       hvacFormikRef?.current?.setFieldValue(
         "heating_system_transmission_losses",
-        heatingWarmWaterData?.heating_system_transmission_losses ?? "",
+        heatingWarmWaterData?.heating_system_transmission_losses ??
+          selectedQuestions?.heating?.heating_system_transmission_losses ??
+          "",
       );
       hvacFormikRef?.current?.setFieldValue(
         "heating_system_distribution_losses",
-        heatingWarmWaterData?.heating_system_distribution_losses ?? "",
+        heatingWarmWaterData?.heating_system_distribution_losses ??
+          selectedQuestions?.heating?.heating_system_transmission_losses ??
+          "",
       );
       hvacFormikRef?.current?.setFieldValue(
         "warm_water_storage_losses",
-        heatingWarmWaterData?.warm_water_storage_losses ?? "",
+        heatingWarmWaterData?.warm_water_storage_losses ??
+          selectedQuestions?.heating?.warm_water_storage_losses ??
+          "",
       );
       hvacFormikRef?.current?.setFieldValue(
         "warm_water_distribution_losses",
-        heatingWarmWaterData?.warm_water_distribution_losses ?? "",
+        heatingWarmWaterData?.warm_water_distribution_losses ??
+          selectedQuestions?.heating?.warm_water_distribution_losses ??
+          "",
       );
       hvacFormikRef?.current?.setFieldValue(
         "load_operating_hours",
-        heatingWarmWaterData?.load_operating_hours ?? "",
+        heatingWarmWaterData?.load_operating_hours ??
+          selectedQuestions?.auxiliary_equipment?.load_non_operating_hours ??
+          "",
       );
       hvacFormikRef?.current?.setFieldValue(
         "load_non_operating_hours",
-        heatingWarmWaterData?.load_non_operating_hours ?? "",
+        heatingWarmWaterData?.load_non_operating_hours ??
+          selectedQuestions?.auxiliary_equipment?.load_non_operating_hours ??
+          "",
       );
     }
-  }, [heatingWarmWaterData, hvacFormikRef?.current]);
+  }, [heatingWarmWaterData, hvacFormikRef?.current, selectedQuestions]);
 
   return (
     <div className="right-wrp hvac-rotet">
@@ -84,221 +123,284 @@ const ShowDetails = () => {
             <Form onChange={(e) => console.log(e)}>
               <div className="showDetailsWrp ">
                 <div className="main-table">
-                  <div className="main-title">Warm water system losses</div>
-                  <div className="sub-title">Heating</div>
-                  <div className="itemsData">
-                    <div className="items-row">
-                      <div className="sub-items">
-                        <div className="items">
-                          <p>Heat transmission</p>
-                          <Field
-                            as="select"
-                            name="heating_system_transmission_losses_dropdown"
-                            onChange={(e) =>
-                              onSelectOption(
-                                e,
-                                "heating_system_transmission_losses",
-                                setFieldValue,
-                              )
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="10" value="High" data-extra="10">
-                              High
-                            </option>
-                            <option key="5" value="Medium" data-extra="5">
-                              Medium
-                            </option>
-                            <option key="1" value="Low" data-extra="1">
-                              Low
-                            </option>
-                          </Field>
-                        </div>
-                        <ReactTooltip id="share" place="top" effect="solid">
-                          Share
-                        </ReactTooltip>
-                        <div className="items">
-                          <div className="info">
-                            <p>Share</p>
-                            <span data-tip data-for="share">
-                              !
-                            </span>
+                  {key === hvacTabs.heating && (
+                    <>
+                      <div className="main-title">Warm water system losses</div>
+                      <div className="sub-title">Heating system dimension</div>
+                      <div className="itemsData">
+                        <div className="items-row">
+                          <div className="sub-items">
+                            <div className="items">
+                              <p>Radiator surface area / room surface area</p>
+                              <Field
+                                as="select"
+                                name="radiator_surface_area_dropdown"
+                                onChange={(e) =>
+                                  onSelectOption(
+                                    e,
+                                    "radiator_surface_area",
+                                    setFieldValue,
+                                  )
+                                }
+                              >
+                                <option key="" value="" data-extra="">
+                                  Custom
+                                </option>
+                                <option key="10" value="High" data-extra="10">
+                                  High
+                                </option>
+                                <option key="5" value="Medium" data-extra="5">
+                                  Medium
+                                </option>
+                                <option key="1" value="Low" data-extra="1">
+                                  Low
+                                </option>
+                              </Field>
+                            </div>
+                            <ReactTooltip id="share" place="top" effect="solid">
+                              Share
+                            </ReactTooltip>
+                            <div className="items">
+                              <div className="info">
+                                <p>Share</p>
+                                <span data-tip data-for="share">
+                                  !
+                                </span>
+                              </div>
+                              <Field
+                                type="number"
+                                placeholder=""
+                                name="radiator_surface_area"
+                              />
+                            </div>
                           </div>
-                          <Field
-                            type="number"
-                            placeholder=""
-                            name="heating_system_transmission_losses"
-                          />
                         </div>
                       </div>
-                    </div>
-                    <div className="items-row">
-                      <div className="sub-items">
-                        <div className="items">
-                          <p>Heat distribution</p>
-                          <Field
-                            as="select"
-                            name="heating_system_distribution_losses_dropdown"
-                            onChange={(e) =>
-                              onSelectOption(
-                                e,
-                                "heating_system_distribution_losses",
-                                setFieldValue,
-                              )
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="" value="High" data-extra="10">
-                              High
-                            </option>
-                            <option key="" value="Medium" data-extra="5">
-                              Medium
-                            </option>
-                            <option key="" value="Low" data-extra="1">
-                              Low
-                            </option>
-                          </Field>
-                        </div>
-                        <div className="items">
-                          <div className="info">
-                            <p>Share</p>
-                            <span data-tip data-for="share">
-                              !
-                            </span>
+                      <div className="horizontalLine"></div>
+
+                      <div className="sub-title">Heating</div>
+                      <div className="itemsData">
+                        <div className="items-row">
+                          <div className="sub-items">
+                            <div className="items">
+                              <p>Heat transmission</p>
+                              <Field
+                                as="select"
+                                name="heating_system_transmission_losses_dropdown"
+                                onChange={(e) =>
+                                  onSelectOption(
+                                    e,
+                                    "heating_system_transmission_losses",
+                                    setFieldValue,
+                                  )
+                                }
+                              >
+                                <option key="" value="" data-extra="">
+                                  Custom
+                                </option>
+                                <option key="10" value="High" data-extra="10">
+                                  High
+                                </option>
+                                <option key="5" value="Medium" data-extra="5">
+                                  Medium
+                                </option>
+                                <option key="1" value="Low" data-extra="1">
+                                  Low
+                                </option>
+                              </Field>
+                            </div>
+                            <ReactTooltip id="share" place="top" effect="solid">
+                              Share
+                            </ReactTooltip>
+                            <div className="items">
+                              <div className="info">
+                                <p>Share</p>
+                                <span data-tip data-for="share">
+                                  !
+                                </span>
+                              </div>
+                              <Field
+                                type="number"
+                                placeholder=""
+                                name="heating_system_transmission_losses"
+                              />
+                            </div>
                           </div>
-                          <Field
-                            type="number"
-                            placeholder=""
-                            name="heating_system_distribution_losses"
-                          />
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="horizontalLine"></div>
-                  <div className="sub-title">Warm (drinking) water</div>
-                  <div className="itemsData">
-                    <div className="items-row">
-                      <div className="sub-items">
-                        <div className="items">
-                          <p>Heat distribution</p>
-                          <Field
-                            as="select"
-                            name="warm_water_storage_losses_dropdown"
-                            onChange={(e) =>
-                              onSelectOption(
-                                e,
-                                "warm_water_storage_losses",
-                                setFieldValue,
-                              )
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="10" value="High" data-extra="10">
-                              High
-                            </option>
-                            <option key="5" value="Medium" data-extra="5">
-                              Medium
-                            </option>
-                            <option key="1" value="Low" data-extra="1">
-                              Low
-                            </option>
-                          </Field>
-                        </div>
-                        <div className="items">
-                          <div className="info">
-                            <p>Share</p>
-                            <span data-tip data-for="share">
-                              !
-                            </span>
+                        <div className="items-row">
+                          <div className="sub-items">
+                            <div className="items">
+                              <p>Heat distribution</p>
+                              <Field
+                                as="select"
+                                name="heating_system_distribution_losses_dropdown"
+                                onChange={(e) =>
+                                  onSelectOption(
+                                    e,
+                                    "heating_system_distribution_losses",
+                                    setFieldValue,
+                                  )
+                                }
+                              >
+                                <option key="" value="" data-extra="">
+                                  Custom
+                                </option>
+                                <option key="" value="High" data-extra="10">
+                                  High
+                                </option>
+                                <option key="" value="Medium" data-extra="5">
+                                  Medium
+                                </option>
+                                <option key="" value="Low" data-extra="1">
+                                  Low
+                                </option>
+                              </Field>
+                            </div>
+                            <div className="items">
+                              <div className="info">
+                                <p>Share</p>
+                                <span data-tip data-for="share">
+                                  !
+                                </span>
+                              </div>
+                              <Field
+                                type="number"
+                                placeholder=""
+                                name="heating_system_distribution_losses"
+                              />
+                            </div>
                           </div>
-                          <Field
-                            type="number"
-                            placeholder=""
-                            name="warm_water_storage_losses"
-                          />
                         </div>
                       </div>
-                    </div>
-                    <div className="items-row">
-                      <div className="sub-items">
-                        <div className="items">
-                          <p>Heat transmission</p>
-                          <Field
-                            as="select"
-                            name="warm_water_distribution_losses_dropdown"
-                            onChange={(e) =>
-                              onSelectOption(
-                                e,
-                                "warm_water_distribution_losses",
-                                setFieldValue,
-                              )
-                            }
-                          >
-                            <option key="" value="" data-extra="">
-                              Custom
-                            </option>
-                            <option key="10" value="High" data-extra="10">
-                              High
-                            </option>
-                            <option key="5" value="Medium" data-extra="5">
-                              Medium
-                            </option>
-                            <option key="1" value="Low" data-extra="1">
-                              Low
-                            </option>
-                          </Field>
-                        </div>
-                        <div className="items">
-                          <div className="info">
-                            <p>Share</p>
-                            <span data-tip data-for="share">
-                              !
-                            </span>
+                      <div className="horizontalLine"></div>
+                      <div className="sub-title">Warm (drinking) water</div>
+                      <div className="itemsData">
+                        <div className="items-row">
+                          <div className="sub-items">
+                            <div className="items">
+                              <p>Heat distribution</p>
+                              <Field
+                                as="select"
+                                name="warm_water_storage_losses_dropdown"
+                                onChange={(e) =>
+                                  onSelectOption(
+                                    e,
+                                    "warm_water_storage_losses",
+                                    setFieldValue,
+                                  )
+                                }
+                              >
+                                <option key="" value="" data-extra="">
+                                  Custom
+                                </option>
+                                <option key="10" value="High" data-extra="10">
+                                  High
+                                </option>
+                                <option key="5" value="Medium" data-extra="5">
+                                  Medium
+                                </option>
+                                <option key="1" value="Low" data-extra="1">
+                                  Low
+                                </option>
+                              </Field>
+                            </div>
+                            <div className="items">
+                              <div className="info">
+                                <p>Share</p>
+                                <span data-tip data-for="share">
+                                  !
+                                </span>
+                              </div>
+                              <Field
+                                type="number"
+                                placeholder=""
+                                name="warm_water_storage_losses"
+                              />
+                            </div>
                           </div>
-                          <Field
-                            type="number"
-                            placeholder=""
-                            name="warm_water_distribution_losses"
-                          />
+                        </div>
+                        <div className="items-row">
+                          <div className="sub-items">
+                            <div className="items">
+                              <p>Heat transmission</p>
+                              <Field
+                                as="select"
+                                name="warm_water_distribution_losses_dropdown"
+                                onChange={(e) =>
+                                  onSelectOption(
+                                    e,
+                                    "warm_water_distribution_losses",
+                                    setFieldValue,
+                                  )
+                                }
+                              >
+                                <option key="" value="" data-extra="">
+                                  Custom
+                                </option>
+                                <option key="10" value="High" data-extra="10">
+                                  High
+                                </option>
+                                <option key="5" value="Medium" data-extra="5">
+                                  Medium
+                                </option>
+                                <option key="1" value="Low" data-extra="1">
+                                  Low
+                                </option>
+                              </Field>
+                            </div>
+                            <div className="items">
+                              <div className="info">
+                                <p>Share</p>
+                                <span data-tip data-for="share">
+                                  !
+                                </span>
+                              </div>
+                              <Field
+                                type="number"
+                                placeholder=""
+                                name="warm_water_distribution_losses"
+                              />
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="horizontalLine"></div>
-                  <div className="sub-title">Auxiliary equipment</div>
-                  <div className="itemsData">
-                    <div className="items-row">
-                      <div className="diff-items">
-                        <div className="title">Load during operating hours</div>
-                        <Field
-                          type="number"
-                          placeholder=""
-                          name="load_operating_hours"
-                        />
-                        <span>W/m²</span>
-                      </div>
-                    </div>
-                    <div className="items-row">
-                      <div className="diff-items">
-                        <div className="title">
-                          Load during non-operating hours
+                      {/* <div className="horizontalLine"></div> */}
+                    </>
+                  )}
+
+                  {key === hvacTabs.auxiliary_equipment && (
+                    <>
+                      <div className="sub-title">Auxiliary equipment</div>
+                      <div className="itemsData">
+                        <div className="items-row">
+                          <div className="diff-items">
+                            <div className="title">
+                              Load during operating hours
+                            </div>
+                            <Field
+                              type="number"
+                              placeholder=""
+                              name="load_operating_hours"
+                            />
+                            <span>W/m²</span>
+                          </div>
                         </div>
-                        <Field
-                          type="number"
-                          placeholder=""
-                          name="load_non_operating_hours"
-                        />
-                        <span>W/m²</span>
+                        <div className="items-row">
+                          <div className="diff-items">
+                            <div className="title">
+                              Load during non-operating hours
+                            </div>
+                            <Field
+                              type="number"
+                              placeholder=""
+                              name="load_non_operating_hours"
+                            />
+                            <span>W/m²</span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
+                    </>
+                  )}
                 </div>
               </div>
 

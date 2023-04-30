@@ -6,9 +6,22 @@ import TabBar from "./TabBar";
 import ShowDetails from "./ShowDetails";
 import LoadingCover from "../LoadingCover";
 import { useHvacSystem } from "../../Context/HvacSystemProvider";
+import SaveProjectConfirmationPopup from "../SaveProjectConfirmationPopup";
+import CreateConfigurationPopup from "../CreateConfigurationPopup";
+import { hvacTabs } from "./hvacConstants";
 
 const HVAC = () => {
-  const { loading } = useHvacSystem();
+  const {
+    loading,
+    showConfirmModal,
+    setShowConfirmModal,
+    handleAddNewConfig,
+    onCloseConfigModalHandler,
+    onCreateNewConfigModalHandler,
+    isShowCreateConfig,
+    handleSubmitHvacData,
+    key,
+  } = useHvacSystem();
 
   return (
     <div>
@@ -28,12 +41,28 @@ const HVAC = () => {
                     <TabBar />
                   </div>
                 </div>
-                <ShowDetails />
+                {(key === hvacTabs.heating ||
+                  key === hvacTabs.auxiliary_equipment) && <ShowDetails />}
               </div>
             </div>
           </div>
         </section>
       </div>
+      {showConfirmModal && (
+        <SaveProjectConfirmationPopup
+          isShow={showConfirmModal}
+          onCloseModalHandler={() => setShowConfirmModal(false)}
+          handleSaveConfig={() => handleSubmitHvacData()}
+          handleAddNewConfig={handleAddNewConfig}
+        />
+      )}
+      {isShowCreateConfig && (
+        <CreateConfigurationPopup
+          isShow={isShowCreateConfig}
+          onCloseModalHandler={onCloseConfigModalHandler}
+          onCreateNewConfigModalHandler={onCreateNewConfigModalHandler}
+        />
+      )}
       <LoadingCover show={loading} />
     </div>
   );

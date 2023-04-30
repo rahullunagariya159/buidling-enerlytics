@@ -6,9 +6,10 @@ import Ventilation from "./Ventilation";
 import Humidification from "./Humidification";
 import AuxiliaryEquipment from "./AuxiliaryEquipment";
 import { hvacTabs } from "./hvacConstants";
+import { useHvacSystem } from "../../Context/HvacSystemProvider";
 
 const TabBar = () => {
-  const [key, setKey] = useState(hvacTabs.heating);
+  const { key, setKey } = useHvacSystem();
 
   const HeatingWarmWaterTabTitle = () => {
     return (

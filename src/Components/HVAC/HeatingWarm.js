@@ -124,12 +124,6 @@ const HeatingWarm = () => {
           </>
         </>
       )}
-      {/* {data.map((item, index) => (
-        <>
-          <QuestionAns item={item} key={index} />
-          {index !== data?.length - 1 && <div className="horizontalLine"></div>}
-        </>
-      ))} */}
     </Container>
   );
 };

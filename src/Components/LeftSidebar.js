@@ -53,9 +53,17 @@ function LeftSidebar(props) {
       search: "?name=" + projectName,
     });
   };
+
   const navigateToRooms = () => {
     navigate({
       pathname: `${Routes.rooms}`,
+      search: "?name=" + projectName,
+    });
+  };
+
+  const handleNavigation = (routeName) => {
+    navigate({
+      pathname: routeName,
       search: "?name=" + projectName,
     });
   };
@@ -223,7 +231,11 @@ function LeftSidebar(props) {
             </a>
           </div>
         </div>
-        <div id="EG" className="side-link-flex">
+        <div
+          id="EG"
+          className="side-link-flex"
+          onClick={() => handleNavigation(Routes.rooms)}
+        >
           <div className="flex-side">
             <img
               className="side-icon"
