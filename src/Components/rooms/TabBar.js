@@ -1,15 +1,8 @@
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import { useState } from "react";
-import OperatingHours from "./OperatingHours";
-import IndoorClimateSettings from "./IndoorClimateSettings";
-import Ventilation from "./Ventilation";
-import WarmWater from "./WarmWater";
-import Lighting from "./Lighting";
-import ElectricAppliances from "./ElectricAppliances";
-import SunlightProtection from "./SunlightProtection";
 
-const TabBar = () => {
+const TabBar = ({ setTab }) => {
   const [key, setKey] = useState("operatingHours");
   const tabData = [
     {
@@ -82,7 +75,10 @@ const TabBar = () => {
         defaultActiveKey={tabData[0].eventKeyName}
         transition={false}
         fill
-        onSelect={(k) => setKey(k)}
+        onSelect={(k) => {
+          setKey(k);
+          setTab(k);
+        }}
       >
         {tabData.map((items, index) => {
           return (
@@ -91,15 +87,7 @@ const TabBar = () => {
               transition={false}
               eventKey={items.eventKeyName}
               title={<TabTitle info={items} />}
-            >
-              {/* {items.id === 1 && <OperatingHours />}
-            {items.id === 2 && <IndoorClimateSettings />}
-            {items.id === 3 && <Ventilation />}
-            {items.id === 4 && <WarmWater />}
-            {items.id === 5 && <Lighting />}
-            {items.id === 6 && <ElectricAppliances />}
-            {items.id === 7 && <SunlightProtection />} */}
-            </Tab>
+            ></Tab>
           );
         })}
       </Tabs>

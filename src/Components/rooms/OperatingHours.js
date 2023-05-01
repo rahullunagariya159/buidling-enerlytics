@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Container, Form, FormControl, Row } from "react-bootstrap";
+import { Col, Container, Form, Row } from "react-bootstrap";
 import OperatingInterval from "./OperatingInterval";
 
 const OperatingHours = () => {
@@ -30,11 +30,9 @@ const OperatingHours = () => {
           <Form.Label>
             How many usage intervals would you like to enter?
           </Form.Label>
-          <FormControl
-            type="number"
-            className="number-input"
-            aria-label="Number input"
-          />
+          <span className="inputBox-rooms">
+            <input min="1" step="1" type="number" aria-label="Number input" />
+          </span>
         </Col>
       </Row>
       <Row className="gap-4">

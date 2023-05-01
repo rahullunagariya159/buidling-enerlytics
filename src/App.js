@@ -82,7 +82,7 @@ function App() {
                   element={<BuildingMaterial />}
                 />
                 <Route path={appRoutes.hvac} element={<HVAC />} />
-                {/* <Route path={appRoutes.rooms} element={<Rooms />} /> */}
+                <Route path={appRoutes.rooms} element={<Rooms />} />
                 <Route path={appRoutes.contactUs} element={<ContactUs />} />
                 <Route path={appRoutes.pricing} element={<Pricing />} />
                 <Route path={appRoutes.aboutUs} element={<AboutUs />} />

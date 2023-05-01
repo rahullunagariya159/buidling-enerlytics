@@ -41,7 +41,7 @@
   background: #fbfbfb 0% 0% no-repeat padding-box;
   border: 1px solid #f1f1f1;
   border-radius: 12px;
-  padding: 30px;
+  /* padding: 30px; */
 }
 .roomsTab-wrapper .nav-link {
   font: normal normal 600 10px/14px Poppins;
@@ -75,7 +75,7 @@
   display: flex;
   flex-direction: column;
   gap: 45px;
-  padding: 0px;
+  padding: 20px;
 }
 .rooms {
   display: flex;
@@ -155,4 +155,74 @@
   width: 94px;
   height: 35px;
   padding: 0;
+}
+.indoor-wrp {
+  padding: 15px;
+  border-bottom: 1px solid #dcdcdc;
+}
+.indoor-wrp img {
+  width: 33px !important;
+  height: 29px !important;
+}
+.indoor-wrp span {
+  font: normal normal 600 17px/26px Poppins;
+  letter-spacing: 0.53px;
+  color: #ffbb1c;
+}
+.indoorClimateSettingWrp {
+  display: flex;
+  flex-direction: column;
+  /* gap: 45px; */
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+}
+.inputBox-rooms .small-input {
+  width: 75px !important;
+  height: 40px !important;
+  padding: 0px 25px 0px 5px !important;
+}
+.indoorClimate:after,
+.indoorClimate:before {
+  left: 56px !important;
+}
+.rooms .ventilation .question-header {
+  font: normal normal 600 14px/21px Poppins;
+  letter-spacing: 0.43px;
+  color: #013a67;
+}
+.rooms .ventilation .inputLabel {
+  font: normal normal 500 14px/21px Poppins;
+  letter-spacing: 0.43px;
+  color: #013a67;
+}
+.rooms .ventilation label {
+  font: normal normal normal 14px/21px Poppins;
+  letter-spacing: 0.43px;
+  color: #013a67;
+}
+.rooms .questionWrp {
+  gap: 20px !important;
+}
+
+.indoorClimateSettingWrp .borderBottom {
+  border-bottom: 1px solid #dcdcdc;
+}
+.rooms .labelYellow {
+  font: normal normal 600 13px/20px Poppins;
+  letter-spacing: 0.4px;
+  color: #ffbb1c;
+  margin-left: 9px;
+}
+.rooms .ventilation-input {
+  width: 83px;
+  height: 40px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #ffbb1c;
+  border-radius: 4px;
+  font: normal normal 500 16px/25px Poppins;
+  letter-spacing: 0.5px;
+  color: #013a67;
+  padding: 10px;
+  text-align: end;
 }

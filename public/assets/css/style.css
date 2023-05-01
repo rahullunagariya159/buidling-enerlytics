@@ -5279,7 +5279,9 @@ img.hgyu {
   color: #013a67;
   padding-left: 16px;
 }
-
+.inputBox-rooms {
+  position: relative;
+}
 .inputBox-rooms:after,
 .inputBox-rooms:before {
   position: absolute;
@@ -5290,9 +5292,9 @@ img.hgyu {
   background-size: contain;
   background-repeat: no-repeat;
   caret-color: transparent;
-  left: 116px;
+  left: 104px;
   display: flex;
-  top: 71px;
+  top: 6px;
   cursor: pointer;
 }
 
