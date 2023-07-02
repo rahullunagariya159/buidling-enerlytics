@@ -8,6 +8,7 @@ import { buyCredits } from "./Services/UserProfileService";
 import { somethingWentWrongError } from "../Constants";
 import Text from "./Text";
 import LoadingCover from "../Components/LoadingCover";
+import { validateNumber } from "../utils";
 
 function BuyCredits() {
   const [inputVal, setInputVal] = useState("");
@@ -20,6 +21,13 @@ function BuyCredits() {
   const onChangeHandler = (evt) => {
     setError("");
     const value = evt.target.value;
+    if (!validateNumber(value)) {
+      setInputVal({
+        ...inputVal,
+        [evt.target.name]: "",
+      });
+      return false;
+    }
     setInputVal({
       ...inputVal,
       [evt.target.name]: value,
@@ -103,6 +111,7 @@ function BuyCredits() {
                 name="credits"
                 id="credits"
                 value={inputVal?.credits}
+                pattern="[1-9]"
               />
             </div>
             <div className="cost-title">

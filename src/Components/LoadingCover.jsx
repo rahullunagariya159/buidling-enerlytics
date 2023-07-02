@@ -27,7 +27,7 @@ const LoadingFadedDiv = styled.div`
 
 const LoadingCover = ({ show, isFullScreen = true }) => (
   <LoadingFadedDiv show={show} isfull={isFullScreen}>
-    <img src="assets/img/icon-loading-primary.gif" alt="loading..." />
+    <img src="assets/img/icon-loading-primary.gif" alt="" />
   </LoadingFadedDiv>
 );
 

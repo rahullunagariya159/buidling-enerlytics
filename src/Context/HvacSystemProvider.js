@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useMemo } from "react";
 import { ReactSession } from "react-client-session";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { isEqual } from "lodash";
-import { hvacTabs } from "../Components/HVAC/hvacConstants";
+import { hvacTabs, noValue } from "../Components/HVAC/hvacConstants";
 import {
   getHVACHeatingWarmWater,
   getHVACAuxiliaryEquipment,
@@ -36,6 +36,12 @@ export function HvacSystemProvider({ children }) {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isShowCreateConfig, setIsCreateShowConfig] = useState(false);
   const [hvacFormValues, setHvacFormValues] = useState({});
+  const [isCompleteHeating, setIsCompleteHeating] = useState(false);
+  const [isCompleteCooling, setIsCompleteCooling] = useState(false);
+  const [isCompleteVentilation, setIsCompleteVentilation] = useState(false);
+  const [isCompleteHumidification, setIsCompleteHumidification] =
+    useState(false);
+  const [isCompleteAuxi, setIsCompleteAuxi] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [key, setKey] = useState(hvacTabs.heating);
 
@@ -47,6 +53,65 @@ export function HvacSystemProvider({ children }) {
   // ========================================================================
   // FUNCTIONS
   // =========================================================================
+  // console.log("---->>", Object.keys(selectedQuestions?.heating)?.length);
+  useEffect(() => {
+    if (
+      selectedQuestions &&
+      selectedQuestions?.heating &&
+      (selectedQuestions?.heating?.heating_warm_water_available === noValue ||
+        Object.keys(selectedQuestions?.heating)?.length >= 4)
+    ) {
+      setIsCompleteHeating(true);
+    } else {
+      setIsCompleteHeating(false);
+    }
+
+    if (
+      selectedQuestions &&
+      selectedQuestions?.cooling &&
+      (selectedQuestions?.cooling?.cooling_available === noValue ||
+        Object.keys(selectedQuestions?.cooling)?.length === 2)
+    ) {
+      setIsCompleteCooling(true);
+    } else {
+      setIsCompleteCooling(false);
+    }
+
+    if (
+      selectedQuestions &&
+      selectedQuestions?.ventilation &&
+      (selectedQuestions?.ventilation?.ventilation_available === noValue ||
+        Object.keys(selectedQuestions?.ventilation)?.length > 5)
+    ) {
+      setIsCompleteVentilation(true);
+    } else {
+      setIsCompleteVentilation(false);
+    }
+
+    if (
+      selectedQuestions &&
+      selectedQuestions?.humidification &&
+      (selectedQuestions?.humidification?.humidification_available ===
+        noValue ||
+        Object.keys(selectedQuestions?.humidification)?.length >= 4)
+    ) {
+      setIsCompleteHumidification(true);
+    } else {
+      setIsCompleteHumidification(false);
+    }
+
+    if (
+      selectedQuestions &&
+      selectedQuestions?.auxiliary_equipment &&
+      (selectedQuestions?.auxiliary_equipment?.elevator_electricity_bill ===
+        noValue ||
+        Object.keys(selectedQuestions?.auxiliary_equipment)?.length >= 2)
+    ) {
+      setIsCompleteAuxi(true);
+    } else {
+      setIsCompleteAuxi(false);
+    }
+  }, [selectedQuestions]);
 
   const onCloseConfigModalHandler = () => {
     setIsCreateShowConfig(false);
@@ -156,7 +221,7 @@ export function HvacSystemProvider({ children }) {
       formValues?.warm_water_distribution_losses;
     hvacData.heating.radiator_surface_area = formValues?.radiator_surface_area;
     hvacData.auxiliary_equipment.load_operating_hours =
-      formValues?.load_operating_hours;
+      formValues?.load_operating_hours ?? "";
     hvacData.auxiliary_equipment.load_non_operating_hours =
       formValues?.load_non_operating_hours;
 
@@ -176,8 +241,9 @@ export function HvacSystemProvider({ children }) {
 
     await saveHvacData(hvacPayload)
       .then((response) => {
+        console.log({ response });
         if (response?.status === 200) {
-          setShowConfirmModal();
+          setShowConfirmModal(false);
           navigate({
             pathname: `${Routes.energyGeneration}`,
             search: "?name=" + projectName,
@@ -206,7 +272,7 @@ export function HvacSystemProvider({ children }) {
     hvacFrmData.heating.radiator_surface_area =
       formValues?.radiator_surface_area;
     hvacFrmData.auxiliary_equipment.load_operating_hours =
-      formValues?.load_operating_hours;
+      formValues?.load_operating_hours ?? "";
     hvacFrmData.auxiliary_equipment.load_non_operating_hours =
       formValues?.load_non_operating_hours;
 
@@ -284,6 +350,11 @@ export function HvacSystemProvider({ children }) {
     handleFormConfig,
     setKey,
     key,
+    isCompleteHeating,
+    isCompleteCooling,
+    isCompleteVentilation,
+    isCompleteHumidification,
+    isCompleteAuxi,
   };
 
   return (

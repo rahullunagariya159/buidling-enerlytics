@@ -37,13 +37,15 @@ function AddCard(props) {
   const elements = useElements();
 
   const handleChange = async (e) => {
+    let displayError = document.getElementById("card-errors");
+    displayError.textContent = "";
+
     if (e.elementType === "cardNumber") {
       if (e.complete) {
         setCardType(e.brand);
       } else if (e.error) {
         setCardType("");
 
-        var displayError = document.getElementById("card-errors");
         if (e.error) {
           displayError.textContent = e.error.message;
         } else {
@@ -115,6 +117,14 @@ function AddCard(props) {
     setSelectedCardName(cardName);
   };
 
+  const handleCloseAddCard = () => {
+    // document.getElementById("cardNumber").value = "";
+    // document.getElementById("cardExpiry").value = "";
+    // document.getElementById("cardCvv").value = "";
+    // document.getElementById("cardName").value = "";
+    setIsAddingCard(false);
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -177,6 +187,7 @@ function AddCard(props) {
                   }}
                   name="card_number"
                   onChange={handleChange}
+                  id="cardNumber"
                 />
               </div>
               <div className="Card-type-grid card-expiry">
@@ -191,6 +202,7 @@ function AddCard(props) {
                   }}
                   name="card_expiry"
                   onChange={handleChange}
+                  id="cardExpiry"
                 />
               </div>
             </div>
@@ -220,6 +232,7 @@ function AddCard(props) {
                   }}
                   name="card_cvv"
                   onChange={handleChange}
+                  id="cardCVV"
                 />
                 <img
                   src="assets/img/Add-credit-card-details/qcstion.svg"
@@ -245,7 +258,7 @@ function AddCard(props) {
               data-bs-dismiss="modal"
               data-bs-toggle="modal"
               data-bs-target={isAddingCard ? "" : "#PROMOCODE"}
-              onClick={() => setIsAddingCard(false)}
+              onClick={() => handleCloseAddCard()}
             >
               Close
             </a>

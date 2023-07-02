@@ -58,3 +58,8 @@ export const validatePhoneNumber = (input_str) => {
 
   return re.test(input_str);
 };
+
+export const validateNumber = (value) => {
+  let numberReg = /^[0-9]*$/;
+  return numberReg.test(value);
+};

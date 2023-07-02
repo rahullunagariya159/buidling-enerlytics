@@ -25,7 +25,7 @@ const DeleteConfigurationModal = ({
             <div className="heading">Configuration</div>
             {configurationDetails?.length > 0 &&
               configurationDetails?.map((config) => {
-                return <p>{config?.name ?? "-"}</p>;
+                return config?.name !== "Basic" && <p>{config?.name ?? "-"}</p>;
               })}
           </div>
           <div className="v-border"></div>

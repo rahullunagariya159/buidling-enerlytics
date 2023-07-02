@@ -237,9 +237,11 @@ function LoadProject() {
   };
 
   const handleDeleteConfig = () => {
-    if (projectConfiguration?.length > 0) {
+    if (selectedConfiguration?.length > 0) {
       setShowLoader(true);
-      const configIds = projectConfiguration?.map((pConfig) => pConfig?.id);
+      const configIds = selectedConfiguration?.map(
+        (pConfig) => pConfig?.id && pConfig?.name !== "Basic",
+      );
       const deletePayloads = {
         projectId: selectedProjects?.id,
         configurationIds: configIds,
@@ -248,7 +250,11 @@ function LoadProject() {
       deleteProjectConfiguration(deletePayloads)
         .then((response) => {
           if (response?.status === 200 && response?.data?.msg) {
-            setProjectConfiguration([]);
+            const filterRemainingProj = projectConfiguration.filter(
+              (val) => !configIds.includes(val.id),
+            );
+            setProjectConfiguration(filterRemainingProj);
+            setSelectedConfiguration([]);
             // toast.success("Project Configuration deleted successfully");
             setIsDeleteConfig(false);
           }
@@ -425,21 +431,7 @@ function LoadProject() {
                                 </div>
                                 <div className="lestgrid-1">
                                   <p className="lest-pra-8px">-</p>
-                                  <p className="lest-pra-8px">
-                                    {item &&
-                                      item?.updated_at &&
-                                      format(
-                                        new Date(parseInt(item?.updated_at)),
-                                        "d MMM yy",
-                                      )}{" "}
-                                    -{" "}
-                                    {item &&
-                                      item.created_at &&
-                                      format(
-                                        new Date(parseInt(item.created_at)),
-                                        "d MMM yy",
-                                      )}
-                                  </p>
+                                  <p className="lest-pra-8px">-</p>
                                   <p className="lest-pra-8px">
                                     {item &&
                                       item.created_at &&
@@ -478,13 +470,20 @@ function LoadProject() {
                               {selectedConfiguration?.length > 0
                                 ? `${
                                     selectedConfiguration?.length ?? 0
-                                  } configuration
+                                  } configuration${
+                                    selectedConfiguration?.length > 1 ? "s" : ""
+                                  }
                               selected`
                                 : ""}
                             </p>
-                            {projectConfiguration?.length > 0 && (
+                            {selectedConfiguration?.length > 0 && (
                               <div
-                                onClick={() => setIsDeleteConfig(true)}
+                                onClick={() =>
+                                  selectedConfiguration?.length === 1 &&
+                                  selectedConfiguration?.[0]?.name === "Basic"
+                                    ? setIsDeleteConfig(false)
+                                    : setIsDeleteConfig(true)
+                                }
                                 className="Permanent-btn"
                               >
                                 Permanent delete
@@ -722,7 +721,7 @@ function LoadProject() {
         isDelete={isDeleteConfig}
         handleCloseModal={handleCloseDeleteConfig}
         handleDelete={handleDeleteConfig}
-        configurationDetails={projectConfiguration}
+        configurationDetails={selectedConfiguration}
       />
     </div>
   );

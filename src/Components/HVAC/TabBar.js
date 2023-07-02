@@ -9,13 +9,23 @@ import { hvacTabs } from "./hvacConstants";
 import { useHvacSystem } from "../../Context/HvacSystemProvider";
 
 const TabBar = () => {
-  const { key, setKey } = useHvacSystem();
+  const {
+    key,
+    setKey,
+    isCompleteHeating,
+    isCompleteCooling,
+    isCompleteVentilation,
+    isCompleteHumidification,
+    isCompleteAuxi,
+  } = useHvacSystem();
 
   const HeatingWarmWaterTabTitle = () => {
     return (
       <div className="tabTitle">
         <div className="verified-tab">
-          <img src="assets/img/hvac/checked-verified.svg" alt="" />
+          {isCompleteHeating && (
+            <img src="assets/img/hvac/checked-verified.svg" alt="" />
+          )}
         </div>
         <img
           src={
@@ -35,7 +45,9 @@ const TabBar = () => {
     return (
       <div className="tabTitle">
         <div className="verified-tab">
-          <img src="assets/img/hvac/checked-verified.svg" alt="" />
+          {isCompleteCooling && (
+            <img src="assets/img/hvac/checked-verified.svg" alt="" />
+          )}
         </div>
         <img
           src={
@@ -55,7 +67,9 @@ const TabBar = () => {
     return (
       <div className="tabTitle">
         <div className="verified-tab">
-          <img src="assets/img/hvac/checked-verified.svg" alt="" />
+          {isCompleteVentilation && (
+            <img src="assets/img/hvac/checked-verified.svg" alt="" />
+          )}
         </div>
         <img
           src={
@@ -77,7 +91,9 @@ const TabBar = () => {
     return (
       <div className="tabTitle">
         <div className="verified-tab">
-          <img src="assets/img/hvac/checked-verified.svg" alt="" />
+          {isCompleteHumidification && (
+            <img src="assets/img/hvac/checked-verified.svg" alt="" />
+          )}
         </div>
         <img
           src={
@@ -99,7 +115,9 @@ const TabBar = () => {
     return (
       <div className="tabTitle">
         <div className="verified-tab">
-          <img src="assets/img/hvac/checked-verified.svg" alt="" />
+          {isCompleteAuxi && (
+            <img src="assets/img/hvac/checked-verified.svg" alt="" />
+          )}
         </div>
         <img
           src={

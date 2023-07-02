@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { Form, Formik, Field } from "formik";
+import * as Yup from "yup";
 import { ReactSession } from "react-client-session";
 import ReactTooltip from "react-tooltip";
 import { useHvacSystem } from "../../Context/HvacSystemProvider";
+import { useAuth } from "../../Context/AuthProvider";
 import { hvacTabs } from "./hvacConstants";
 
 const ShowDetails = () => {
@@ -17,6 +19,7 @@ const ShowDetails = () => {
     setLoading,
     key,
   } = useHvacSystem();
+  const { userId } = useAuth();
   const hvacFormikRef = useRef(null);
   const isEdit = ReactSession.get("isedit_project_config");
 
@@ -30,6 +33,29 @@ const ShowDetails = () => {
     load_non_operating_hours: "",
   };
 
+  const validationSchema = Yup.object().shape({
+    radiator_surface_area: Yup.number()
+      .min(1, "Value must be greater than or equal to 1")
+      .max(50, "Value must be less than or equal to 10")
+      .required("Radiator surface is required"),
+    heating_system_transmission_losses: Yup.number()
+      .min(1, "Value must be greater than or equal to 1")
+      .max(50, "Value must be less than or equal to 10")
+      .required("Heat transmission is required"),
+    heating_system_distribution_losses: Yup.number()
+      .min(1, "Value must be greater than or equal to 1")
+      .max(50, "Value must be less than or equal to 10")
+      .required("Heat distribution is required"),
+    warm_water_storage_losses: Yup.number()
+      .min(1, "Value must be greater than or equal to 1")
+      .max(50, "Value must be less than or equal to 10")
+      .required("Heat distribution is required"),
+    warm_water_distribution_losses: Yup.number()
+      .min(1, "Value must be greater than or equal to 1")
+      .max(50, "Value must be less than or equal to 10")
+      .required("Heat distribution is required"),
+  });
+
   const onSelectOption = (event, inputFieldName, setFieldValue) => {
     const name = event?.target?.name;
     const value = event?.target?.value;
@@ -41,6 +67,9 @@ const ShowDetails = () => {
   };
 
   const onHandleFormSubmit = async (values) => {
+    if (!userId) {
+      return false;
+    }
     setLoading(true);
     setHvacFormValues(values);
     setTimeout(async () => {
@@ -87,7 +116,7 @@ const ShowDetails = () => {
       hvacFormikRef?.current?.setFieldValue(
         "load_operating_hours",
         heatingWarmWaterData?.load_operating_hours ??
-          selectedQuestions?.auxiliary_equipment?.load_non_operating_hours ??
+          selectedQuestions?.auxiliary_equipment?.load_operating_hours ??
           "",
       );
       hvacFormikRef?.current?.setFieldValue(
@@ -118,9 +147,10 @@ const ShowDetails = () => {
           initialValues={initialValues}
           innerRef={hvacFormikRef}
           onSubmit={(values) => onHandleFormSubmit(values)}
+          validateOnSubmit={true}
         >
           {({ setFieldValue, errors, touched }) => (
-            <Form onChange={(e) => console.log(e)}>
+            <Form>
               <div className="showDetailsWrp ">
                 <div className="main-table">
                   {key === hvacTabs.heating && (
@@ -172,6 +202,12 @@ const ShowDetails = () => {
                                 placeholder=""
                                 name="radiator_surface_area"
                               />
+                              {errors.radiator_surface_area &&
+                              touched.radiator_surface_area ? (
+                                <div className="building-material-form-err">
+                                  {errors.radiator_surface_area}
+                                </div>
+                              ) : null}
                             </div>
                           </div>
                         </div>
@@ -224,6 +260,12 @@ const ShowDetails = () => {
                                 placeholder=""
                                 name="heating_system_transmission_losses"
                               />
+                              {errors.heating_system_transmission_losses &&
+                              touched.heating_system_transmission_losses ? (
+                                <div className="building-material-form-err">
+                                  {errors.heating_system_transmission_losses}
+                                </div>
+                              ) : null}
                             </div>
                           </div>
                         </div>
@@ -316,6 +358,12 @@ const ShowDetails = () => {
                                 placeholder=""
                                 name="warm_water_storage_losses"
                               />
+                              {errors.warm_water_storage_losses &&
+                              touched.warm_water_storage_losses ? (
+                                <div className="building-material-form-err">
+                                  {errors.warm_water_storage_losses}
+                                </div>
+                              ) : null}
                             </div>
                           </div>
                         </div>
@@ -360,6 +408,12 @@ const ShowDetails = () => {
                                 placeholder=""
                                 name="warm_water_distribution_losses"
                               />
+                              {errors.warm_water_distribution_losses &&
+                              touched.warm_water_distribution_losses ? (
+                                <div className="building-material-form-err">
+                                  {errors.warm_water_distribution_losses}
+                                </div>
+                              ) : null}
                             </div>
                           </div>
                         </div>
@@ -382,6 +436,12 @@ const ShowDetails = () => {
                               placeholder=""
                               name="load_operating_hours"
                             />
+                            {errors.load_operating_hours &&
+                            touched.load_operating_hours ? (
+                              <div className="building-material-form-err">
+                                {errors.load_operating_hours}
+                              </div>
+                            ) : null}
                             <span>W/m²</span>
                           </div>
                         </div>
@@ -395,6 +455,12 @@ const ShowDetails = () => {
                               placeholder=""
                               name="load_non_operating_hours"
                             />
+                            {errors.load_non_operating_hours &&
+                            touched.load_non_operating_hours ? (
+                              <div className="building-material-form-err">
+                                {errors.load_non_operating_hours}
+                              </div>
+                            ) : null}
                             <span>W/m²</span>
                           </div>
                         </div>

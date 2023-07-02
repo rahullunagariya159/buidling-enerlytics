@@ -10,9 +10,12 @@ function Slider() {
   const [clicked, setClicked] = useState(false);
   const [skipClicked, setSkipClicked] = useState(false);
 
-  const { userId, isLoggedIn } = useAuth();
+  const { userId, isLoggedIn, userProfileDetails } = useAuth();
 
   const handleCreateProjectForGuest = (clickedStatus) => {
+    if (userId && userProfileDetails?.credits < 1) {
+      return false;
+    }
     if (clickedStatus) {
       setClicked(true);
     } else {
@@ -28,32 +31,40 @@ function Slider() {
       name: guestProjectName,
       userId: guestUserId,
     };
-    createProject(payload).then((response) => {
-      if (response?.error) {
-        toast.error(response?.error);
-      } else {
-        if (response?.msg) {
-          ReactSession.set("project_id", response?.msg?.[0]?.id);
-          ReactSession.set("configuration_id", response?.configurationId);
-          ReactSession.set("isedit_project_config", false);
-          ReactSession.set("isview_project_config", false);
+    createProject(payload)
+      .then((response) => {
+        if (response?.error) {
+          toast.error(response?.error);
+        } else {
+          if (response?.msg) {
+            ReactSession.set("project_id", response?.msg?.[0]?.id);
+            ReactSession.set("configuration_id", response?.configurationId);
+            ReactSession.set("isedit_project_config", false);
+            ReactSession.set("isview_project_config", false);
 
-          if (isLoggedIn == "true") {
-            setTimeout(
-              (window.location.href =
-                "/create-project?name=" + guestProjectName),
-              2000,
-            );
-          } else {
-            setTimeout(
-              (window.location.href =
-                "/create-project?name=" + guestProjectName + "&&skip=true"),
-              2000,
-            );
+            if (isLoggedIn == "true") {
+              setTimeout(
+                (window.location.href =
+                  "/create-project?name=" + guestProjectName),
+                2000,
+              );
+            } else {
+              setTimeout(
+                (window.location.href =
+                  "/create-project?name=" + guestProjectName + "&&skip=true"),
+                2000,
+              );
+            }
           }
         }
-      }
-    });
+      })
+      .catch((error) => {
+        console.log({ error });
+      })
+      .finally(() => {
+        setClicked(false);
+        setSkipClicked(false);
+      });
   };
   return (
     <div id="main-parant-1" className="main-parant-1">
