@@ -7,22 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 
 const App = React.lazy(() => import("./App"));
 
-const loadingMarkup = (
-  <LoadingCover show={true} />
-  // <div className="loader-container">
-  //   <div className="loader-wrapper">
-  //     <div className="loader">
-  //       <span className="pip-0"></span>
-  //       <span className="pip-1"></span>
-  //       <span className="pip-2"></span>
-  //       <span className="pip-3"></span>
-  //       <span className="pip-4"></span>
-  //       <span className="pip-5"></span>
-  //     </div>
-  //     <h1>Loading...</h1>
-  //   </div>
-  // </div>
-);
+const loadingMarkup = <LoadingCover show={true} />;
 
 ReactDOM.render(
   <Suspense fallback={loadingMarkup}>
